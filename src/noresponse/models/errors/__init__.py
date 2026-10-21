@@ -8,7 +8,7 @@ if TYPE_CHECKING:
     from .authenticationerror import AuthenticationError, AuthenticationErrorData
     from .badrequesterror import BadRequestError, BadRequestErrorData
     from .conflicterror import ConflictError, ConflictErrorData
-    from .no_response_error import NoResponseError
+    from .no_response_received_error import NoResponseReceivedError
     from .notfounderror import NotFoundError, NotFoundErrorData
     from .permissiondeniederror import PermissionDeniedError, PermissionDeniedErrorData
     from .ratelimiterror import RateLimitError, RateLimitErrorData
@@ -23,7 +23,7 @@ __all__ = [
     "BadRequestErrorData",
     "ConflictError",
     "ConflictErrorData",
-    "NoResponseError",
+    "NoResponseReceivedError",
     "NotFoundError",
     "NotFoundErrorData",
     "PermissionDeniedError",
@@ -41,7 +41,7 @@ _dynamic_imports: dict[str, str] = {
     "BadRequestErrorData": ".badrequesterror",
     "ConflictError": ".conflicterror",
     "ConflictErrorData": ".conflicterror",
-    "NoResponseError": ".no_response_error",
+    "NoResponseReceivedError": ".no_response_received_error",
     "NotFoundError": ".notfounderror",
     "NotFoundErrorData": ".notfounderror",
     "PermissionDeniedError": ".permissiondeniederror",

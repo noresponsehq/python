@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass(unsafe_hash=True)
-class NoResponseError(Exception):
+class NoResponseReceivedError(Exception):
     """Error raised when no HTTP response is received from the server."""
 
     message: str
