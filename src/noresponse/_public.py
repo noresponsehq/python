@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from .assessments import Assessments
+from .auth import from_auth0, from_clerk, from_oidc, from_workos
 from .sdk import NoResponse
 from .wait import DEFAULT_WAIT_SECONDS, WaitTimeoutError, wait, wait_async
 from .webhooks import (
@@ -32,6 +33,10 @@ __all__ = [
     "NoResponse",
     "Assessments",
     "WaitTimeoutError",
+    "from_workos",
+    "from_clerk",
+    "from_auth0",
+    "from_oidc",
     "construct_event",
     "verification_response",
     "WebhookVerificationError",
