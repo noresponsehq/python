@@ -1,0 +1,15 @@
+# KeyRotation
+
+The 201 answer of POST /v1/keys/rotate: the new key, shown once, and when the key that was presented stops working. The new key has the scopes of the presented key.
+
+
+## Fields
+
+| Field                                                                                     | Type                                                                                      | Required                                                                                  | Description                                                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `key`                                                                                     | *str*                                                                                     | :heavy_check_mark:                                                                        | The new credential, nrk_<key id>_<secret>. It is shown only in this answer; store it now. |
+| `key_id`                                                                                  | *str*                                                                                     | :heavy_check_mark:                                                                        | The public id of the new key.                                                             |
+| `scopes`                                                                                  | List[[shared.Scope](../../models/shared/scope.md)]                                        | :heavy_check_mark:                                                                        | The scopes of the new key: those of the presented key.                                    |
+| `created_at`                                                                              | *str*                                                                                     | :heavy_check_mark:                                                                        | N/A                                                                                       |
+| `previous_key_id`                                                                         | *str*                                                                                     | :heavy_check_mark:                                                                        | The id of the key that signed this request.                                               |
+| `previous_key_expires_at`                                                                 | *str*                                                                                     | :heavy_check_mark:                                                                        | When the previous key stops authenticating. Until then both keys work.                    |

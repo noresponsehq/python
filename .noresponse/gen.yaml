@@ -1,0 +1,101 @@
+configVersion: 2.0.0
+generation:
+  sdkClassName: NoResponse
+  maintainOpenAPIOrder: true
+  usageSnippets:
+    optionalPropertyRendering: withExample
+    sdkInitStyle: constructor
+  useClassNamesForArrayFields: true
+  fixes:
+    nameResolutionDec2023: true
+    nameResolutionFeb2025: true
+    parameterOrderingFeb2024: true
+    requestResponseComponentNamesFeb2024: true
+    securityFeb2025: true
+    sharedErrorComponentsApr2025: true
+    sharedNestedComponentsJan2026: true
+    nameOverrideFeb2026: true
+    openSingleValueEnumsOct2026: true
+  auth:
+    oAuth2ClientCredentialsEnabled: false
+    oAuth2PasswordEnabled: false
+    hoistGlobalSecurity: true
+  inferSSEOverload: true
+  sdkHooksConfigAccess: true
+  schemas:
+    allOfMergeStrategy: shallowMerge
+  requestBodyFieldName: body
+  versioningStrategy: automatic
+  persistentEdits: {}
+  tests:
+    generateTests: false
+    generateNewTests: false
+    skipResponseBodyAssertions: false
+python:
+  version: 2.0.0
+  additionalDependencies:
+    dev: {}
+    main: {}
+  allowedRedefinedBuiltins:
+    - id
+    - object
+    - input
+  asyncMode: both
+  authors:
+    - NoResponse
+  baseErrorName: APIError
+  bodyVariantOverloads: true
+  clientServerStatusCodesAsErrors: true
+  constFieldCasing: normal
+  defaultErrorName: APIStatusError
+  description: NoResponse signup and gateway risk assessment client for Python
+  durationFormat: true
+  enableCustomCodeRegions: true
+  enumFormat: union
+  envVarPrefix: NORESPONSE
+  errorSchemaValidation: true
+  eventStreamClassNames:
+    async: EventStreamAsync
+    sync: EventStream
+  fixFlags:
+    asyncPaginationSep2025: true
+    conflictResistantModelImportsFeb2026: true
+    responseRequiredSep2024: true
+  flattenGlobalSecurity: true
+  flattenRequests: true
+  flatteningOrder: parameters-first
+  forwardCompatibleEnumsByDefault: true
+  forwardCompatibleUnionsByDefault: tagged-only
+  httpClientLibrary: httpx
+  imports:
+    option: openapi
+    paths:
+      callbacks: models/callbacks
+      errors: models/errors
+      operations: models/operations
+      shared: models/shared
+      webhooks: models/webhooks
+  inferUnionDiscriminators: true
+  inputModelSuffix: input
+  inputTypedDictSuffix: TypedDict
+  license: Apache-2.0
+  maxMethodParams: 999
+  methodArguments: positional-path-params
+  methodTimeoutArgument: timeout-ms
+  methodTimeoutUnits: milliseconds
+  moduleName: ""
+  multipartArrayFormat: standard
+  optionalDependencies: {}
+  outputModelSuffix: output
+  packageManager: uv
+  packageName: noresponse
+  preApplyUnionDiscriminators: true
+  pytestFilterWarnings: []
+  pytestTimeout: 0
+  rawResponseHelpers: true
+  responseFormat: flat
+  responseSchemaValidation: true
+  sseFlatResponse: true
+  templateVersion: v2
+  useAsyncHooks: true
+  uuidFormat: true

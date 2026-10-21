@@ -1,0 +1,5 @@
+# Hand-written files beside the generated client.
+/src/noresponse/webhooks.py
+/src/noresponse/wait.py
+/src/noresponse/_public.py
+/tests/test_*.py

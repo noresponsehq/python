@@ -1,0 +1,17 @@
+# PermissionDeniedError
+
+HTTP 403 problem document.
+
+
+## Fields
+
+| Field                                                                                | Type                                                                                 | Required                                                                             | Description                                                                          |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| `type`                                                                               | *str*                                                                                | :heavy_check_mark:                                                                   | N/A                                                                                  |
+| `title`                                                                              | *str*                                                                                | :heavy_check_mark:                                                                   | N/A                                                                                  |
+| `status`                                                                             | *Literal[403]*                                                                       | :heavy_check_mark:                                                                   | N/A                                                                                  |
+| `detail`                                                                             | *str*                                                                                | :heavy_check_mark:                                                                   | N/A                                                                                  |
+| `instance`                                                                           | *Optional[str]*                                                                      | :heavy_minus_sign:                                                                   | N/A                                                                                  |
+| `code`                                                                               | [shared.PermissionDeniedErrorCode](../../models/shared/permissiondeniederrorcode.md) | :heavy_check_mark:                                                                   | Machine codes an HTTP 403 answer can carry.                                          |
+| `request_id`                                                                         | *str*                                                                                | :heavy_check_mark:                                                                   | N/A                                                                                  |
+| `invalid_params`                                                                     | List[[shared.ProblemInvalidParam](../../models/shared/probleminvalidparam.md)]       | :heavy_minus_sign:                                                                   | N/A                                                                                  |

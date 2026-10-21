@@ -1,0 +1,11 @@
+# RiskSummaryPhone
+
+
+## Fields
+
+| Field                                                                                        | Type                                                                                         | Required                                                                                     | Description                                                                                  |
+| -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `line_type`                                                                                  | [Optional[shared.LineType]](../../models/shared/linetype.md)                                 | :heavy_minus_sign:                                                                           | N/A                                                                                          |
+| `country`                                                                                    | *Optional[str]*                                                                              | :heavy_minus_sign:                                                                           | N/A                                                                                          |
+| `report_count`                                                                               | *Optional[int]*                                                                              | :heavy_minus_sign:                                                                           | Highest report count any source gave for the number.                                         |
+| `carrier`                                                                                    | *Optional[str]*                                                                              | :heavy_minus_sign:                                                                           | Carrier-network metadata from privately weighted sources; not upstream provider attribution. |

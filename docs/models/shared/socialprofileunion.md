@@ -1,0 +1,35 @@
+# SocialProfileUnion
+
+
+## Supported Types
+
+### `str`
+
+```python
+value: str = /* values here */
+```
+
+### `float`
+
+```python
+value: float = /* values here */
+```
+
+### `bool`
+
+```python
+value: bool = /* values here */
+```
+
+### `shared.SocialProfile`
+
+```python
+value: shared.SocialProfile = /* values here */
+```
+
+### `List[Any]`
+
+```python
+value: List[Any] = /* values here */
+```
+

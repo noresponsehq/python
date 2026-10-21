@@ -1,0 +1,62 @@
+import json
+from pathlib import Path
+
+import httpx
+import pytest
+
+import noresponse.wait as wait_module
+from noresponse import NoResponse
+from noresponse.wait import WaitTimeoutError, wait
+
+FIXTURES = Path(__file__).parent / "fixtures"
+PENDING = json.loads((FIXTURES / "valid/assessment-pending.json").read_text())
+COMPLETE = json.loads((FIXTURES / "valid/assessment-complete.json").read_text())
+ID = COMPLETE["assessment_id"]
+
+
+def client(responses):
+    seen = []
+
+    def handler(request):
+        seen.append(request)
+        status, body, headers = responses[min(len(seen), len(responses)) - 1]
+        return httpx.Response(status, json=body, headers=headers)
+
+    sdk = NoResponse(api_key="nrk_test_" + "k" * 20, server_url="https://api.example.test",
+                     client=httpx.Client(transport=httpx.MockTransport(handler)))
+    return sdk, seen
+
+
+@pytest.fixture
+def sleeps(monkeypatch):
+    slept = []
+    clock = [0.0]
+    monkeypatch.setattr(wait_module.time, "sleep", lambda s: (slept.append(s), clock.__setitem__(0, clock[0] + s)))
+    monkeypatch.setattr(wait_module.time, "monotonic", lambda: clock[0])
+    return slept
+
+
+def test_wait_polls_until_complete_honouring_retry_after(sleeps):
+    sdk, seen = client([(200, PENDING, {"Retry-After": "3"}), (200, PENDING, {"Retry-After": "0"}), (200, COMPLETE, {})])
+    result = wait(sdk, ID)
+    assert result.status == "complete"
+    assert result.assessment_id == ID
+    assert sleeps == [3.0, 1.0]
+    assert len(seen) == 3
+    assert all(r.url.path == f"/v1/assessments/{ID}" for r in seen)
+    assert seen[0].headers["authorization"] == "Bearer nrk_test_" + "k" * 20
+
+
+def test_wait_times_out_with_the_last_pending_assessment(sleeps):
+    sdk, _ = client([(200, PENDING, {"Retry-After": "2"})])
+    with pytest.raises(WaitTimeoutError) as caught:
+        wait(sdk, ID, timeout=5)
+    assert caught.value.last.status == "pending"
+    assert sleeps == [2.0, 2.0]
+
+
+def test_retry_after_accepts_http_date():
+    assert wait_module._retry_after(
+        {"Retry-After": ["Wed, 21 Oct 2015 07:28:00 GMT"]},
+        now=1445412475.0,
+    ) == 5.0
