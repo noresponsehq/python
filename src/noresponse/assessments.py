@@ -187,7 +187,7 @@ class Assessments(BaseSDK):
                 AfterParseErrorContext(_noresponse_hook_ctx),
                 http_res,
                 parse_exc_,
-            ) and whitespace are refused, as is a JWT; a hex digest such as a SHA-256 is allowed. It travels only in request bodies.
+            ) and whitespace are refused, as is a JWT; a hex digest such as a SHA-256 is allowed. It travels only in request bodies. An assessment requested by a provider hook at pre_registration, which has no account yet, carries the server-issued account_id pre: followed by its assessment_id.
         :param identifiers: At least one of email, username or phone. name and ip refine the match and travel beside a lookup identifier; a body with only name or ip is refused with 400.
         :param policy_context:
         :param request_id: An optional provider correlation id, echoed back. It is not an idempotency key. Refuses an exact-shape JWT or a bare 40, 64 or 128 character hex digest; a UUID is accepted.
@@ -544,7 +544,7 @@ class Assessments(BaseSDK):
                 AfterParseErrorContext(_noresponse_hook_ctx),
                 http_res,
                 parse_exc_,
-            ) and whitespace are refused, as is a JWT; a hex digest such as a SHA-256 is allowed. It travels only in request bodies.
+            ) and whitespace are refused, as is a JWT; a hex digest such as a SHA-256 is allowed. It travels only in request bodies. An assessment requested by a provider hook at pre_registration, which has no account yet, carries the server-issued account_id pre: followed by its assessment_id.
         :param identifiers: At least one of email, username or phone. name and ip refine the match and travel beside a lookup identifier; a body with only name or ip is refused with 400.
         :param policy_context:
         :param request_id: An optional provider correlation id, echoed back. It is not an idempotency key. Refuses an exact-shape JWT or a bare 40, 64 or 128 character hex digest; a UUID is accepted.
@@ -1653,7 +1653,7 @@ class Assessments(BaseSDK):
                 AfterParseErrorContext(_noresponse_hook_ctx),
                 http_res,
                 parse_exc_,
-            ) and whitespace are refused, as is a JWT; a hex digest such as a SHA-256 is allowed. It travels only in request bodies.
+            ) and whitespace are refused, as is a JWT; a hex digest such as a SHA-256 is allowed. It travels only in request bodies. An assessment requested by a provider hook at pre_registration, which has no account yet, carries the server-issued account_id pre: followed by its assessment_id.
         :param limit:
         :param cursor: next_cursor from the previous page, unchanged. Opaque, MAC'd and bound to the tenant and account_id.
         :param response_mode: standard returns the consolidated risk response; detailed adds merged provider-neutral facts when the key has detailed scope. There is no raw mode.
@@ -2016,7 +2016,7 @@ class Assessments(BaseSDK):
                 AfterParseErrorContext(_noresponse_hook_ctx),
                 http_res,
                 parse_exc_,
-            ) and whitespace are refused, as is a JWT; a hex digest such as a SHA-256 is allowed. It travels only in request bodies.
+            ) and whitespace are refused, as is a JWT; a hex digest such as a SHA-256 is allowed. It travels only in request bodies. An assessment requested by a provider hook at pre_registration, which has no account yet, carries the server-issued account_id pre: followed by its assessment_id.
         :param limit:
         :param cursor: next_cursor from the previous page, unchanged. Opaque, MAC'd and bound to the tenant and account_id.
         :param response_mode: standard returns the consolidated risk response; detailed adds merged provider-neutral facts when the key has detailed scope. There is no raw mode.

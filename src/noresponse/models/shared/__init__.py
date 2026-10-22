@@ -44,6 +44,7 @@ if TYPE_CHECKING:
     from .failurereason import FailureReason
     from .flow import Flow
     from .freshness import Freshness
+    from .hookpoint import HookPoint
     from .identifierkind import IdentifierKind
     from .incompletereason import IncompleteReason
     from .incompletesource import IncompleteSource, IncompleteSourceTypedDict
@@ -172,6 +173,7 @@ __all__ = [
     "FailureReason",
     "Flow",
     "Freshness",
+    "HookPoint",
     "IPSummary",
     "IPSummaryType",
     "IPSummaryTypedDict",
@@ -296,6 +298,7 @@ _dynamic_imports: dict[str, str] = {
     "FailureReason": ".failurereason",
     "Flow": ".flow",
     "Freshness": ".freshness",
+    "HookPoint": ".hookpoint",
     "IdentifierKind": ".identifierkind",
     "IncompleteReason": ".incompletereason",
     "IncompleteSource": ".incompletesource",

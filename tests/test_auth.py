@@ -5,12 +5,35 @@ from pathlib import Path
 
 import pytest
 
-from noresponse import from_auth0, from_clerk, from_firebase, from_oidc, from_supabase, from_workos
+from noresponse import (
+    from_auth0,
+    from_clerk,
+    from_cognito,
+    from_entra,
+    from_firebase,
+    from_keycloak,
+    from_oidc,
+    from_ory,
+    from_ory_oauth2,
+    from_supabase,
+    from_workos,
+)
 from noresponse.auth import _MAP
 
 FIXTURES = Path(__file__).parent / "fixtures"
 VECTORS = json.loads((FIXTURES / "auth-context-vectors.json").read_text())["cases"]
-MAPPERS = {"workos": from_workos, "clerk": from_clerk, "auth0": from_auth0, "supabase": from_supabase, "firebase": from_firebase}
+MAPPERS = {
+    "workos": from_workos,
+    "clerk": from_clerk,
+    "auth0": from_auth0,
+    "supabase": from_supabase,
+    "firebase": from_firebase,
+    "cognito": from_cognito,
+    "entra": from_entra,
+    "keycloak": from_keycloak,
+    "ory": from_ory,
+    "ory_oauth2": from_ory_oauth2,
+}
 
 
 def run(vector):

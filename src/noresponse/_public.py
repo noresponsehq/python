@@ -8,7 +8,19 @@ client.py, which wraps the generated one.
 from __future__ import annotations
 
 from .client import Assessments, Keys, NoResponse
-from .auth import from_auth0, from_clerk, from_firebase, from_oidc, from_supabase, from_workos
+from .auth import (
+    from_auth0,
+    from_clerk,
+    from_cognito,
+    from_entra,
+    from_firebase,
+    from_keycloak,
+    from_oidc,
+    from_ory,
+    from_ory_oauth2,
+    from_supabase,
+    from_workos,
+)
 from .errors import (
     APIConnectionError,
     APIStatusError,
@@ -67,6 +79,11 @@ __all__ = [
     "from_auth0",
     "from_supabase",
     "from_firebase",
+    "from_cognito",
+    "from_entra",
+    "from_keycloak",
+    "from_ory",
+    "from_ory_oauth2",
     "from_oidc",
     "construct_event",
     "verification_response",

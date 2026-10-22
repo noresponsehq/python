@@ -19,10 +19,22 @@ from typing import Any, Mapping, Optional
 
 from .models.shared.authcontext import AuthContext
 
-__all__ = ["from_workos", "from_clerk", "from_auth0", "from_oidc"]
+__all__ = [
+    "from_workos",
+    "from_clerk",
+    "from_auth0",
+    "from_supabase",
+    "from_firebase",
+    "from_cognito",
+    "from_entra",
+    "from_keycloak",
+    "from_ory",
+    "from_ory_oauth2",
+    "from_oidc",
+]
 
 _MAP = json.loads(
-    r'''{"version":1,"kinds":{"id":{"pattern":"[A-Za-z0-9._:@/|+=~-]+","maxLength":256},"audience":{"pattern":"[A-Za-z0-9._:/-]+","maxLength":256},"role":{"pattern":"[A-Za-z0-9._:@/-]+","maxLength":64},"method":{"pattern":"[A-Za-z0-9._:-]+","maxLength":32},"issuer":{"pattern":"https://[\\x21-\\x7e]+","maxLength":256},"time":{"pattern":"[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|[+-]([01][0-9]|2[0-3]):[0-5][0-9])","maxLength":64}},"slug":"[a-z0-9][a-z0-9._-]{1,31}","constants":{"verified":true,"transport":"backend"},"base":{"issuer":{"op":"id","kind":"issuer","claims":["iss"],"required":true},"subject":{"op":"id","kind":"id","claims":["sub"],"required":true},"audiences":{"op":"list","kind":"audience","claims":["aud"],"split":"whitespace","max":8},"issued_at":{"op":"time","claims":["iat"]},"expires_at":{"op":"time","claims":["exp"]},"auth_time":{"op":"time","claims":["auth_time"]},"session_id":{"op":"id","kind":"id","claims":["sid"]},"token_id":{"op":"id","kind":"id","claims":["jti"]}},"providers":{"workos":{"fields":{"organization_id":{"op":"id","kind":"id","claims":["org_id"]},"roles":{"op":"list","kind":"role","claims":["roles","role"],"split":"whitespace","max":32},"scopes":{"op":"list","kind":"role","claims":["permissions"],"split":"whitespace","max":32},"impersonated":{"op":"actor","claims":["act"]}}},"clerk":{"disable":["issued_at"],"fields":{"organization_id":{"op":"id","kind":"id","claims":["o.id","org_id"]},"roles":{"op":"list","kind":"role","claims":["o.rol","org_role"],"split":"none","max":32},"scopes":{"op":"list","kind":"role","claims":["o.per","org_permissions"],"split":"comma_whitespace","max":32},"impersonated":{"op":"actor","claims":["act"]},"mfa":{"op":"mfa_factor_age","claim":"fva","index":1,"unitSeconds":60,"maxSeconds":315360000}}},"auth0":{"fields":{"organization_id":{"op":"id","kind":"id","claims":["org_id"]},"scopes":{"op":"list","kind":"role","claims":["scope","permissions"],"split":"whitespace","max":32},"email_verified":{"op":"bool","claims":["email_verified"]},"phone_verified":{"op":"bool","claims":["phone_number_verified"]},"impersonated":{"op":"actor","claims":["act"]},"mfa":{"op":"mfa_methods","kind":"method","claim":"amr","max":8,"mfaValue":"mfa","ignore":["pwd"]}}},"supabase":{"disable":["auth_time"],"fields":{"session_id":{"op":"id","kind":"id","claims":["session_id"]},"roles":{"op":"list","kind":"role","claims":["role"],"split":"none","max":1},"mfa":{"op":"mfa_aal","claim":"aal","present":["aal2"],"absent":["aal1"],"amr":"amr","methodKey":"method","factors":{"totp":"totp","mfa/phone":"mfa:phone","mfa/webauthn":"mfa:webauthn","mfa/recovery_code":"mfa:recovery_code"}},"assurance_level":{"op":"marker","value":"low","when":[{"claim":"is_anonymous","equals":true},{"claim":"app_metadata.provider","equals":"anonymous"}]}}},"firebase":{"disable":["session_id","token_id"],"fields":{"tenant_id":{"op":"id","kind":"id","claims":["firebase.tenant"]},"mfa":{"op":"mfa_factor","kind":"method","claim":"firebase.sign_in_second_factor"},"assurance_level":{"op":"marker","value":"low","when":[{"claim":"firebase.sign_in_provider","equals":"anonymous"}]}}},"oidc":{"slugArgument":true,"fields":{}}}}'''
+    r'''{"version":1,"kinds":{"id":{"pattern":"[A-Za-z0-9._:@/|+=~-]+","maxLength":256},"audience":{"pattern":"[A-Za-z0-9._:/-]+","maxLength":256},"role":{"pattern":"[A-Za-z0-9._:@/-]+","maxLength":64},"method":{"pattern":"[A-Za-z0-9._:-]+","maxLength":32},"issuer":{"pattern":"https://[\\x21-\\x7e]+","maxLength":256},"time":{"pattern":"[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|[+-]([01][0-9]|2[0-3]):[0-5][0-9])","maxLength":64}},"slug":"[a-z0-9][a-z0-9._-]{1,31}","constants":{"verified":true,"transport":"backend"},"base":{"issuer":{"op":"id","kind":"issuer","claims":["iss"],"required":true},"subject":{"op":"id","kind":"id","claims":["sub"],"required":true},"audiences":{"op":"list","kind":"audience","claims":["aud"],"split":"whitespace","max":8},"issued_at":{"op":"time","claims":["iat"]},"expires_at":{"op":"time","claims":["exp"]},"auth_time":{"op":"time","claims":["auth_time"]},"session_id":{"op":"id","kind":"id","claims":["sid"]},"token_id":{"op":"id","kind":"id","claims":["jti"]}},"providers":{"workos":{"fields":{"organization_id":{"op":"id","kind":"id","claims":["org_id"]},"roles":{"op":"list","kind":"role","claims":["roles","role"],"split":"whitespace","max":32},"scopes":{"op":"list","kind":"role","claims":["permissions"],"split":"whitespace","max":32},"impersonated":{"op":"actor","claims":["act"]}}},"clerk":{"disable":["issued_at"],"fields":{"organization_id":{"op":"id","kind":"id","claims":["o.id","org_id"]},"roles":{"op":"list","kind":"role","claims":["o.rol","org_role"],"split":"none","max":32},"scopes":{"op":"list","kind":"role","claims":["o.per","org_permissions"],"split":"comma_whitespace","max":32},"impersonated":{"op":"actor","claims":["act"]},"mfa":{"op":"mfa_factor_age","claim":"fva","index":1,"unitSeconds":60,"maxSeconds":315360000}}},"auth0":{"fields":{"organization_id":{"op":"id","kind":"id","claims":["org_id"]},"scopes":{"op":"list","kind":"role","claims":["scope","permissions"],"split":"whitespace","max":32},"email_verified":{"op":"bool","claims":["email_verified"]},"phone_verified":{"op":"bool","claims":["phone_number_verified"]},"impersonated":{"op":"actor","claims":["act"]},"mfa":{"op":"mfa_methods","kind":"method","claim":"amr","max":8,"mfaValue":"mfa","ignore":["pwd"]}}},"supabase":{"disable":["auth_time"],"fields":{"session_id":{"op":"id","kind":"id","claims":["session_id"]},"roles":{"op":"list","kind":"role","claims":["role"],"split":"none","max":1},"mfa":{"op":"mfa_aal","claim":"aal","present":["aal2"],"absent":["aal1"],"amr":"amr","methodKey":"method","factors":{"totp":"totp","mfa/phone":"mfa:phone","mfa/webauthn":"mfa:webauthn","mfa/recovery_code":"mfa:recovery_code"}},"assurance_level":{"op":"marker","value":"low","when":[{"claim":"is_anonymous","equals":true},{"claim":"app_metadata.provider","equals":"anonymous"}]}}},"firebase":{"disable":["session_id","token_id"],"fields":{"tenant_id":{"op":"id","kind":"id","claims":["firebase.tenant"]},"mfa":{"op":"mfa_factor","kind":"method","claim":"firebase.sign_in_second_factor"},"assurance_level":{"op":"marker","value":"low","when":[{"claim":"firebase.sign_in_provider","equals":"anonymous"}]}}},"cognito":{"fields":{"audiences":{"op":"list","kind":"audience","claims":["aud","client_id"],"split":"none","max":8},"session_id":{"op":"id","kind":"id","claims":["origin_jti"]},"roles":{"op":"list","kind":"role","claims":["cognito:groups"],"split":"none","max":32},"scopes":{"op":"list","kind":"role","claims":["scope"],"split":"whitespace","max":32},"mfa":{"op":"mfa_methods","kind":"method","claim":"amr","max":8,"mfaValue":"mfa","ignore":["pwd"]}}},"entra":{"fields":{"tenant_id":{"op":"id","kind":"id","claims":["tid"]},"token_id":{"op":"id","kind":"id","claims":["uti"]},"roles":{"op":"list","kind":"role","claims":["roles"],"split":"none","max":32},"scopes":{"op":"list","kind":"role","claims":["scp"],"split":"whitespace","max":32},"mfa":{"op":"mfa_methods","kind":"method","claim":"amr","max":8,"mfaValue":"mfa","ignore":["pwd","none"]}}},"keycloak":{"fields":{"session_id":{"op":"id","kind":"id","claims":["sid","session_state"]},"organization_id":{"op":"id","kind":"id","claims":["organization"],"single":true},"roles":{"op":"list","kind":"role","claims":["realm_access.roles"],"split":"none","max":32},"scopes":{"op":"list","kind":"role","claims":["scope"],"split":"whitespace","max":32},"impersonated":{"op":"actor","claims":["impersonator.id","impersonator.username"],"onlyTrue":true},"mfa":{"op":"mfa_methods","kind":"method","claim":"amr","max":8,"mfaValue":"mfa","ignore":["pwd"],"classes":{"pwd":"knowledge","pin":"knowledge","kba":"knowledge","otp":"possession","hwk":"possession","swk":"possession","sc":"possession","sms":"possession","tel":"possession","fpt":"inherence","face":"inherence","iris":"inherence","retina":"inherence","vbm":"inherence"}}}},"ory":{"disable":["issuer","audiences","issued_at","token_id"],"fields":{"subject":{"op":"id","kind":"id","claims":["identity.id"],"required":true},"session_id":{"op":"id","kind":"id","claims":["id"]},"expires_at":{"op":"time","claims":["expires_at"]},"auth_time":{"op":"time","claims":["authenticated_at"]},"session_created_at":{"op":"time","claims":["issued_at"]},"account_created_at":{"op":"time","claims":["identity.created_at"]},"organization_id":{"op":"id","kind":"id","claims":["identity.organization_id"]},"mfa":{"op":"mfa_aal","claim":"authenticator_assurance_level","present":["aal2"],"absent":["aal1"],"amr":"authentication_methods","methodKey":"method","levelKey":"aal","factors":{"totp":"totp","lookup_secret":"lookup_secret","webauthn":"webauthn","code":"code"}}}},"ory_oauth2":{"fields":{"mfa":{"op":"mfa_methods","kind":"method","claim":"amr","max":8,"mfaValue":"mfa","ignore":["password","pwd"],"classes":{"password":"knowledge","totp":"possession","lookup_secret":"possession","webauthn":"possession","code":"possession"}}}},"oidc":{"slugArgument":true,"fields":{}}}}'''
 )
 _KINDS = {
     name: (re.compile("(?:" + kind["pattern"] + ")"), kind["maxLength"])
@@ -84,11 +96,17 @@ def _map_list(claims: Mapping[str, Any], rule: Mapping[str, Any]) -> Optional[li
     return None
 
 
+def _same_string(value: Any, allowed: list) -> bool:
+    return isinstance(value, str) and value in allowed
+
+
 def _map_rule(claims: Mapping[str, Any], rule: Mapping[str, Any]) -> Any:
     op = rule["op"]
     if op == "id":
         for path in rule["claims"]:
             value = _lookup(claims, path)
+            if rule.get("single") and isinstance(value, list) and len(value) == 1:
+                value = value[0]
             if _matches(rule["kind"], value):
                 return value
         return None
@@ -103,10 +121,14 @@ def _map_rule(claims: Mapping[str, Any], rule: Mapping[str, Any]) -> Any:
                 return value
         return None
     if op == "actor":
-        value = _lookup(claims, rule["claims"][0])
-        if isinstance(value, Mapping):
-            return any(isinstance(value.get(key), str) and len(value[key]) > 0 for key in ("sub", "email"))
-        return isinstance(value, str) and len(value) > 0
+        for path in rule["claims"]:
+            value = _lookup(claims, path)
+            if isinstance(value, Mapping):
+                if any(isinstance(value.get(key), str) and len(value[key]) > 0 for key in ("sub", "email")):
+                    return True
+            elif isinstance(value, str) and len(value) > 0:
+                return True
+        return None if rule.get("onlyTrue") else False
     if op == "mfa_factor_age":
         value = _lookup(claims, rule["claim"])
         age = value[rule["index"]] if isinstance(value, list) and len(value) > rule["index"] else None
@@ -124,7 +146,10 @@ def _map_rule(claims: Mapping[str, Any], rule: Mapping[str, Any]) -> Any:
         methods = [item for item in kept if _lower(item) not in rule["ignore"]]
         if not methods:
             return None
-        return {"present": any(_lower(item) == rule["mfaValue"] for item in kept), "methods": methods}
+        classes = rule.get("classes", {})
+        spanned = {classes[_lower(item)] for item in kept if _lower(item) in classes}
+        present = any(_lower(item) == rule["mfaValue"] for item in kept) or len(spanned) >= 2
+        return {"present": present, "methods": methods}
     if op == "mfa_aal":
         level = _lookup(claims, rule["claim"])
         if not isinstance(level, str):
@@ -136,6 +161,8 @@ def _map_rule(claims: Mapping[str, Any], rule: Mapping[str, Any]) -> Any:
         entries = _lookup(claims, rule["amr"])
         found: list = []
         for entry in entries if isinstance(entries, list) else []:
+            if "levelKey" in rule and not (isinstance(entry, dict) and _same_string(entry.get(rule["levelKey"]), rule["present"])):
+                continue
             name = entry.get(rule["methodKey"]) if isinstance(entry, dict) else entry
             mapped = rule["factors"].get(name) if isinstance(name, str) else None
             if mapped is not None and mapped not in found:
@@ -211,6 +238,34 @@ def from_supabase(claims: Mapping[str, Any], overrides: Optional[Mapping[str, An
 def from_firebase(claims: Mapping[str, Any], overrides: Optional[Mapping[str, Any]] = None) -> AuthContext:
     """Map verified Firebase ID token claims from the Admin SDK verify_id_token. Custom claims never change the mapping."""
     return _build("firebase", "firebase", claims, overrides)
+
+
+def from_cognito(claims: Mapping[str, Any], overrides: Optional[Mapping[str, Any]] = None) -> AuthContext:
+    """Map verified Amazon Cognito user pool ID or access token claims.
+
+    Claims added by a pre token generation Lambda never change the mapping.
+    """
+    return _build("cognito", "cognito", claims, overrides)
+
+
+def from_entra(claims: Mapping[str, Any], overrides: Optional[Mapping[str, Any]] = None) -> AuthContext:
+    """Map verified Microsoft Entra ID v1.0 or v2.0 ID or access token claims."""
+    return _build("entra", "entra", claims, overrides)
+
+
+def from_keycloak(claims: Mapping[str, Any], overrides: Optional[Mapping[str, Any]] = None) -> AuthContext:
+    """Map verified Keycloak ID or access token claims."""
+    return _build("keycloak", "keycloak", claims, overrides)
+
+
+def from_ory(session: Mapping[str, Any], overrides: Optional[Mapping[str, Any]] = None) -> AuthContext:
+    """Map an Ory session from toSession (Kratos FrontendApi). Pass your project URL as the `issuer` override."""
+    return _build("ory", "ory", session, overrides)
+
+
+def from_ory_oauth2(claims: Mapping[str, Any], overrides: Optional[Mapping[str, Any]] = None) -> AuthContext:
+    """Map verified Ory OAuth2 and OpenID Connect (Hydra) ID token claims."""
+    return _build("ory_oauth2", "ory", claims, overrides)
 
 
 def from_oidc(provider: str, claims: Mapping[str, Any], overrides: Optional[Mapping[str, Any]] = None) -> AuthContext:

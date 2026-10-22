@@ -1,6 +1,7 @@
 from __future__ import annotations
 from .assurancelevel import AssuranceLevel
 from .authcontextmfa import AuthContextMfa, AuthContextMfaTypedDict
+from .hookpoint import HookPoint
 from .transport import Transport
 from noresponse.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
@@ -16,7 +17,7 @@ class AuthContextTypedDict(TypedDict):
     issuer: str
     r"""The verified token issuer, normally the provider's HTTPS issuer URL."""
     subject: str
-    r"""The verified stable subject identifier (`sub`), opaque to NoResponse."""
+    r"""The verified stable subject identifier (`sub`), opaque to NoResponse. Required, except from a provider hook at pre_registration, where no user exists yet."""
     verified: bool
     r"""Whether the customer completed signature, issuer, audience and expiry validation before calling NoResponse. False contexts are accepted only as weak hints."""
     audience: NotRequired[str]
@@ -50,7 +51,9 @@ class AuthContextTypedDict(TypedDict):
     impersonated: NotRequired[bool]
     r"""Whether the verified session is acting on behalf of another subject."""
     transport: NotRequired[Transport]
-    r"""Where the customer derived this context. Backend is the trusted integration path; browser values are treated as weak hints."""
+    r"""Where this context was derived. Backend is the trusted integration path; browser values are treated as weak hints. provider_hook is a hosted provider hook (an Auth0 or WorkOS Action) calling at hook_point; it needs hook_point and verified false, and its authentication facts are not scored."""
+    hook_point: NotRequired[HookPoint]
+    r"""The provider event a provider_hook context was sent for. pre_registration runs before the user exists, so subject and the request's account_id may be absent there. Sent only with transport provider_hook."""
     mfa: NotRequired[AuthContextMfaTypedDict]
     r"""Normalized multi-factor evidence from a verified provider session."""
     roles: NotRequired[List[str]]
@@ -69,7 +72,7 @@ class AuthContext(BaseModel):
     r"""The verified token issuer, normally the provider's HTTPS issuer URL."""
 
     subject: str
-    r"""The verified stable subject identifier (`sub`), opaque to NoResponse."""
+    r"""The verified stable subject identifier (`sub`), opaque to NoResponse. Required, except from a provider hook at pre_registration, where no user exists yet."""
 
     verified: bool
     r"""Whether the customer completed signature, issuer, audience and expiry validation before calling NoResponse. False contexts are accepted only as weak hints."""
@@ -120,7 +123,10 @@ class AuthContext(BaseModel):
     r"""Whether the verified session is acting on behalf of another subject."""
 
     transport: Optional[Transport] = None
-    r"""Where the customer derived this context. Backend is the trusted integration path; browser values are treated as weak hints."""
+    r"""Where this context was derived. Backend is the trusted integration path; browser values are treated as weak hints. provider_hook is a hosted provider hook (an Auth0 or WorkOS Action) calling at hook_point; it needs hook_point and verified false, and its authentication facts are not scored."""
+
+    hook_point: Optional[HookPoint] = None
+    r"""The provider event a provider_hook context was sent for. pre_registration runs before the user exists, so subject and the request's account_id may be absent there. Sent only with transport provider_hook."""
 
     mfa: Optional[AuthContextMfa] = None
     r"""Normalized multi-factor evidence from a verified provider session."""
@@ -151,6 +157,7 @@ class AuthContext(BaseModel):
                 "assurance_level",
                 "impersonated",
                 "transport",
+                "hook_point",
                 "mfa",
                 "roles",
                 "scopes",
