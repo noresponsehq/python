@@ -1,16 +1,20 @@
 # HookPoint
 
-The provider event a provider_hook context was sent for. pre_registration runs before the user exists, so subject and the request's account_id may be absent there. Sent only with transport provider_hook.
+The provider event a provider_hook context was sent for; absent for any other transport.
 
 ## Example Usage
 
 ```python
 from noresponse.models.shared import HookPoint
+
+# Open enum: unrecognized values are captured as UnrecognizedStr
 value: HookPoint = "pre_registration"
 ```
 
 
 ## Values
+
+This is an open enum. Unrecognized values will not fail type checks.
 
 - `"pre_registration"`
 - `"post_registration"`

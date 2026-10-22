@@ -4,6 +4,10 @@ from noresponse.utils.dynamic_imports import lazy_getattr, lazy_dir
 
 if TYPE_CHECKING:
     from .assessment import Assessment, AssessmentTypedDict
+    from .assessmentauthcontext import (
+        AssessmentAuthContext,
+        AssessmentAuthContextTypedDict,
+    )
     from .assessmentlist import AssessmentList, AssessmentListTypedDict
     from .assessmentoutcome import AssessmentOutcome, AssessmentOutcomeTypedDict
     from .assessmentoutcomerequest import (
@@ -160,6 +164,8 @@ __all__ = [
     "AlternateNameUnion",
     "AlternateNameUnionTypedDict",
     "Assessment",
+    "AssessmentAuthContext",
+    "AssessmentAuthContextTypedDict",
     "AssessmentList",
     "AssessmentListTypedDict",
     "AssessmentOutcome",
@@ -324,6 +330,8 @@ __all__ = [
 _dynamic_imports: dict[str, str] = {
     "Assessment": ".assessment",
     "AssessmentTypedDict": ".assessment",
+    "AssessmentAuthContext": ".assessmentauthcontext",
+    "AssessmentAuthContextTypedDict": ".assessmentauthcontext",
     "AssessmentList": ".assessmentlist",
     "AssessmentListTypedDict": ".assessmentlist",
     "AssessmentOutcome": ".assessmentoutcome",
