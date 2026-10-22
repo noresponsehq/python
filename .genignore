@@ -4,3 +4,4 @@
 /src/noresponse/auth.py
 /src/noresponse/_public.py
 /tests/test_*.py
+/LICENSE
