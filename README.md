@@ -196,6 +196,16 @@ nr.assessments.create(
 nr.assessments.create(account_id="usr_8f2k1", identifiers={"email": email}, retries=None)  # no retries
 ```
 
+## Issued keys
+
+When your signup gate issues an API key to the new account, send only its hash, as `issued_credential.sha256`; the key itself never leaves your backend.
+
+```python
+from noresponse import hash_issued_credential
+
+sha256 = hash_issued_credential(issued_key)  # 64 lower-case hex characters
+```
+
 ## Webhooks
 
 Verify the exact bytes you received, then act on the typed event. `secrets` maps each `whk_` key id we give you to its secret; hold both during a rotation.

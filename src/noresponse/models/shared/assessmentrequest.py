@@ -7,6 +7,10 @@ from .assessmentrequestidentifiers import (
     AssessmentRequestIdentifiers,
     AssessmentRequestIdentifiersTypedDict,
 )
+from .assessmentrequestissuedcredential import (
+    AssessmentRequestIssuedCredential,
+    AssessmentRequestIssuedCredentialTypedDict,
+)
 from .assessmentrequestpolicycontext import (
     AssessmentRequestPolicyContext,
     AssessmentRequestPolicyContextTypedDict,
@@ -37,6 +41,8 @@ class AssessmentRequestTypedDict(TypedDict):
     r"""Optional context observed by your signup client. The server parses these hints into coarse features, leaves raw user_agent and opaque ids out of every answer, and weighs a mismatch with the other evidence."""
     auth_context: NotRequired[AuthContextTypedDict]
     r"""Normalised claims from a session your backend has already verified with WorkOS, Clerk, Auth0 or any OIDC provider. Pass the output of the SDK's auth adapters, not a raw token."""
+    issued_credential: NotRequired[AssessmentRequestIssuedCredentialTypedDict]
+    r"""Optional. When the signup gate issues an API key to the new account, send SHA-256 of that key, so later usage of the key, or a leaked copy, ties back to this assessment. Each SDK has a helper that computes it. Send only the hash: customer keys are high-entropy, so the hash reveals nothing about them. The assessment stores it, and no response, webhook or log carries it."""
 
 
 class AssessmentRequest(BaseModel):
@@ -65,6 +71,9 @@ class AssessmentRequest(BaseModel):
     auth_context: Optional[AuthContext] = None
     r"""Normalised claims from a session your backend has already verified with WorkOS, Clerk, Auth0 or any OIDC provider. Pass the output of the SDK's auth adapters, not a raw token."""
 
+    issued_credential: Optional[AssessmentRequestIssuedCredential] = None
+    r"""Optional. When the signup gate issues an API key to the new account, send SHA-256 of that key, so later usage of the key, or a leaked copy, ties back to this assessment. Each SDK has a helper that computes it. Send only the hash: customer keys are high-entropy, so the hash reveals nothing about them. The assessment stores it, and no response, webhook or log carries it."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -75,6 +84,7 @@ class AssessmentRequest(BaseModel):
                 "response_mode",
                 "client_context",
                 "auth_context",
+                "issued_credential",
             ]
         )
         serialized = handler(self)

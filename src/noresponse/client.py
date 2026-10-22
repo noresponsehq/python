@@ -64,6 +64,9 @@ Identifiers = Union[
 PolicyContext = Union[models.shared.AssessmentRequestPolicyContext, models.shared.AssessmentRequestPolicyContextTypedDict]
 ClientContext = Union[models.shared.AssessmentRequestClientContext, models.shared.AssessmentRequestClientContextTypedDict]
 AuthContext = Union[models.shared.AuthContext, models.shared.AuthContextTypedDict]
+IssuedCredential = Union[
+    models.shared.AssessmentRequestIssuedCredential, models.shared.AssessmentRequestIssuedCredentialTypedDict
+]
 
 
 def _translated(error: httpx.HTTPError) -> Optional[APIConnectionError]:
@@ -123,6 +126,7 @@ class Assessments(_Assessments):
         response_mode: Optional[models.shared.ResponseMode] = None,
         client_context: Optional[ClientContext] = None,
         auth_context: Optional[AuthContext] = None,
+        issued_credential: Optional[IssuedCredential] = None,
         retries: OptionalNullable[RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -135,7 +139,8 @@ class Assessments(_Assessments):
         the webhook). idempotency_key is generated when omitted and is sent
         again on every retry of this call; pass your own, derived from your
         signup attempt, so that a retry from your side replays the same
-        assessment instead of starting new work.
+        assessment instead of starting new work. issued_credential is
+        {"sha256": hash_issued_credential(key)} when your gate issued a key.
         """
         response = _sync(super().create)(
             idempotency_key=_key(idempotency_key),
@@ -147,6 +152,7 @@ class Assessments(_Assessments):
             response_mode=response_mode,
             client_context=client_context,
             auth_context=auth_context,
+            issued_credential=issued_credential,
             retries=retries,
             server_url=server_url,
             timeout_ms=timeout_ms,
@@ -166,6 +172,7 @@ class Assessments(_Assessments):
         response_mode: Optional[models.shared.ResponseMode] = None,
         client_context: Optional[ClientContext] = None,
         auth_context: Optional[AuthContext] = None,
+        issued_credential: Optional[IssuedCredential] = None,
         retries: OptionalNullable[RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -182,6 +189,7 @@ class Assessments(_Assessments):
             response_mode=response_mode,
             client_context=client_context,
             auth_context=auth_context,
+            issued_credential=issued_credential,
             retries=retries,
             server_url=server_url,
             timeout_ms=timeout_ms,

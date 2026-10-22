@@ -46,6 +46,12 @@ class Assessments(BaseSDK):
         auth_context: Optional[
             Union[models.shared.AuthContext, models.shared.AuthContextTypedDict]
         ] = None,
+        issued_credential: Optional[
+            Union[
+                models.shared.AssessmentRequestIssuedCredential,
+                models.shared.AssessmentRequestIssuedCredentialTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -53,7 +59,7 @@ class Assessments(BaseSDK):
     ) -> models.operations.CreateAssessmentResponse:
         r"""Assess identifiers for a signup or gateway decision.
 
-        Returns within the deadline (500 ms at most) with a complete, partial or pending assessment: 200 carries complete or partial, 202 carries pending with Location and Retry-After. A pending answer has no recommendation; apply your own fallback for pending, 429, 503 or a timeout. Requires the assess scope. Idempotency-Key is required and is bound to the body for 24 hours: the same key with the same body replays the latest assessment with Idempotent-Replayed: true and starts no new work; the same key with a different body answers 409 idempotency_key_reused. response_mode defaults to standard; detailed needs the detailed scope.
+        Returns within the deadline (500 ms at most) with a complete, partial or pending assessment: 200 carries complete or partial, 202 carries pending with Location and Retry-After. A pending answer has no recommendation; apply your own fallback for pending, 429, 503 or a timeout. risk.block says when your block threshold was reached. Requires the assess scope. Idempotency-Key is required and is bound to the body for 24 hours: the same key with the same body replays the latest assessment with Idempotent-Replayed: true and starts no new work; the same key with a different body answers 409 idempotency_key_reused. response_mode defaults to standard; detailed needs the detailed scope.
 
         :param idempotency_key: Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the tenant principal and bound to the canonical body for 24 hours.
         :param account_id: Your own opaque identifier for the account being checked, scoped to your tenant. Use an id you mint, with no direct identifier (email, phone, name or national id) in it. '|' is accepted so an Auth0 user id such as 'auth0|64abc' passes unchanged; '@', '+', '
@@ -78,6 +84,7 @@ class Assessments(BaseSDK):
                 response_mode=response_mode,
                 client_context=utils.get_pydantic_model(client_context, Optional[models.shared.AssessmentRequestClientContext]),
                 auth_context=utils.get_pydantic_model(auth_context, Optional[models.shared.AuthContext]),
+                issued_credential=utils.get_pydantic_model(issued_credential, Optional[models.shared.AssessmentRequestIssuedCredential]),
             ),
         )
 
@@ -195,6 +202,7 @@ class Assessments(BaseSDK):
         :param response_mode: standard returns the consolidated risk response; detailed adds merged provider-neutral facts when the key has detailed scope. There is no raw mode.
         :param client_context: Optional context observed by your signup client. The server parses these hints into coarse features, leaves raw user_agent and opaque ids out of every answer, and weighs a mismatch with the other evidence.
         :param auth_context: Normalised claims from a session your backend has already verified with WorkOS, Clerk, Auth0 or any OIDC provider. Pass the output of the SDK's auth adapters, not a raw token.
+        :param issued_credential: Optional. When the signup gate issues an API key to the new account, send SHA-256 of that key, so later usage of the key, or a leaked copy, ties back to this assessment. Each SDK has a helper that computes it. Send only the hash: customer keys are high-entropy, so the hash reveals nothing about them. The assessment stores it, and no response, webhook or log carries it.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -230,6 +238,10 @@ class Assessments(BaseSDK):
                 ),
                 auth_context=utils.get_pydantic_model(
                     auth_context, Optional[models.shared.AuthContext]
+                ),
+                issued_credential=utils.get_pydantic_model(
+                    issued_credential,
+                    Optional[models.shared.AssessmentRequestIssuedCredential],
                 ),
             ),
         )
@@ -403,6 +415,12 @@ class Assessments(BaseSDK):
         auth_context: Optional[
             Union[models.shared.AuthContext, models.shared.AuthContextTypedDict]
         ] = None,
+        issued_credential: Optional[
+            Union[
+                models.shared.AssessmentRequestIssuedCredential,
+                models.shared.AssessmentRequestIssuedCredentialTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -410,7 +428,7 @@ class Assessments(BaseSDK):
     ) -> models.operations.CreateAssessmentResponse:
         r"""Assess identifiers for a signup or gateway decision.
 
-        Returns within the deadline (500 ms at most) with a complete, partial or pending assessment: 200 carries complete or partial, 202 carries pending with Location and Retry-After. A pending answer has no recommendation; apply your own fallback for pending, 429, 503 or a timeout. Requires the assess scope. Idempotency-Key is required and is bound to the body for 24 hours: the same key with the same body replays the latest assessment with Idempotent-Replayed: true and starts no new work; the same key with a different body answers 409 idempotency_key_reused. response_mode defaults to standard; detailed needs the detailed scope.
+        Returns within the deadline (500 ms at most) with a complete, partial or pending assessment: 200 carries complete or partial, 202 carries pending with Location and Retry-After. A pending answer has no recommendation; apply your own fallback for pending, 429, 503 or a timeout. risk.block says when your block threshold was reached. Requires the assess scope. Idempotency-Key is required and is bound to the body for 24 hours: the same key with the same body replays the latest assessment with Idempotent-Replayed: true and starts no new work; the same key with a different body answers 409 idempotency_key_reused. response_mode defaults to standard; detailed needs the detailed scope.
 
         :param idempotency_key: Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the tenant principal and bound to the canonical body for 24 hours.
         :param account_id: Your own opaque identifier for the account being checked, scoped to your tenant. Use an id you mint, with no direct identifier (email, phone, name or national id) in it. '|' is accepted so an Auth0 user id such as 'auth0|64abc' passes unchanged; '@', '+', '
@@ -435,6 +453,7 @@ class Assessments(BaseSDK):
                 response_mode=response_mode,
                 client_context=utils.get_pydantic_model(client_context, Optional[models.shared.AssessmentRequestClientContext]),
                 auth_context=utils.get_pydantic_model(auth_context, Optional[models.shared.AuthContext]),
+                issued_credential=utils.get_pydantic_model(issued_credential, Optional[models.shared.AssessmentRequestIssuedCredential]),
             ),
         )
 
@@ -552,6 +571,7 @@ class Assessments(BaseSDK):
         :param response_mode: standard returns the consolidated risk response; detailed adds merged provider-neutral facts when the key has detailed scope. There is no raw mode.
         :param client_context: Optional context observed by your signup client. The server parses these hints into coarse features, leaves raw user_agent and opaque ids out of every answer, and weighs a mismatch with the other evidence.
         :param auth_context: Normalised claims from a session your backend has already verified with WorkOS, Clerk, Auth0 or any OIDC provider. Pass the output of the SDK's auth adapters, not a raw token.
+        :param issued_credential: Optional. When the signup gate issues an API key to the new account, send SHA-256 of that key, so later usage of the key, or a leaked copy, ties back to this assessment. Each SDK has a helper that computes it. Send only the hash: customer keys are high-entropy, so the hash reveals nothing about them. The assessment stores it, and no response, webhook or log carries it.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -587,6 +607,10 @@ class Assessments(BaseSDK):
                 ),
                 auth_context=utils.get_pydantic_model(
                     auth_context, Optional[models.shared.AuthContext]
+                ),
+                issued_credential=utils.get_pydantic_model(
+                    issued_credential,
+                    Optional[models.shared.AssessmentRequestIssuedCredential],
                 ),
             ),
         )

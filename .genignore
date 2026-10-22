@@ -4,6 +4,7 @@
 /LICENSE
 /src/noresponse/__init__.py
 /src/noresponse/auth.py
+/src/noresponse/issued_credential.py
 /src/noresponse/_public.py
 /src/noresponse/client.py
 /src/noresponse/errors.py

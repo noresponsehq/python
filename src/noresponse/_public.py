@@ -21,6 +21,7 @@ from .auth import (
     from_supabase,
     from_workos,
 )
+from .issued_credential import hash_issued_credential
 from .errors import (
     APIConnectionError,
     APIStatusError,
@@ -86,6 +87,7 @@ __all__ = [
     "wait_async",
     "Webhook",
     "from_workos",
+    "hash_issued_credential",
     "from_clerk",
     "from_auth0",
     "from_supabase",

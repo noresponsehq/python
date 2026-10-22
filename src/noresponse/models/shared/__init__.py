@@ -20,6 +20,10 @@ if TYPE_CHECKING:
         AssessmentRequestIdentifiers,
         AssessmentRequestIdentifiersTypedDict,
     )
+    from .assessmentrequestissuedcredential import (
+        AssessmentRequestIssuedCredential,
+        AssessmentRequestIssuedCredentialTypedDict,
+    )
     from .assessmentrequestpolicycontext import (
         AssessmentRequestPolicyContext,
         AssessmentRequestPolicyContextTypedDict,
@@ -139,6 +143,8 @@ __all__ = [
     "AssessmentRequestClientContextTypedDict",
     "AssessmentRequestIdentifiers",
     "AssessmentRequestIdentifiersTypedDict",
+    "AssessmentRequestIssuedCredential",
+    "AssessmentRequestIssuedCredentialTypedDict",
     "AssessmentRequestPolicyContext",
     "AssessmentRequestPolicyContextTypedDict",
     "AssessmentRequestTypedDict",
@@ -270,6 +276,8 @@ _dynamic_imports: dict[str, str] = {
     "AssessmentRequestClientContextTypedDict": ".assessmentrequestclientcontext",
     "AssessmentRequestIdentifiers": ".assessmentrequestidentifiers",
     "AssessmentRequestIdentifiersTypedDict": ".assessmentrequestidentifiers",
+    "AssessmentRequestIssuedCredential": ".assessmentrequestissuedcredential",
+    "AssessmentRequestIssuedCredentialTypedDict": ".assessmentrequestissuedcredential",
     "AssessmentRequestPolicyContext": ".assessmentrequestpolicycontext",
     "AssessmentRequestPolicyContextTypedDict": ".assessmentrequestpolicycontext",
     "AssessmentTiming": ".assessmenttiming",
