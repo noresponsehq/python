@@ -19,7 +19,7 @@ import functools
 import logging
 import os
 import uuid
-from typing import Any, Awaitable, Callable, Dict, Mapping, Optional, TypeVar, Union, cast
+from typing import Any, Awaitable, Callable, Dict, Iterable, Mapping, Optional, TypeVar, Union, cast
 from urllib.parse import urlsplit
 
 import httpx
@@ -29,14 +29,19 @@ from . import models
 from .assessments import Assessments as _Assessments
 from .errors import APIConnectionError, APITimeoutError
 from .httpclient import AsyncHttpClient, HttpClient
+from .integrations import Integrations as _Integrations
 from .keys import Keys as _Keys
 from .responses import (
     Assessment,
     AssessmentOutcome,
     AssessmentPage,
+    Integration,
+    IntegrationList,
     KeyRotation,
     ResponseMeta,
     as_assessment,
+    as_integration,
+    as_integration_list,
     as_outcome,
     as_rotation,
 )
@@ -47,7 +52,7 @@ from .utils.logger import Logger, NoOpLogger
 from ._wait import DEFAULT_WAIT_SECONDS, wait, wait_async
 from .webhooks import Webhook
 
-__all__ = ["DEFAULT_BASE_URL", "DEFAULT_TIMEOUT_MS", "Assessments", "Keys", "NoResponse"]
+__all__ = ["DEFAULT_BASE_URL", "DEFAULT_TIMEOUT_MS", "Assessments", "Integrations", "Keys", "NoResponse"]
 
 DEFAULT_BASE_URL = "https://api.noresponse.org"
 DEFAULT_TIMEOUT_MS = 10_000
@@ -490,6 +495,194 @@ def _rotation(response: Any) -> KeyRotation:
     return as_rotation(response.result, ResponseMeta.from_headers(response.headers))
 
 
+HookPoints = Iterable[Union[models.shared.IntegrationHookPoint, str]]
+"""pre_registration, post_login or both (the default)."""
+
+
+class Integrations(_Integrations):
+    """Hosted provider integrations: a WorkOS or Auth0 Action that NoResponse answers.
+
+    Every method needs a key with the integrations scope. create and rotate are
+    not idempotent and are never retried: a retry after a lost answer registers
+    or rotates again.
+    """
+
+    def create(  # type: ignore[override]
+        self,
+        *,
+        platform: Union[models.shared.IntegrationPlatform, str],
+        hook_points: Optional[HookPoints] = None,
+        signing_secret: Optional[str] = None,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Integration:
+        """Register a WorkOS or Auth0 integration and return its endpoint url.
+
+        For WorkOS, pass the Actions signing_secret from the WorkOS dashboard. For
+        Auth0, the answer's secret is the Action's shared secret, shown once.
+        """
+        response = _sync(super().create)(
+            platform=cast(Any, platform),
+            hook_points=cast(Any, hook_points),
+            signing_secret=signing_secret,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _integration(response)
+
+    async def create_async(  # type: ignore[override]
+        self,
+        *,
+        platform: Union[models.shared.IntegrationPlatform, str],
+        hook_points: Optional[HookPoints] = None,
+        signing_secret: Optional[str] = None,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Integration:
+        """The asyncio form of create."""
+        response = await _async(super().create_async)(
+            platform=cast(Any, platform),
+            hook_points=cast(Any, hook_points),
+            signing_secret=signing_secret,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _integration(response)
+
+    def list(  # type: ignore[override]
+        self,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> IntegrationList:
+        """Every integration, oldest first. Listings carry no secrets."""
+        response = _sync(super().list)(
+            retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        return _integration_list(response)
+
+    async def list_async(  # type: ignore[override]
+        self,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> IntegrationList:
+        """The asyncio form of list."""
+        response = await _async(super().list_async)(
+            retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        return _integration_list(response)
+
+    def delete(  # type: ignore[override]
+        self,
+        integration_id: str,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> ResponseMeta:
+        """Delete an integration; its endpoint answers 404 from then on. Returns the response metadata."""
+        response = _sync(super().delete)(
+            integration_id=integration_id,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _deleted(response)
+
+    async def delete_async(  # type: ignore[override]
+        self,
+        integration_id: str,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> ResponseMeta:
+        """The asyncio form of delete."""
+        response = await _async(super().delete_async)(
+            integration_id=integration_id,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _deleted(response)
+
+    def rotate(  # type: ignore[override]
+        self,
+        integration_id: str,
+        *,
+        signing_secret: Optional[str] = None,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Integration:
+        """Replace an integration's secret.
+
+        For Auth0 pass nothing and read the new secret, shown once. For WorkOS pass
+        the regenerated signing_secret. The replaced secret is accepted until
+        previous_secret_expires_at.
+        """
+        response = _sync(super().rotate)(
+            integration_id=integration_id,
+            signing_secret=signing_secret,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _integration(response)
+
+    async def rotate_async(  # type: ignore[override]
+        self,
+        integration_id: str,
+        *,
+        signing_secret: Optional[str] = None,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Integration:
+        """The asyncio form of rotate."""
+        response = await _async(super().rotate_async)(
+            integration_id=integration_id,
+            signing_secret=signing_secret,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _integration(response)
+
+
+def _integration(response: Any) -> Integration:
+    if not isinstance(
+        response, (models.operations.CreateIntegrationResponse, models.operations.RotateIntegrationSecretResponse)
+    ):
+        return response  # type: ignore[no-any-return]
+    return as_integration(response.result, ResponseMeta.from_headers(response.headers))
+
+
+def _integration_list(response: Any) -> IntegrationList:
+    if not isinstance(response, models.operations.ListIntegrationsResponse):
+        return response  # type: ignore[no-any-return]
+    return as_integration_list(response.result, ResponseMeta.from_headers(response.headers))
+
+
+def _deleted(response: Any) -> ResponseMeta:
+    if not isinstance(response, models.operations.DeleteIntegrationResponse):
+        return response  # type: ignore[no-any-return]
+    return ResponseMeta.from_headers(response.headers)
+
+
 class _SafeLogger:
     """Passes the debug lines the generated client writes to a logger, without the API key or any body.
 
@@ -552,9 +745,11 @@ class NoResponse(_NoResponse):
 
     assessments: Assessments  # type: ignore[assignment]
     keys: Keys  # type: ignore[assignment]
+    integrations: Integrations  # type: ignore[assignment]
     _sub_sdk_map: Dict[str, Any] = {
         "assessments": ("noresponse.client", "Assessments"),
         "keys": ("noresponse.client", "Keys"),
+        "integrations": ("noresponse.client", "Integrations"),
     }
 
     def __init__(

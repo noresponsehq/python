@@ -14,12 +14,16 @@ from pydantic import BaseModel, PrivateAttr
 
 from .models.shared.assessment import Assessment as _Assessment
 from .models.shared.assessmentoutcome import AssessmentOutcome as _AssessmentOutcome
+from .models.shared.integration import Integration as _Integration
+from .models.shared.integrationlist import IntegrationList as _IntegrationList
 from .models.shared.keyrotation import KeyRotation as _KeyRotation
 
 __all__ = [
     "Assessment",
     "AssessmentOutcome",
     "AssessmentPage",
+    "Integration",
+    "IntegrationList",
     "KeyRotation",
     "ResponseMeta",
 ]
@@ -102,6 +106,26 @@ class KeyRotation(_KeyRotation):
         return self._meta
 
 
+class Integration(_Integration):
+    """A hosted provider integration. secret is set only by create and rotate for Auth0, and shown once."""
+
+    _meta: ResponseMeta = PrivateAttr(default=_EMPTY)
+
+    @property
+    def meta(self) -> ResponseMeta:
+        return self._meta
+
+
+class IntegrationList(_IntegrationList):
+    """Every integration of the account, oldest first, with no secrets."""
+
+    _meta: ResponseMeta = PrivateAttr(default=_EMPTY)
+
+    @property
+    def meta(self) -> ResponseMeta:
+        return self._meta
+
+
 def as_assessment(source: _Assessment, meta: ResponseMeta = _EMPTY) -> Assessment:
     return _attach(Assessment, source, meta)
 
@@ -112,6 +136,14 @@ def as_outcome(source: _AssessmentOutcome, meta: ResponseMeta) -> AssessmentOutc
 
 def as_rotation(source: _KeyRotation, meta: ResponseMeta) -> KeyRotation:
     return _attach(KeyRotation, source, meta)
+
+
+def as_integration(source: _Integration, meta: ResponseMeta) -> Integration:
+    return _attach(Integration, source, meta)
+
+
+def as_integration_list(source: _IntegrationList, meta: ResponseMeta) -> IntegrationList:
+    return _attach(IntegrationList, source, meta)
 
 
 class AssessmentPage:

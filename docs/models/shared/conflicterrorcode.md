@@ -18,3 +18,4 @@ This is an open enum. Unrecognized values will not fail type checks.
 
 - `"idempotency_key_reused"`
 - `"key_rotation_in_progress"`
+- `"too_many_integrations"`

@@ -12,6 +12,8 @@ from noresponse import (
     APITimeoutError,
     Assessment,
     AssessmentPage,
+    Integration,
+    IntegrationList,
     AuthenticationError,
     BadRequestError,
     ConflictError,
@@ -37,6 +39,9 @@ COMPLETE = fixture("valid/assessment-complete.json")
 LIST = fixture("valid/assessment-list.json")
 OUTCOME = fixture("valid/assessment-outcome.json")
 ROTATION = fixture("valid/key-rotation.json")
+INTEGRATION = fixture("valid/integration-auth0.json")
+INTEGRATION_ROTATED = fixture("valid/integration-auth0-rotated.json")
+INTEGRATIONS = fixture("valid/integration-list.json")
 REQUEST = {"account_id": "usr_8f2k1", "identifiers": {"email": "jordan.lee@example.com", "name": "Jordan Lee"}}
 
 
@@ -290,6 +295,54 @@ def test_record_outcome_and_key_rotation():
     rotation = sdk.keys.rotate(overlap_seconds=3600)
     assert rotation.key == ROTATION["key"] and rotation.previous_key_expires_at == ROTATION["previous_key_expires_at"]
     assert json.loads(seen[1].content) == {"overlap_seconds": 3600}
+
+
+def test_integrations_create_list_rotate_and_delete():
+    integration_id = INTEGRATION["integration_id"]
+    deleted = httpx.Response(204, headers={"x-request-id": "c" * 32})
+    sdk, seen = make([answer(INTEGRATION, 201), answer(INTEGRATIONS), answer(INTEGRATION_ROTATED), deleted])
+    created = sdk.integrations.create(platform="auth0", hook_points=["post_login"])
+    assert isinstance(created, Integration)
+    assert created.integration_id == integration_id and created.secret == INTEGRATION["secret"]
+    assert created.meta.request_id == "a" * 32
+    assert (seen[0].method, seen[0].url.path) == ("POST", "/v1/integrations")
+    assert json.loads(seen[0].content) == {"platform": "auth0", "hook_points": ["post_login"]}
+    assert "idempotency-key" not in seen[0].headers
+    listed = sdk.integrations.list()
+    assert isinstance(listed, IntegrationList)
+    assert [item.integration_id for item in listed.items] == [item["integration_id"] for item in INTEGRATIONS["items"]]
+    assert all(item.secret is None for item in listed.items)
+    assert (seen[1].method, seen[1].url.path) == ("GET", "/v1/integrations")
+    rotated = sdk.integrations.rotate(integration_id)
+    assert rotated.secret == INTEGRATION_ROTATED["secret"]
+    assert rotated.previous_secret_expires_at == INTEGRATION_ROTATED["previous_secret_expires_at"]
+    assert (seen[2].method, seen[2].url.path) == ("POST", f"/v1/integrations/{integration_id}/rotate")
+    assert json.loads(seen[2].content) == {}
+    meta = sdk.integrations.delete(integration_id)
+    assert meta.request_id == "c" * 32
+    assert (seen[3].method, seen[3].url.path) == ("DELETE", f"/v1/integrations/{integration_id}")
+
+
+def test_integrations_create_and_rotate_are_never_retried():
+    sdk, seen = make([problem(503, "unavailable", headers={"retry-after": "1"})])
+    with pytest.raises(APIStatusError):
+        sdk.integrations.create(platform="workos", signing_secret="wos_action_secret_k3Yx8pQ2mN7vR4tW")
+    assert len(seen) == 1
+    assert json.loads(seen[0].content)["signing_secret"] == "wos_action_secret_k3Yx8pQ2mN7vR4tW"
+    with pytest.raises(APIStatusError):
+        sdk.integrations.rotate(INTEGRATION["integration_id"], signing_secret="wos_action_secret_Z9cD1eF5gH0jL4sP")
+    assert len(seen) == 2
+
+    async def scenario():
+        sdk, seen = make([answer(INTEGRATION, 201), answer(INTEGRATIONS)])
+        async with sdk:
+            created = await sdk.integrations.create_async(platform="auth0")
+            assert created.integration_id == INTEGRATION["integration_id"]
+            listed = await sdk.integrations.list_async()
+            assert len(listed.items) == len(INTEGRATIONS["items"])
+        assert [r.method for r in seen] == ["POST", "GET"]
+
+    asyncio.run(scenario())
 
 
 def test_raw_responses_are_still_available():

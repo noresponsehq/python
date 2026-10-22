@@ -7,6 +7,7 @@ ConflictErrorCode = Union[
     Literal[
         "idempotency_key_reused",
         "key_rotation_in_progress",
+        "too_many_integrations",
     ],
     UnrecognizedStr,
 ]

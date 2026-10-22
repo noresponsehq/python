@@ -60,13 +60,13 @@ nr = NoResponse(
 | `api_key` | `NORESPONSE_API_KEY` | A string, or a function that returns one. |
 | `server_url` | `NORESPONSE_BASE_URL`, then `https://api.noresponse.org` | HTTPS, except localhost. |
 | `timeout_ms` | 10 000 | Per request. Every method also takes `timeout_ms`. |
-| `retry_config` | see [Retries](#retries) | Every method except `keys.rotate` also takes `retries`. |
+| `retry_config` | see [Retries](#retries) | Every method except `keys.rotate`, `integrations.create` and `integrations.rotate` also takes `retries`. |
 | `client`, `async_client` | a new `httpx.Client` and `httpx.AsyncClient` | Your own, for a proxy, mTLS or tests. |
 | `debug_logger` | off; `NORESPONSE_LOG=debug` logs to the `noresponse` logger | One line per request and response. See [Logging](#logging). |
 
 Use the client as a context manager (`with` or `async with`) to close the HTTP clients it opened. Make one client per process and reuse it.
 
-Every method also takes `server_url`, `timeout_ms` and `http_headers` for that call, and every method except `keys.rotate` takes `retries`. Rotation is not idempotent, so it is never retried.
+Every method also takes `server_url`, `timeout_ms` and `http_headers` for that call, and every method except `keys.rotate`, `integrations.create` and `integrations.rotate` takes `retries`. They are not idempotent, so they are never retried.
 
 ## Assessments
 
@@ -133,6 +133,23 @@ rotation.previous_key_expires_at  # when the key that signed the request stops w
 ```
 
 The default overlap is 24 hours (minimum 60 seconds, maximum 7 days). Rotate with the new key next time.
+
+## Integrations
+
+A hosted integration is a WorkOS or Auth0 Action that NoResponse answers, so sign-ups and sign-ins are scored with no server of your own. These calls need a key with the `integrations` scope.
+
+```python
+integration = nr.integrations.create(platform="auth0")
+integration.url     # point the Auth0 Action at this
+integration.secret  # the Action's shared secret, shown once
+
+nr.integrations.create(platform="workos", signing_secret=os.environ["WORKOS_ACTIONS_SECRET"])
+listed = nr.integrations.list()  # listed.items, with no secrets
+rotated = nr.integrations.rotate(integration.integration_id)  # Auth0: new secret; WorkOS: pass signing_secret
+nr.integrations.delete(integration.integration_id)
+```
+
+`create` and `rotate` are not idempotent and are never retried. The replaced secret is accepted until `previous_secret_expires_at`. Each method has an `_async` twin.
 
 ## Response metadata
 

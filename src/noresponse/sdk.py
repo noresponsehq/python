@@ -14,13 +14,14 @@ import weakref
 
 if TYPE_CHECKING:
     from noresponse.assessments import Assessments
+    from noresponse.integrations import Integrations
     from noresponse.keys import Keys
 
 
 class NoResponse(BaseSDK):
     r"""NoResponse API: Server-side signup and gateway risk assessment: a recommendation, polling and signed webhooks.
 
-    Assess a signup or gateway event, poll a pending assessment, page through an account's history, record what you later learned, and rotate your API key. Every response carries X-Request-ID; every error is an RFC 9457 problem document. Keep the API key on your server.
+    Assess a signup or gateway event, poll a pending assessment, page through an account's history, record what you later learned, rotate your API key, and register hosted endpoints that answer your WorkOS or Auth0 sign-up and sign-in hooks. Every response carries X-Request-ID; every error is an RFC 9457 problem document. Keep the API key on your server.
     """
 
     @property
@@ -35,9 +36,12 @@ class NoResponse(BaseSDK):
     r"""Signup and gateway assessments."""
     keys: "Keys"
     r"""Your own API keys."""
+    integrations: "Integrations"
+    r"""Hosted endpoints that answer your sign-up and sign-in hooks."""
     _sub_sdk_map = {
         "assessments": ("noresponse.assessments", "Assessments"),
         "keys": ("noresponse.keys", "Keys"),
+        "integrations": ("noresponse.integrations", "Integrations"),
     }
 
     def __init__(
@@ -207,6 +211,10 @@ class NoResponseWithRawResponse:
     def keys(self):
         return self._sdk.keys.with_raw_response
 
+    @property
+    def integrations(self):
+        return self._sdk.integrations.with_raw_response
+
 
 class NoResponseWithStreamingResponse:
     def __init__(self, sdk: NoResponse) -> None:
@@ -219,3 +227,7 @@ class NoResponseWithStreamingResponse:
     @property
     def keys(self):
         return self._sdk.keys.with_streaming_response
+
+    @property
+    def integrations(self):
+        return self._sdk.integrations.with_streaming_response

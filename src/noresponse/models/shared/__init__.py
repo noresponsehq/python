@@ -52,6 +52,15 @@ if TYPE_CHECKING:
     from .identifierkind import IdentifierKind
     from .incompletereason import IncompleteReason
     from .incompletesource import IncompleteSource, IncompleteSourceTypedDict
+    from .integration import Integration, IntegrationTypedDict
+    from .integrationhookpoint import IntegrationHookPoint
+    from .integrationlist import IntegrationList, IntegrationListTypedDict
+    from .integrationplatform import IntegrationPlatform
+    from .integrationrequest import IntegrationRequest, IntegrationRequestTypedDict
+    from .integrationrotationrequest import (
+        IntegrationRotationRequest,
+        IntegrationRotationRequestTypedDict,
+    )
     from .ipsummary import IPSummary, IPSummaryTypedDict
     from .ipsummarytype import IPSummaryType
     from .keyrotation import KeyRotation, KeyRotationTypedDict, Scope
@@ -187,6 +196,16 @@ __all__ = [
     "IncompleteReason",
     "IncompleteSource",
     "IncompleteSourceTypedDict",
+    "Integration",
+    "IntegrationHookPoint",
+    "IntegrationList",
+    "IntegrationListTypedDict",
+    "IntegrationPlatform",
+    "IntegrationRequest",
+    "IntegrationRequestTypedDict",
+    "IntegrationRotationRequest",
+    "IntegrationRotationRequestTypedDict",
+    "IntegrationTypedDict",
     "KeyRotation",
     "KeyRotationRequest",
     "KeyRotationRequestTypedDict",
@@ -311,6 +330,16 @@ _dynamic_imports: dict[str, str] = {
     "IncompleteReason": ".incompletereason",
     "IncompleteSource": ".incompletesource",
     "IncompleteSourceTypedDict": ".incompletesource",
+    "Integration": ".integration",
+    "IntegrationTypedDict": ".integration",
+    "IntegrationHookPoint": ".integrationhookpoint",
+    "IntegrationList": ".integrationlist",
+    "IntegrationListTypedDict": ".integrationlist",
+    "IntegrationPlatform": ".integrationplatform",
+    "IntegrationRequest": ".integrationrequest",
+    "IntegrationRequestTypedDict": ".integrationrequest",
+    "IntegrationRotationRequest": ".integrationrotationrequest",
+    "IntegrationRotationRequestTypedDict": ".integrationrotationrequest",
     "IPSummary": ".ipsummary",
     "IPSummaryTypedDict": ".ipsummary",
     "IPSummaryType": ".ipsummarytype",

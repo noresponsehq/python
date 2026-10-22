@@ -7,7 +7,7 @@ client.py, which wraps the generated one.
 
 from __future__ import annotations
 
-from .client import Assessments, Keys, NoResponse
+from .client import Assessments, Integrations, Keys, NoResponse
 from .auth import (
     from_auth0,
     from_clerk,
@@ -36,7 +36,15 @@ from .errors import (
     ResponseValidationError,
 )
 from .models.shared import AuthContext, AuthContextTypedDict
-from .responses import Assessment, AssessmentOutcome, AssessmentPage, KeyRotation, ResponseMeta
+from .responses import (
+    Assessment,
+    AssessmentOutcome,
+    AssessmentPage,
+    Integration,
+    IntegrationList,
+    KeyRotation,
+    ResponseMeta,
+)
 from ._wait import DEFAULT_WAIT_SECONDS, WaitTimeoutError, wait, wait_async
 from .webhooks import (
     AssessmentExpired,
@@ -63,10 +71,13 @@ __all__ = [
     "NoResponse",
     "Assessments",
     "Keys",
+    "Integrations",
     "Assessment",
     "AssessmentOutcome",
     "AssessmentPage",
     "KeyRotation",
+    "Integration",
+    "IntegrationList",
     "ResponseMeta",
     "AuthContext",
     "AuthContextTypedDict",

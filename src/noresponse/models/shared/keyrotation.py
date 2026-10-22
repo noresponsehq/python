@@ -10,6 +10,7 @@ Scope = Union[
         "history",
         "webhooks",
         "detailed",
+        "integrations",
     ],
     UnrecognizedStr,
 ]
