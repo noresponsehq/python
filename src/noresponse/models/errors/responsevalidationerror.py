@@ -2,11 +2,11 @@ import httpx
 from typing import Optional
 from dataclasses import dataclass
 
-from noresponse.models.errors import APIError
+from noresponse.models.errors import NoResponseError
 
 
 @dataclass(unsafe_hash=True)
-class ResponseValidationError(APIError):
+class ResponseValidationError(NoResponseError):
     """Error raised when there is a type mismatch between the response data and the expected Pydantic model."""
 
     def __init__(

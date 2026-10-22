@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
 import httpx
-from noresponse.models.errors import APIError
+from noresponse.models.errors import NoResponseError
 from noresponse.models.shared import (
     notfounderrorcode as shared_notfounderrorcode,
     probleminvalidparam as shared_probleminvalidparam,
@@ -32,7 +32,7 @@ class NotFoundErrorData(BaseModel):
 
 
 @dataclass(unsafe_hash=True)
-class NotFoundError(APIError):
+class NotFoundError(NoResponseError):
     r"""HTTP 404 problem document."""
 
     data: NotFoundErrorData = field(hash=False)

@@ -17,12 +17,13 @@ from typing import Any, Iterable, List, Literal, Mapping, Optional, Tuple, Union
 
 import pydantic
 
-from .models.shared.assessment import Assessment
+from .responses import Assessment
 
 __all__ = [
     "DEFAULT_TOLERANCE_SECONDS",
     "AssessmentExpired",
     "EndpointVerification",
+    "Webhook",
     "WebhookEvent",
     "WebhookVerificationError",
     "construct_event",
@@ -234,3 +235,10 @@ def verification_response(event: WebhookEvent) -> dict[str, str]:
     if not isinstance(event.data, EndpointVerification):
         raise _fail("invalid_payload", "Not an endpoint.verification event")
     return {"challenge": event.data.challenge}
+
+
+class Webhook:
+    """The verification functions as one namespace: ``Webhook.construct_event(payload, headers, secrets)``."""
+
+    construct_event = staticmethod(construct_event)
+    verification_response = staticmethod(verification_response)

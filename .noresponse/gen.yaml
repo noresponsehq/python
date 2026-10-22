@@ -32,7 +32,7 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 python:
-  version: 2.0.6
+  version: 2.0.7
   additionalDependencies:
     dev: {}
     main: {}
@@ -43,12 +43,13 @@ python:
   asyncMode: both
   authors:
     - NoResponse
-  baseErrorName: APIError
+  baseErrorName: NoResponseError
   bodyVariantOverloads: true
   clientServerStatusCodesAsErrors: true
   constFieldCasing: normal
   defaultErrorName: APIStatusError
   description: NoResponse signup and gateway risk assessment client for Python
+  documentationUrl: https://docs.noresponse.org
   durationFormat: true
   enableCustomCodeRegions: true
   enumFormat: union
@@ -66,6 +67,7 @@ python:
   flatteningOrder: parameters-first
   forwardCompatibleEnumsByDefault: true
   forwardCompatibleUnionsByDefault: tagged-only
+  homepage: https://docs.noresponse.org
   httpClientLibrary: httpx
   imports:
     option: openapi

@@ -1,38 +1,67 @@
-"""Public entry points for the hand-written Python SDK helpers."""
+"""The public entry points of the package. Hand-written; not generated.
+
+The generated __init__ imports everything from here last, so these names replace
+the generated client of the same name: NoResponse here is the client in
+client.py, which wraps the generated one.
+"""
 
 from __future__ import annotations
 
-from .assessments import Assessments
+from .client import Assessments, Keys, NoResponse
 from .auth import from_auth0, from_clerk, from_firebase, from_oidc, from_supabase, from_workos
-from .sdk import NoResponse
-from .wait import DEFAULT_WAIT_SECONDS, WaitTimeoutError, wait, wait_async
+from .errors import (
+    APIConnectionError,
+    APIStatusError,
+    APITimeoutError,
+    AuthenticationError,
+    BadRequestError,
+    ConflictError,
+    NoResponseError,
+    NotFoundError,
+    PermissionDeniedError,
+    RateLimitError,
+    ResponseValidationError,
+)
+from .models.shared import AuthContext, AuthContextTypedDict
+from .responses import Assessment, AssessmentOutcome, AssessmentPage, KeyRotation, ResponseMeta
+from ._wait import DEFAULT_WAIT_SECONDS, WaitTimeoutError, wait, wait_async
 from .webhooks import (
     AssessmentExpired,
     EndpointVerification,
+    Webhook,
     WebhookEvent,
     WebhookVerificationError,
     construct_event,
     verification_response,
 )
 
-
-def _wait(self: Assessments, assessment_id: str, *, timeout: float = DEFAULT_WAIT_SECONDS):
-    return wait(self, assessment_id, timeout=timeout)
-
-
-async def _wait_async(self: Assessments, assessment_id: str, *, timeout: float = DEFAULT_WAIT_SECONDS):
-    return await wait_async(self, assessment_id, timeout=timeout)
-
-
-if not hasattr(Assessments, "wait"):
-    Assessments.wait = _wait  # type: ignore[attr-defined,method-assign]
-    Assessments.wait_async = _wait_async  # type: ignore[attr-defined,method-assign]
-
-
 __all__ = [
     "NoResponse",
     "Assessments",
+    "Keys",
+    "Assessment",
+    "AssessmentOutcome",
+    "AssessmentPage",
+    "KeyRotation",
+    "ResponseMeta",
+    "AuthContext",
+    "AuthContextTypedDict",
+    "NoResponseError",
+    "APIStatusError",
+    "BadRequestError",
+    "AuthenticationError",
+    "PermissionDeniedError",
+    "NotFoundError",
+    "ConflictError",
+    "RateLimitError",
+    "ResponseValidationError",
+    "APIConnectionError",
+    "APITimeoutError",
     "WaitTimeoutError",
+    "DEFAULT_WAIT_SECONDS",
+    "wait",
+    "wait_async",
+    "Webhook",
     "from_workos",
     "from_clerk",
     "from_auth0",

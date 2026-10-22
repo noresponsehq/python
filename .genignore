@@ -1,7 +1,16 @@
 # Hand-written files beside the generated client.
-/src/noresponse/webhooks.py
-/src/noresponse/wait.py
+/README.md
+/CHANGELOG.md
+/LICENSE
+/src/noresponse/__init__.py
 /src/noresponse/auth.py
 /src/noresponse/_public.py
+/src/noresponse/client.py
+/src/noresponse/errors.py
+/src/noresponse/responses.py
+/src/noresponse/_wait.py
+/src/noresponse/webhooks.py
 /tests/test_*.py
-/LICENSE
+# Generated pages that describe the raw operations, not the client in this folder.
+/docs/sdks/
+/USAGE.md

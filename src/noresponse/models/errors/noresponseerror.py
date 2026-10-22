@@ -5,7 +5,7 @@ from dataclasses import dataclass, field
 
 
 @dataclass(unsafe_hash=True)
-class APIError(Exception):
+class NoResponseError(Exception):
     """The base class for all HTTP error responses.
 
     When the body is an RFC 9457 problem document, status, type, title, detail,

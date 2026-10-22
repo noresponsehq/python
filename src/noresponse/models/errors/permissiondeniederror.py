@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
 import httpx
-from noresponse.models.errors import APIError
+from noresponse.models.errors import NoResponseError
 from noresponse.models.shared import (
     permissiondeniederrorcode as shared_permissiondeniederrorcode,
     probleminvalidparam as shared_probleminvalidparam,
@@ -32,7 +32,7 @@ class PermissionDeniedErrorData(BaseModel):
 
 
 @dataclass(unsafe_hash=True)
-class PermissionDeniedError(APIError):
+class PermissionDeniedError(NoResponseError):
     r"""HTTP 403 problem document."""
 
     data: PermissionDeniedErrorData = field(hash=False)

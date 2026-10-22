@@ -1,4 +1,4 @@
-from .apierror import APIError
+from .noresponseerror import NoResponseError
 from typing import Any, TYPE_CHECKING
 
 from noresponse.utils.dynamic_imports import lazy_getattr, lazy_dir
@@ -15,7 +15,6 @@ if TYPE_CHECKING:
     from .responsevalidationerror import ResponseValidationError
 
 __all__ = [
-    "APIError",
     "APIStatusError",
     "AuthenticationError",
     "AuthenticationErrorData",
@@ -23,6 +22,7 @@ __all__ = [
     "BadRequestErrorData",
     "ConflictError",
     "ConflictErrorData",
+    "NoResponseError",
     "NoResponseReceivedError",
     "NotFoundError",
     "NotFoundErrorData",

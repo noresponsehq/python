@@ -4,9 +4,9 @@ from pathlib import Path
 import httpx
 import pytest
 
-import noresponse.wait as wait_module
+import noresponse._wait as wait_module
 from noresponse import NoResponse
-from noresponse.wait import WaitTimeoutError, wait
+from noresponse._wait import WaitTimeoutError, wait
 
 FIXTURES = Path(__file__).parent / "fixtures"
 PENDING = json.loads((FIXTURES / "valid/assessment-pending.json").read_text())

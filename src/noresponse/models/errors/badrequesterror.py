@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
 import httpx
-from noresponse.models.errors import APIError
+from noresponse.models.errors import NoResponseError
 from noresponse.models.shared import (
     badrequesterrorcode as shared_badrequesterrorcode,
     probleminvalidparam as shared_probleminvalidparam,
@@ -32,7 +32,7 @@ class BadRequestErrorData(BaseModel):
 
 
 @dataclass(unsafe_hash=True)
-class BadRequestError(APIError):
+class BadRequestError(NoResponseError):
     r"""HTTP 400 problem document."""
 
     data: BadRequestErrorData = field(hash=False)

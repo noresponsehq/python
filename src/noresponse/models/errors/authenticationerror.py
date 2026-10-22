@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
 import httpx
-from noresponse.models.errors import APIError
+from noresponse.models.errors import NoResponseError
 from noresponse.models.shared import (
     authenticationerrorcode as shared_authenticationerrorcode,
     probleminvalidparam as shared_probleminvalidparam,
@@ -32,7 +32,7 @@ class AuthenticationErrorData(BaseModel):
 
 
 @dataclass(unsafe_hash=True)
-class AuthenticationError(APIError):
+class AuthenticationError(NoResponseError):
     r"""HTTP 401 problem document."""
 
     data: AuthenticationErrorData = field(hash=False)

@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
 import httpx
-from noresponse.models.errors import APIError
+from noresponse.models.errors import NoResponseError
 from noresponse.models.shared import (
     probleminvalidparam as shared_probleminvalidparam,
     ratelimiterrorcode as shared_ratelimiterrorcode,
@@ -32,7 +32,7 @@ class RateLimitErrorData(BaseModel):
 
 
 @dataclass(unsafe_hash=True)
-class RateLimitError(APIError):
+class RateLimitError(NoResponseError):
     r"""HTTP 429 problem document."""
 
     data: RateLimitErrorData = field(hash=False)

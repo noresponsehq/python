@@ -5,8 +5,8 @@ management:
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 2.0.6
-  configChecksum: ccbc0a9b2f2ad7c723112e50eef179d9
+  releaseVersion: 2.0.7
+  configChecksum: e08f4d214bdedac7bad2ceecc8272206
 features:
   python:
     additionalDependencies: 1.1.0
@@ -34,8 +34,6 @@ trackedFiles:
     last_write_checksum: sha1:53134de3ada576f37c22276901e1b5b6d85cd2da
   .vscode/settings.json:
     last_write_checksum: sha1:f84632c81029fcdda8c3b0c768d02b836fc80526
-  USAGE.md:
-    last_write_checksum: sha1:658117dd933c873fa78ba61f88b339c6d7101d84
   docs/models/errors/authenticationerror.md:
     last_write_checksum: sha1:4bb548f1548d9fd300bfc340fd5c71d86eb72a65
   docs/models/errors/badrequesterror.md:
@@ -228,20 +226,14 @@ trackedFiles:
     last_write_checksum: sha1:3d6d61f9b8d68b89c7c99159bffcbfe156294e67
   docs/models/utils/retryconfig.md:
     last_write_checksum: sha1:562c0f21e308ad10c27f85f75704c15592c6929d
-  docs/sdks/assessments/README.md:
-    last_write_checksum: sha1:e620208d6ce1a0121ef6213bf91e88c030210964
-  docs/sdks/keys/README.md:
-    last_write_checksum: sha1:14735790feb8d303deeade4457a78405abf52f78
   py.typed:
     last_write_checksum: sha1:8efc425ffe830805ffcc0f3055871bdcdc542c60
   pylintrc:
     last_write_checksum: sha1:b597c55ad0872655b4c18fabb14f167f647aa3ad
   pyproject.toml:
-    last_write_checksum: sha1:742109a6bc9f8c31ae9a3ce9174d0d9a11ee6edf
+    last_write_checksum: sha1:8717d14792cfd23d1301fc69a7109cbff4749c37
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
-  src/noresponse/__init__.py:
-    last_write_checksum: sha1:a22794390bc3853d32ff57c315ee72375f85f5ac
   src/noresponse/_hooks/__init__.py:
     last_write_checksum: sha1:497cab11d467ba61b39e29d7a5493ae885bd6ffd
   src/noresponse/_hooks/adapters.py:
@@ -255,7 +247,7 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:6d72e4e8d382d214c62b6d80ffcb40f379186121
+    last_write_checksum: sha1:8fd217083d3d97d118a586260afc837bce5eb9c6
   src/noresponse/assessments.py:
     last_write_checksum: sha1:1cf2ff3833226427e84c81214b99c8a27c330775
   src/noresponse/basesdk.py:
@@ -267,27 +259,27 @@ trackedFiles:
   src/noresponse/models/__init__.py:
     last_write_checksum: sha1:0f3470719cb39c11191bbad9e2444ff273c174c5
   src/noresponse/models/errors/__init__.py:
-    last_write_checksum: sha1:981916e2acc2c0082661c6b25cd150595d6667ea
-  src/noresponse/models/errors/apierror.py:
-    last_write_checksum: sha1:9c98c8758a69490fb2d0f6bd794d3ee9078f89fc
+    last_write_checksum: sha1:f2194658bbdbe9550db8af2639e83b4fddc2b928
   src/noresponse/models/errors/apistatuserror.py:
-    last_write_checksum: sha1:7f3ba05855e06244331265a7f0ef57772906dbd7
+    last_write_checksum: sha1:6f2bf44c14a19b71bc6aa0d36540a52fdf2322ac
   src/noresponse/models/errors/authenticationerror.py:
-    last_write_checksum: sha1:f7faa0d027b79d4553093ebd89242f1b72b6dff9
+    last_write_checksum: sha1:541211769887bd857ee693bf89823d889d9265f0
   src/noresponse/models/errors/badrequesterror.py:
-    last_write_checksum: sha1:a99b370c907dcee08ec8645e5e55b80466d8cf42
+    last_write_checksum: sha1:f279c14b8f5a62b913ef33b04a0a82d0dae01fb0
   src/noresponse/models/errors/conflicterror.py:
-    last_write_checksum: sha1:04869280ae34fd3d077046a5e1b5762ed3e6c90a
+    last_write_checksum: sha1:42f61f50fdd42e2cd905273457f0bbad80330706
   src/noresponse/models/errors/no_response_received_error.py:
     last_write_checksum: sha1:91af98011a4c46fa7bc8b294d9543f101744c048
+  src/noresponse/models/errors/noresponseerror.py:
+    last_write_checksum: sha1:1c13287ea731f60a1c320418916e1384052150bf
   src/noresponse/models/errors/notfounderror.py:
-    last_write_checksum: sha1:c05603ff554c30855a9e5b2a6ff561c1d21f4c0a
+    last_write_checksum: sha1:288f18e4c98a2aa884e457d728920a40553288a9
   src/noresponse/models/errors/permissiondeniederror.py:
-    last_write_checksum: sha1:7abe6febf17c7383a5d2122f3510c34a6ffcba90
+    last_write_checksum: sha1:a29b4645151e58202ec6215ef815a4d844d5c729
   src/noresponse/models/errors/ratelimiterror.py:
-    last_write_checksum: sha1:d7657e7e95b6a8791bbdcca40d032607522219ac
+    last_write_checksum: sha1:2c098f7ab5d0d8180b10ccbd731498ea436680f4
   src/noresponse/models/errors/responsevalidationerror.py:
-    last_write_checksum: sha1:e7dc34def4e6fa98d398b6802db5bfe527709870
+    last_write_checksum: sha1:75d25eced330a4b3c43729ec087ff5a41cf07577
   src/noresponse/models/operations/__init__.py:
     last_write_checksum: sha1:e7fac01556a7694b9abf8462e84e82486f13dd8a
   src/noresponse/models/operations/createassessment.py:

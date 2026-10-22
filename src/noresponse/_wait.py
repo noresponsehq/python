@@ -6,17 +6,18 @@ import asyncio
 import time
 from datetime import timezone
 from email.utils import parsedate_to_datetime
-from typing import Any, Mapping, Sequence
+from typing import Any, Mapping, Optional, Sequence
 
-from .models.shared.assessment import Assessment
+from .errors import APITimeoutError
+from .responses import Assessment
 
 __all__ = ["DEFAULT_WAIT_SECONDS", "WaitTimeoutError", "wait", "wait_async"]
 
 DEFAULT_WAIT_SECONDS = 30.0
 
 
-class WaitTimeoutError(TimeoutError):
-    """The assessment was still pending when the wait ran out.
+class WaitTimeoutError(APITimeoutError):
+    """The assessment was still pending when the wait ran out. An APITimeoutError.
 
     last is the pending assessment from the final poll. The webhook delivers
     the result when it settles.
@@ -48,7 +49,13 @@ def _resource(client: Any) -> Any:
     return getattr(client, "assessments", client)
 
 
-def wait(client: Any, assessment_id: str, *, timeout: float = DEFAULT_WAIT_SECONDS) -> Assessment:
+def wait(
+    client: Any,
+    assessment_id: str,
+    *,
+    timeout: float = DEFAULT_WAIT_SECONDS,
+    response_mode: Optional[str] = None,
+) -> Assessment:
     """Poll assessments.get until the assessment is no longer pending.
 
     Sleeps for the Retry-After the API sends between polls, at least 1 s, and
@@ -60,16 +67,22 @@ def wait(client: Any, assessment_id: str, *, timeout: float = DEFAULT_WAIT_SECON
     deadline = time.monotonic() + timeout
     while True:
         remaining_ms = max(1, int((deadline - time.monotonic()) * 1000))
-        response = resource.get(assessment_id, timeout_ms=remaining_ms)
-        if response.result.status != "pending":
-            return response.result
-        delay = _retry_after(response.headers)
+        assessment = resource.get(assessment_id, response_mode=response_mode, timeout_ms=remaining_ms)
+        if assessment.status != "pending":
+            return assessment  # type: ignore[no-any-return]
+        delay = _retry_after(assessment.meta.headers)
         if time.monotonic() + delay > deadline:
-            raise WaitTimeoutError(assessment_id, response.result)
+            raise WaitTimeoutError(assessment_id, assessment)
         time.sleep(delay)
 
 
-async def wait_async(client: Any, assessment_id: str, *, timeout: float = DEFAULT_WAIT_SECONDS) -> Assessment:
+async def wait_async(
+    client: Any,
+    assessment_id: str,
+    *,
+    timeout: float = DEFAULT_WAIT_SECONDS,
+    response_mode: Optional[str] = None,
+) -> Assessment:
     """The asyncio form of wait."""
     if timeout <= 0:
         raise ValueError("timeout must be positive")
@@ -77,10 +90,10 @@ async def wait_async(client: Any, assessment_id: str, *, timeout: float = DEFAUL
     deadline = time.monotonic() + timeout
     while True:
         remaining_ms = max(1, int((deadline - time.monotonic()) * 1000))
-        response = await resource.get_async(assessment_id, timeout_ms=remaining_ms)
-        if response.result.status != "pending":
-            return response.result
-        delay = _retry_after(response.headers)
+        assessment = await resource.get_async(assessment_id, response_mode=response_mode, timeout_ms=remaining_ms)
+        if assessment.status != "pending":
+            return assessment  # type: ignore[no-any-return]
+        delay = _retry_after(assessment.meta.headers)
         if time.monotonic() + delay > deadline:
-            raise WaitTimeoutError(assessment_id, response.result)
+            raise WaitTimeoutError(assessment_id, assessment)
         await asyncio.sleep(delay)

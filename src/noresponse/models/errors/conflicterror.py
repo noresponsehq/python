@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass, field
 import httpx
-from noresponse.models.errors import APIError
+from noresponse.models.errors import NoResponseError
 from noresponse.models.shared import (
     conflicterrorcode as shared_conflicterrorcode,
     probleminvalidparam as shared_probleminvalidparam,
@@ -32,7 +32,7 @@ class ConflictErrorData(BaseModel):
 
 
 @dataclass(unsafe_hash=True)
-class ConflictError(APIError):
+class ConflictError(NoResponseError):
     r"""HTTP 409 problem document."""
 
     data: ConflictErrorData = field(hash=False)

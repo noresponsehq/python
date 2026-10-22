@@ -27,14 +27,14 @@ def test_create_returns_the_documented_assessment():
             account_id="acct_7f3a9c",
             identifiers={"email": "new.user@example.com"},
         )
-    assert res.result.assessment_id.startswith("asm_")
-    assert res.result.account_id == "acct_7f3a9c"
+    assert res.assessment_id.startswith("asm_")
+    assert res.account_id == "acct_7f3a9c"
 
 
 def test_get_returns_the_documented_assessment():
     with client() as sdk:
         res = sdk.assessments.get("asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM")
-    assert res.result.assessment_id.startswith("asm_")
+    assert res.assessment_id.startswith("asm_")
 
 
 def test_async_create():
@@ -46,4 +46,4 @@ def test_async_create():
                 identifiers={"email": "new.user@example.com"},
             )
 
-    assert asyncio.run(create()).result.assessment_id.startswith("asm_")
+    assert asyncio.run(create()).assessment_id.startswith("asm_")
