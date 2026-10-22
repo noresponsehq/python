@@ -256,6 +256,8 @@ async def handler(request: Request) -> Response:
         return Response(status_code=400)
     if event.type == "endpoint.verification":
         return JSONResponse(Webhook.verification_response(event))
+    if event.test:  # send_test_event's fixed example assessment: apply nothing
+        return Response(status_code=204)
     if isinstance(event.data, AssessmentExpired):
         forget(event.data.assessment_id)  # GET now answers 404
     elif isinstance(event.data, Assessment) and is_newer(event.data):  # keep the highest assessment_version per assessment

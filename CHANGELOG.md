@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.16
+
+No changes detected.
+
 ## 2.0.15
 
 * `sdk.assessments.create()`:  `response.auth_context` **Added**
