@@ -227,6 +227,19 @@ async def handler(request: Request) -> Response:
 
 `construct_event(payload, headers, secrets, tolerance_seconds=300)` takes the raw body (`bytes` or the exact text) and any header mapping or list of pairs, and refuses a repeated signature header, a delivery older than 300 seconds, an unknown key id or a bad signature with a `WebhookVerificationError` whose `code` says which. Deliveries are at least once: deduplicate on `event.id`. The same functions are on `Webhook`, on `nr.webhooks` and in the `noresponse` namespace.
 
+### Late results
+
+An assessment can be revised after you allowed the signup. `handle_late_result` verifies the delivery with `construct_event`, applies your policy and acts through your auth provider's admin API:
+
+```python
+from noresponse import clerk_actions, handle_late_result  # or workos_actions, auth0_actions
+
+provider = clerk_actions(os.environ["CLERK_SECRET_KEY"])
+result = handle_late_result(raw_body, request.headers, SECRETS, provider, policy={"review": "ban"})
+```
+
+The default policy revokes sessions on `review` and does nothing otherwise. `ban` blocks the user in Clerk and Auth0; WorkOS has no block, so its ban deletes the user permanently. Pass `resolve_user_id` when the provider's user id is not your `account_id`. A refused provider call raises `ProviderActionError`; answer the webhook with a 5xx so we retry it.
+
 ## Logging
 
 Set `NORESPONSE_LOG=debug`, or pass `debug_logger`, to get one line per request and response: method, URL, status and request id. The API key, other headers and bodies are kept out of the log.
