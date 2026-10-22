@@ -5,12 +5,12 @@ from pathlib import Path
 
 import pytest
 
-from noresponse import from_auth0, from_clerk, from_oidc, from_workos
+from noresponse import from_auth0, from_clerk, from_firebase, from_oidc, from_supabase, from_workos
 from noresponse.auth import _MAP
 
 FIXTURES = Path(__file__).parent / "fixtures"
 VECTORS = json.loads((FIXTURES / "auth-context-vectors.json").read_text())["cases"]
-MAPPERS = {"workos": from_workos, "clerk": from_clerk, "auth0": from_auth0}
+MAPPERS = {"workos": from_workos, "clerk": from_clerk, "auth0": from_auth0, "supabase": from_supabase, "firebase": from_firebase}
 
 
 def run(vector):
