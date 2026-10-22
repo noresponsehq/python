@@ -297,6 +297,35 @@ def test_record_outcome_and_key_rotation():
     assert json.loads(seen[1].content) == {"overlap_seconds": 3600}
 
 
+def test_webhook_endpoints_register_list_rotate_test_and_delete_without_retrying_writes():
+    created = fixture("valid/webhook-endpoint-created.json")
+    listed = fixture("valid/webhook-endpoint-list.json")
+    rotated = fixture("valid/webhook-key-rotation.json")
+    sent = fixture("valid/webhook-test-assessment-updated.json")
+    deleted = httpx.Response(204, headers={"x-request-id": "b" * 32, "cache-control": "no-store"})
+    sdk, seen = make([answer(created, 201), answer(listed), answer(rotated, 201), answer(sent, 202), deleted, answer({}, 503, problem=True)])
+    endpoint_id = created["endpoint"]["endpoint_id"]
+    endpoint = sdk.webhook_endpoints.create(url="https://hooks.example.com/noresponse")
+    assert endpoint.signing_secret.secret == created["signing_secret"]["secret"] and endpoint.endpoint.state == "unverified"
+    assert len(sdk.webhook_endpoints.list().items[0].signing_keys) == 2
+    assert sdk.webhook_endpoints.rotate_signing_key(endpoint_id).previous_key_id == rotated["previous_key_id"]
+    assert sdk.webhook_endpoints.send_test_event(endpoint_id, event="assessment.updated").delivery_id == sent["delivery_id"]
+    assert sdk.webhook_endpoints.delete(endpoint_id) is None
+    with pytest.raises(Exception):
+        sdk.webhook_endpoints.send_test_event(endpoint_id, event="endpoint.verification")
+    assert [(r.method, r.url.path) for r in seen] == [
+        ("POST", "/v1/webhooks"),
+        ("GET", "/v1/webhooks"),
+        ("POST", f"/v1/webhooks/{endpoint_id}/rotate"),
+        ("POST", f"/v1/webhooks/{endpoint_id}/test"),
+        ("DELETE", f"/v1/webhooks/{endpoint_id}"),
+        ("POST", f"/v1/webhooks/{endpoint_id}/test"),
+    ]
+    assert json.loads(seen[0].content) == {"url": "https://hooks.example.com/noresponse"}
+    assert json.loads(seen[2].content) == {}
+    assert json.loads(seen[3].content) == {"event": "assessment.updated"}
+
+
 def test_integrations_create_list_rotate_and_delete():
     integration_id = INTEGRATION["integration_id"]
     deleted = httpx.Response(204, headers={"x-request-id": "c" * 32})

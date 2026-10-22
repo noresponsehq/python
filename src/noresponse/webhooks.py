@@ -98,6 +98,9 @@ class WebhookEvent:
     type: Literal["assessment.updated", "endpoint.verification"]
     created_at: str
     data: Union[Assessment, AssessmentExpired, EndpointVerification]
+    test: bool = False
+    """True on an event sent by webhook_endpoints.send_test_event: data is a fixed
+    example assessment, not one of yours. Acknowledge it and apply nothing."""
 
     @property
     def expired(self) -> bool:
@@ -227,7 +230,7 @@ def construct_event(
         assessment = Assessment.model_validate(data)
     except pydantic.ValidationError:
         raise _fail("invalid_payload", "Webhook data is not an assessment") from None
-    return WebhookEvent(event_id, "assessment.updated", created_at, assessment)
+    return WebhookEvent(event_id, "assessment.updated", created_at, assessment, test=body.get("test") is True)
 
 
 def verification_response(event: WebhookEvent) -> dict[str, str]:

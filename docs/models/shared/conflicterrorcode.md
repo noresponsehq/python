@@ -18,4 +18,6 @@ This is an open enum. Unrecognized values will not fail type checks.
 
 - `"idempotency_key_reused"`
 - `"key_rotation_in_progress"`
+- `"webhook_endpoint_limit_reached"`
+- `"webhook_endpoint_unverified"`
 - `"too_many_integrations"`

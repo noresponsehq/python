@@ -8,6 +8,7 @@ BadRequestErrorCode = Union[
         "invalid_request",
         "invalid_idempotency_key",
         "invalid_cursor",
+        "webhook_url_refused",
     ],
     UnrecognizedStr,
 ]

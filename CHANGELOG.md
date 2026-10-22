@@ -1,5 +1,22 @@
 # Changelog
 
+## 2.0.14
+
+* `sdk.webhook_endpoints.list()`: **Added**
+* `sdk.webhook_endpoints.create()`: **Added**
+* `sdk.webhook_endpoints.delete()`: **Added**
+* `sdk.webhook_endpoints.rotate_signing_key()`: **Added**
+* `sdk.webhook_endpoints.send_test_event()`: **Added**
+* `sdk.assessments.create()`:  `error.code` **Changed**
+* `sdk.assessments.get()`:  `error.code` **Changed**
+* `sdk.assessments.record_outcome()`:  `error.code` **Changed**
+* `sdk.assessments.query()`:  `error.code` **Changed**
+* `sdk.keys.rotate()`:  `error.code` **Changed**
+* `sdk.integrations.create()`:  `error.code` **Changed**
+* `sdk.integrations.list()`:  `error.code` **Changed**
+* `sdk.integrations.delete()`:  `error.code` **Changed**
+* `sdk.integrations.rotate()`:  `error.code` **Changed**
+
 ## 2.0.13
 
 * `sdk.integrations.create()`: **Added**

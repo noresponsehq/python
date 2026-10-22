@@ -149,3 +149,13 @@ def test_contract_invalid_fixtures_and_malformed_identifiers_are_refused():
         mutate(body)
         raw, headers = signed(body, "secret", body["id"])
         refused("invalid_payload", raw, headers, {"whk_sdktest01": "secret"}, now=NOW)
+
+
+def test_a_test_event_says_so_and_a_real_one_does_not():
+    sample = fixture("valid/webhook-assessment-updated-test.json")
+    raw, headers = signed(sample, "secret", sample["id"])
+    event = construct_event(raw, headers, {"whk_sdktest01": "secret"}, now=NOW)
+    assert event.test is True and isinstance(event.data, Assessment)
+    real = fixture("valid/webhook-assessment-updated.json")
+    raw, headers = signed(real, "secret", real["id"])
+    assert construct_event(raw, headers, {"whk_sdktest01": "secret"}, now=NOW).test is False

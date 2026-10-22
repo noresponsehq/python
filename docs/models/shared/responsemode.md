@@ -6,11 +6,15 @@ standard returns the consolidated risk response; detailed adds merged provider-n
 
 ```python
 from noresponse.models.shared import ResponseMode
+
+# Open enum: unrecognized values are captured as UnrecognizedStr
 value: ResponseMode = "standard"
 ```
 
 
 ## Values
+
+This is an open enum. Unrecognized values will not fail type checks.
 
 - `"standard"`
 - `"detailed"`

@@ -7,6 +7,8 @@ ConflictErrorCode = Union[
     Literal[
         "idempotency_key_reused",
         "key_rotation_in_progress",
+        "webhook_endpoint_limit_reached",
+        "webhook_endpoint_unverified",
         "too_many_integrations",
     ],
     UnrecognizedStr,

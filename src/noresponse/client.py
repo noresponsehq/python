@@ -31,6 +31,7 @@ from .errors import APIConnectionError, APITimeoutError
 from .httpclient import AsyncHttpClient, HttpClient
 from .integrations import Integrations as _Integrations
 from .keys import Keys as _Keys
+from .webhookendpoints import WebhookEndpoints as _WebhookEndpoints
 from .responses import (
     Assessment,
     AssessmentOutcome,
@@ -495,6 +496,150 @@ def _rotation(response: Any) -> KeyRotation:
     return as_rotation(response.result, ResponseMeta.from_headers(response.headers))
 
 
+class WebhookEndpoints(_WebhookEndpoints):
+    """Your webhook endpoints.
+
+    create and rotate_signing_key return a signing secret shown only in that
+    answer. None of create, rotate_signing_key and send_test_event is retried:
+    a retry would register, issue or send again.
+    """
+
+    def create(  # type: ignore[override]
+        self,
+        *,
+        url: str,
+        response_mode: Optional[models.shared.ResponseMode] = None,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.shared.WebhookEndpointCreated:
+        """Register an endpoint. It starts unverified: send endpoint.verification with send_test_event."""
+        response = _sync(super().create)(
+            url=url, response_mode=response_mode, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        return response.result
+
+    async def create_async(  # type: ignore[override]
+        self,
+        *,
+        url: str,
+        response_mode: Optional[models.shared.ResponseMode] = None,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.shared.WebhookEndpointCreated:
+        """The asyncio form of create."""
+        response = await _async(super().create_async)(
+            url=url, response_mode=response_mode, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        return response.result
+
+    def list(  # type: ignore[override]
+        self,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.shared.WebhookEndpointList:
+        """Every endpoint you hold, in every state, with its signing key ids."""
+        return _sync(super().list)(retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers).result
+
+    async def list_async(  # type: ignore[override]
+        self,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.shared.WebhookEndpointList:
+        """The asyncio form of list."""
+        response = await _async(super().list_async)(retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers)
+        return response.result
+
+    def delete(  # type: ignore[override]
+        self,
+        endpoint_id: str,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> None:
+        """Delete an endpoint and its keys; deliveries still queued for it are dropped."""
+        _sync(super().delete)(endpoint_id, retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers)
+
+    async def delete_async(  # type: ignore[override]
+        self,
+        endpoint_id: str,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> None:
+        """The asyncio form of delete."""
+        await _async(super().delete_async)(endpoint_id, retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers)
+
+    def rotate_signing_key(  # type: ignore[override]  # pylint: disable=arguments-differ
+        self,
+        endpoint_id: str,
+        *,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.shared.WebhookKeyRotation:
+        """Issue a new signing key. The previous one keeps verifying for 7 days."""
+        response = _sync(super().rotate_signing_key)(
+            endpoint_id, body={}, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        return response.result
+
+    async def rotate_signing_key_async(  # type: ignore[override]  # pylint: disable=arguments-differ
+        self,
+        endpoint_id: str,
+        *,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.shared.WebhookKeyRotation:
+        """The asyncio form of rotate_signing_key."""
+        response = await _async(super().rotate_signing_key_async)(
+            endpoint_id, body={}, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        return response.result
+
+    def send_test_event(  # type: ignore[override]
+        self,
+        endpoint_id: str,
+        *,
+        event: models.shared.WebhookTestRequestEvent,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.shared.WebhookTest:
+        """Send endpoint.verification now, or queue an assessment.updated test event with test true."""
+        response = _sync(super().send_test_event)(
+            endpoint_id, event=event, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        return response.result
+
+    async def send_test_event_async(  # type: ignore[override]
+        self,
+        endpoint_id: str,
+        *,
+        event: models.shared.WebhookTestRequestEvent,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.shared.WebhookTest:
+        """The asyncio form of send_test_event."""
+        response = await _async(super().send_test_event_async)(
+            endpoint_id, event=event, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        return response.result
+
+
 HookPoints = Iterable[Union[models.shared.IntegrationHookPoint, str]]
 """pre_registration, post_login or both (the default)."""
 
@@ -745,10 +890,12 @@ class NoResponse(_NoResponse):
 
     assessments: Assessments  # type: ignore[assignment]
     keys: Keys  # type: ignore[assignment]
+    webhook_endpoints: WebhookEndpoints  # type: ignore[assignment]
     integrations: Integrations  # type: ignore[assignment]
     _sub_sdk_map: Dict[str, Any] = {
         "assessments": ("noresponse.client", "Assessments"),
         "keys": ("noresponse.client", "Keys"),
+        "webhook_endpoints": ("noresponse.client", "WebhookEndpoints"),
         "integrations": ("noresponse.client", "Integrations"),
     }
 

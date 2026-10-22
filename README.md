@@ -225,7 +225,18 @@ sha256 = hash_issued_credential(issued_key)  # 64 lower-case hex characters
 
 ## Webhooks
 
-Verify the exact bytes you received, then act on the typed event. `secrets` maps each `whk_` key id we give you to its secret; hold both during a rotation.
+Register your endpoint with a key that has the `webhooks` scope. The signing secret is shown only in this answer, so store it, then send the verification challenge:
+
+```python
+created = nr.webhook_endpoints.create(url="https://app.example.com/webhooks/noresponse")
+secret_store.write(created.signing_secret.key_id, created.signing_secret.secret)
+check = nr.webhook_endpoints.send_test_event(created.endpoint.endpoint_id, event="endpoint.verification")  # check.verified
+nr.webhook_endpoints.send_test_event(created.endpoint.endpoint_id, event="assessment.updated")  # event.test is True
+```
+
+`list()`, `rotate_signing_key(endpoint_id)` (the old key verifies for 7 more days) and `delete(endpoint_id)` manage it afterwards.
+
+Verify the exact bytes you received, then act on the typed event. `secrets` maps each `whk_` key id to its secret; hold both during a rotation.
 
 ```python
 import os

@@ -13,11 +13,21 @@ if TYPE_CHECKING:
         CreateIntegrationResponse,
         CreateIntegrationResponseTypedDict,
     )
+    from .createwebhookendpoint import (
+        CreateWebhookEndpointResponse,
+        CreateWebhookEndpointResponseTypedDict,
+    )
     from .deleteintegration import (
         DeleteIntegrationRequest,
         DeleteIntegrationRequestTypedDict,
         DeleteIntegrationResponse,
         DeleteIntegrationResponseTypedDict,
+    )
+    from .deletewebhookendpoint import (
+        DeleteWebhookEndpointRequest,
+        DeleteWebhookEndpointRequestTypedDict,
+        DeleteWebhookEndpointResponse,
+        DeleteWebhookEndpointResponseTypedDict,
     )
     from .getassessment import (
         GetAssessmentRequest,
@@ -28,6 +38,10 @@ if TYPE_CHECKING:
     from .listintegrations import (
         ListIntegrationsResponse,
         ListIntegrationsResponseTypedDict,
+    )
+    from .listwebhookendpoints import (
+        ListWebhookEndpointsResponse,
+        ListWebhookEndpointsResponseTypedDict,
     )
     from .queryaccountassessments import (
         QueryAccountAssessmentsResponse,
@@ -46,6 +60,18 @@ if TYPE_CHECKING:
         RotateIntegrationSecretResponse,
         RotateIntegrationSecretResponseTypedDict,
     )
+    from .rotatewebhooksigningkey import (
+        RotateWebhookSigningKeyRequest,
+        RotateWebhookSigningKeyRequestTypedDict,
+        RotateWebhookSigningKeyResponse,
+        RotateWebhookSigningKeyResponseTypedDict,
+    )
+    from .sendwebhooktestevent import (
+        SendWebhookTestEventRequest,
+        SendWebhookTestEventRequestTypedDict,
+        SendWebhookTestEventResponse,
+        SendWebhookTestEventResponseTypedDict,
+    )
 
 __all__ = [
     "CreateAssessmentRequest",
@@ -54,16 +80,24 @@ __all__ = [
     "CreateAssessmentResponseTypedDict",
     "CreateIntegrationResponse",
     "CreateIntegrationResponseTypedDict",
+    "CreateWebhookEndpointResponse",
+    "CreateWebhookEndpointResponseTypedDict",
     "DeleteIntegrationRequest",
     "DeleteIntegrationRequestTypedDict",
     "DeleteIntegrationResponse",
     "DeleteIntegrationResponseTypedDict",
+    "DeleteWebhookEndpointRequest",
+    "DeleteWebhookEndpointRequestTypedDict",
+    "DeleteWebhookEndpointResponse",
+    "DeleteWebhookEndpointResponseTypedDict",
     "GetAssessmentRequest",
     "GetAssessmentRequestTypedDict",
     "GetAssessmentResponse",
     "GetAssessmentResponseTypedDict",
     "ListIntegrationsResponse",
     "ListIntegrationsResponseTypedDict",
+    "ListWebhookEndpointsResponse",
+    "ListWebhookEndpointsResponseTypedDict",
     "QueryAccountAssessmentsResponse",
     "QueryAccountAssessmentsResponseTypedDict",
     "RecordAssessmentOutcomeRequest",
@@ -76,6 +110,14 @@ __all__ = [
     "RotateIntegrationSecretRequestTypedDict",
     "RotateIntegrationSecretResponse",
     "RotateIntegrationSecretResponseTypedDict",
+    "RotateWebhookSigningKeyRequest",
+    "RotateWebhookSigningKeyRequestTypedDict",
+    "RotateWebhookSigningKeyResponse",
+    "RotateWebhookSigningKeyResponseTypedDict",
+    "SendWebhookTestEventRequest",
+    "SendWebhookTestEventRequestTypedDict",
+    "SendWebhookTestEventResponse",
+    "SendWebhookTestEventResponseTypedDict",
 ]
 
 _dynamic_imports: dict[str, str] = {
@@ -85,16 +127,24 @@ _dynamic_imports: dict[str, str] = {
     "CreateAssessmentResponseTypedDict": ".createassessment",
     "CreateIntegrationResponse": ".createintegration",
     "CreateIntegrationResponseTypedDict": ".createintegration",
+    "CreateWebhookEndpointResponse": ".createwebhookendpoint",
+    "CreateWebhookEndpointResponseTypedDict": ".createwebhookendpoint",
     "DeleteIntegrationRequest": ".deleteintegration",
     "DeleteIntegrationRequestTypedDict": ".deleteintegration",
     "DeleteIntegrationResponse": ".deleteintegration",
     "DeleteIntegrationResponseTypedDict": ".deleteintegration",
+    "DeleteWebhookEndpointRequest": ".deletewebhookendpoint",
+    "DeleteWebhookEndpointRequestTypedDict": ".deletewebhookendpoint",
+    "DeleteWebhookEndpointResponse": ".deletewebhookendpoint",
+    "DeleteWebhookEndpointResponseTypedDict": ".deletewebhookendpoint",
     "GetAssessmentRequest": ".getassessment",
     "GetAssessmentRequestTypedDict": ".getassessment",
     "GetAssessmentResponse": ".getassessment",
     "GetAssessmentResponseTypedDict": ".getassessment",
     "ListIntegrationsResponse": ".listintegrations",
     "ListIntegrationsResponseTypedDict": ".listintegrations",
+    "ListWebhookEndpointsResponse": ".listwebhookendpoints",
+    "ListWebhookEndpointsResponseTypedDict": ".listwebhookendpoints",
     "QueryAccountAssessmentsResponse": ".queryaccountassessments",
     "QueryAccountAssessmentsResponseTypedDict": ".queryaccountassessments",
     "RecordAssessmentOutcomeRequest": ".recordassessmentoutcome",
@@ -107,6 +157,14 @@ _dynamic_imports: dict[str, str] = {
     "RotateIntegrationSecretRequestTypedDict": ".rotateintegrationsecret",
     "RotateIntegrationSecretResponse": ".rotateintegrationsecret",
     "RotateIntegrationSecretResponseTypedDict": ".rotateintegrationsecret",
+    "RotateWebhookSigningKeyRequest": ".rotatewebhooksigningkey",
+    "RotateWebhookSigningKeyRequestTypedDict": ".rotatewebhooksigningkey",
+    "RotateWebhookSigningKeyResponse": ".rotatewebhooksigningkey",
+    "RotateWebhookSigningKeyResponseTypedDict": ".rotatewebhooksigningkey",
+    "SendWebhookTestEventRequest": ".sendwebhooktestevent",
+    "SendWebhookTestEventRequestTypedDict": ".sendwebhooktestevent",
+    "SendWebhookTestEventResponse": ".sendwebhooktestevent",
+    "SendWebhookTestEventResponseTypedDict": ".sendwebhooktestevent",
 }
 
 

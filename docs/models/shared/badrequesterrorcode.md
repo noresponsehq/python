@@ -19,3 +19,4 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"invalid_request"`
 - `"invalid_idempotency_key"`
 - `"invalid_cursor"`
+- `"webhook_url_refused"`
