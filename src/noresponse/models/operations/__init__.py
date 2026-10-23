@@ -83,6 +83,12 @@ if TYPE_CHECKING:
         RecordAssessmentOutcomeResponse,
         RecordAssessmentOutcomeResponseTypedDict,
     )
+    from .recordkeyusage import (
+        RecordKeyUsageRequest,
+        RecordKeyUsageRequestTypedDict,
+        RecordKeyUsageResponse,
+        RecordKeyUsageResponseTypedDict,
+    )
     from .replaywebhookdelivery import (
         ReplayWebhookDeliveryRequest,
         ReplayWebhookDeliveryRequestTypedDict,
@@ -160,6 +166,10 @@ __all__ = [
     "RecordAssessmentOutcomeRequestTypedDict",
     "RecordAssessmentOutcomeResponse",
     "RecordAssessmentOutcomeResponseTypedDict",
+    "RecordKeyUsageRequest",
+    "RecordKeyUsageRequestTypedDict",
+    "RecordKeyUsageResponse",
+    "RecordKeyUsageResponseTypedDict",
     "ReplayWebhookDeliveryRequest",
     "ReplayWebhookDeliveryRequestTypedDict",
     "ReplayWebhookDeliveryResponse",
@@ -231,6 +241,10 @@ _dynamic_imports: dict[str, str] = {
     "RecordAssessmentOutcomeRequestTypedDict": ".recordassessmentoutcome",
     "RecordAssessmentOutcomeResponse": ".recordassessmentoutcome",
     "RecordAssessmentOutcomeResponseTypedDict": ".recordassessmentoutcome",
+    "RecordKeyUsageRequest": ".recordkeyusage",
+    "RecordKeyUsageRequestTypedDict": ".recordkeyusage",
+    "RecordKeyUsageResponse": ".recordkeyusage",
+    "RecordKeyUsageResponseTypedDict": ".recordkeyusage",
     "ReplayWebhookDeliveryRequest": ".replaywebhookdelivery",
     "ReplayWebhookDeliveryRequestTypedDict": ".replaywebhookdelivery",
     "ReplayWebhookDeliveryResponse": ".replaywebhookdelivery",

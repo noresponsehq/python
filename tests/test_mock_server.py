@@ -53,6 +53,15 @@ def test_accounts_return_the_documented_account_and_page():
     assert removed.id.startswith("asm_") and removed.deleted is True and removed.account.id == "acct_7f3a9c"
 
 
+def test_key_usage_returns_the_documented_batch():
+    with client() as sdk:
+        batch = sdk.key_usage.record(
+            events=[{"key_sha256": "2bdbf5c72f2a36df0ef40fb92203612274d4546f56dba946070a6a79c2401a1b", "ip": "203.0.113.24",
+                     "occurred_at": "2026-10-23T09:14:07Z"}]
+        )
+    assert batch.id.startswith("kub_") and isinstance(batch.accepted, int)
+
+
 def test_async_create():
     async def create():
         async with client() as sdk:

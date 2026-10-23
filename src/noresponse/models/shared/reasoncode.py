@@ -41,6 +41,7 @@ ReasonCode = Union[
         "context_line_country_mismatch",
         "prior_abuse_link",
         "test_scenario",
+        "shared_api_key",
     ],
     UnrecognizedStr,
 ]

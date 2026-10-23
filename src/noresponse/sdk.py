@@ -17,13 +17,14 @@ if TYPE_CHECKING:
     from noresponse.assessments import Assessments
     from noresponse.integrations import Integrations
     from noresponse.keys import Keys
+    from noresponse.keyusage import KeyUsage
     from noresponse.webhookendpoints import WebhookEndpoints
 
 
 class NoResponse(BaseSDK):
     r"""NoResponse API: Server-side signup and gateway risk assessment: a recommendation, polling and signed webhooks.
 
-    Assess a signup, login or purchase and get back the account's one current risk, poll a pending assessment, page through an account's history, record what you later learned, rotate your API key, manage your webhook endpoints, and register hosted endpoints that answer your WorkOS or Auth0 sign-up and sign-in hooks. Every response carries X-Request-ID; every error is an RFC 9457 problem document. Keep the API key on your server.
+    Assess a signup, login or purchase and get back the account's one current risk, poll a pending assessment, page through an account's history, record what you later learned, report usage of the API keys you issue to your accounts, rotate your API key, manage your webhook endpoints, and register hosted endpoints that answer your WorkOS or Auth0 sign-up and sign-in hooks. Every response carries X-Request-ID; every error is an RFC 9457 problem document. Keep the API key on your server.
     """
 
     @property
@@ -38,6 +39,7 @@ class NoResponse(BaseSDK):
     r"""Signup and gateway assessments."""
     accounts: "Accounts"
     r"""Your accounts, each with one current risk, and their assessment history."""
+    key_usage: "KeyUsage"
     keys: "Keys"
     r"""Your own API keys."""
     integrations: "Integrations"
@@ -47,6 +49,7 @@ class NoResponse(BaseSDK):
     _sub_sdk_map = {
         "assessments": ("noresponse.assessments", "Assessments"),
         "accounts": ("noresponse.accounts", "Accounts"),
+        "key_usage": ("noresponse.keyusage", "KeyUsage"),
         "keys": ("noresponse.keys", "Keys"),
         "integrations": ("noresponse.integrations", "Integrations"),
         "webhook_endpoints": ("noresponse.webhookendpoints", "WebhookEndpoints"),
@@ -220,6 +223,10 @@ class NoResponseWithRawResponse:
         return self._sdk.accounts.with_raw_response
 
     @property
+    def key_usage(self):
+        return self._sdk.key_usage.with_raw_response
+
+    @property
     def keys(self):
         return self._sdk.keys.with_raw_response
 
@@ -243,6 +250,10 @@ class NoResponseWithStreamingResponse:
     @property
     def accounts(self):
         return self._sdk.accounts.with_streaming_response
+
+    @property
+    def key_usage(self):
+        return self._sdk.key_usage.with_streaming_response
 
     @property
     def keys(self):

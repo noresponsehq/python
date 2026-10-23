@@ -21,6 +21,7 @@ from .models.shared.assessmentoutcome import AssessmentOutcome as _AssessmentOut
 from .models.shared.integration import Integration as _Integration
 from .models.shared.integrationlist import IntegrationList as _IntegrationList
 from .models.shared.keyrotation import KeyRotation as _KeyRotation
+from .models.shared.keyusagebatch import KeyUsageBatch as _KeyUsageBatch
 
 __all__ = [
     "Account",
@@ -33,6 +34,7 @@ __all__ = [
     "Integration",
     "IntegrationList",
     "KeyRotation",
+    "KeyUsageBatch",
     "ResponseMeta",
 ]
 
@@ -119,6 +121,16 @@ class KeyRotation(_KeyRotation):
         return self._meta
 
 
+class KeyUsageBatch(_KeyUsageBatch):
+    """A recorded key usage batch: its id and how many events were accepted and ignored."""
+
+    _meta: ResponseMeta = PrivateAttr(default=_EMPTY)
+
+    @property
+    def meta(self) -> ResponseMeta:
+        return self._meta
+
+
 class Account(_Account):
     """An account's one current risk: the risk of its latest assessment with a decision, and a decision per flow."""
 
@@ -175,6 +187,10 @@ def as_assessment(source: _Assessment, meta: ResponseMeta = _EMPTY) -> Assessmen
 
 def as_outcome(source: _AssessmentOutcome, meta: ResponseMeta) -> AssessmentOutcome:
     return _attach(AssessmentOutcome, source, meta)
+
+
+def as_key_usage_batch(source: _KeyUsageBatch, meta: ResponseMeta) -> KeyUsageBatch:
+    return _attach(KeyUsageBatch, source, meta)
 
 
 def as_rotation(source: _KeyRotation, meta: ResponseMeta) -> KeyRotation:

@@ -90,6 +90,12 @@ if TYPE_CHECKING:
     from .ipsummarytype import IPSummaryType
     from .keyrotation import KeyRotation, KeyRotationTypedDict, Scope
     from .keyrotationrequest import KeyRotationRequest, KeyRotationRequestTypedDict
+    from .keyusagebatch import KeyUsageBatch, KeyUsageBatchTypedDict
+    from .keyusagebatchrequest import (
+        KeyUsageBatchRequest,
+        KeyUsageBatchRequestTypedDict,
+    )
+    from .keyusageevent import KeyUsageEvent, KeyUsageEventTypedDict
     from .lane import Lane
     from .linetype import LineType
     from .notfounderrorcode import NotFoundErrorCode
@@ -289,6 +295,12 @@ __all__ = [
     "KeyRotationRequest",
     "KeyRotationRequestTypedDict",
     "KeyRotationTypedDict",
+    "KeyUsageBatch",
+    "KeyUsageBatchRequest",
+    "KeyUsageBatchRequestTypedDict",
+    "KeyUsageBatchTypedDict",
+    "KeyUsageEvent",
+    "KeyUsageEventTypedDict",
     "Lane",
     "LineType",
     "Location",
@@ -480,6 +492,12 @@ _dynamic_imports: dict[str, str] = {
     "Scope": ".keyrotation",
     "KeyRotationRequest": ".keyrotationrequest",
     "KeyRotationRequestTypedDict": ".keyrotationrequest",
+    "KeyUsageBatch": ".keyusagebatch",
+    "KeyUsageBatchTypedDict": ".keyusagebatch",
+    "KeyUsageBatchRequest": ".keyusagebatchrequest",
+    "KeyUsageBatchRequestTypedDict": ".keyusagebatchrequest",
+    "KeyUsageEvent": ".keyusageevent",
+    "KeyUsageEventTypedDict": ".keyusageevent",
     "Lane": ".lane",
     "LineType": ".linetype",
     "NotFoundErrorCode": ".notfounderrorcode",

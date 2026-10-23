@@ -52,3 +52,4 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"context_line_country_mismatch"`
 - `"prior_abuse_link"`
 - `"test_scenario"`
+- `"shared_api_key"`

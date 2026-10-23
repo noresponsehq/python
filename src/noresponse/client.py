@@ -9,7 +9,8 @@ A thin layer over the generated operations that makes the common path short:
   the response headers on its meta attribute;
 * connection failures and timeouts raise APIConnectionError and APITimeoutError;
 * query and accounts.list_assessments return an AssessmentPage you can iterate
-  across pages.
+  across pages;
+* key_usage.buffer() batches key usage and sends it from a background thread.
 
 Each method has an async twin with the suffix _async.
 """
@@ -33,6 +34,8 @@ from .errors import APIConnectionError, APITimeoutError
 from .httpclient import AsyncHttpClient, HttpClient
 from .integrations import Integrations as _Integrations
 from .keys import Keys as _Keys
+from .keyusage import KeyUsage as _KeyUsage
+from .key_usage import KeyUsageBuffer
 from .webhookendpoints import WebhookEndpoints as _WebhookEndpoints
 from .responses import (
     Account,
@@ -44,6 +47,7 @@ from .responses import (
     Integration,
     IntegrationList,
     KeyRotation,
+    KeyUsageBatch,
     ResponseMeta,
     as_account,
     as_account_deletion,
@@ -51,6 +55,7 @@ from .responses import (
     as_assessment,
     as_integration,
     as_integration_list,
+    as_key_usage_batch,
     as_outcome,
     as_rotation,
 )
@@ -61,7 +66,7 @@ from .utils.logger import Logger, NoOpLogger
 from ._wait import DEFAULT_WAIT_SECONDS, wait, wait_async
 from .webhooks import Webhook
 
-__all__ = ["DEFAULT_BASE_URL", "DEFAULT_TIMEOUT_MS", "Accounts", "Assessments", "Integrations", "Keys", "NoResponse"]
+__all__ = ["DEFAULT_BASE_URL", "DEFAULT_TIMEOUT_MS", "Accounts", "Assessments", "Integrations", "KeyUsage", "Keys", "NoResponse"]
 
 DEFAULT_BASE_URL = "https://api.noresponse.org"
 DEFAULT_TIMEOUT_MS = 10_000
@@ -730,6 +735,83 @@ class Keys(_Keys):
         return _rotation(response)
 
 
+KeyUsageEvents = Union[
+    Iterable[models.shared.KeyUsageEvent],
+    Iterable[models.shared.KeyUsageEventTypedDict],
+]
+"""1 to 500 events, as dicts or models: key_sha256, ip, occurred_at and optionally user_agent, model, input_tokens,
+output_tokens and sample_rate."""
+
+
+class KeyUsage(_KeyUsage):
+    """Usage of the API keys your signup gate issued to your accounts. Needs the assess scope.
+
+    Most callers use ``buffer()``, which batches facts and sends them from a
+    background thread; ``record`` sends one batch now.
+    """
+
+    def record(  # type: ignore[override]
+        self,
+        *,
+        events: KeyUsageEvents,
+        idempotency_key: Optional[str] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> KeyUsageBatch:
+        """Send one batch of 1 to 500 events (at most 256 KiB).
+
+        idempotency_key is generated when omitted and sent on every retry of this
+        call, so a retried batch is counted once.
+        """
+        response = _sync(super().record)(
+            idempotency_key=_key(idempotency_key),
+            events=events,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _key_usage_batch(response)
+
+    async def record_async(  # type: ignore[override]
+        self,
+        *,
+        events: KeyUsageEvents,
+        idempotency_key: Optional[str] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> KeyUsageBatch:
+        """The asyncio form of record."""
+        response = await _async(super().record_async)(
+            idempotency_key=_key(idempotency_key),
+            events=events,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _key_usage_batch(response)
+
+    def buffer(self, **options: Any) -> KeyUsageBuffer:
+        """A buffer that sends recorded facts from a background thread. Keep one per process.
+
+        Options: batch_size (default 100, at most 500), flush_interval (seconds,
+        default 5), max_queue (default 10 000; the oldest fact is dropped when
+        full), sample_rate, on_error and flush_at_exit (default True).
+        """
+        return KeyUsageBuffer(self, **options)
+
+
+def _key_usage_batch(response: Any) -> KeyUsageBatch:
+    if not isinstance(response, models.operations.RecordKeyUsageResponse):
+        return response  # type: ignore[no-any-return]
+    return as_key_usage_batch(response.result, ResponseMeta.from_headers(response.headers))
+
+
 def _rotation(response: Any) -> KeyRotation:
     if not isinstance(response, models.operations.RotateAPIKeyResponse):
         return response  # type: ignore[no-any-return]
@@ -1204,12 +1286,14 @@ class NoResponse(_NoResponse):
     assessments: Assessments  # type: ignore[assignment]
     accounts: Accounts  # type: ignore[assignment]
     keys: Keys  # type: ignore[assignment]
+    key_usage: KeyUsage  # type: ignore[assignment]
     webhook_endpoints: WebhookEndpoints  # type: ignore[assignment]
     integrations: Integrations  # type: ignore[assignment]
     _sub_sdk_map: Dict[str, Any] = {
         "assessments": ("noresponse.client", "Assessments"),
         "accounts": ("noresponse.client", "Accounts"),
         "keys": ("noresponse.client", "Keys"),
+        "key_usage": ("noresponse.client", "KeyUsage"),
         "webhook_endpoints": ("noresponse.client", "WebhookEndpoints"),
         "integrations": ("noresponse.client", "Integrations"),
     }

@@ -255,6 +255,25 @@ from noresponse import hash_issued_credential
 sha256 = hash_issued_credential(issued_key)  # 64 lower-case hex characters
 ```
 
+## Key usage
+
+Report each request made with an issued key, and NoResponse ties the key's usage back to the account it was issued to. A key used from 20 or more IP addresses, or 3 or more countries, within 24 hours puts `shared_api_key` in that account's risk. Keep one buffer per process in your API gateway and record every request; it needs a key with the `assess` scope.
+
+```python
+usage = nr.key_usage.buffer()  # sends every 5 s, or once 100 facts are queued
+
+@app.middleware("http")
+async def report_usage(request, call_next):
+    usage.record(
+        key=request.headers.get("authorization", "").removeprefix("Bearer "),  # hashed here; the key is not sent
+        ip=request.client.host,
+        user_agent=request.headers.get("user-agent"),
+    )
+    return await call_next(request)
+```
+
+`record` does not block and does not raise; a background thread sends the batches, and the buffer sends what is left when the interpreter exits (`flush_at_exit=False` turns that off; call `usage.close()` yourself). Pass `key_sha256` instead of `key` when you already hold the hash, and `model`, `input_tokens`, `output_tokens` and `occurred_at` when you have them. Options: `batch_size` (default 100, at most 500), `flush_interval` (seconds, default 5), `max_queue` (default 10 000; when full, the oldest fact is dropped), `sample_rate` (record a share of requests, such as 0.1) and `on_error` (called when a batch fails after retries). `usage.stats()` returns `queued`, `sent`, `dropped`, `failed` and `invalid`. Each batch carries its own `Idempotency-Key`, sent again on every retry, so a retried batch is counted once. `nr.key_usage.record(events=[...])` (or `record_async`) sends one batch yourself.
+
 ## Webhooks
 
 Register your endpoint with a key that has the `webhooks` scope. The signing secret is shown only in this answer, so store it, then send the verification challenge:
