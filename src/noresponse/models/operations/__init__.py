@@ -51,6 +51,12 @@ if TYPE_CHECKING:
         ListIntegrationsResponse,
         ListIntegrationsResponseTypedDict,
     )
+    from .listwebhookdeliveries import (
+        ListWebhookDeliveriesRequest,
+        ListWebhookDeliveriesRequestTypedDict,
+        ListWebhookDeliveriesResponse,
+        ListWebhookDeliveriesResponseTypedDict,
+    )
     from .listwebhookendpoints import (
         ListWebhookEndpointsResponse,
         ListWebhookEndpointsResponseTypedDict,
@@ -64,6 +70,12 @@ if TYPE_CHECKING:
         RecordAssessmentOutcomeRequestTypedDict,
         RecordAssessmentOutcomeResponse,
         RecordAssessmentOutcomeResponseTypedDict,
+    )
+    from .replaywebhookdelivery import (
+        ReplayWebhookDeliveryRequest,
+        ReplayWebhookDeliveryRequestTypedDict,
+        ReplayWebhookDeliveryResponse,
+        ReplayWebhookDeliveryResponseTypedDict,
     )
     from .rotateapikey import RotateAPIKeyResponse, RotateAPIKeyResponseTypedDict
     from .rotateintegrationsecret import (
@@ -116,6 +128,10 @@ __all__ = [
     "ListAccountAssessmentsResponseTypedDict",
     "ListIntegrationsResponse",
     "ListIntegrationsResponseTypedDict",
+    "ListWebhookDeliveriesRequest",
+    "ListWebhookDeliveriesRequestTypedDict",
+    "ListWebhookDeliveriesResponse",
+    "ListWebhookDeliveriesResponseTypedDict",
     "ListWebhookEndpointsResponse",
     "ListWebhookEndpointsResponseTypedDict",
     "QueryAccountAssessmentsResponse",
@@ -124,6 +140,10 @@ __all__ = [
     "RecordAssessmentOutcomeRequestTypedDict",
     "RecordAssessmentOutcomeResponse",
     "RecordAssessmentOutcomeResponseTypedDict",
+    "ReplayWebhookDeliveryRequest",
+    "ReplayWebhookDeliveryRequestTypedDict",
+    "ReplayWebhookDeliveryResponse",
+    "ReplayWebhookDeliveryResponseTypedDict",
     "RotateAPIKeyResponse",
     "RotateAPIKeyResponseTypedDict",
     "RotateIntegrationSecretRequest",
@@ -171,6 +191,10 @@ _dynamic_imports: dict[str, str] = {
     "ListAccountAssessmentsResponseTypedDict": ".listaccountassessments",
     "ListIntegrationsResponse": ".listintegrations",
     "ListIntegrationsResponseTypedDict": ".listintegrations",
+    "ListWebhookDeliveriesRequest": ".listwebhookdeliveries",
+    "ListWebhookDeliveriesRequestTypedDict": ".listwebhookdeliveries",
+    "ListWebhookDeliveriesResponse": ".listwebhookdeliveries",
+    "ListWebhookDeliveriesResponseTypedDict": ".listwebhookdeliveries",
     "ListWebhookEndpointsResponse": ".listwebhookendpoints",
     "ListWebhookEndpointsResponseTypedDict": ".listwebhookendpoints",
     "QueryAccountAssessmentsResponse": ".queryaccountassessments",
@@ -179,6 +203,10 @@ _dynamic_imports: dict[str, str] = {
     "RecordAssessmentOutcomeRequestTypedDict": ".recordassessmentoutcome",
     "RecordAssessmentOutcomeResponse": ".recordassessmentoutcome",
     "RecordAssessmentOutcomeResponseTypedDict": ".recordassessmentoutcome",
+    "ReplayWebhookDeliveryRequest": ".replaywebhookdelivery",
+    "ReplayWebhookDeliveryRequestTypedDict": ".replaywebhookdelivery",
+    "ReplayWebhookDeliveryResponse": ".replaywebhookdelivery",
+    "ReplayWebhookDeliveryResponseTypedDict": ".replaywebhookdelivery",
     "RotateAPIKeyResponse": ".rotateapikey",
     "RotateAPIKeyResponseTypedDict": ".rotateapikey",
     "RotateIntegrationSecretRequest": ".rotateintegrationsecret",

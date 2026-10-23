@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: 40ef314b3c4721b370d8381dab5efec3
+  docChecksum: 0313440f6ed76a6269bc47bf0d2a799a
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 2.0.25
-  configChecksum: 04a70b5b394f30faab26698d8fb6e792
+  releaseVersion: 2.0.26
+  configChecksum: 240f6c33da4a7665253dc3d2c0a34247
 features:
   python:
     additionalDependencies: 1.1.0
@@ -76,6 +76,10 @@ trackedFiles:
     last_write_checksum: sha1:bcd96312d44298baff7085755ff5d21076816de1
   docs/models/operations/listintegrationsresponse.md:
     last_write_checksum: sha1:6d5ddd85a36e545ed4f5146a2edf6c00bb334a81
+  docs/models/operations/listwebhookdeliveriesrequest.md:
+    last_write_checksum: sha1:1d52d96ffbee8c35af0d56215858a15f33c111a5
+  docs/models/operations/listwebhookdeliveriesresponse.md:
+    last_write_checksum: sha1:cd5afaf6bc4a94a1a75300968a8624450e2c1003
   docs/models/operations/listwebhookendpointsresponse.md:
     last_write_checksum: sha1:20ef8bf24bd50cff595e441fddae4451f04367a3
   docs/models/operations/queryaccountassessmentsresponse.md:
@@ -84,6 +88,10 @@ trackedFiles:
     last_write_checksum: sha1:0e09e442521a1c7317c7ba2ba14f1ce13361ce31
   docs/models/operations/recordassessmentoutcomeresponse.md:
     last_write_checksum: sha1:2a52722015ff5458e23435c9fb6610d6a9fc1ec8
+  docs/models/operations/replaywebhookdeliveryrequest.md:
+    last_write_checksum: sha1:b1d9aee7511947b650a3815c1a161ed971760a68
+  docs/models/operations/replaywebhookdeliveryresponse.md:
+    last_write_checksum: sha1:c31790d3c47a91b86cee27e7d932a1007ab2e8b0
   docs/models/operations/rotateapikeyresponse.md:
     last_write_checksum: sha1:357f185196e9f14f76139f87091a23eb7fd2d461
   docs/models/operations/rotateintegrationsecretrequest.md:
@@ -172,6 +180,10 @@ trackedFiles:
     last_write_checksum: sha1:fa23b6c9fc6e2d5db9bf8991a2209112b7ceb840
   docs/models/shared/emailunion.md:
     last_write_checksum: sha1:30031ce228b45a96b6b6875d16a89c8d1c513625
+  docs/models/shared/eventtype.md:
+    last_write_checksum: sha1:c71337ba73c833741a98be9eed583e4f951981a0
+  docs/models/shared/failure.md:
+    last_write_checksum: sha1:fefe42d97d0a76b445759be6ce9aa4717c5df9ee
   docs/models/shared/failurereason.md:
     last_write_checksum: sha1:ab516119beca8acb39384f54640531f0b1218e16
   docs/models/shared/flow.md:
@@ -288,6 +300,12 @@ trackedFiles:
     last_write_checksum: sha1:d19ea35c262eddb3a53c50911cebdeceef9d3e1b
   docs/models/shared/transport.md:
     last_write_checksum: sha1:ea41299bcbe262cf1b869cfedc9d91fd41fcea30
+  docs/models/shared/webhookdeliveryattempt.md:
+    last_write_checksum: sha1:3f2521d266de0849a54c04c640d7092c7bcf3fa6
+  docs/models/shared/webhookdeliveryattemptstatus.md:
+    last_write_checksum: sha1:2ed24af1d21ab05f13421b9a5d837ffb3403a06c
+  docs/models/shared/webhookdeliverylist.md:
+    last_write_checksum: sha1:e15eeda3caa1c85492d88945029e404803113075
   docs/models/shared/webhookendpoint.md:
     last_write_checksum: sha1:32824a9a6b62e13a782cb3b49ac9c033af95eec9
   docs/models/shared/webhookendpointcreated.md:
@@ -302,6 +320,10 @@ trackedFiles:
     last_write_checksum: sha1:b1540360b660a59e4d9cbc6c4dce8bde5a072eac
   docs/models/shared/webhookkeyrotationrequest.md:
     last_write_checksum: sha1:9daf33b4d44abed8a71b970893c464fd6238b56f
+  docs/models/shared/webhookreplay.md:
+    last_write_checksum: sha1:76749fbba6f517c1dc172f31eff8c62c92032c8b
+  docs/models/shared/webhookreplayrequest.md:
+    last_write_checksum: sha1:97bbe30c0e5e3a903301bba0428af795c5a81d6d
   docs/models/shared/webhooktest.md:
     last_write_checksum: sha1:6f945ab267ba31e61539bd50414605899c53f220
   docs/models/shared/webhooktestrequest.md:
@@ -319,7 +341,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:b597c55ad0872655b4c18fabb14f167f647aa3ad
   pyproject.toml:
-    last_write_checksum: sha1:61723eff073ddbbdad06cfa0b0881f0440bbf3e0
+    last_write_checksum: sha1:6125a67428db0de05aee00697d873b76b41d2706
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -335,7 +357,7 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:347be08088f997f50f28b68f42ecfe911ea680ba
+    last_write_checksum: sha1:60cbddffc980e7f5f84e717745bf5073f7ee935f
   src/noresponse/accounts.py:
     last_write_checksum: sha1:dc6769a4a68e353a3e76eb370cbe0f8e5fdf41a5
   src/noresponse/assessments.py:
@@ -373,7 +395,7 @@ trackedFiles:
   src/noresponse/models/errors/responsevalidationerror.py:
     last_write_checksum: sha1:75d25eced330a4b3c43729ec087ff5a41cf07577
   src/noresponse/models/operations/__init__.py:
-    last_write_checksum: sha1:ccfa776462ebbf004c0ab86360f29399169fe9ee
+    last_write_checksum: sha1:e23da6ce15978f860551ab6fbeef187bdd7647fc
   src/noresponse/models/operations/createassessment.py:
     last_write_checksum: sha1:41910f288e8043a547c1164dfd75d99a187cf328
   src/noresponse/models/operations/createintegration.py:
@@ -392,12 +414,16 @@ trackedFiles:
     last_write_checksum: sha1:25ef1acb61e8a1e9249fa2a9273be0282d712edf
   src/noresponse/models/operations/listintegrations.py:
     last_write_checksum: sha1:c3a3899da39715e9cb6b10d520315a2a29abb4eb
+  src/noresponse/models/operations/listwebhookdeliveries.py:
+    last_write_checksum: sha1:caac47f47ec26a6aa0ba3c54596ff1d956e9794e
   src/noresponse/models/operations/listwebhookendpoints.py:
     last_write_checksum: sha1:6f6e94b5183e7039f56e17727cae07cf23f9d8bf
   src/noresponse/models/operations/queryaccountassessments.py:
     last_write_checksum: sha1:31ba4c1d2e4c10b809b42e733e991e19e7c27a83
   src/noresponse/models/operations/recordassessmentoutcome.py:
     last_write_checksum: sha1:2877c3d120af7e7e25880d56025a5b5754f7023d
+  src/noresponse/models/operations/replaywebhookdelivery.py:
+    last_write_checksum: sha1:c2b45b3cfeba8cd1c66901c9854df26e69131eef
   src/noresponse/models/operations/rotateapikey.py:
     last_write_checksum: sha1:10c8b806a7a0c7948cb8efedb4520e045a25ccf7
   src/noresponse/models/operations/rotateintegrationsecret.py:
@@ -407,7 +433,7 @@ trackedFiles:
   src/noresponse/models/operations/sendwebhooktestevent.py:
     last_write_checksum: sha1:845701b811fc9df26377c00424393a01ff7c836a
   src/noresponse/models/shared/__init__.py:
-    last_write_checksum: sha1:92ac0190a8666b94cc72a0a6ae5b1b0003500c82
+    last_write_checksum: sha1:521c77af453b0cf25b7c00a7b64857318cc9b870
   src/noresponse/models/shared/account.py:
     last_write_checksum: sha1:9470d39280634a29ba5f79173dd8a5e685c96bd7
   src/noresponse/models/shared/accountdecision.py:
@@ -474,6 +500,10 @@ trackedFiles:
     last_write_checksum: sha1:74ddde7d0c303c2dfc9fa240766d8d236a80cb8b
   src/noresponse/models/shared/country.py:
     last_write_checksum: sha1:93492de81afdddd31e1a7ef1d5cc36172ccdcedb
+  src/noresponse/models/shared/eventtype.py:
+    last_write_checksum: sha1:059672b87088aea7b0d62e8931dbf9233cc36a4b
+  src/noresponse/models/shared/failure.py:
+    last_write_checksum: sha1:3ea8e382523008e9675411e9e092181cdb910988
   src/noresponse/models/shared/failurereason.py:
     last_write_checksum: sha1:c8d5784e6a3254f56bee10f81e14557bdedeeb09
   src/noresponse/models/shared/flow.py:
@@ -572,6 +602,12 @@ trackedFiles:
     last_write_checksum: sha1:dd2a7b7f5a5d03812daca6a5fbde5a786baf22b1
   src/noresponse/models/shared/transport.py:
     last_write_checksum: sha1:34f89da47042749db18d2a1691909b16d0892b14
+  src/noresponse/models/shared/webhookdeliveryattempt.py:
+    last_write_checksum: sha1:d33ecf0bd12aa7ea2e746d2e5202c8ba40f70eb7
+  src/noresponse/models/shared/webhookdeliveryattemptstatus.py:
+    last_write_checksum: sha1:2278e0ffb5110a40fb649bb4aef04016307ab180
+  src/noresponse/models/shared/webhookdeliverylist.py:
+    last_write_checksum: sha1:5dcc389c566afb217b77012c5eee29e59c681cf8
   src/noresponse/models/shared/webhookendpoint.py:
     last_write_checksum: sha1:ef0b2daeae8f45b458a6fc8fc4ad7a3f128c59d9
   src/noresponse/models/shared/webhookendpointcreated.py:
@@ -586,6 +622,10 @@ trackedFiles:
     last_write_checksum: sha1:aa3c1302da3a30d37d81d20985925c454477528e
   src/noresponse/models/shared/webhookkeyrotationrequest.py:
     last_write_checksum: sha1:e1030e4ad8a09d2c9676c2fcf0dcc2c083d1b23e
+  src/noresponse/models/shared/webhookreplay.py:
+    last_write_checksum: sha1:c1df3f2ab923440f9d0ad2c4c69e7bbfc698daa4
+  src/noresponse/models/shared/webhookreplayrequest.py:
+    last_write_checksum: sha1:6cb0ec0fc217c996caa81b4fe43d8f119dbc52f4
   src/noresponse/models/shared/webhooktest.py:
     last_write_checksum: sha1:2023793dc67df44ec824fbb045f2d0a9f792e784
   src/noresponse/models/shared/webhooktestrequest.py:
@@ -643,7 +683,7 @@ trackedFiles:
   src/noresponse/utils/values.py:
     last_write_checksum: sha1:c5d5982598e3cdb758ef0e687a513d9dc2690ef0
   src/noresponse/webhookendpoints.py:
-    last_write_checksum: sha1:58f161eed408fcceaa1be5ea16f6dc5fe3c7e738
+    last_write_checksum: sha1:d108165a57245ec51f76a2aafe085deb87007c5f
 examples:
   createAssessment:
     minimal:
@@ -1115,4 +1155,47 @@ examples:
       responses:
         "202":
           application/json: {"delivery_id": "evt_01JA2ZD3K4M5N6P7Q8R9S0T1V2", "endpoint_id": "whe_01JA2ZD0E1F2G3H4J5K6M7N8P9", "event": "assessment.updated", "state": "verified"}
+  listWebhookDeliveries:
+    attempts:
+      parameters:
+        path:
+          endpoint_id: "whe_01JA2ZD0E1F2G3H4J5K6M7N8P9"
+        query:
+          limit: 20
+      responses:
+        "200":
+          application/json: {"endpoint_id": "whe_01JA2ZD0E1F2G3H4J5K6M7N8P9", "items": [{"event_id": "evt_01JA2ZD3K4M5N6P7Q8R9S0T1V2", "event_type": "assessment.updated", "attempt": 1, "replay": true, "status": "delivered", "response_code": 200, "latency_ms": 184, "attempted_at": "2026-10-22T10:15:02.118Z"}, {"event_id": "evt_01JA2ZD3K4M5N6P7Q8R9S0T1V2", "event_type": "assessment.updated", "attempt": 2, "replay": false, "status": "failed", "response_code": 500, "failure": "non_2xx", "latency_ms": 96, "attempted_at": "2026-10-22T09:00:31.402Z"}, {"event_id": "evt_01JA2ZD3K4M5N6P7Q8R9S0T1V2", "event_type": "assessment.updated", "attempt": 1, "replay": false, "status": "failed", "failure": "timeout", "latency_ms": 5000, "attempted_at": "2026-10-22T09:00:00.951Z"}], "next_cursor": "AQAAAABpG1CXAAYqJ2gK4cQAx1dJ2Hk3Q6CjhYbJ9xU8Pz0qRkL1n3VbW2c"}
+  replayWebhookDelivery:
+    empty:
+      parameters:
+        path:
+          endpoint_id: "whe_01JA2ZD0E1F2G3H4J5K6M7N8P9"
+          event_id: "evt_01JA2ZD3K4M5N6P7Q8R9S0T1V2"
+      requestBody:
+        application/json: {}
+      responses:
+        "202":
+          application/json: {"endpoint_id": "whe_01JA2ZD0E1F2G3H4J5K6M7N8P9", "event_id": "evt_01JA2ZD3K4M5N6P7Q8R9S0T1V2", "event_type": "assessment.updated"}
+        "400":
+          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 400, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "invalid_idempotency_key", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
+        "401":
+          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 401, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "unauthorized", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
+        "403":
+          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 403, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "tenant_forbidden", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
+        "404":
+          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 404, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "not_found", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
+        "409":
+          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 409, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "key_rotation_in_progress", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
+        "429":
+          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 429, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "rate_limited", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
+    replay:
+      parameters:
+        path:
+          endpoint_id: "whe_01JA2ZD0E1F2G3H4J5K6M7N8P9"
+          event_id: "evt_01JA2ZD3K4M5N6P7Q8R9S0T1V2"
+      requestBody:
+        application/json: {}
+      responses:
+        "202":
+          application/json: {"endpoint_id": "whe_01JA2ZD0E1F2G3H4J5K6M7N8P9", "event_id": "evt_01JA2ZD3K4M5N6P7Q8R9S0T1V2", "event_type": "assessment.updated"}
 examplesVersion: 1.0.2

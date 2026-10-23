@@ -392,6 +392,26 @@ def test_webhook_endpoints_register_list_rotate_test_and_delete_without_retrying
     assert json.loads(seen[3].content) == {"event": "assessment.updated"}
 
 
+def test_webhook_endpoints_list_deliveries_and_replay_one_without_retrying():
+    page = fixture("valid/webhook-delivery-list.json")
+    replayed = fixture("valid/webhook-replay.json")
+    endpoint_id, event_id = page["endpoint_id"], page["items"][0]["event_id"]
+    sdk, seen = make([answer(page), answer(replayed, 202), answer({}, 503, problem=True)])
+    listed = sdk.webhook_endpoints.list_deliveries(endpoint_id, limit=3, cursor="abc")
+    assert [item.status for item in listed.items] == ["delivered", "failed", "failed"]
+    assert listed.items[1].response_code == 500 and listed.items[2].response_code is None
+    assert listed.next_cursor == page["next_cursor"]
+    assert sdk.webhook_endpoints.replay_delivery(endpoint_id, event_id).event_id == event_id
+    with pytest.raises(Exception):
+        sdk.webhook_endpoints.replay_delivery(endpoint_id, event_id)
+    assert [(r.method, r.url.path, dict(r.url.params)) for r in seen] == [
+        ("GET", f"/v1/webhooks/{endpoint_id}/deliveries", {"limit": "3", "cursor": "abc"}),
+        ("POST", f"/v1/webhooks/{endpoint_id}/deliveries/{event_id}/replay", {}),
+        ("POST", f"/v1/webhooks/{endpoint_id}/deliveries/{event_id}/replay", {}),
+    ]
+    assert json.loads(seen[1].content) == {}
+
+
 def test_integrations_create_list_rotate_and_delete():
     integration_id = INTEGRATION["integration_id"]
     deleted = httpx.Response(204, headers={"x-request-id": "c" * 32})

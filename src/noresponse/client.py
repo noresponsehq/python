@@ -640,8 +640,8 @@ class WebhookEndpoints(_WebhookEndpoints):
     """Your webhook endpoints.
 
     create and rotate_signing_key return a signing secret shown only in that
-    answer. None of create, rotate_signing_key and send_test_event is retried:
-    a retry would register, issue or send again.
+    answer. None of create, rotate_signing_key, send_test_event and
+    replay_delivery is retried: a retry would register, issue or send again.
     """
 
     def create(  # type: ignore[override]
@@ -776,6 +776,79 @@ class WebhookEndpoints(_WebhookEndpoints):
         """The asyncio form of send_test_event."""
         response = await _async(super().send_test_event_async)(
             endpoint_id, event=event, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        return response.result
+
+    def list_deliveries(  # type: ignore[override]
+        self,
+        endpoint_id: str,
+        *,
+        limit: Optional[int] = 20,
+        cursor: Optional[str] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.shared.WebhookDeliveryList:
+        """One page of the endpoint's delivery attempts, newest first.
+
+        Pass the page's next_cursor back as cursor for the next page; it is
+        None on the last one. Attempts are kept for 30 days, or your retention
+        when that is shorter.
+        """
+        response = _sync(super().list_deliveries)(
+            endpoint_id, limit=limit, cursor=cursor, retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        if not isinstance(response, models.operations.ListWebhookDeliveriesResponse):
+            return response  # type: ignore[return-value]
+        return response.result
+
+    async def list_deliveries_async(  # type: ignore[override]
+        self,
+        endpoint_id: str,
+        *,
+        limit: Optional[int] = 20,
+        cursor: Optional[str] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.shared.WebhookDeliveryList:
+        """The asyncio form of list_deliveries."""
+        response = await _async(super().list_deliveries_async)(
+            endpoint_id, limit=limit, cursor=cursor, retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        if not isinstance(response, models.operations.ListWebhookDeliveriesResponse):
+            return response  # type: ignore[return-value]
+        return response.result
+
+    def replay_delivery(  # type: ignore[override]  # pylint: disable=arguments-differ
+        self,
+        endpoint_id: str,
+        event_id: str,
+        *,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.shared.WebhookReplay:
+        """Send one logged event again: the same id and body, a fresh timestamp and signature."""
+        response = _sync(super().replay_delivery)(
+            endpoint_id, event_id, body={}, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        return response.result
+
+    async def replay_delivery_async(  # type: ignore[override]  # pylint: disable=arguments-differ
+        self,
+        endpoint_id: str,
+        event_id: str,
+        *,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.shared.WebhookReplay:
+        """The asyncio form of replay_delivery."""
+        response = await _async(super().replay_delivery_async)(
+            endpoint_id, event_id, body={}, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
         )
         return response.result
 

@@ -57,6 +57,8 @@ if TYPE_CHECKING:
     from .consistency import Consistency, ConsistencyTypedDict
     from .consistencyvalue import ConsistencyValue
     from .country import Country
+    from .eventtype import EventType
+    from .failure import Failure
     from .failurereason import FailureReason
     from .flow import Flow
     from .freshness import Freshness
@@ -146,6 +148,12 @@ if TYPE_CHECKING:
     from .signingsecret import SigningSecret, SigningSecretTypedDict
     from .status import Status
     from .transport import Transport
+    from .webhookdeliveryattempt import (
+        WebhookDeliveryAttempt,
+        WebhookDeliveryAttemptTypedDict,
+    )
+    from .webhookdeliveryattemptstatus import WebhookDeliveryAttemptStatus
+    from .webhookdeliverylist import WebhookDeliveryList, WebhookDeliveryListTypedDict
     from .webhookendpoint import WebhookEndpoint, WebhookEndpointTypedDict
     from .webhookendpointcreated import (
         WebhookEndpointCreated,
@@ -161,6 +169,11 @@ if TYPE_CHECKING:
     from .webhookkeyrotationrequest import (
         WebhookKeyRotationRequest,
         WebhookKeyRotationRequestTypedDict,
+    )
+    from .webhookreplay import WebhookReplay, WebhookReplayTypedDict
+    from .webhookreplayrequest import (
+        WebhookReplayRequest,
+        WebhookReplayRequestTypedDict,
     )
     from .webhooktest import WebhookTest, WebhookTestTypedDict
     from .webhooktestrequest import WebhookTestRequest, WebhookTestRequestTypedDict
@@ -229,6 +242,8 @@ __all__ = [
     "EmailTypedDict",
     "EmailUnion",
     "EmailUnionTypedDict",
+    "EventType",
+    "Failure",
     "FailureReason",
     "Flow",
     "Freshness",
@@ -320,6 +335,11 @@ __all__ = [
     "TimezoneUnion",
     "TimezoneUnionTypedDict",
     "Transport",
+    "WebhookDeliveryAttempt",
+    "WebhookDeliveryAttemptStatus",
+    "WebhookDeliveryAttemptTypedDict",
+    "WebhookDeliveryList",
+    "WebhookDeliveryListTypedDict",
     "WebhookEndpoint",
     "WebhookEndpointCreated",
     "WebhookEndpointCreatedTypedDict",
@@ -333,6 +353,10 @@ __all__ = [
     "WebhookKeyRotationRequest",
     "WebhookKeyRotationRequestTypedDict",
     "WebhookKeyRotationTypedDict",
+    "WebhookReplay",
+    "WebhookReplayRequest",
+    "WebhookReplayRequestTypedDict",
+    "WebhookReplayTypedDict",
     "WebhookTest",
     "WebhookTestRequest",
     "WebhookTestRequestEvent",
@@ -399,6 +423,8 @@ _dynamic_imports: dict[str, str] = {
     "ConsistencyTypedDict": ".consistency",
     "ConsistencyValue": ".consistencyvalue",
     "Country": ".country",
+    "EventType": ".eventtype",
+    "Failure": ".failure",
     "FailureReason": ".failurereason",
     "Flow": ".flow",
     "Freshness": ".freshness",
@@ -502,6 +528,11 @@ _dynamic_imports: dict[str, str] = {
     "SigningSecretTypedDict": ".signingsecret",
     "Status": ".status",
     "Transport": ".transport",
+    "WebhookDeliveryAttempt": ".webhookdeliveryattempt",
+    "WebhookDeliveryAttemptTypedDict": ".webhookdeliveryattempt",
+    "WebhookDeliveryAttemptStatus": ".webhookdeliveryattemptstatus",
+    "WebhookDeliveryList": ".webhookdeliverylist",
+    "WebhookDeliveryListTypedDict": ".webhookdeliverylist",
     "WebhookEndpoint": ".webhookendpoint",
     "WebhookEndpointTypedDict": ".webhookendpoint",
     "WebhookEndpointCreated": ".webhookendpointcreated",
@@ -515,6 +546,10 @@ _dynamic_imports: dict[str, str] = {
     "WebhookKeyRotationTypedDict": ".webhookkeyrotation",
     "WebhookKeyRotationRequest": ".webhookkeyrotationrequest",
     "WebhookKeyRotationRequestTypedDict": ".webhookkeyrotationrequest",
+    "WebhookReplay": ".webhookreplay",
+    "WebhookReplayTypedDict": ".webhookreplay",
+    "WebhookReplayRequest": ".webhookreplayrequest",
+    "WebhookReplayRequestTypedDict": ".webhookreplayrequest",
     "WebhookTest": ".webhooktest",
     "WebhookTestTypedDict": ".webhooktest",
     "WebhookTestRequest": ".webhooktestrequest",
