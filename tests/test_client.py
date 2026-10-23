@@ -152,6 +152,15 @@ def test_create_sends_the_contract_request_and_returns_the_assessment_with_meta(
     assert "meta" not in repr(assessment)
 
 
+def test_create_with_an_apps_own_login_leaves_auth_context_out_of_the_body():
+    sdk, seen = make([answer(COMPLETE)])
+    sdk.assessments.create(**REQUEST, auth_context=None)
+    assert json.loads(seen[0].content) == {
+        "account_id": "usr_8f2k1",
+        "identifiers": {"email": "jordan.lee@example.com", "name": "Jordan Lee"},
+    }
+
+
 def test_idempotency_key_is_generated_once_and_sent_on_every_retry():
     sdk, seen = make([problem(503, "unavailable"), answer(COMPLETE, headers={"Idempotent-Replayed": "true"})])
     assessment = sdk.assessments.create(**REQUEST)

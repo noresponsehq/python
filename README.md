@@ -297,6 +297,8 @@ result = handle_late_result(raw_body, request.headers, SECRETS, provider, policy
 
 The default policy revokes sessions on `review` and does nothing otherwise. `ban` blocks the user in Clerk and Auth0; WorkOS has no block, so its ban deletes the user permanently. Pass `resolve_user_id` when the provider's user id is not your `account_id`. A test event from `send_test_event` acts on nothing. A refused provider call raises `ProviderActionError`; answer the webhook with a 5xx so we retry it. A provider 404 means the user or session is already gone and counts as done, so a repeated delivery is safe.
 
+If your app has its own login, `log_only_actions()` logs what it would revoke or ban (to the `noresponse.late_results` logger at WARNING, or pass `log`) and calls nothing. Use it to try the handler, then subclass `LateResultProvider` with a `name` and the two methods `revoke_sessions(user_id)` and `ban(user_id)`.
+
 ## Logging
 
 Set `NORESPONSE_LOG=debug`, or pass `debug_logger`, to get one line per request and response: method, URL, status and request id. The API key, other headers and bodies are kept out of the log.

@@ -16,6 +16,7 @@ from noresponse import (
     clerk_actions,
     handle_late_result,
     late_result_action,
+    log_only_actions,
     workos_actions,
 )
 from noresponse.webhooks import AssessmentExpired, EndpointVerification, WebhookEvent
@@ -360,3 +361,33 @@ def test_a_clerk_session_gone_between_list_and_revoke_is_done_and_other_refusals
     with pytest.raises(ProviderActionError) as refused:
         handle_late_result(raw, headers, SECRETS, clerk, now=NOW, policy={"review": "ban"})
     assert refused.value.status == 500
+
+
+def test_the_log_only_provider_logs_what_it_would_revoke_or_ban_and_calls_nothing(monkeypatch, caplog):
+    def refuse(*args, **kwargs):
+        raise AssertionError("the log-only provider must not call out")
+
+    monkeypatch.setattr("urllib.request.urlopen", refuse)
+    lines = []
+    log_only = log_only_actions(lines.append)
+    assert log_only.name == "log_only"
+    raw, headers = delivery(REVIEW, "usr_8f2k1")
+    revoked = handle_late_result(raw, headers, SECRETS, log_only, now=NOW)
+    assert (revoked.action, revoked.user_id) == ("revoke_sessions", "usr_8f2k1")
+    banned = handle_late_result(raw, headers, SECRETS, log_only, now=NOW, policy={"review": "ban"})
+    assert banned.action == "ban"
+    assert lines == [
+        "NoResponse late result (log only): would revoke every session of user usr_8f2k1",
+        "NoResponse late result (log only): would ban user usr_8f2k1 and end their sessions",
+    ]
+    raw, headers = delivery(REVIEW, "usr_8f2k1", test=True)
+    assert handle_late_result(raw, headers, SECRETS, log_only, now=NOW).action == "none"
+    assert len(lines) == 2
+    with pytest.raises(ValueError):
+        log_only.ban("")
+
+    with caplog.at_level("WARNING", logger="noresponse.late_results"):
+        log_only_actions().revoke_sessions("usr_8f2k1")
+    assert [(r.name, r.levelname, r.getMessage()) for r in caplog.records] == [
+        ("noresponse.late_results", "WARNING", "NoResponse late result (log only): would revoke every session of user usr_8f2k1"),
+    ]

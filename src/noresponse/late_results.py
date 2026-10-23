@@ -16,6 +16,7 @@ that is already gone counts as done, so a repeated delivery is safe.
 from __future__ import annotations
 
 import json
+import logging
 import urllib.error
 import urllib.request
 from dataclasses import dataclass
@@ -35,6 +36,7 @@ __all__ = [
     "clerk_actions",
     "handle_late_result",
     "late_result_action",
+    "log_only_actions",
     "workos_actions",
 ]
 
@@ -340,3 +342,32 @@ def auth0_actions(
     if not base:
         raise ValueError("auth0_actions needs domain or base_url")
     return _Auth0(_Caller("auth0", base, f"Bearer {token}", transport))
+
+
+class _LogOnly(LateResultProvider):
+    name = "log_only"
+
+    def __init__(self, log: Callable[[str], None]) -> None:
+        self._log = log
+
+    def revoke_sessions(self, user_id: str) -> None:
+        _segment(user_id)
+        self._log(f"NoResponse late result (log only): would revoke every session of user {user_id}")
+
+    def ban(self, user_id: str) -> None:
+        _segment(user_id)
+        self._log(f"NoResponse late result (log only): would ban user {user_id} and end their sessions")
+
+
+def log_only_actions(log: Optional[Callable[[str], None]] = None) -> LateResultProvider:
+    """A provider for an app with its own login, or for trying the handler first.
+
+    revoke_sessions and ban each log one line saying what they would do and
+    call nothing: no request leaves your process. log receives that line; by
+    default it goes to the "noresponse.late_results" logger at WARNING, so it
+    shows without any logging setup. Replace it with your own
+    LateResultProvider once you know what revoking and banning mean in your app.
+    """
+    if log is None:
+        log = logging.getLogger("noresponse.late_results").warning
+    return _LogOnly(log)
