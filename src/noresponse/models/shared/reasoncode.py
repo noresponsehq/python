@@ -40,6 +40,7 @@ ReasonCode = Union[
         "context_locale_mismatch",
         "context_line_country_mismatch",
         "prior_abuse_link",
+        "test_scenario",
     ],
     UnrecognizedStr,
 ]

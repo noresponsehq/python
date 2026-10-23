@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.23
+
+* `sdk.assessments.create()`:  `response.risk.reasons[].code.enum(test_scenario)` **Added**
+* `sdk.assessments.get()`:  `response.risk.reasons[].code.enum(test_scenario)` **Added**
+* `sdk.assessments.query()`:  `response.items[].risk.reasons[].code.enum(test_scenario)` **Added**
+* `sdk.accounts.get()`:  `response.risk.reasons[].code.enum(test_scenario)` **Added**
+* `sdk.accounts.list_assessments()`:  `response.items[].risk.reasons[].code.enum(test_scenario)` **Added**
+
 ## 2.0.22
 
 No changes detected.
