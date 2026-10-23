@@ -9,6 +9,7 @@ if TYPE_CHECKING:
         AccountDecisionsByFlow,
         AccountDecisionsByFlowTypedDict,
     )
+    from .accountdeletion import AccountDeletion, AccountDeletionTypedDict
     from .accountrisk import AccountRisk, AccountRiskTypedDict
     from .accountriskreason import AccountRiskReason, AccountRiskReasonTypedDict
     from .assessment import Assessment, AssessmentTypedDict
@@ -186,6 +187,8 @@ __all__ = [
     "AccountDecision",
     "AccountDecisionsByFlow",
     "AccountDecisionsByFlowTypedDict",
+    "AccountDeletion",
+    "AccountDeletionTypedDict",
     "AccountRisk",
     "AccountRiskReason",
     "AccountRiskReasonTypedDict",
@@ -378,6 +381,8 @@ _dynamic_imports: dict[str, str] = {
     "AccountDecision": ".accountdecision",
     "AccountDecisionsByFlow": ".accountdecisionsbyflow",
     "AccountDecisionsByFlowTypedDict": ".accountdecisionsbyflow",
+    "AccountDeletion": ".accountdeletion",
+    "AccountDeletionTypedDict": ".accountdeletion",
     "AccountRisk": ".accountrisk",
     "AccountRiskTypedDict": ".accountrisk",
     "AccountRiskReason": ".accountriskreason",

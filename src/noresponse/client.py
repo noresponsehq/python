@@ -36,6 +36,7 @@ from .keys import Keys as _Keys
 from .webhookendpoints import WebhookEndpoints as _WebhookEndpoints
 from .responses import (
     Account,
+    AccountDeletion,
     Assessment,
     AssessmentOutcome,
     AssessmentPage,
@@ -44,6 +45,7 @@ from .responses import (
     KeyRotation,
     ResponseMeta,
     as_account,
+    as_account_deletion,
     as_assessment,
     as_integration,
     as_integration_list,
@@ -471,7 +473,7 @@ class Accounts(_Accounts):
 
     An account is the account_id you send with your assessments. It holds one
     current risk, the risk of its latest assessment with a decision, and its
-    assessments are its history. Both methods need the history scope.
+    assessments are its history. Every method needs the history scope.
     """
 
     def get(  # type: ignore[override]
@@ -507,6 +509,40 @@ class Accounts(_Accounts):
             account_id, retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
         )
         return _account(response)
+
+    def delete(  # type: ignore[override]
+        self,
+        account_id: str,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AccountDeletion:
+        """Erase the account in your key's environment: every assessment of it.
+
+        Idempotent: a repeat answers assessments_deleted 0. An account.deleted
+        webhook follows when something was deleted.
+        """
+        response = _sync(super().delete)(
+            account_id, retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        return _account_deletion(response)
+
+    async def delete_async(  # type: ignore[override]
+        self,
+        account_id: str,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AccountDeletion:
+        """The asyncio form of delete."""
+        response = await _async(super().delete_async)(
+            account_id, retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        return _account_deletion(response)
 
     def list_assessments(  # type: ignore[override]
         self,
@@ -597,6 +633,12 @@ def _account(response: Any) -> Account:
     if not isinstance(response, models.operations.GetAccountResponse):
         return response  # type: ignore[no-any-return]
     return as_account(response.result, ResponseMeta.from_headers(response.headers))
+
+
+def _account_deletion(response: Any) -> AccountDeletion:
+    if not isinstance(response, models.operations.DeleteAccountResponse):
+        return response  # type: ignore[no-any-return]
+    return as_account_deletion(response.result, ResponseMeta.from_headers(response.headers))
 
 
 class Keys(_Keys):

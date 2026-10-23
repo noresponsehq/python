@@ -21,6 +21,7 @@ from .responses import Assessment
 
 __all__ = [
     "DEFAULT_TOLERANCE_SECONDS",
+    "AccountDeleted",
     "AssessmentExpired",
     "EndpointVerification",
     "Webhook",
@@ -84,20 +85,32 @@ class EndpointVerification:
 
 
 @dataclass(frozen=True)
+class AccountDeleted:
+    """An account you erased with accounts.delete: delete what you hold for it."""
+
+    account_id: str
+    assessments_deleted: int
+    """How many assessments the erasure deleted, at least 1."""
+    deleted_at: str
+    """When the erasure took effect, as deleted_at in the accounts.delete answer."""
+
+
+@dataclass(frozen=True)
 class WebhookEvent:
     """A verified delivery.
 
     data is an Assessment (exactly as assessments.get returns it) or an
-    AssessmentExpired for type "assessment.updated", and an
-    EndpointVerification for type "endpoint.verification". Deliveries are at
+    AssessmentExpired for type "assessment.updated", an EndpointVerification
+    for type "endpoint.verification", and an AccountDeleted for type
+    "account.deleted". Deliveries are at
     least once and unordered: deduplicate on id and keep the highest
     assessment_version per assessment.
     """
 
     id: str
-    type: Literal["assessment.updated", "endpoint.verification"]
+    type: Literal["assessment.updated", "endpoint.verification", "account.deleted"]
     created_at: str
-    data: Union[Assessment, AssessmentExpired, EndpointVerification]
+    data: Union[Assessment, AssessmentExpired, EndpointVerification, AccountDeleted]
     test: bool = False
     """True on an event sent by webhook_endpoints.send_test_event: data is a fixed
     example assessment, not one of yours. Acknowledge it and apply nothing."""
@@ -210,6 +223,19 @@ def construct_event(
         ):
             raise _fail("invalid_payload", "Endpoint verification event is malformed")
         return WebhookEvent(event_id, "endpoint.verification", created_at, EndpointVerification(endpoint_id, challenge))
+    if event_type == "account.deleted":
+        account_id, deleted, deleted_at = data.get("account_id"), data.get("assessments_deleted"), data.get("deleted_at")
+        if (
+            not isinstance(account_id, str)
+            or _ACCOUNT_ID.fullmatch(account_id) is None
+            or not isinstance(deleted, int)
+            or isinstance(deleted, bool)
+            or deleted < 1
+            or not isinstance(deleted_at, str)
+            or not _date_time(deleted_at)
+        ):
+            raise _fail("invalid_payload", "Account deleted event is malformed")
+        return WebhookEvent(event_id, "account.deleted", created_at, AccountDeleted(account_id, deleted, deleted_at))
     if event_type != "assessment.updated":
         raise _fail("invalid_payload", "Unknown webhook event type")
     if data.get("status") == "expired":

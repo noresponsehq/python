@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: 7b124caf22372a7e20c96529d8229f8c
+  docChecksum: 9bd7ee37d081bba6f43984ed182bb88e
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 2.0.28
-  configChecksum: 8755aa2f014f537e4ad50d848e9326ca
+  releaseVersion: 2.0.29
+  configChecksum: 7332f86e08ee683fc87bebd6f5cf0437
 features:
   python:
     additionalDependencies: 1.1.0
@@ -54,6 +54,10 @@ trackedFiles:
     last_write_checksum: sha1:e5e8de4b13c86e7d8b185af760b5367accab40a3
   docs/models/operations/createwebhookendpointresponse.md:
     last_write_checksum: sha1:4d3db090e5cb7bcedd9ef8e3418cf6c03bd045fc
+  docs/models/operations/deleteaccountrequest.md:
+    last_write_checksum: sha1:19e4cc15257b2887b70078f50a8dc166be75a8ab
+  docs/models/operations/deleteaccountresponse.md:
+    last_write_checksum: sha1:677fc22e5c2a1b00a7eeebd15fca6e625b7cc1b9
   docs/models/operations/deleteintegrationrequest.md:
     last_write_checksum: sha1:dde6d01f19bcf983aac15a2f22b9ca2e000b86b0
   docs/models/operations/deleteintegrationresponse.md:
@@ -112,6 +116,8 @@ trackedFiles:
     last_write_checksum: sha1:1f8ea49199ea413ec46da1430832db55ab1a448b
   docs/models/shared/accountdecisionsbyflow.md:
     last_write_checksum: sha1:30dec23d7d2feb3a830d01581f8029d011d6a322
+  docs/models/shared/accountdeletion.md:
+    last_write_checksum: sha1:869f19868dd0892821d48c7c917086af6c17c107
   docs/models/shared/accountrisk.md:
     last_write_checksum: sha1:ab79a53d40406e985589ce609a884bc9ef586575
   docs/models/shared/accountriskreason.md:
@@ -345,7 +351,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:b597c55ad0872655b4c18fabb14f167f647aa3ad
   pyproject.toml:
-    last_write_checksum: sha1:2e66527efc09dbeb6a5da19ba352cccc7d8e4ac6
+    last_write_checksum: sha1:90487d429b980bf529953b8d3b513cd51d183ef1
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -361,9 +367,9 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:feab44829247bbf8106e40c6f5a521db43b46173
+    last_write_checksum: sha1:8067eed0dda1df0502675a9d0a1c548eba6d84ff
   src/noresponse/accounts.py:
-    last_write_checksum: sha1:dc6769a4a68e353a3e76eb370cbe0f8e5fdf41a5
+    last_write_checksum: sha1:7de04dc42e861dde90109b451918d01b8a37809e
   src/noresponse/assessments.py:
     last_write_checksum: sha1:841e15173ffbc138d0988493e95f6905ae08f14a
   src/noresponse/basesdk.py:
@@ -399,13 +405,15 @@ trackedFiles:
   src/noresponse/models/errors/responsevalidationerror.py:
     last_write_checksum: sha1:75d25eced330a4b3c43729ec087ff5a41cf07577
   src/noresponse/models/operations/__init__.py:
-    last_write_checksum: sha1:e23da6ce15978f860551ab6fbeef187bdd7647fc
+    last_write_checksum: sha1:52bc7056f69753caf169e824d68ffadb78d259df
   src/noresponse/models/operations/createassessment.py:
     last_write_checksum: sha1:41910f288e8043a547c1164dfd75d99a187cf328
   src/noresponse/models/operations/createintegration.py:
     last_write_checksum: sha1:0d38fd23cb4c80d92e7f60a91565002c11b03eeb
   src/noresponse/models/operations/createwebhookendpoint.py:
     last_write_checksum: sha1:8c79d88dae8af33cac5bde0b2f6b52c3e3e87a5b
+  src/noresponse/models/operations/deleteaccount.py:
+    last_write_checksum: sha1:093bb15fb2317b845a38b94b5f392c47f626ea87
   src/noresponse/models/operations/deleteintegration.py:
     last_write_checksum: sha1:103b3db22bd57f0454090c618cbd052e5bdf08ae
   src/noresponse/models/operations/deletewebhookendpoint.py:
@@ -437,13 +445,15 @@ trackedFiles:
   src/noresponse/models/operations/sendwebhooktestevent.py:
     last_write_checksum: sha1:845701b811fc9df26377c00424393a01ff7c836a
   src/noresponse/models/shared/__init__.py:
-    last_write_checksum: sha1:734d73e35761533456fa2a501699996518b1a431
+    last_write_checksum: sha1:2efba98eac99d743f3979e809c9c8fadeb2752f3
   src/noresponse/models/shared/account.py:
     last_write_checksum: sha1:9470d39280634a29ba5f79173dd8a5e685c96bd7
   src/noresponse/models/shared/accountdecision.py:
     last_write_checksum: sha1:fc3583004988b363224622f778d72e9c3b30a55e
   src/noresponse/models/shared/accountdecisionsbyflow.py:
     last_write_checksum: sha1:5fb1947a69df7d45fed8b29ef26e3b1e101ffa75
+  src/noresponse/models/shared/accountdeletion.py:
+    last_write_checksum: sha1:e3ac0ce0106378b6639824add84edd68297b9a31
   src/noresponse/models/shared/accountrisk.py:
     last_write_checksum: sha1:76680bf3d251e9a302999b3e42b66c6d81ae1e64
   src/noresponse/models/shared/accountriskreason.py:
@@ -927,6 +937,21 @@ examples:
       responses:
         "200":
           application/json: {"schema_version": "1", "id": "acct_7f3a9c", "risk": {"score": 90, "decision": "block", "reasons": [{"code": "disposable_email", "weight": 40, "identifier": "email"}, {"code": "proxy_ip", "weight": 30, "identifier": "ip"}, {"code": "many_recent_signups", "weight": 20}]}, "decisions_by_flow": {"signup": "block", "login": "block", "purchase": "block"}, "assessment_id": "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "updated_at": "2026-10-14T09:00:00.412Z"}
+  deleteAccount:
+    erased:
+      parameters:
+        path:
+          account_id: "acct_7f3a9c"
+      responses:
+        "200":
+          application/json: {"schema_version": "1", "id": "acct_7f3a9c", "deleted": true, "assessments_deleted": 3, "deleted_at": "2026-10-23T09:00:00.000Z"}
+    repeat:
+      parameters:
+        path:
+          account_id: "acct_7f3a9c"
+      responses:
+        "200":
+          application/json: {"schema_version": "1", "id": "acct_7f3a9c", "deleted": true, "assessments_deleted": 0, "deleted_at": "2026-10-23T09:00:05.000Z"}
   listAccountAssessments:
     page:
       parameters:

@@ -7,6 +7,7 @@ import pytest
 
 from noresponse.models.shared.assessment import Assessment
 from noresponse.webhooks import (
+    AccountDeleted,
     AssessmentExpired,
     EndpointVerification,
     WebhookVerificationError,
@@ -113,6 +114,26 @@ def test_expired_and_verification_events():
     assert verification_response(event) == {"challenge": ping["data"]["challenge"]}
 
 
+def test_account_deleted_event():
+    erased = fixture("valid/webhook-account-deleted.json")
+    raw, headers = signed(erased, "secret", erased["id"])
+    event = construct_event(raw, headers, {"whk_sdktest01": "secret"}, now=NOW)
+    assert event.type == "account.deleted" and not event.expired and not event.test
+    assert event.data == AccountDeleted("acct_7f3a9c", 3, "2026-10-23T09:00:00.000Z")
+    with pytest.raises(WebhookVerificationError):
+        verification_response(event)
+    for change in (
+        {"assessments_deleted": 0},
+        {"assessments_deleted": True},
+        {"assessments_deleted": 1.5},
+        {"account_id": "jane@example.com"},
+        {"deleted_at": "tomorrow"},
+    ):
+        body = {**erased, "data": {**erased["data"], **change}}
+        raw, headers = signed(body, "secret", body["id"])
+        refused("invalid_payload", raw, headers, {"whk_sdktest01": "secret"}, now=NOW)
+
+
 def test_unknown_fields_are_accepted():
     # The API adds fields without a new version, so keys this SDK does not
     # know must not stop a signed event from verifying.
@@ -120,6 +141,7 @@ def test_unknown_fields_are_accepted():
         "invalid/webhook-tenant-id.json",
         "invalid/webhook-identifier-leak.json",
         "invalid/webhook-expired-with-assessment-url.json",
+        "invalid/webhook-account-deleted-assessment-id.json",
     ):
         body = fixture(name)
         raw, headers = signed(body, "secret", body["id"])
@@ -133,6 +155,7 @@ def test_contract_invalid_fixtures_and_malformed_identifiers_are_refused():
         "invalid/webhook-update-pointer-only.json",
         "invalid/webhook-update-with-expired-status.json",
         "invalid/webhook-verification-without-challenge.json",
+        "invalid/webhook-account-deleted-none.json",
     ):
         body = fixture(name)
         raw, headers = signed(body, "secret", body["id"])

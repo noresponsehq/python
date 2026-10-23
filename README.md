@@ -124,9 +124,12 @@ account.assessment_id            # the assessment the risk comes from
 
 for assessment in nr.accounts.list_assessments("usr_8f2k1", limit=20):
     ...  # the same pages as assessments.query, newest first
+
+erased = nr.accounts.delete("usr_8f2k1")  # an erasure request: every assessment of the account goes
+erased.assessments_deleted               # 0 on a repeat
 ```
 
-Both calls need the `history` scope. An account with no decided assessment raises `NotFoundError`. `list_assessments` puts the account id in the URL; use `assessments.query` to keep it in the request body. In async code use `get_async` and `list_assessments_async`.
+Every call needs the `history` scope. An account with no decided assessment raises `NotFoundError`. `list_assessments` puts the account id in the URL; use `assessments.query` to keep it in the request body. In async code use `get_async`, `list_assessments_async` and `delete_async`. A `delete` that removed something sends an `account.deleted` webhook.
 
 ### Record an outcome
 
@@ -258,7 +261,7 @@ Verify the exact bytes you received, then act on the typed event. `secrets` maps
 ```python
 import os
 from noresponse import Webhook, WebhookVerificationError
-from noresponse import AssessmentExpired, Assessment
+from noresponse import AccountDeleted, AssessmentExpired, Assessment
 
 SECRETS = {
     os.environ["NORESPONSE_WEBHOOK_KEY_ID"]: os.environ["NORESPONSE_WEBHOOK_SECRET"],
@@ -275,7 +278,9 @@ async def handler(request: Request) -> Response:
         return JSONResponse(Webhook.verification_response(event))
     if event.test:  # send_test_event's fixed example assessment: apply nothing
         return Response(status_code=204)
-    if isinstance(event.data, AssessmentExpired):
+    if isinstance(event.data, AccountDeleted):  # type "account.deleted": you erased it with accounts.delete
+        forget_account(event.data.account_id)
+    elif isinstance(event.data, AssessmentExpired):
         forget(event.data.assessment_id)  # GET now answers 404
     elif isinstance(event.data, Assessment) and is_newer(event.data):  # keep the highest assessment_version per assessment
         apply(event.data)  # the full assessment, as assessments.get returns it

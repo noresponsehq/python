@@ -8,6 +8,8 @@ import pytest
 
 from noresponse import (
     Account,
+    AccountDeletion,
+    PermissionDeniedError,
     APIConnectionError,
     APIStatusError,
     APITimeoutError,
@@ -45,6 +47,7 @@ INTEGRATION_ROTATED = fixture("valid/integration-auth0-rotated.json")
 INTEGRATIONS = fixture("valid/integration-list.json")
 ACCOUNT = fixture("valid/account.json")
 ACCOUNT_BLOCK = fixture("valid/account-block.json")
+ACCOUNT_DELETION = fixture("valid/account-deletion.json")
 REQUEST = {"account_id": "usr_8f2k1", "identifiers": {"email": "jordan.lee@example.com", "name": "Jordan Lee"}}
 
 
@@ -286,6 +289,28 @@ def test_accounts_get_reads_the_current_risk():
     with pytest.raises(NotFoundError) as caught:
         sdk.accounts.get("acct_missing")
     assert caught.value.code == "not_found"
+
+
+def test_accounts_delete_erases_and_a_repeat_answers_zero():
+    repeat = {**ACCOUNT_DELETION, "assessments_deleted": 0}
+    sdk, seen = make([answer(ACCOUNT_DELETION), answer(repeat), problem(403, "tenant_forbidden")], retry_config=NO_RETRIES)
+    deletion = sdk.accounts.delete("acct_7f3a9c")
+    assert isinstance(deletion, AccountDeletion)
+    assert (seen[0].method, seen[0].url.path, seen[0].content) == ("DELETE", "/v1/accounts/acct_7f3a9c", b"")
+    assert deletion.id == "acct_7f3a9c" and deletion.deleted is True and deletion.assessments_deleted == 3
+    assert deletion.meta.request_id == "a" * 32
+    assert sdk.accounts.delete("acct_7f3a9c").assessments_deleted == 0
+    with pytest.raises(PermissionDeniedError) as caught:
+        sdk.accounts.delete("acct_7f3a9c")
+    assert caught.value.code == "tenant_forbidden"
+
+    async def scenario():
+        sdk, seen = make([answer(ACCOUNT_DELETION)])
+        async with sdk:
+            erased = await sdk.accounts.delete_async("acct_7f3a9c")
+        assert erased.assessments_deleted == 3 and seen[0].method == "DELETE"
+
+    asyncio.run(scenario())
 
 
 def test_accounts_list_assessments_sends_query_parameters_and_pages():

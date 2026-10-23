@@ -44,6 +44,9 @@ def test_accounts_return_the_documented_account_and_page():
     assert account.id == "acct_7f3a9c" and account.assessment_id.startswith("asm_")
     assert account.decisions_by_flow.signup == account.risk.decision
     assert page.account_id == "acct_7f3a9c"
+    with client() as sdk:
+        deletion = sdk.accounts.delete("acct_7f3a9c")
+    assert deletion.id == "acct_7f3a9c" and deletion.deleted is True
 
 
 def test_async_create():

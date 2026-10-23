@@ -38,6 +38,7 @@ from .errors import (
 from .models.shared import AuthContext, AuthContextTypedDict
 from .responses import (
     Account,
+    AccountDeletion,
     Assessment,
     AssessmentOutcome,
     AssessmentPage,
@@ -48,6 +49,7 @@ from .responses import (
 )
 from ._wait import DEFAULT_WAIT_SECONDS, WaitTimeoutError, wait, wait_async
 from .webhooks import (
+    AccountDeleted,
     AssessmentExpired,
     EndpointVerification,
     Webhook,
@@ -76,6 +78,7 @@ __all__ = [
     "Keys",
     "Integrations",
     "Account",
+    "AccountDeletion",
     "Assessment",
     "AssessmentOutcome",
     "AssessmentPage",
@@ -119,6 +122,7 @@ __all__ = [
     "WebhookEvent",
     "AssessmentExpired",
     "EndpointVerification",
+    "AccountDeleted",
     "DEFAULT_LATE_RESULT_POLICY",
     "LateResult",
     "LateResultProvider",

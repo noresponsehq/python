@@ -17,6 +17,12 @@ if TYPE_CHECKING:
         CreateWebhookEndpointResponse,
         CreateWebhookEndpointResponseTypedDict,
     )
+    from .deleteaccount import (
+        DeleteAccountRequest,
+        DeleteAccountRequestTypedDict,
+        DeleteAccountResponse,
+        DeleteAccountResponseTypedDict,
+    )
     from .deleteintegration import (
         DeleteIntegrationRequest,
         DeleteIntegrationRequestTypedDict,
@@ -106,6 +112,10 @@ __all__ = [
     "CreateIntegrationResponseTypedDict",
     "CreateWebhookEndpointResponse",
     "CreateWebhookEndpointResponseTypedDict",
+    "DeleteAccountRequest",
+    "DeleteAccountRequestTypedDict",
+    "DeleteAccountResponse",
+    "DeleteAccountResponseTypedDict",
     "DeleteIntegrationRequest",
     "DeleteIntegrationRequestTypedDict",
     "DeleteIntegrationResponse",
@@ -169,6 +179,10 @@ _dynamic_imports: dict[str, str] = {
     "CreateIntegrationResponseTypedDict": ".createintegration",
     "CreateWebhookEndpointResponse": ".createwebhookendpoint",
     "CreateWebhookEndpointResponseTypedDict": ".createwebhookendpoint",
+    "DeleteAccountRequest": ".deleteaccount",
+    "DeleteAccountRequestTypedDict": ".deleteaccount",
+    "DeleteAccountResponse": ".deleteaccount",
+    "DeleteAccountResponseTypedDict": ".deleteaccount",
     "DeleteIntegrationRequest": ".deleteintegration",
     "DeleteIntegrationRequestTypedDict": ".deleteintegration",
     "DeleteIntegrationResponse": ".deleteintegration",

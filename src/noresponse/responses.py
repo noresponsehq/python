@@ -13,6 +13,7 @@ from typing import Any, AsyncIterator, Callable, Iterator, List, Mapping, Option
 from pydantic import BaseModel, PrivateAttr
 
 from .models.shared.account import Account as _Account
+from .models.shared.accountdeletion import AccountDeletion as _AccountDeletion
 from .models.shared.assessment import Assessment as _Assessment
 from .models.shared.assessmentoutcome import AssessmentOutcome as _AssessmentOutcome
 from .models.shared.integration import Integration as _Integration
@@ -21,6 +22,7 @@ from .models.shared.keyrotation import KeyRotation as _KeyRotation
 
 __all__ = [
     "Account",
+    "AccountDeletion",
     "Assessment",
     "AssessmentOutcome",
     "AssessmentPage",
@@ -118,6 +120,16 @@ class Account(_Account):
         return self._meta
 
 
+class AccountDeletion(_AccountDeletion):
+    """An erased account: how many assessments the call deleted (0 on a repeat) and when."""
+
+    _meta: ResponseMeta = PrivateAttr(default=_EMPTY)
+
+    @property
+    def meta(self) -> ResponseMeta:
+        return self._meta
+
+
 class Integration(_Integration):
     """A hosted provider integration. secret is set only by create and rotate for Auth0, and shown once."""
 
@@ -152,6 +164,10 @@ def as_rotation(source: _KeyRotation, meta: ResponseMeta) -> KeyRotation:
 
 def as_account(source: _Account, meta: ResponseMeta) -> Account:
     return _attach(Account, source, meta)
+
+
+def as_account_deletion(source: _AccountDeletion, meta: ResponseMeta) -> AccountDeletion:
+    return _attach(AccountDeletion, source, meta)
 
 
 def as_integration(source: _Integration, meta: ResponseMeta) -> Integration:
