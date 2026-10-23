@@ -17,11 +17,13 @@ from typing import Any, Iterable, List, Literal, Mapping, Optional, Tuple, Union
 
 import pydantic
 
-from .responses import Assessment
+from .models.shared.accountdecisionsbyflow import AccountDecisionsByFlow
+from .responses import Account, Assessment
 
 __all__ = [
     "DEFAULT_TOLERANCE_SECONDS",
     "AccountDeleted",
+    "AccountRiskChanged",
     "AssessmentExpired",
     "EndpointDisabled",
     "EndpointVerification",
@@ -120,24 +122,46 @@ class EndpointDisabled:
 
 
 @dataclass(frozen=True)
+class AccountRiskChanged:
+    """The account's decision for at least one flow changed.
+
+    It is not sent when the score moves within the same decision, nor for an
+    account's first risk.
+    """
+
+    account: Account
+    """The account exactly as accounts.get returns it: the new risk and decisions."""
+    previous_decisions_by_flow: AccountDecisionsByFlow
+    """The decision for each flow before the change, as last announced."""
+
+
+@dataclass(frozen=True)
 class WebhookEvent:
     """A verified delivery.
 
     data is an Assessment (exactly as assessments.get returns it) or an
     AssessmentExpired for type "assessment.updated", an EndpointVerification
     for type "endpoint.verification", an AccountDeleted for type
-    "account.deleted", a TenantDeleted for type "tenant.deleted" and an
-    EndpointDisabled for type "webhook_endpoint.disabled". Deliveries are at
+    "account.deleted", a TenantDeleted for type "tenant.deleted", an
+    EndpointDisabled for type "webhook_endpoint.disabled" and an
+    AccountRiskChanged for type "account.risk_changed". Deliveries are at
     least once and unordered: deduplicate on id and keep the highest
     detail.assessment_version per assessment.
     """
 
     id: str
     type: Literal[
-        "assessment.updated", "endpoint.verification", "account.deleted", "tenant.deleted", "webhook_endpoint.disabled"
+        "assessment.updated",
+        "endpoint.verification",
+        "account.deleted",
+        "tenant.deleted",
+        "webhook_endpoint.disabled",
+        "account.risk_changed",
     ]
     created_at: str
-    data: Union[Assessment, AssessmentExpired, EndpointVerification, AccountDeleted, TenantDeleted, EndpointDisabled]
+    data: Union[
+        Assessment, AssessmentExpired, EndpointVerification, AccountDeleted, TenantDeleted, EndpointDisabled, AccountRiskChanged
+    ]
     test: bool = False
     """True on an event sent by webhook_endpoints.send_test_event: data is a fixed
     example assessment, not one of yours. Acknowledge it and apply nothing."""
@@ -288,6 +312,15 @@ def construct_event(
         return WebhookEvent(
             event_id, "webhook_endpoint.disabled", created_at, EndpointDisabled(endpoint_id, failing_since, disabled_at)
         )
+    if event_type == "account.risk_changed":
+        try:
+            account = Account.model_validate(data.get("account"))
+            previous = AccountDecisionsByFlow.model_validate(data.get("previous_decisions_by_flow"))
+        except pydantic.ValidationError:
+            raise _fail("invalid_payload", "Account risk changed event is malformed") from None
+        if _ACCOUNT_ID.fullmatch(account.id) is None:
+            raise _fail("invalid_payload", "Account risk changed event is malformed")
+        return WebhookEvent(event_id, "account.risk_changed", created_at, AccountRiskChanged(account, previous))
     if event_type != "assessment.updated":
         raise _fail("invalid_payload", "Unknown webhook event type")
     if data.get("status") == "expired":

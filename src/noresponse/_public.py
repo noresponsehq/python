@@ -54,6 +54,7 @@ from .responses import (
 from ._wait import DEFAULT_WAIT_SECONDS, WaitTimeoutError, wait, wait_async
 from .webhooks import (
     AccountDeleted,
+    AccountRiskChanged,
     AssessmentExpired,
     EndpointDisabled,
     EndpointVerification,
@@ -137,6 +138,7 @@ __all__ = [
     "AccountDeleted",
     "TenantDeleted",
     "EndpointDisabled",
+    "AccountRiskChanged",
     "DEFAULT_LATE_RESULT_POLICY",
     "LateResult",
     "LateResultProvider",

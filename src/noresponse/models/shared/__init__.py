@@ -68,7 +68,6 @@ if TYPE_CHECKING:
     from .consistencyvalue import ConsistencyValue
     from .country import Country
     from .depth import Depth
-    from .eventtype import EventType
     from .failure import Failure
     from .failurereason import FailureReason
     from .flow import Flow
@@ -268,7 +267,6 @@ __all__ = [
     "EmailTypedDict",
     "EmailUnion",
     "EmailUnionTypedDict",
-    "EventType",
     "Failure",
     "FailureReason",
     "Flow",
@@ -464,7 +462,6 @@ _dynamic_imports: dict[str, str] = {
     "ConsistencyValue": ".consistencyvalue",
     "Country": ".country",
     "Depth": ".depth",
-    "EventType": ".eventtype",
     "Failure": ".failure",
     "FailureReason": ".failurereason",
     "Flow": ".flow",

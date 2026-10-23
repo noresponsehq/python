@@ -294,7 +294,7 @@ Verify the exact bytes you received, then act on the typed event. `secrets` maps
 ```python
 import os
 from noresponse import Webhook, WebhookVerificationError
-from noresponse import AccountDeleted, AssessmentExpired, Assessment, EndpointDisabled, TenantDeleted
+from noresponse import AccountDeleted, AccountRiskChanged, AssessmentExpired, Assessment, EndpointDisabled, TenantDeleted
 
 SECRETS = {
     os.environ["NORESPONSE_WEBHOOK_KEY_ID"]: os.environ["NORESPONSE_WEBHOOK_SECRET"],
@@ -317,6 +317,9 @@ async def handler(request: Request) -> Response:
         forget_environment(event.data.environment)
     elif isinstance(event.data, EndpointDisabled):  # another endpoint failed for 72 hours and is disabled
         alert_ops(event.data.endpoint_id, event.data.failing_since)
+    elif isinstance(event.data, AccountRiskChanged):  # type "account.risk_changed": a flow's decision changed
+        # data.account is the Account accounts.get returns; previous_decisions_by_flow holds the decisions it replaced.
+        apply_decisions(event.data.account.id, event.data.account.decisions_by_flow)
     elif isinstance(event.data, AssessmentExpired):
         forget(event.data.assessment_id)  # GET now answers 404
     elif isinstance(event.data, Assessment) and is_newer(event.data):  # keep the highest detail.assessment_version per assessment
@@ -337,7 +340,7 @@ provider = clerk_actions(os.environ["CLERK_SECRET_KEY"])
 result = handle_late_result(raw_body, request.headers, SECRETS, provider, policy={"review": "ban"})
 ```
 
-The policy maps the account's decision (`account.risk.decision`) to an action. The default revokes sessions on `review` and `block` and does nothing otherwise. A pending assessment acts on nothing: its account decision comes from an earlier assessment. `ban` blocks the user in Clerk and Auth0; WorkOS has no block, so its ban deletes the user permanently. Pass `resolve_user_id` when the provider's user id is not your `account_id`. A test event from `send_test_event` acts on nothing. A refused provider call raises `ProviderActionError`; answer the webhook with a 5xx so we retry it. A provider 404 means the user or session is already gone and counts as done, so a repeated delivery is safe.
+The policy maps the account's decision (`account.risk.decision`) to an action. The default revokes sessions on `review` and `block` and does nothing otherwise. A pending assessment acts on nothing: its account decision comes from an earlier assessment. `ban` blocks the user in Clerk and Auth0; WorkOS has no block, so its ban deletes the user permanently. Pass `resolve_user_id` when the provider's user id is not your `account_id`. A test event from `send_test_event` acts on nothing. Nor does an `account.risk_changed` event: the handler acts on the `assessment.updated` that changed the decision. A refused provider call raises `ProviderActionError`; answer the webhook with a 5xx so we retry it. A provider 404 means the user or session is already gone and counts as done, so a repeated delivery is safe.
 
 If your app has its own login, `log_only_actions()` logs what it would revoke or ban (to the `noresponse.late_results` logger at WARNING, or pass `log`) and calls nothing. Use it to try the handler, then subclass `LateResultProvider` with a `name` and the two methods `revoke_sessions(user_id)` and `ban(user_id)`.
 

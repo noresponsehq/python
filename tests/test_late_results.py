@@ -23,6 +23,7 @@ from noresponse import (
 )
 from noresponse.webhooks import (
     AccountDeleted,
+    AccountRiskChanged,
     AssessmentExpired,
     EndpointDisabled,
     EndpointVerification,
@@ -53,6 +54,7 @@ STEP_UP = decided("step_up")
 PENDING = fixture("valid/assessment-view-pending.json")
 KNOWN_PENDING = fixture("valid/assessment-view-pending-known-account.json")
 EXPIRED = fixture("valid/webhook-assessment-expired.json")
+RISK_CHANGED = fixture("valid/webhook-account-risk-changed.json")
 
 
 def delivery(data, account_id=None, **extra):
@@ -163,6 +165,9 @@ def test_the_default_policy_revokes_on_review_and_block_and_does_nothing_on_allo
     assert late_result_action(WebhookEvent("evt_x", "tenant.deleted", "x", TenantDeleted("tnt_1", "live", "x"))) == "none"
     disabled = EndpointDisabled("whe_1", "x", "x")
     assert late_result_action(WebhookEvent("evt_x", "webhook_endpoint.disabled", "x", disabled)) == "none"
+    blocked = SimpleNamespace(risk=SimpleNamespace(decision="block"))
+    changed = AccountRiskChanged(blocked, SimpleNamespace(signup="allow", login="allow", purchase="allow"))  # type: ignore[arg-type]
+    assert late_result_action(WebhookEvent("evt_x", "account.risk_changed", "x", changed)) == "none"
     assert late_result_action(ev(Data("complete", "step_up")), {"step_up": "ban"}) == "ban"
     assert late_result_action(ev(Data("complete", "block")), {"block": "ban"}) == "ban"
     assert late_result_action(ev(Data("complete", "review")), {"step_up": "ban"}) == "none"
@@ -477,6 +482,12 @@ def test_an_unverified_quiet_or_unmapped_event_makes_no_provider_call_and_a_prov
     for data in (STEP_UP, PENDING, {**KNOWN_PENDING, "account": REVIEW["account"]}, EXPIRED["data"]):
         d_raw, d_headers = delivery(data)
         assert handle_late_result(d_raw, d_headers, SECRETS, auth0, now=NOW).action == "none"
+    # account.risk_changed is verified and typed, and acts on nothing: the
+    # assessment.updated that moved the decision does.
+    c_raw, c_headers = delivery(RISK_CHANGED["data"], type=RISK_CHANGED["type"])
+    ignored = handle_late_result(c_raw, c_headers, SECRETS, auth0, now=NOW)
+    assert ignored.action == "none" and ignored.event.type == "account.risk_changed"
+    assert ignored.event.data.account.decisions_by_flow.login == "review"
     assert handle_late_result(raw, headers, SECRETS, auth0, now=NOW, resolve_user_id=lambda a, e: None).action == "none"
     assert len(mock.calls) == 0
     with pytest.raises(ProviderActionError) as refused:

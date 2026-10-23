@@ -1,5 +1,4 @@
 from __future__ import annotations
-from .eventtype import EventType
 from .failure import Failure
 from .webhookdeliveryattemptstatus import WebhookDeliveryAttemptStatus
 from noresponse.types import BaseModel, UNSET_SENTINEL
@@ -11,7 +10,8 @@ from typing_extensions import NotRequired, TypedDict
 class WebhookDeliveryAttemptTypedDict(TypedDict):
     event_id: str
     r"""The event id the receiver saw as NR-Webhook-Id and as the body's id. Replay it with POST /v1/webhooks/{endpoint_id}/deliveries/{event_id}/replay."""
-    event_type: EventType
+    event_type: str
+    r"""The event's type, as its body's type: assessment.updated, account.deleted or account.risk_changed."""
     attempt: int
     r"""Which attempt of this delivery this was: 1 for the first send, up to 9 with retries. A replay counts its own attempts from 1."""
     replay: bool
@@ -32,7 +32,8 @@ class WebhookDeliveryAttempt(BaseModel):
     event_id: str
     r"""The event id the receiver saw as NR-Webhook-Id and as the body's id. Replay it with POST /v1/webhooks/{endpoint_id}/deliveries/{event_id}/replay."""
 
-    event_type: EventType
+    event_type: str
+    r"""The event's type, as its body's type: assessment.updated, account.deleted or account.risk_changed."""
 
     attempt: int
     r"""Which attempt of this delivery this was: 1 for the first send, up to 9 with retries. A replay counts its own attempts from 1."""

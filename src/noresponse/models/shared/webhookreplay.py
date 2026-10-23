@@ -1,5 +1,4 @@
 from __future__ import annotations
-from .eventtype import EventType
 from noresponse.types import BaseModel
 from typing_extensions import TypedDict
 
@@ -11,7 +10,8 @@ class WebhookReplayTypedDict(TypedDict):
     r"""Opaque id of the endpoint registration."""
     event_id: str
     r"""The replayed event's id. The receiver sees the same id and body as the first time, with a new NR-Webhook-Timestamp and signature."""
-    event_type: EventType
+    event_type: str
+    r"""The event's type, as its body's type: assessment.updated, account.deleted or account.risk_changed."""
 
 
 class WebhookReplay(BaseModel):
@@ -23,4 +23,5 @@ class WebhookReplay(BaseModel):
     event_id: str
     r"""The replayed event's id. The receiver sees the same id and body as the first time, with a new NR-Webhook-Timestamp and signature."""
 
-    event_type: EventType
+    event_type: str
+    r"""The event's type, as its body's type: assessment.updated, account.deleted or account.risk_changed."""

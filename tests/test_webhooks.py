@@ -5,9 +5,11 @@ from pathlib import Path
 
 import pytest
 
+from noresponse import Account
 from noresponse.models.shared.assessment import Assessment
 from noresponse.webhooks import (
     AccountDeleted,
+    AccountRiskChanged,
     AssessmentExpired,
     EndpointDisabled,
     EndpointVerification,
@@ -210,6 +212,37 @@ def test_endpoint_disabled_event():
         ),
         ("endpoint_id", "failing_since", "disabled_at"),
     )
+
+
+def test_account_risk_changed_event():
+    changed = fixture("valid/webhook-account-risk-changed.json")
+    raw, headers = signed(changed, "secret", changed["id"])
+    event = construct_event(raw, headers, {"whk_sdktest01": "secret"}, now=NOW)
+    assert event.type == "account.risk_changed" and not event.expired and not event.test
+    assert event.id == changed["id"]
+    assert isinstance(event.data, AccountRiskChanged)
+    # data.account is the same type accounts.get returns.
+    assert isinstance(event.data.account, Account)
+    account = event.data.account
+    assert account.id == "acct_7f3a9c" and account.schema_version == "1"
+    assert account.risk.score == 70 and account.risk.decision == "review"
+    assert account.risk.reasons[0].code == "recent_password_exposure" and account.risk.reasons[0].weight == 55
+    assert (account.decisions_by_flow.signup, account.decisions_by_flow.login, account.decisions_by_flow.purchase) == ("review", "review", "review")
+    assert account.assessment_id == "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
+    assert account.updated_at == "2026-10-23T09:00:04.812Z"
+    previous = event.data.previous_decisions_by_flow
+    assert (previous.signup, previous.login, previous.purchase) == ("allow", "allow", "allow")
+    with pytest.raises(WebhookVerificationError):
+        verification_response(event)
+    for change in (
+        {"previous_decisions_by_flow": None},
+        {"account": "acct_7f3a9c"},
+        {"account": {k: v for k, v in changed["data"]["account"].items() if k != "decisions_by_flow"}},
+        {"account": {**changed["data"]["account"], "id": "jane@example.com"}},
+    ):
+        body = {**changed, "data": {**changed["data"], **change}}
+        raw, headers = signed(body, "secret", body["id"])
+        refused("invalid_payload", raw, headers, {"whk_sdktest01": "secret"}, now=NOW)
 
 
 def test_unknown_fields_are_accepted():
