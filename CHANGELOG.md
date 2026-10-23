@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.1
+
+No changes detected.
+
 ## 4.0.0
 
 * `sdk.webhook_endpoints.list_deliveries()`:  `response.items[].event_type` **Changed** (Breaking ⚠️)
