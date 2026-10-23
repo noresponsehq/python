@@ -34,7 +34,7 @@ class AssessmentRequestTypedDict(TypedDict):
     request_id: NotRequired[str]
     r"""An optional provider correlation id, echoed back. It is not an idempotency key. Refuses an exact-shape JWT or a bare 40, 64 or 128 character hex digest; a UUID is accepted."""
     deadline_ms: NotRequired[int]
-    r"""Optional tighter budget, 50 to 500 ms, measured from the moment the request reaches NoResponse. Absent means the 500 ms ceiling; a value above it is refused with 400 rather than clamped."""
+    r"""Optional tighter budget, 50 to 3000 ms, measured from the moment the request reaches NoResponse. Absent means the 3000 ms ceiling; a value above it is refused with 400 rather than clamped."""
     response_mode: NotRequired[ResponseMode]
     r"""standard returns the consolidated risk response; detailed adds merged provider-neutral facts when the key has detailed scope. There is no raw mode."""
     client_context: NotRequired[AssessmentRequestClientContextTypedDict]
@@ -60,7 +60,7 @@ class AssessmentRequest(BaseModel):
     r"""An optional provider correlation id, echoed back. It is not an idempotency key. Refuses an exact-shape JWT or a bare 40, 64 or 128 character hex digest; a UUID is accepted."""
 
     deadline_ms: Optional[int] = None
-    r"""Optional tighter budget, 50 to 500 ms, measured from the moment the request reaches NoResponse. Absent means the 500 ms ceiling; a value above it is refused with 400 rather than clamped."""
+    r"""Optional tighter budget, 50 to 3000 ms, measured from the moment the request reaches NoResponse. Absent means the 3000 ms ceiling; a value above it is refused with 400 rather than clamped."""
 
     response_mode: Optional[ResponseMode] = None
     r"""standard returns the consolidated risk response; detailed adds merged provider-neutral facts when the key has detailed scope. There is no raw mode."""

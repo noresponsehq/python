@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: 0ba8c72441139f7cb0de6724ef1f48af
+  docChecksum: 1154b96455629ed85a6987823fbb8772
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 2.0.18
-  configChecksum: 9355e64ab5fc09bfa031ce437ff43259
+  releaseVersion: 2.0.19
+  configChecksum: 4c49c1627a023e20e36e707d10ac5109
 features:
   python:
     additionalDependencies: 1.1.0
@@ -107,7 +107,7 @@ trackedFiles:
   docs/models/shared/assessmentquery.md:
     last_write_checksum: sha1:aa3e65cc29b3fc9692c0739d04f38f68bc4a7ba5
   docs/models/shared/assessmentrequest.md:
-    last_write_checksum: sha1:a7a6f6cc8a184b3d1c8a0375f617e0ab3b36549c
+    last_write_checksum: sha1:9011ec75d2afe8fd974897e57f667db042830e0c
   docs/models/shared/assessmentrequestclientcontext.md:
     last_write_checksum: sha1:46a56f656c695960f919108d0d43ae77eebaf195
   docs/models/shared/assessmentrequestidentifiers.md:
@@ -301,7 +301,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:b597c55ad0872655b4c18fabb14f167f647aa3ad
   pyproject.toml:
-    last_write_checksum: sha1:cf2aa42607df1a8bf10fbce3084fb712f47fe05c
+    last_write_checksum: sha1:6e5b42af33fed10f755a6e278a31e69083bffaf5
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -317,9 +317,9 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:891e602941964ec7b4b22ff915dd63febc0ac7fa
+    last_write_checksum: sha1:d6266cea779cc6a254ca1371e7ecf22650ed694d
   src/noresponse/assessments.py:
-    last_write_checksum: sha1:267ab2a21b0ad67864d328a46da35317693e4fc5
+    last_write_checksum: sha1:f4ec29fc67d3c04bb5888d21cbd472b0cf3e32e8
   src/noresponse/basesdk.py:
     last_write_checksum: sha1:504a1120368ba40f8c5a5f259812c0e344e5b233
   src/noresponse/httpclient.py:
@@ -397,7 +397,7 @@ trackedFiles:
   src/noresponse/models/shared/assessmentquery.py:
     last_write_checksum: sha1:7847da38356052df7058ca2753239d14b6ce0669
   src/noresponse/models/shared/assessmentrequest.py:
-    last_write_checksum: sha1:80af77fe61a720086af9f537bdcb74c9b5d80550
+    last_write_checksum: sha1:38e3d59d921bc339a284ea3d4e1399db5f3a1d67
   src/noresponse/models/shared/assessmentrequestclientcontext.py:
     last_write_checksum: sha1:55c1ec17cda1d43a6c8b6d5527234c342e3b8b10
   src/noresponse/models/shared/assessmentrequestidentifiers.py:
