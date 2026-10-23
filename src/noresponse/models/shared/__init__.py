@@ -16,6 +16,7 @@ if TYPE_CHECKING:
         AssessmentAuthContext,
         AssessmentAuthContextTypedDict,
     )
+    from .assessmentflow import AssessmentFlow
     from .assessmentlist import AssessmentList, AssessmentListTypedDict
     from .assessmentoutcome import AssessmentOutcome, AssessmentOutcomeTypedDict
     from .assessmentoutcomerequest import (
@@ -57,6 +58,7 @@ if TYPE_CHECKING:
     from .consistency import Consistency, ConsistencyTypedDict
     from .consistencyvalue import ConsistencyValue
     from .country import Country
+    from .depth import Depth
     from .eventtype import EventType
     from .failure import Failure
     from .failurereason import FailureReason
@@ -196,6 +198,7 @@ __all__ = [
     "Assessment",
     "AssessmentAuthContext",
     "AssessmentAuthContextTypedDict",
+    "AssessmentFlow",
     "AssessmentList",
     "AssessmentListTypedDict",
     "AssessmentOutcome",
@@ -238,6 +241,7 @@ __all__ = [
     "ConsistencyTypedDict",
     "ConsistencyValue",
     "Country",
+    "Depth",
     "Email",
     "EmailTypedDict",
     "EmailUnion",
@@ -382,6 +386,7 @@ _dynamic_imports: dict[str, str] = {
     "AssessmentTypedDict": ".assessment",
     "AssessmentAuthContext": ".assessmentauthcontext",
     "AssessmentAuthContextTypedDict": ".assessmentauthcontext",
+    "AssessmentFlow": ".assessmentflow",
     "AssessmentList": ".assessmentlist",
     "AssessmentListTypedDict": ".assessmentlist",
     "AssessmentOutcome": ".assessmentoutcome",
@@ -423,6 +428,7 @@ _dynamic_imports: dict[str, str] = {
     "ConsistencyTypedDict": ".consistency",
     "ConsistencyValue": ".consistencyvalue",
     "Country": ".country",
+    "Depth": ".depth",
     "EventType": ".eventtype",
     "Failure": ".failure",
     "FailureReason": ".failurereason",

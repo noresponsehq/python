@@ -1,4 +1,5 @@
 from __future__ import annotations
+from .assessmentflow import AssessmentFlow
 from .assessmentrequestclientcontext import (
     AssessmentRequestClientContext,
     AssessmentRequestClientContextTypedDict,
@@ -16,6 +17,7 @@ from .assessmentrequestpolicycontext import (
     AssessmentRequestPolicyContextTypedDict,
 )
 from .authcontext import AuthContext, AuthContextTypedDict
+from .depth import Depth
 from .responsemode import ResponseMode
 from noresponse.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
@@ -30,6 +32,10 @@ class AssessmentRequestTypedDict(TypedDict):
     r"""Your own opaque identifier for the account being checked, scoped to your tenant. Use an id you mint, with no direct identifier (email, phone, name or national id) in it. '|' is accepted so an Auth0 user id such as 'auth0|64abc' passes unchanged; '@', '+', '$' and whitespace are refused by the pattern, as is an exact-shape JWT; a hex digest such as a SHA-256 is allowed, because hashing an internal id is a common pseudonymous scheme. A value such as '07700900123' or 'jane.doe.gmail.com' cannot be told apart from an opaque id. It travels in bodies, and in a URL only as the path segment of GET /v1/accounts/{account_id} and its /assessments. An assessment requested by a provider hook at pre_registration, which has no account yet, carries the server-issued account_id pre: followed by its assessment_id."""
     identifiers: AssessmentRequestIdentifiersTypedDict
     r"""At least one of email, username or phone. name and ip refine the match and travel beside a lookup identifier; a body with only name or ip is refused with 400."""
+    flow: NotRequired[AssessmentFlow]
+    r"""The customer event an assessment is made for: signup (a new account), login (a returning sign-in) or purchase (a payment or credit grant). The account's risk is reported with the decision for this flow."""
+    depth: NotRequired[Depth]
+    r"""How long the synchronous answer waits for sources. quick waits only for the fast sources, those that answer within 500 ms of ingress (or deadline_ms when lower); full waits for the whole budget, up to 3000 ms. Sources still running at the cut continue asynchronously and update the assessment either way."""
     policy_context: NotRequired[AssessmentRequestPolicyContextTypedDict]
     request_id: NotRequired[str]
     r"""An optional provider correlation id, echoed back. It is not an idempotency key. Refuses an exact-shape JWT or a bare 40, 64 or 128 character hex digest; a UUID is accepted."""
@@ -53,6 +59,12 @@ class AssessmentRequest(BaseModel):
 
     identifiers: AssessmentRequestIdentifiers
     r"""At least one of email, username or phone. name and ip refine the match and travel beside a lookup identifier; a body with only name or ip is refused with 400."""
+
+    flow: Optional[AssessmentFlow] = None
+    r"""The customer event an assessment is made for: signup (a new account), login (a returning sign-in) or purchase (a payment or credit grant). The account's risk is reported with the decision for this flow."""
+
+    depth: Optional[Depth] = None
+    r"""How long the synchronous answer waits for sources. quick waits only for the fast sources, those that answer within 500 ms of ingress (or deadline_ms when lower); full waits for the whole budget, up to 3000 ms. Sources still running at the cut continue asynchronously and update the assessment either way."""
 
     policy_context: Optional[AssessmentRequestPolicyContext] = None
 
@@ -78,6 +90,8 @@ class AssessmentRequest(BaseModel):
     def serialize_model(self, handler):
         optional_fields = set(
             [
+                "flow",
+                "depth",
                 "policy_context",
                 "request_id",
                 "deadline_ms",

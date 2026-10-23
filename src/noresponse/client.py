@@ -130,6 +130,8 @@ class Assessments(_Assessments):
         account_id: str,
         identifiers: Identifiers,
         idempotency_key: Optional[str] = None,
+        flow: Optional[models.shared.AssessmentFlow] = None,
+        depth: Optional[models.shared.Depth] = None,
         policy_context: Optional[PolicyContext] = None,
         request_id: Optional[str] = None,
         deadline_ms: Optional[int] = None,
@@ -149,13 +151,17 @@ class Assessments(_Assessments):
         the webhook). idempotency_key is generated when omitted and is sent
         again on every retry of this call; pass your own, derived from your
         signup attempt, so that a retry from your side replays the same
-        assessment instead of starting new work. issued_credential is
+        assessment instead of starting new work. flow is "signup", "login" or
+        "purchase"; depth is "quick" or "full" (by default full for signup and
+        purchase, quick for login). issued_credential is
         {"sha256": hash_issued_credential(key)} when your gate issued a key.
         """
         response = _sync(super().create)(
             idempotency_key=_key(idempotency_key),
             account_id=account_id,
             identifiers=cast(Any, identifiers),
+            flow=flow,
+            depth=depth,
             policy_context=policy_context,
             request_id=request_id,
             deadline_ms=deadline_ms,
@@ -176,6 +182,8 @@ class Assessments(_Assessments):
         account_id: str,
         identifiers: Identifiers,
         idempotency_key: Optional[str] = None,
+        flow: Optional[models.shared.AssessmentFlow] = None,
+        depth: Optional[models.shared.Depth] = None,
         policy_context: Optional[PolicyContext] = None,
         request_id: Optional[str] = None,
         deadline_ms: Optional[int] = None,
@@ -193,6 +201,8 @@ class Assessments(_Assessments):
             idempotency_key=_key(idempotency_key),
             account_id=account_id,
             identifiers=cast(Any, identifiers),
+            flow=flow,
+            depth=depth,
             policy_context=policy_context,
             request_id=request_id,
             deadline_ms=deadline_ms,
