@@ -17,6 +17,8 @@ from __future__ import annotations
 
 import json
 import logging
+import math
+import time
 import urllib.error
 import urllib.request
 from dataclasses import dataclass
@@ -53,9 +55,14 @@ LatePolicy = Mapping[str, str]
 # Revoke sessions on review and block; do nothing on allow or step_up. Banning is opt-in.
 DEFAULT_LATE_RESULT_POLICY: LatePolicy = {"allow": NONE, "step_up": NONE, "review": REVOKE_SESSIONS, "block": REVOKE_SESSIONS}
 
-# transport(method, url, headers, body) -> (status, response body bytes).
-# The default uses urllib. Pass your own for a proxy or for tests.
-Transport = Callable[[str, str, Mapping[str, str], Optional[bytes]], Tuple[int, bytes]]
+# transport(method, url, headers, body) -> (status, response body bytes), or
+# (status, body, response headers) so a 429's Retry-After and
+# X-RateLimit-Reset are honoured. The default uses urllib and returns the
+# headers. Pass your own for a proxy or for tests.
+Transport = Callable[
+    [str, str, Mapping[str, str], Optional[bytes]],
+    Union[Tuple[int, bytes], Tuple[int, bytes, Mapping[str, str]]],
+]
 
 
 class ProviderActionError(Exception):
@@ -185,24 +192,77 @@ def handle_late_result(
     return LateResult(event, ran if ran in _ACTIONS else action, user_id)
 
 
-def _urllib_transport(method: str, url: str, headers: Mapping[str, str], body: Optional[bytes]) -> Tuple[int, bytes]:
+def _urllib_transport(method: str, url: str, headers: Mapping[str, str], body: Optional[bytes]) -> Tuple[int, bytes, Mapping[str, str]]:
     request = urllib.request.Request(url, data=body, method=method, headers=dict(headers))
     try:
         with urllib.request.urlopen(request, timeout=30) as response:  # noqa: S310 - caller-supplied https base
-            return response.status, response.read()
+            return response.status, response.read(), dict(response.headers.items())
     except urllib.error.HTTPError as error:
         try:
-            return error.code, error.read()
+            return error.code, error.read(), dict(error.headers.items()) if error.headers else {}
         finally:
             error.close()
 
 
+# Rate limits. Auth0 answers 429 when the Management API rate limit is hit,
+# and a 429 means it did not act, so the call is safe to send again, a DELETE
+# included. One revoke or ban waits at most _RATE_LIMIT_BUDGET seconds in all,
+# and each call retries at most _RATE_LIMIT_RETRIES times: it waits
+# Retry-After seconds, else until X-RateLimit-Reset (Unix seconds), else
+# 0.25, 0.5, 1 and 2 s. A wait that would pass the budget is not started: the
+# 429 raises at once as ProviderActionError, the webhook answers 5xx and
+# NoResponse delivers it again later. The budget keeps the handler inside the
+# 5 s a delivery has to be answered.
+_RATE_LIMIT_RETRIES = 4
+_RATE_LIMIT_BUDGET = 3.0
+_RATE_LIMIT_BACKOFF = 0.25
+
+
+def _header(headers: Mapping[str, str], name: str) -> Optional[str]:
+    for key, value in headers.items():
+        if key.lower() == name:
+            return str(value).strip()
+    return None
+
+
+def _number(text: Optional[str]) -> Optional[float]:
+    try:
+        value = float(text) if text else None
+    except ValueError:
+        return None
+    return value if value is not None and math.isfinite(value) else None
+
+
+def _rate_limit_wait(headers: Mapping[str, str], retry: int) -> float:
+    """How long a 429 asks to wait, in seconds."""
+    after = _number(_header(headers, "retry-after"))
+    if after is not None and after >= 0:
+        return after
+    reset = _number(_header(headers, "x-ratelimit-reset"))
+    if reset is not None:
+        return max(0.0, reset - time.time())
+    return _RATE_LIMIT_BACKOFF * 2**retry
+
+
 class _Caller:
-    def __init__(self, name: str, base_url: str, authorization: str, transport: Optional[Transport]) -> None:
+    def __init__(
+        self,
+        name: str,
+        base_url: str,
+        authorization: str,
+        transport: Optional[Transport],
+        retry_rate_limits: bool = False,
+    ) -> None:
         self.name = name
         self.base = base_url.rstrip("/")
         self.authorization = authorization
         self.transport = transport or _urllib_transport
+        self.retry_rate_limits = retry_rate_limits
+        self.waited = 0.0
+
+    def fresh(self) -> "_Caller":
+        """A caller with the same settings and its own rate-limit budget, for one action."""
+        return _Caller(self.name, self.base, self.authorization, self.transport, self.retry_rate_limits)
 
     def __call__(
         self,
@@ -217,7 +277,18 @@ class _Caller:
         if body is not None:
             headers["Content-Type"] = "application/json"
             data = json.dumps(body, separators=(",", ":")).encode("utf-8")
-        status, text = self.transport(method, url, headers, data)
+        retry = 0
+        while True:
+            answer = self.transport(method, url, headers, data)
+            status, text = answer[0], answer[1]
+            if status == 429 and self.retry_rate_limits and retry < _RATE_LIMIT_RETRIES:
+                wait = _rate_limit_wait(answer[2] if len(answer) > 2 else {}, retry)  # type: ignore[misc]
+                if self.waited + wait <= _RATE_LIMIT_BUDGET:
+                    self.waited += wait
+                    time.sleep(wait)
+                    retry += 1
+                    continue
+            break
         # Every call names a user or a session. A 404 means it is already gone,
         # so revoke and ban count it as done and a repeated delivery does not fail.
         if status == 404:
@@ -353,24 +424,26 @@ class _Auth0(LateResultProvider):
     _PAGE = 100
 
     def __init__(self, call: _Caller) -> None:
-        self._call = call
+        self._caller = call
 
-    def _block(self, user: str) -> None:
-        self._call("PATCH", f"/users/{user}", body={"blocked": True})
+    @staticmethod
+    def _block(call: _Caller, user: str) -> None:
+        call("PATCH", f"/users/{user}", body={"blocked": True})
 
-    def _delete_sessions(self, user: str) -> bool:
+    @staticmethod
+    def _delete_sessions(call: _Caller, user: str) -> bool:
         """End every session; False when the plan has no sessions API."""
         try:
-            self._call("DELETE", f"/users/{user}/sessions")
+            call("DELETE", f"/users/{user}/sessions")
         except ProviderActionError as error:
             if _not_on_plan(error):
                 return False
             raise
         return True
 
-    def _delete_refresh_tokens(self, user_id: str, user: str) -> None:
+    def _delete_refresh_tokens(self, call: _Caller, user_id: str, user: str) -> None:
         try:
-            self._call("DELETE", f"/users/{user}/refresh-tokens")
+            call("DELETE", f"/users/{user}/refresh-tokens")
             return
         except ProviderActionError as error:
             if not _not_on_plan(error):
@@ -379,7 +452,7 @@ class _Auth0(LateResultProvider):
         ids: list = []
         for kind in ("refresh_token", "rotating_refresh_token"):
             for page in range(10):
-                body = self._call(
+                body = call(
                     "GET",
                     "/device-credentials",
                     {"user_id": user_id, "type": kind, "page": str(page), "per_page": str(self._PAGE)},
@@ -389,15 +462,16 @@ class _Auth0(LateResultProvider):
                 if len(listed) < self._PAGE:
                     break
         for credential_id in ids:
-            self._call("DELETE", f"/device-credentials/{quote(credential_id, safe='')}")
+            call("DELETE", f"/device-credentials/{quote(credential_id, safe='')}")
 
     def _revoke(self, user_id: str) -> str:
         user = _segment(user_id)
-        ended = self._delete_sessions(user)
+        call = self._caller.fresh()
+        ended = self._delete_sessions(call, user)
         # Without the sessions API a login session survives; blocking is the only way to end it.
         if not ended:
-            self._block(user)
-        self._delete_refresh_tokens(user_id, user)
+            self._block(call, user)
+        self._delete_refresh_tokens(call, user_id, user)
         return REVOKE_SESSIONS if ended else BAN
 
     def revoke_sessions(self, user_id: str) -> None:
@@ -405,10 +479,11 @@ class _Auth0(LateResultProvider):
 
     def ban(self, user_id: str) -> None:
         user = _segment(user_id)
-        self._block(user)
+        call = self._caller.fresh()
+        self._block(call, user)
         # The block already ends a session the plan cannot delete.
-        self._delete_sessions(user)
-        self._delete_refresh_tokens(user_id, user)
+        self._delete_sessions(call, user)
+        self._delete_refresh_tokens(call, user_id, user)
 
     def act(self, action: str, user_id: str) -> str:
         if action == BAN:
@@ -441,13 +516,19 @@ def auth0_actions(
     the refresh tokens, and act reports "ban". Unblock the user in the
     dashboard to undo it. Any other refusal, such as 403 insufficient_scope,
     raises.
+
+    A 429 from the Management API is waited out and retried: Retry-After,
+    else X-RateLimit-Reset, else 0.25 s doubling, at most 4 retries a call and
+    3 s of waiting a revoke or ban. Past that the 429 raises as
+    ProviderActionError. A custom transport passes the response headers as a
+    third tuple element; without them the backoff applies.
     """
     if not token:
         raise ValueError("auth0_actions needs token")
     base = base_url or (f"https://{domain}/api/v2" if domain else None)
     if not base:
         raise ValueError("auth0_actions needs domain or base_url")
-    return _Auth0(_Caller("auth0", base, f"Bearer {token}", transport))
+    return _Auth0(_Caller("auth0", base, f"Bearer {token}", transport, retry_rate_limits=True))
 
 
 class _LogOnly(LateResultProvider):

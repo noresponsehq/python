@@ -2,6 +2,7 @@ import hashlib
 import hmac
 import json
 import threading
+import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 from types import SimpleNamespace
@@ -97,10 +98,12 @@ class MockProvider:
                 call.accept = self.headers.get("Accept")
                 call.content_type = self.headers.get("Content-Type")
                 outer.calls.append(call)
-                status, body = route(call) or (404, {"error": "not found"})
+                status, body, *extra = route(call) or (404, {"error": "not found"})
                 payload = b"" if body is None else json.dumps(body).encode()
                 self.send_response(status)
                 self.send_header("Content-Type", "application/json")
+                for name, value in (extra[0] if extra else {}).items():
+                    self.send_header(name, value)
                 self.send_header("Content-Length", str(len(payload)))
                 self.end_headers()
                 self.wfile.write(payload)
@@ -378,6 +381,57 @@ def test_auth0_with_refresh_tokens_but_no_sessions_api_still_blocks_and_a_scope_
         handle_late_result(raw, headers, SECRETS, auth0_actions("mgmt_token", base_url=scoped.url + "/api/v2"), now=NOW)
     assert refused.value.status == 403 and refused.value.code == "insufficient_scope"
     assert [c.method for c in scoped.calls] == ["DELETE"]
+
+
+TOO_MANY = {"statusCode": 429, "error": "Too Many Requests", "message": "Global limit has been reached", "errorCode": "too_many_requests"}
+
+
+def test_auth0_waits_out_a_429_from_the_management_api_and_retries_the_call(mock_provider):
+    tenant = Auth0WithoutSessionsApi("auth0%7Cabc")
+    # One 429 each: Retry-After, an X-RateLimit-Reset already past, and no header (the backoff).
+    limited = {
+        "GET refresh_token": {"Retry-After": "0"},
+        "DELETE /api/v2/device-credentials/dcr_a": {"X-RateLimit-Reset": str(int(time.time()) - 5)},
+        "DELETE /api/v2/device-credentials/dcr_b": {},
+    }
+
+    def route(c):
+        key = f"GET {c.query.get('type')}" if c.method == "GET" else f"{c.method} {c.path}"
+        if key in limited:
+            return 429, TOO_MANY, limited.pop(key)
+        return tenant(c)
+
+    mock = mock_provider(route)
+    raw, headers = delivery(REVIEW, "auth0|abc")
+    result = handle_late_result(raw, headers, SECRETS, auth0_actions("mgmt_token", base_url=mock.url + "/api/v2"), now=NOW)
+    assert result.action == "ban"
+    assert tenant.blocked and tenant.credentials == [] and limited == {}
+    sent = [f"{c.method} {c.path} {c.query.get('type', '')}".rstrip() for c in mock.calls]
+    assert sent.count("GET /api/v2/device-credentials refresh_token") == 2
+    assert sent.count("DELETE /api/v2/device-credentials/dcr_a") == 2
+    assert sent.count("DELETE /api/v2/device-credentials/dcr_b") == 2
+
+
+def test_auth0_raises_a_429_at_once_when_the_wait_it_asks_for_passes_the_budget(mock_provider):
+    mock = mock_provider(lambda c: (429, TOO_MANY, {"Retry-After": "60"}))
+    started = time.monotonic()
+    with pytest.raises(ProviderActionError) as limited:
+        auth0_actions("mgmt_token", base_url=mock.url + "/api/v2").act("revoke_sessions", "auth0|abc")
+    assert limited.value.status == 429 and limited.value.code == "too_many_requests"
+    assert time.monotonic() - started < 1
+    assert len(mock.calls) == 1
+
+
+def test_auth0_with_a_two_tuple_transport_falls_back_to_the_backoff():
+    answers = [(429, b""), (204, b""), (204, b"")]
+    sent = []
+
+    def transport(method, url, headers, body):
+        sent.append(f"{method} {url}")
+        return answers.pop(0)
+
+    assert auth0_actions("mgmt_token", base_url="https://tenant.example/api/v2", transport=transport).act("revoke_sessions", "auth0|abc") == "revoke_sessions"
+    assert len(sent) == 3 and sent[0] == sent[1]
 
 
 def test_a_provider_without_act_reports_the_action_asked_for():
