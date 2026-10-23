@@ -7,7 +7,7 @@ client.py, which wraps the generated one.
 
 from __future__ import annotations
 
-from .client import Assessments, Integrations, Keys, NoResponse
+from .client import Accounts, Assessments, Integrations, Keys, NoResponse
 from .auth import (
     from_auth0,
     from_clerk,
@@ -37,6 +37,7 @@ from .errors import (
 )
 from .models.shared import AuthContext, AuthContextTypedDict
 from .responses import (
+    Account,
     Assessment,
     AssessmentOutcome,
     AssessmentPage,
@@ -69,9 +70,11 @@ from .late_results import (
 
 __all__ = [
     "NoResponse",
+    "Accounts",
     "Assessments",
     "Keys",
     "Integrations",
+    "Account",
     "Assessment",
     "AssessmentOutcome",
     "AssessmentPage",

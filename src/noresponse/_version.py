@@ -1,11 +1,11 @@
 import importlib.metadata
 
 __title__: str = "noresponse"
-__version__: str = "2.0.19"
+__version__: str = "2.0.20"
 __response_mode_header__: str = "x-noresponse-response-mode"
 __openapi_doc_version__: str = "1"
 __gen_version__: str = "internal"
-__user_agent__: str = "noresponse-sdk/python 2.0.19 internal 1 noresponse"
+__user_agent__: str = "noresponse-sdk/python 2.0.20 internal 1 noresponse"
 
 try:
     if __package__ is not None:

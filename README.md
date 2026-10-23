@@ -111,6 +111,23 @@ for assessment in page:
 
 In async code, `page = await nr.assessments.query_async(...)`, then `async for assessment in page` and `await page.next_page_async()`.
 
+### Read an account's current risk
+
+An account is the `account_id` you send with your assessments. It holds one current risk: the risk of its latest assessment with a decision. Every assessment updates it.
+
+```python
+account = nr.accounts.get("usr_8f2k1")
+account.risk.score               # 0 (safe) to 100 (risky)
+account.risk.decision            # allow, step_up, review or block
+account.decisions_by_flow.login  # a decision for signup, login and purchase
+account.assessment_id            # the assessment the risk comes from
+
+for assessment in nr.accounts.list_assessments("usr_8f2k1", limit=20):
+    ...  # the same pages as assessments.query, newest first
+```
+
+Both calls need the `history` scope. An account with no decided assessment raises `NotFoundError`. `list_assessments` puts the account id in the URL; use `assessments.query` to keep it in the request body. In async code use `get_async` and `list_assessments_async`.
+
 ### Record an outcome
 
 ```python

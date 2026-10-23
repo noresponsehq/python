@@ -37,6 +37,15 @@ def test_get_returns_the_documented_assessment():
     assert res.assessment_id.startswith("asm_")
 
 
+def test_accounts_return_the_documented_account_and_page():
+    with client() as sdk:
+        account = sdk.accounts.get("acct_7f3a9c")
+        page = sdk.accounts.list_assessments("acct_7f3a9c", limit=20)
+    assert account.id == "acct_7f3a9c" and account.assessment_id.startswith("asm_")
+    assert account.decisions_by_flow.signup == account.risk.decision
+    assert page.account_id == "acct_7f3a9c"
+
+
 def test_async_create():
     async def create():
         async with client() as sdk:

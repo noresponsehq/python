@@ -13,6 +13,7 @@ from typing import Any, Callable, Dict, Optional, TYPE_CHECKING, Union, cast
 import weakref
 
 if TYPE_CHECKING:
+    from noresponse.accounts import Accounts
     from noresponse.assessments import Assessments
     from noresponse.integrations import Integrations
     from noresponse.keys import Keys
@@ -35,6 +36,8 @@ class NoResponse(BaseSDK):
 
     assessments: "Assessments"
     r"""Signup and gateway assessments."""
+    accounts: "Accounts"
+    r"""Your accounts, each with one current risk, and their assessment history."""
     keys: "Keys"
     r"""Your own API keys."""
     integrations: "Integrations"
@@ -43,6 +46,7 @@ class NoResponse(BaseSDK):
     r"""Your webhook endpoints: register, list, rotate signing keys, send test events and delete."""
     _sub_sdk_map = {
         "assessments": ("noresponse.assessments", "Assessments"),
+        "accounts": ("noresponse.accounts", "Accounts"),
         "keys": ("noresponse.keys", "Keys"),
         "integrations": ("noresponse.integrations", "Integrations"),
         "webhook_endpoints": ("noresponse.webhookendpoints", "WebhookEndpoints"),
@@ -212,6 +216,10 @@ class NoResponseWithRawResponse:
         return self._sdk.assessments.with_raw_response
 
     @property
+    def accounts(self):
+        return self._sdk.accounts.with_raw_response
+
+    @property
     def keys(self):
         return self._sdk.keys.with_raw_response
 
@@ -231,6 +239,10 @@ class NoResponseWithStreamingResponse:
     @property
     def assessments(self):
         return self._sdk.assessments.with_streaming_response
+
+    @property
+    def accounts(self):
+        return self._sdk.accounts.with_streaming_response
 
     @property
     def keys(self):

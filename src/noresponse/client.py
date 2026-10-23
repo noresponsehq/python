@@ -8,7 +8,8 @@ A thin layer over the generated operations that makes the common path short:
 * methods return the model itself (an Assessment, not a response envelope), with
   the response headers on its meta attribute;
 * connection failures and timeouts raise APIConnectionError and APITimeoutError;
-* query returns an AssessmentPage you can iterate across pages.
+* query and accounts.list_assessments return an AssessmentPage you can iterate
+  across pages.
 
 Each method has an async twin with the suffix _async.
 """
@@ -26,6 +27,7 @@ import httpx
 from typing_extensions import ParamSpec
 
 from . import models
+from .accounts import Accounts as _Accounts
 from .assessments import Assessments as _Assessments
 from .errors import APIConnectionError, APITimeoutError
 from .httpclient import AsyncHttpClient, HttpClient
@@ -33,6 +35,7 @@ from .integrations import Integrations as _Integrations
 from .keys import Keys as _Keys
 from .webhookendpoints import WebhookEndpoints as _WebhookEndpoints
 from .responses import (
+    Account,
     Assessment,
     AssessmentOutcome,
     AssessmentPage,
@@ -40,6 +43,7 @@ from .responses import (
     IntegrationList,
     KeyRotation,
     ResponseMeta,
+    as_account,
     as_assessment,
     as_integration,
     as_integration_list,
@@ -53,7 +57,7 @@ from .utils.logger import Logger, NoOpLogger
 from ._wait import DEFAULT_WAIT_SECONDS, wait, wait_async
 from .webhooks import Webhook
 
-__all__ = ["DEFAULT_BASE_URL", "DEFAULT_TIMEOUT_MS", "Assessments", "Integrations", "Keys", "NoResponse"]
+__all__ = ["DEFAULT_BASE_URL", "DEFAULT_TIMEOUT_MS", "Accounts", "Assessments", "Integrations", "Keys", "NoResponse"]
 
 DEFAULT_BASE_URL = "https://api.noresponse.org"
 DEFAULT_TIMEOUT_MS = 10_000
@@ -435,7 +439,10 @@ def _outcome(response: Any) -> AssessmentOutcome:
     return as_outcome(response.result, ResponseMeta.from_headers(response.headers))
 
 
-def _page(response: models.operations.QueryAccountAssessmentsResponse, fetch: Callable[[str], Any]) -> AssessmentPage:
+def _page(
+    response: Union[models.operations.QueryAccountAssessmentsResponse, models.operations.ListAccountAssessmentsResponse],
+    fetch: Callable[[str], Any],
+) -> AssessmentPage:
     body = response.result
     return AssessmentPage(
         account_id=body.account_id,
@@ -445,6 +452,139 @@ def _page(response: models.operations.QueryAccountAssessmentsResponse, fetch: Ca
         meta=ResponseMeta.from_headers(response.headers),
         fetch=fetch,
     )
+
+
+class Accounts(_Accounts):
+    """Your accounts.
+
+    An account is the account_id you send with your assessments. It holds one
+    current risk, the risk of its latest assessment with a decision, and its
+    assessments are its history. Both methods need the history scope.
+    """
+
+    def get(  # type: ignore[override]
+        self,
+        account_id: str,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Account:
+        """The account's current risk, with a decision for each flow.
+
+        An account with no unexpired assessment that has a decision raises
+        NotFoundError.
+        """
+        response = _sync(super().get)(
+            account_id, retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        return _account(response)
+
+    async def get_async(  # type: ignore[override]
+        self,
+        account_id: str,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Account:
+        """The asyncio form of get."""
+        response = await _async(super().get_async)(
+            account_id, retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        return _account(response)
+
+    def list_assessments(  # type: ignore[override]
+        self,
+        account_id: str,
+        *,
+        limit: Optional[int] = 20,
+        cursor: Optional[str] = None,
+        response_mode: Optional[models.shared.ResponseMode] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AssessmentPage:
+        """One page of the account's unexpired assessments, newest first.
+
+        The same pages as assessments.query, with the account_id in the URL.
+        Iterate the page to walk every item across every page.
+        """
+        response = _sync(super().list_assessments)(
+            account_id,
+            limit=limit,
+            cursor=cursor,
+            response_mode=response_mode,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        if not isinstance(response, models.operations.ListAccountAssessmentsResponse):
+            return response  # type: ignore[return-value]
+
+        def fetch(next_cursor: str) -> AssessmentPage:
+            return self.list_assessments(
+                account_id,
+                limit=limit,
+                cursor=next_cursor,
+                response_mode=response_mode,
+                retries=retries,
+                server_url=server_url,
+                timeout_ms=timeout_ms,
+                http_headers=http_headers,
+            )
+
+        return _page(response, fetch)
+
+    async def list_assessments_async(  # type: ignore[override]
+        self,
+        account_id: str,
+        *,
+        limit: Optional[int] = 20,
+        cursor: Optional[str] = None,
+        response_mode: Optional[models.shared.ResponseMode] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AssessmentPage:
+        """The asyncio form of list_assessments. Walk every page with ``async for``."""
+        response = await _async(super().list_assessments_async)(
+            account_id,
+            limit=limit,
+            cursor=cursor,
+            response_mode=response_mode,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        if not isinstance(response, models.operations.ListAccountAssessmentsResponse):
+            return response  # type: ignore[return-value]
+
+        def fetch(next_cursor: str) -> Awaitable[AssessmentPage]:
+            return self.list_assessments_async(
+                account_id,
+                limit=limit,
+                cursor=next_cursor,
+                response_mode=response_mode,
+                retries=retries,
+                server_url=server_url,
+                timeout_ms=timeout_ms,
+                http_headers=http_headers,
+            )
+
+        return _page(response, fetch)
+
+
+def _account(response: Any) -> Account:
+    if not isinstance(response, models.operations.GetAccountResponse):
+        return response  # type: ignore[no-any-return]
+    return as_account(response.result, ResponseMeta.from_headers(response.headers))
 
 
 class Keys(_Keys):
@@ -889,11 +1029,13 @@ class NoResponse(_NoResponse):
     """Webhook verification: ``nr.webhooks.construct_event(payload, headers, secrets)``."""
 
     assessments: Assessments  # type: ignore[assignment]
+    accounts: Accounts  # type: ignore[assignment]
     keys: Keys  # type: ignore[assignment]
     webhook_endpoints: WebhookEndpoints  # type: ignore[assignment]
     integrations: Integrations  # type: ignore[assignment]
     _sub_sdk_map: Dict[str, Any] = {
         "assessments": ("noresponse.client", "Assessments"),
+        "accounts": ("noresponse.client", "Accounts"),
         "keys": ("noresponse.client", "Keys"),
         "webhook_endpoints": ("noresponse.client", "WebhookEndpoints"),
         "integrations": ("noresponse.client", "Integrations"),

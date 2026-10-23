@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: 1154b96455629ed85a6987823fbb8772
+  docChecksum: 526526e5582d19f3ac292a8627322dbf
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 2.0.19
-  configChecksum: 4c49c1627a023e20e36e707d10ac5109
+  releaseVersion: 2.0.20
+  configChecksum: 2b71b496b13e4cfd70c2523f2fbcd29c
 features:
   python:
     additionalDependencies: 1.1.0
@@ -62,10 +62,18 @@ trackedFiles:
     last_write_checksum: sha1:17cf776d6df8e94772bad10e4bc5daaa5b29b197
   docs/models/operations/deletewebhookendpointresponse.md:
     last_write_checksum: sha1:86682c6b0d271c517ae593a2a0f6723803920434
+  docs/models/operations/getaccountrequest.md:
+    last_write_checksum: sha1:c06b38ebdd3101905445f36f686339ff9098f04e
+  docs/models/operations/getaccountresponse.md:
+    last_write_checksum: sha1:a4dd70a61b0a5b43121cdcc9f36e86160bb54dc4
   docs/models/operations/getassessmentrequest.md:
     last_write_checksum: sha1:693cffa864fd86a87da92ead71794fb57d37c1f8
   docs/models/operations/getassessmentresponse.md:
     last_write_checksum: sha1:46c883599ed9922f483ff4aaa218d6cb9cb81793
+  docs/models/operations/listaccountassessmentsrequest.md:
+    last_write_checksum: sha1:477b40348f3cd372205da0888e7d7ff9f8c248b5
+  docs/models/operations/listaccountassessmentsresponse.md:
+    last_write_checksum: sha1:bcd96312d44298baff7085755ff5d21076816de1
   docs/models/operations/listintegrationsresponse.md:
     last_write_checksum: sha1:6d5ddd85a36e545ed4f5146a2edf6c00bb334a81
   docs/models/operations/listwebhookendpointsresponse.md:
@@ -90,24 +98,34 @@ trackedFiles:
     last_write_checksum: sha1:88e1fca0ab47559820aa2eaa072516992e9cf630
   docs/models/operations/sendwebhooktesteventresponse.md:
     last_write_checksum: sha1:21ccdb4987573ae984aacdebd5ea4b5be561a50e
+  docs/models/shared/account.md:
+    last_write_checksum: sha1:38c2b25744419d470b4e7fdf87d2ff809ddbda0f
+  docs/models/shared/accountdecision.md:
+    last_write_checksum: sha1:1f8ea49199ea413ec46da1430832db55ab1a448b
+  docs/models/shared/accountdecisionsbyflow.md:
+    last_write_checksum: sha1:30dec23d7d2feb3a830d01581f8029d011d6a322
+  docs/models/shared/accountrisk.md:
+    last_write_checksum: sha1:ab79a53d40406e985589ce609a884bc9ef586575
+  docs/models/shared/accountriskreason.md:
+    last_write_checksum: sha1:221b4523cb63a7a668995a3f123fe6862a6b9b49
   docs/models/shared/alternatename.md:
     last_write_checksum: sha1:f570181d957d21d0af9792dabb2bef986d7df4be
   docs/models/shared/alternatenameunion.md:
     last_write_checksum: sha1:9d9be416f1d10641c6316264783ff5c9111d21d9
   docs/models/shared/assessment.md:
-    last_write_checksum: sha1:a921f0978dee7c9c1d18e52903ad666331ee26c3
+    last_write_checksum: sha1:83cd542aab7c58e052025648a27cfe98f3ea7250
   docs/models/shared/assessmentauthcontext.md:
     last_write_checksum: sha1:8e31861465964d44897a3efd6d41b53430081748
   docs/models/shared/assessmentlist.md:
-    last_write_checksum: sha1:38db941ad296b86703d2757cdd00a3cb576efe26
+    last_write_checksum: sha1:14b6358fb1f893d1b4acc6ee2abc7aa2c5faa8d7
   docs/models/shared/assessmentoutcome.md:
     last_write_checksum: sha1:5778c66e7dd5e5c9eb85721d4789033848a2b5e1
   docs/models/shared/assessmentoutcomerequest.md:
     last_write_checksum: sha1:93dc0ab87725eabe9ee2c049e2da3b1eaf3e5561
   docs/models/shared/assessmentquery.md:
-    last_write_checksum: sha1:aa3e65cc29b3fc9692c0739d04f38f68bc4a7ba5
+    last_write_checksum: sha1:df6bd8162325083901224ab84ba9d554958d66e4
   docs/models/shared/assessmentrequest.md:
-    last_write_checksum: sha1:9011ec75d2afe8fd974897e57f667db042830e0c
+    last_write_checksum: sha1:fcd653c621fe1f50333d50f3ae807af752603120
   docs/models/shared/assessmentrequestclientcontext.md:
     last_write_checksum: sha1:46a56f656c695960f919108d0d43ae77eebaf195
   docs/models/shared/assessmentrequestidentifiers.md:
@@ -301,7 +319,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:b597c55ad0872655b4c18fabb14f167f647aa3ad
   pyproject.toml:
-    last_write_checksum: sha1:6e5b42af33fed10f755a6e278a31e69083bffaf5
+    last_write_checksum: sha1:a49b4e5702241ec00c624a24236514492d101b30
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -317,9 +335,11 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:d6266cea779cc6a254ca1371e7ecf22650ed694d
+    last_write_checksum: sha1:fdb9098b1c34d4346dbd3467abb1a2d24e7ebc96
+  src/noresponse/accounts.py:
+    last_write_checksum: sha1:dc6769a4a68e353a3e76eb370cbe0f8e5fdf41a5
   src/noresponse/assessments.py:
-    last_write_checksum: sha1:f4ec29fc67d3c04bb5888d21cbd472b0cf3e32e8
+    last_write_checksum: sha1:0addf207b8ca9b695a564612e82185131ab99dd7
   src/noresponse/basesdk.py:
     last_write_checksum: sha1:504a1120368ba40f8c5a5f259812c0e344e5b233
   src/noresponse/httpclient.py:
@@ -353,7 +373,7 @@ trackedFiles:
   src/noresponse/models/errors/responsevalidationerror.py:
     last_write_checksum: sha1:75d25eced330a4b3c43729ec087ff5a41cf07577
   src/noresponse/models/operations/__init__.py:
-    last_write_checksum: sha1:0443b09284ec92f375863ba3fd13d642fd68d078
+    last_write_checksum: sha1:ccfa776462ebbf004c0ab86360f29399169fe9ee
   src/noresponse/models/operations/createassessment.py:
     last_write_checksum: sha1:41910f288e8043a547c1164dfd75d99a187cf328
   src/noresponse/models/operations/createintegration.py:
@@ -364,8 +384,12 @@ trackedFiles:
     last_write_checksum: sha1:103b3db22bd57f0454090c618cbd052e5bdf08ae
   src/noresponse/models/operations/deletewebhookendpoint.py:
     last_write_checksum: sha1:a02fc4a0e1416cbd086c1401a1aa16a8b2158169
+  src/noresponse/models/operations/getaccount.py:
+    last_write_checksum: sha1:c4fd9d3979f1a5ca132921fca3b4a428c78fde3e
   src/noresponse/models/operations/getassessment.py:
     last_write_checksum: sha1:d8a79ac0094862996ef5e2de40c0411de62d48a8
+  src/noresponse/models/operations/listaccountassessments.py:
+    last_write_checksum: sha1:25ef1acb61e8a1e9249fa2a9273be0282d712edf
   src/noresponse/models/operations/listintegrations.py:
     last_write_checksum: sha1:c3a3899da39715e9cb6b10d520315a2a29abb4eb
   src/noresponse/models/operations/listwebhookendpoints.py:
@@ -383,21 +407,31 @@ trackedFiles:
   src/noresponse/models/operations/sendwebhooktestevent.py:
     last_write_checksum: sha1:845701b811fc9df26377c00424393a01ff7c836a
   src/noresponse/models/shared/__init__.py:
-    last_write_checksum: sha1:77fa7b1188636498b279ee09d0bd3d1b2db24f11
+    last_write_checksum: sha1:92ac0190a8666b94cc72a0a6ae5b1b0003500c82
+  src/noresponse/models/shared/account.py:
+    last_write_checksum: sha1:9470d39280634a29ba5f79173dd8a5e685c96bd7
+  src/noresponse/models/shared/accountdecision.py:
+    last_write_checksum: sha1:fc3583004988b363224622f778d72e9c3b30a55e
+  src/noresponse/models/shared/accountdecisionsbyflow.py:
+    last_write_checksum: sha1:5fb1947a69df7d45fed8b29ef26e3b1e101ffa75
+  src/noresponse/models/shared/accountrisk.py:
+    last_write_checksum: sha1:76680bf3d251e9a302999b3e42b66c6d81ae1e64
+  src/noresponse/models/shared/accountriskreason.py:
+    last_write_checksum: sha1:00a4c06e9b4ee4bbe1f9d45660a47cdb8154878e
   src/noresponse/models/shared/assessment.py:
-    last_write_checksum: sha1:efd8d4b74ee786f87d394ab1214ee39de6983c00
+    last_write_checksum: sha1:452a405bc7b73a88c7b4efa4be1d3b36ad636d0a
   src/noresponse/models/shared/assessmentauthcontext.py:
     last_write_checksum: sha1:b37e73bc612d05b58caeb67a7507f454362a513e
   src/noresponse/models/shared/assessmentlist.py:
-    last_write_checksum: sha1:7afae8c7b77796abd69c27d7c37065d79569b549
+    last_write_checksum: sha1:ae063178ad35e4c40ccd712f3efb24742bfda441
   src/noresponse/models/shared/assessmentoutcome.py:
     last_write_checksum: sha1:ef7d218952b392e5ec69d17421c0baf272dd23e2
   src/noresponse/models/shared/assessmentoutcomerequest.py:
     last_write_checksum: sha1:8fb183ac6c293c50288eaee88d7bd39221a88da4
   src/noresponse/models/shared/assessmentquery.py:
-    last_write_checksum: sha1:7847da38356052df7058ca2753239d14b6ce0669
+    last_write_checksum: sha1:6403ee6fa24b248d9f074d2e2209737aa4e7275e
   src/noresponse/models/shared/assessmentrequest.py:
-    last_write_checksum: sha1:38e3d59d921bc339a284ea3d4e1399db5f3a1d67
+    last_write_checksum: sha1:198b5daefcb79649b1a63baa4f6a4db9910af9ac
   src/noresponse/models/shared/assessmentrequestclientcontext.py:
     last_write_checksum: sha1:55c1ec17cda1d43a6c8b6d5527234c342e3b8b10
   src/noresponse/models/shared/assessmentrequestidentifiers.py:
@@ -561,7 +595,7 @@ trackedFiles:
   src/noresponse/py.typed:
     last_write_checksum: sha1:8efc425ffe830805ffcc0f3055871bdcdc542c60
   src/noresponse/sdk.py:
-    last_write_checksum: sha1:51a1d9c55349e4253baff18dc9258e020d255be8
+    last_write_checksum: sha1:c66256bc4a40dffa68ffbbdf769b8a1426b0185b
   src/noresponse/sdkconfiguration.py:
     last_write_checksum: sha1:2126d5a8dce987b438580cebb4a623177e5ef6d1
   src/noresponse/types/__init__.py:
@@ -827,6 +861,31 @@ examples:
     page:
       requestBody:
         application/json: {"account_id": "acct_7f3a9c", "limit": 20, "cursor": "eyJvIjoyMH0"}
+      responses:
+        "200":
+          application/json: {"schema_version": "1", "account_id": "acct_7f3a9c", "items": [{"schema_version": "1", "assessment_id": "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "account_id": "acct_7f3a9c", "request_id": "req-2026-10-14-0001", "status": "complete", "recommendation": "step_up", "confidence": "medium", "signals": [{"type": "account_presence", "identifier": "email", "outcome": "found", "source_id": "github", "evidence_ref": "evr_01JA2Z8K6Q4V7W9XBCDEFGHJKN", "observed_at": "2026-10-14T09:00:00.210Z", "last_checked_at": "2026-10-14T09:00:00.210Z", "freshness": "fresh"}, {"type": "account_presence", "identifier": "username", "outcome": "not_found", "source_id": "gitlab", "last_checked_at": "2026-10-14T09:00:00.190Z", "freshness": "fresh"}, {"type": "breach_exposure", "identifier": "email", "outcome": "found", "source_id": "breach.corpus", "evidence_ref": "evr_01JA2Z8K6Q4V7W9XBCDEFGHJKP", "observed_at": "2025-03-02T00:00:00Z", "last_checked_at": "2026-10-14T09:00:00.150Z", "freshness": "stale"}], "incomplete_sources": [], "policy_version": "heuristic-2026-10.1", "policy_basis": "heuristic_unvalidated", "assessment_version": 2, "created_at": "2026-10-14T09:00:00.000Z", "updated_at": "2026-10-14T09:00:00.412Z", "expires_at": "2027-10-14T09:00:00.000Z", "timing": {"deadline_ms": 300, "elapsed_ms": 287}}, {"schema_version": "1", "assessment_id": "asm_01JA2Z9Y3R5T6V7W8X9ZABCDEF", "account_id": "acct_7f3a9c", "request_id": "req-2026-10-01-0007", "status": "complete", "recommendation": "allow", "confidence": "high", "signals": [{"type": "account_presence", "identifier": "username", "outcome": "not_found", "source_id": "gitlab", "last_checked_at": "2026-10-14T09:00:00.190Z", "freshness": "fresh"}], "incomplete_sources": [], "policy_version": "heuristic-2026-10.1", "policy_basis": "heuristic_unvalidated", "assessment_version": 2, "created_at": "2026-10-01T12:00:00Z", "updated_at": "2026-10-01T12:00:05Z", "expires_at": "2027-10-01T12:00:00.000Z", "timing": {"deadline_ms": 300, "elapsed_ms": 287}}], "next_cursor": "eyJiIjoiY2hrXzAxIn0", "retention_days": 365}
+  getAccount:
+    current:
+      parameters:
+        path:
+          account_id: "acct_7f3a9c"
+      responses:
+        "200":
+          application/json: {"schema_version": "1", "id": "acct_7f3a9c", "risk": {"score": 35, "decision": "step_up", "reasons": [{"code": "new_email", "weight": 20, "identifier": "email"}, {"code": "proxy_ip", "weight": 15, "identifier": "ip"}]}, "decisions_by_flow": {"signup": "step_up", "login": "step_up", "purchase": "step_up"}, "assessment_id": "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "updated_at": "2026-10-14T09:00:00.412Z"}
+    blocked:
+      parameters:
+        path:
+          account_id: "acct_7f3a9c"
+      responses:
+        "200":
+          application/json: {"schema_version": "1", "id": "acct_7f3a9c", "risk": {"score": 90, "decision": "block", "reasons": [{"code": "disposable_email", "weight": 40, "identifier": "email"}, {"code": "proxy_ip", "weight": 30, "identifier": "ip"}, {"code": "many_recent_signups", "weight": 20}]}, "decisions_by_flow": {"signup": "block", "login": "block", "purchase": "block"}, "assessment_id": "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "updated_at": "2026-10-14T09:00:00.412Z"}
+  listAccountAssessments:
+    page:
+      parameters:
+        path:
+          account_id: "acct_7f3a9c"
+        query:
+          limit: 20
       responses:
         "200":
           application/json: {"schema_version": "1", "account_id": "acct_7f3a9c", "items": [{"schema_version": "1", "assessment_id": "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "account_id": "acct_7f3a9c", "request_id": "req-2026-10-14-0001", "status": "complete", "recommendation": "step_up", "confidence": "medium", "signals": [{"type": "account_presence", "identifier": "email", "outcome": "found", "source_id": "github", "evidence_ref": "evr_01JA2Z8K6Q4V7W9XBCDEFGHJKN", "observed_at": "2026-10-14T09:00:00.210Z", "last_checked_at": "2026-10-14T09:00:00.210Z", "freshness": "fresh"}, {"type": "account_presence", "identifier": "username", "outcome": "not_found", "source_id": "gitlab", "last_checked_at": "2026-10-14T09:00:00.190Z", "freshness": "fresh"}, {"type": "breach_exposure", "identifier": "email", "outcome": "found", "source_id": "breach.corpus", "evidence_ref": "evr_01JA2Z8K6Q4V7W9XBCDEFGHJKP", "observed_at": "2025-03-02T00:00:00Z", "last_checked_at": "2026-10-14T09:00:00.150Z", "freshness": "stale"}], "incomplete_sources": [], "policy_version": "heuristic-2026-10.1", "policy_basis": "heuristic_unvalidated", "assessment_version": 2, "created_at": "2026-10-14T09:00:00.000Z", "updated_at": "2026-10-14T09:00:00.412Z", "expires_at": "2027-10-14T09:00:00.000Z", "timing": {"deadline_ms": 300, "elapsed_ms": 287}}, {"schema_version": "1", "assessment_id": "asm_01JA2Z9Y3R5T6V7W8X9ZABCDEF", "account_id": "acct_7f3a9c", "request_id": "req-2026-10-01-0007", "status": "complete", "recommendation": "allow", "confidence": "high", "signals": [{"type": "account_presence", "identifier": "username", "outcome": "not_found", "source_id": "gitlab", "last_checked_at": "2026-10-14T09:00:00.190Z", "freshness": "fresh"}], "incomplete_sources": [], "policy_version": "heuristic-2026-10.1", "policy_basis": "heuristic_unvalidated", "assessment_version": 2, "created_at": "2026-10-01T12:00:00Z", "updated_at": "2026-10-01T12:00:05Z", "expires_at": "2027-10-01T12:00:00.000Z", "timing": {"deadline_ms": 300, "elapsed_ms": 287}}], "next_cursor": "eyJiIjoiY2hrXzAxIn0", "retention_days": 365}

@@ -12,6 +12,7 @@ from typing import Any, AsyncIterator, Callable, Iterator, List, Mapping, Option
 
 from pydantic import BaseModel, PrivateAttr
 
+from .models.shared.account import Account as _Account
 from .models.shared.assessment import Assessment as _Assessment
 from .models.shared.assessmentoutcome import AssessmentOutcome as _AssessmentOutcome
 from .models.shared.integration import Integration as _Integration
@@ -19,6 +20,7 @@ from .models.shared.integrationlist import IntegrationList as _IntegrationList
 from .models.shared.keyrotation import KeyRotation as _KeyRotation
 
 __all__ = [
+    "Account",
     "Assessment",
     "AssessmentOutcome",
     "AssessmentPage",
@@ -106,6 +108,16 @@ class KeyRotation(_KeyRotation):
         return self._meta
 
 
+class Account(_Account):
+    """An account's one current risk: the risk of its latest assessment with a decision, and a decision per flow."""
+
+    _meta: ResponseMeta = PrivateAttr(default=_EMPTY)
+
+    @property
+    def meta(self) -> ResponseMeta:
+        return self._meta
+
+
 class Integration(_Integration):
     """A hosted provider integration. secret is set only by create and rotate for Auth0, and shown once."""
 
@@ -136,6 +148,10 @@ def as_outcome(source: _AssessmentOutcome, meta: ResponseMeta) -> AssessmentOutc
 
 def as_rotation(source: _KeyRotation, meta: ResponseMeta) -> KeyRotation:
     return _attach(KeyRotation, source, meta)
+
+
+def as_account(source: _Account, meta: ResponseMeta) -> Account:
+    return _attach(Account, source, meta)
 
 
 def as_integration(source: _Integration, meta: ResponseMeta) -> Integration:

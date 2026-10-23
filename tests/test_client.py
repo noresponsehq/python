@@ -7,6 +7,7 @@ import httpx
 import pytest
 
 from noresponse import (
+    Account,
     APIConnectionError,
     APIStatusError,
     APITimeoutError,
@@ -42,6 +43,8 @@ ROTATION = fixture("valid/key-rotation.json")
 INTEGRATION = fixture("valid/integration-auth0.json")
 INTEGRATION_ROTATED = fixture("valid/integration-auth0-rotated.json")
 INTEGRATIONS = fixture("valid/integration-list.json")
+ACCOUNT = fixture("valid/account.json")
+ACCOUNT_BLOCK = fixture("valid/account-block.json")
 REQUEST = {"account_id": "usr_8f2k1", "identifiers": {"email": "jordan.lee@example.com", "name": "Jordan Lee"}}
 
 
@@ -255,6 +258,60 @@ def test_query_pages_iterate_across_every_page():
     assert len(seen) == 2
     last = page.next_page()
     assert last is not None and not last.has_more and last.next_page() is None
+
+
+def test_accounts_get_reads_the_current_risk():
+    sdk, seen = make([answer(ACCOUNT), answer(ACCOUNT_BLOCK), problem(404, "not_found")], retry_config=NO_RETRIES)
+    account = sdk.accounts.get("acct_7f3a9c")
+    assert isinstance(account, Account)
+    assert (seen[0].method, seen[0].url.path, seen[0].url.query) == ("GET", "/v1/accounts/acct_7f3a9c", b"")
+    assert account.id == ACCOUNT["id"] and account.assessment_id == ACCOUNT["assessment_id"]
+    assert account.risk.score == ACCOUNT["risk"]["score"] and account.risk.decision == "step_up"
+    assert [reason.code for reason in account.risk.reasons] == [r["code"] for r in ACCOUNT["risk"]["reasons"]]
+    flows = account.decisions_by_flow
+    assert (flows.signup, flows.login, flows.purchase) == ("step_up", "step_up", "step_up")
+    assert account.meta.request_id == "a" * 32
+    blocked = sdk.accounts.get("tenant:usr|42")
+    assert blocked.risk.decision == "block"
+    assert seen[1].url.path == "/v1/accounts/tenant:usr|42"  # one path segment, decoded as sent
+    with pytest.raises(NotFoundError) as caught:
+        sdk.accounts.get("acct_missing")
+    assert caught.value.code == "not_found"
+
+
+def test_accounts_list_assessments_sends_query_parameters_and_pages():
+    first = {**LIST, "next_cursor": "cursor-2"}
+    second = {**LIST, "items": LIST["items"][:1]}
+    second.pop("next_cursor", None)
+
+    def handler(request, number):
+        assert request.method == "GET" and request.url.path == "/v1/accounts/acct_7f3a9c/assessments"
+        assert request.content == b""
+        params = dict(request.url.params)
+        assert params["limit"] == "1" and params["response_mode"] == "detailed"
+        return answer(second if params.get("cursor") == "cursor-2" else first)
+
+    sdk, seen = make(handler)
+    page = sdk.accounts.list_assessments("acct_7f3a9c", limit=1, response_mode="detailed")
+    assert isinstance(page, AssessmentPage)
+    assert page.has_more and page.next_cursor == "cursor-2" and page.meta.request_id == "a" * 32
+    ids = [a.assessment_id for a in page]
+    assert ids == [a["assessment_id"] for a in LIST["items"]] + [LIST["items"][0]["assessment_id"]]
+    assert len(seen) == 2 and "cursor" not in dict(seen[0].url.params)
+    assert dict(seen[1].url.params)["cursor"] == "cursor-2"
+
+    async def scenario():
+        sdk, seen = make(handler)
+        async with sdk:
+            page = await sdk.accounts.list_assessments_async("acct_7f3a9c", limit=1, response_mode="detailed")
+            everything = [item.assessment_id async for item in page]
+            assert len(everything) == len(LIST["items"]) + 1
+        sdk, _ = make([answer(ACCOUNT)])
+        async with sdk:
+            account = await sdk.accounts.get_async("acct_7f3a9c")
+            assert account.risk.decision == ACCOUNT["risk"]["decision"]
+
+    asyncio.run(scenario())
 
 
 def test_async_methods_mirror_the_sync_ones():

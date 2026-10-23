@@ -3,6 +3,14 @@ from typing import Any, TYPE_CHECKING
 from noresponse.utils.dynamic_imports import lazy_getattr, lazy_dir
 
 if TYPE_CHECKING:
+    from .account import Account, AccountTypedDict
+    from .accountdecision import AccountDecision
+    from .accountdecisionsbyflow import (
+        AccountDecisionsByFlow,
+        AccountDecisionsByFlowTypedDict,
+    )
+    from .accountrisk import AccountRisk, AccountRiskTypedDict
+    from .accountriskreason import AccountRiskReason, AccountRiskReasonTypedDict
     from .assessment import Assessment, AssessmentTypedDict
     from .assessmentauthcontext import (
         AssessmentAuthContext,
@@ -159,6 +167,15 @@ if TYPE_CHECKING:
     from .webhooktestrequestevent import WebhookTestRequestEvent
 
 __all__ = [
+    "Account",
+    "AccountDecision",
+    "AccountDecisionsByFlow",
+    "AccountDecisionsByFlowTypedDict",
+    "AccountRisk",
+    "AccountRiskReason",
+    "AccountRiskReasonTypedDict",
+    "AccountRiskTypedDict",
+    "AccountTypedDict",
     "AlternateName",
     "AlternateNameTypedDict",
     "AlternateNameUnion",
@@ -328,6 +345,15 @@ __all__ = [
 ]
 
 _dynamic_imports: dict[str, str] = {
+    "Account": ".account",
+    "AccountTypedDict": ".account",
+    "AccountDecision": ".accountdecision",
+    "AccountDecisionsByFlow": ".accountdecisionsbyflow",
+    "AccountDecisionsByFlowTypedDict": ".accountdecisionsbyflow",
+    "AccountRisk": ".accountrisk",
+    "AccountRiskTypedDict": ".accountrisk",
+    "AccountRiskReason": ".accountriskreason",
+    "AccountRiskReasonTypedDict": ".accountriskreason",
     "Assessment": ".assessment",
     "AssessmentTypedDict": ".assessment",
     "AssessmentAuthContext": ".assessmentauthcontext",

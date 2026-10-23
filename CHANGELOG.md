@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.20
+
+* `sdk.accounts.get()`: **Added**
+* `sdk.accounts.list_assessments()`: **Added**
+
 ## 2.0.19
 
 No changes detected.
