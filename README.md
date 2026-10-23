@@ -278,7 +278,7 @@ provider = clerk_actions(os.environ["CLERK_SECRET_KEY"])
 result = handle_late_result(raw_body, request.headers, SECRETS, provider, policy={"review": "ban"})
 ```
 
-The default policy revokes sessions on `review` and does nothing otherwise. `ban` blocks the user in Clerk and Auth0; WorkOS has no block, so its ban deletes the user permanently. Pass `resolve_user_id` when the provider's user id is not your `account_id`. A refused provider call raises `ProviderActionError`; answer the webhook with a 5xx so we retry it.
+The default policy revokes sessions on `review` and does nothing otherwise. `ban` blocks the user in Clerk and Auth0; WorkOS has no block, so its ban deletes the user permanently. Pass `resolve_user_id` when the provider's user id is not your `account_id`. A test event from `send_test_event` acts on nothing. A refused provider call raises `ProviderActionError`; answer the webhook with a 5xx so we retry it. A provider 404 means the user or session is already gone and counts as done, so a repeated delivery is safe.
 
 ## Logging
 

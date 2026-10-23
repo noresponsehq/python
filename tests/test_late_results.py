@@ -37,11 +37,12 @@ PENDING = fixture("valid/assessment-pending.json")
 EXPIRED = fixture("valid/webhook-assessment-expired.json")
 
 
-def delivery(data, account_id=None):
+def delivery(data, account_id=None, **extra):
     body = {
         "id": "evt_01JA2ZB4N5P6Q7R8S9T0VWXYZ2",
         "type": "assessment.updated",
         "created_at": "2026-10-18T11:00:04Z",
+        **extra,
         "data": {**data, "account_id": account_id} if account_id else data,
     }
     raw = json.dumps(body).encode("utf-8")
@@ -305,3 +306,57 @@ def test_arguments_and_an_injected_transport():
         clerk.ban("")
     clerk.ban("user|1")
     assert seen == [("POST", "https://example.invalid/v1/users/user%7C1/ban", {"Authorization": "Bearer sk", "Accept": "application/json"}, None)]
+
+
+def test_a_webhook_test_event_acts_on_nothing_whatever_the_policy_and_user_id(mock_provider):
+    mock = mock_provider(lambda c: (200, {}))
+    workos = workos_actions("sk_test_workos", base_url=mock.url)
+    raw, headers = delivery(STEP_UP, "acct_7f3a9c", test=True)
+    resolved = []
+
+    def resolve(account_id, event):
+        resolved.append(account_id)
+        return "user_01WORKOS"
+
+    result = handle_late_result(
+        raw, headers, SECRETS, workos, now=NOW, policy={"allow": "ban", "step_up": "ban", "review": "ban"}, resolve_user_id=resolve
+    )
+    assert result.event.test is True
+    assert result.action == "none" and result.user_id is None
+    assert resolved == [] and mock.calls == []
+    assert late_result_action(result.event, {"step_up": "ban"}) == "none"
+
+
+def test_a_repeated_delivery_is_safe_a_provider_404_for_a_gone_user_or_session_counts_as_done(mock_provider):
+    # Every user and session is already gone, as after a first WorkOS ban deleted the user.
+    mock = mock_provider(lambda c: (404, {"error": "not_found"}))
+    raw, headers = delivery(REVIEW, "user_gone")
+    providers = [
+        workos_actions("sk_test_workos", base_url=mock.url),
+        clerk_actions("sk_test_mock", base_url=mock.url + "/v1"),
+        auth0_actions("mgmt_token", base_url=mock.url + "/api/v2"),
+    ]
+    for provider in providers:
+        for review in ("ban", "revoke_sessions"):
+            for _ in range(2):
+                assert handle_late_result(raw, headers, SECRETS, provider, now=NOW, policy={"review": review}).action == review
+    assert mock.calls
+
+
+def test_a_clerk_session_gone_between_list_and_revoke_is_done_and_other_refusals_still_raise(mock_provider):
+    def route(c):
+        if c.method == "GET" and c.path == "/v1/sessions":
+            return 200, [{"id": "sess_1", "status": "active"}]
+        if c.method == "POST" and c.path == "/v1/sessions/sess_1/revoke":
+            return 404, {"errors": [{"code": "resource_not_found"}]}
+        if c.method == "POST" and c.path == "/v1/users/user_2EXAMPLE/ban":
+            return 500, {"error": "boom"}
+        return None
+
+    mock = mock_provider(route)
+    clerk = clerk_actions("sk_test_mock", base_url=mock.url + "/v1")
+    raw, headers = delivery(REVIEW, "user_2EXAMPLE")
+    assert handle_late_result(raw, headers, SECRETS, clerk, now=NOW).action == "revoke_sessions"
+    with pytest.raises(ProviderActionError) as refused:
+        handle_late_result(raw, headers, SECRETS, clerk, now=NOW, policy={"review": "ban"})
+    assert refused.value.status == 500

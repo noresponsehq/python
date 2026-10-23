@@ -7,8 +7,10 @@ with construct_event, picks an action from your policy, and acts through the
 auth provider's admin API: revoke the user's sessions or ban the user.
 
 The handler verifies the delivery itself, so it never acts on an unverified
-event. The provider calls are thin: you pass the credentials, and each action
-is the provider's documented admin endpoint.
+event, and it never acts on a test event from webhook_endpoints.send_test_event.
+The provider calls are thin: you pass the credentials, and each action is the
+provider's documented admin endpoint. A provider 404 for a user or session
+that is already gone counts as done, so a repeated delivery is safe.
 """
 
 from __future__ import annotations
@@ -55,7 +57,10 @@ Transport = Callable[[str, str, Mapping[str, str], Optional[bytes]], Tuple[int, 
 
 
 class ProviderActionError(Exception):
-    """The provider's admin API refused a call. Answer the webhook with a 5xx so NoResponse retries it."""
+    """The provider's admin API refused a call. Answer the webhook with a 5xx so NoResponse retries it.
+
+    A 404 is never raised: the user or session is already gone, so the action is done.
+    """
 
     def __init__(self, provider: str, status: int, message: str) -> None:
         super().__init__(message)
@@ -93,10 +98,14 @@ def _text(value: Any) -> Optional[str]:
 
 
 def late_result_action(event: WebhookEvent, policy: Optional[LatePolicy] = None) -> str:
-    """The action your policy names for a verified event. Only a served assessment with a recommendation can act."""
+    """The action your policy names for a verified event.
+
+    Only a served assessment with a recommendation can act; a test event from
+    webhook_endpoints.send_test_event never does.
+    """
     chosen = DEFAULT_LATE_RESULT_POLICY if policy is None else policy
     data = event.data
-    if event.type != "assessment.updated" or event.expired:
+    if event.type != "assessment.updated" or event.expired or event.test:
         return NONE
     recommendation = _text(getattr(data, "recommendation", None))
     if recommendation is None:
@@ -128,8 +137,10 @@ def handle_late_result(
     construct_event takes; a delivery that fails verification raises
     WebhookVerificationError before any provider call. resolve_user_id maps the
     assessment's account_id to the provider user id (default: the account_id
-    itself); return None to take no action. Deduplicate on result.event.id and
-    ignore versions older than one you have acted on.
+    itself); return None to take no action, or raise to fail the delivery so it
+    is retried. A test event acts on nothing. Revoke and ban are safe to repeat,
+    but deduplicate on result.event.id and ignore versions older than one you
+    have acted on.
     """
     event = construct_event(payload, headers, secrets, tolerance_seconds=tolerance_seconds, now=now)
     action = late_result_action(event, policy)
@@ -171,7 +182,6 @@ class _Caller:
         path: str,
         query: Optional[Mapping[str, str]] = None,
         body: Optional[Any] = None,
-        allow_404: bool = False,
     ) -> Any:
         url = self.base + path + ("?" + urlencode(query) if query else "")
         headers = {"Authorization": self.authorization, "Accept": "application/json"}
@@ -180,7 +190,9 @@ class _Caller:
             headers["Content-Type"] = "application/json"
             data = json.dumps(body, separators=(",", ":")).encode("utf-8")
         status, text = self.transport(method, url, headers, data)
-        if allow_404 and status == 404:
+        # Every call names a user or a session. A 404 means it is already gone,
+        # so revoke and ban count it as done and a repeated delivery does not fail.
+        if status == 404:
             return None
         if not 200 <= status < 300:
             raise ProviderActionError(self.name, status, f"{self.name} {method} {path} answered {status}")
@@ -275,7 +287,7 @@ class _WorkOS(LateResultProvider):
 
     def ban(self, user_id: str) -> None:
         self.revoke_sessions(user_id)
-        self._call("DELETE", f"/user_management/users/{_segment(user_id)}", allow_404=True)
+        self._call("DELETE", f"/user_management/users/{_segment(user_id)}")
 
 
 def workos_actions(api_key: str, *, base_url: str = "https://api.workos.com", transport: Optional[Transport] = None) -> LateResultProvider:
