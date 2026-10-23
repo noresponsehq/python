@@ -1,4 +1,4 @@
-"""Wait for a pending assessment. Hand-written beside the generated client."""
+"""Wait for an assessment to complete. Hand-written beside the generated client."""
 
 from __future__ import annotations
 
@@ -45,6 +45,13 @@ def _retry_after(headers: Mapping[str, Sequence[str]], *, now: float | None = No
     return 1.0
 
 
+def _timed_out(assessment_id: str, last: Assessment) -> Assessment:
+    """The wait ran out: a partial answer stands, a pending one raises."""
+    if last.status == "partial":
+        return last
+    raise WaitTimeoutError(assessment_id, last)
+
+
 def _resource(client: Any) -> Any:
     return getattr(client, "assessments", client)
 
@@ -56,23 +63,32 @@ def wait(
     timeout: float = DEFAULT_WAIT_SECONDS,
     response_mode: Optional[str] = None,
 ) -> Assessment:
-    """Poll assessments.get until the assessment is no longer pending.
+    """Poll assessments.get until the assessment's status is "complete".
 
-    Sleeps for the Retry-After the API sends between polls, at least 1 s, and
-    raises WaitTimeoutError once timeout seconds have passed.
+    Sleeps for the Retry-After the API sends between polls, at least 1 s. Once
+    timeout seconds have passed it returns the latest answer if that is
+    partial (its status stays "partial"), and raises WaitTimeoutError if the
+    assessment is still pending, since a pending one has no recommendation.
     """
     if timeout <= 0:
         raise ValueError("timeout must be positive")
     resource = _resource(client)
     deadline = time.monotonic() + timeout
+    last: Optional[Assessment] = None
     while True:
         remaining_ms = max(1, int((deadline - time.monotonic()) * 1000))
-        assessment = resource.get(assessment_id, response_mode=response_mode, timeout_ms=remaining_ms)
-        if assessment.status != "pending":
+        try:
+            assessment = resource.get(assessment_id, response_mode=response_mode, timeout_ms=remaining_ms)
+        except APITimeoutError:
+            if last is not None and last.status == "partial":
+                return last
+            raise
+        if assessment.status == "complete":
             return assessment  # type: ignore[no-any-return]
+        last = assessment
         delay = _retry_after(assessment.meta.headers)
         if time.monotonic() + delay > deadline:
-            raise WaitTimeoutError(assessment_id, assessment)
+            return _timed_out(assessment_id, assessment)
         time.sleep(delay)
 
 
@@ -88,12 +104,19 @@ async def wait_async(
         raise ValueError("timeout must be positive")
     resource = _resource(client)
     deadline = time.monotonic() + timeout
+    last: Optional[Assessment] = None
     while True:
         remaining_ms = max(1, int((deadline - time.monotonic()) * 1000))
-        assessment = await resource.get_async(assessment_id, response_mode=response_mode, timeout_ms=remaining_ms)
-        if assessment.status != "pending":
+        try:
+            assessment = await resource.get_async(assessment_id, response_mode=response_mode, timeout_ms=remaining_ms)
+        except APITimeoutError:
+            if last is not None and last.status == "partial":
+                return last
+            raise
+        if assessment.status == "complete":
             return assessment  # type: ignore[no-any-return]
+        last = assessment
         delay = _retry_after(assessment.meta.headers)
         if time.monotonic() + delay > deadline:
-            raise WaitTimeoutError(assessment_id, assessment)
+            return _timed_out(assessment_id, assessment)
         await asyncio.sleep(delay)

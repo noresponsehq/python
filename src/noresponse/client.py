@@ -258,11 +258,13 @@ class Assessments(_Assessments):
         timeout: float = DEFAULT_WAIT_SECONDS,
         response_mode: Optional[models.shared.ResponseMode] = None,
     ) -> Assessment:
-        """Poll get() until the assessment is no longer pending.
+        """Poll get() until the assessment's status is "complete".
 
         Sleeps for the Retry-After the API sends between polls, at least one
-        second, and raises APITimeoutError (a WaitTimeoutError, whose last
-        attribute is the final pending assessment) after timeout seconds.
+        second. After timeout seconds it returns the latest answer if that is
+        partial (its status stays "partial"), and raises APITimeoutError (a
+        WaitTimeoutError, whose last attribute is the final pending
+        assessment) if the assessment is still pending.
         """
         return wait(self, assessment_id, timeout=timeout, response_mode=response_mode)
 

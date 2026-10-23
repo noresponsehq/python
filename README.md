@@ -95,7 +95,7 @@ latest = nr.assessments.get(assessment.assessment_id)
 settled = nr.assessments.wait(assessment.assessment_id, timeout=30)
 ```
 
-`wait` polls `get` until the status is no longer pending, sleeping the server's `Retry-After` (at least one second) between polls, and raises `APITimeoutError` after `timeout` seconds (default 30). The error is a `WaitTimeoutError` whose `last` attribute is the final pending assessment. Pass `response_mode="detailed"` to either. In async code use `get_async` and `wait_async`.
+`wait` polls `get` until the status is `complete`, sleeping the server's `Retry-After` (at least one second) between polls. After `timeout` seconds (default 30) it returns the latest answer if that is `partial`, with its status still `partial`, and raises `APITimeoutError` if the assessment is still `pending`. The error is a `WaitTimeoutError` whose `last` attribute is the final pending assessment. Pass `response_mode="detailed"` to either. In async code use `get_async` and `wait_async`.
 
 ### Query an account's history
 

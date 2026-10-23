@@ -5,8 +5,8 @@ management:
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 2.0.26
-  configChecksum: 240f6c33da4a7665253dc3d2c0a34247
+  releaseVersion: 2.0.27
+  configChecksum: 62c48ea74a1cd708d96f33c467c0cde8
 features:
   python:
     additionalDependencies: 1.1.0
@@ -341,7 +341,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:b597c55ad0872655b4c18fabb14f167f647aa3ad
   pyproject.toml:
-    last_write_checksum: sha1:6125a67428db0de05aee00697d873b76b41d2706
+    last_write_checksum: sha1:66488840eccf68bca4223aea9f9c84cbfc46b9ea
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -357,7 +357,7 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:60cbddffc980e7f5f84e717745bf5073f7ee935f
+    last_write_checksum: sha1:1e602f81ba7f17b9ae3d3fd3bb001a8b0fb83957
   src/noresponse/accounts.py:
     last_write_checksum: sha1:dc6769a4a68e353a3e76eb370cbe0f8e5fdf41a5
   src/noresponse/assessments.py:
