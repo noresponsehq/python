@@ -23,6 +23,12 @@ if TYPE_CHECKING:
         DeleteAccountResponse,
         DeleteAccountResponseTypedDict,
     )
+    from .deleteassessment import (
+        DeleteAssessmentRequest,
+        DeleteAssessmentRequestTypedDict,
+        DeleteAssessmentResponse,
+        DeleteAssessmentResponseTypedDict,
+    )
     from .deleteintegration import (
         DeleteIntegrationRequest,
         DeleteIntegrationRequestTypedDict,
@@ -116,6 +122,10 @@ __all__ = [
     "DeleteAccountRequestTypedDict",
     "DeleteAccountResponse",
     "DeleteAccountResponseTypedDict",
+    "DeleteAssessmentRequest",
+    "DeleteAssessmentRequestTypedDict",
+    "DeleteAssessmentResponse",
+    "DeleteAssessmentResponseTypedDict",
     "DeleteIntegrationRequest",
     "DeleteIntegrationRequestTypedDict",
     "DeleteIntegrationResponse",
@@ -183,6 +193,10 @@ _dynamic_imports: dict[str, str] = {
     "DeleteAccountRequestTypedDict": ".deleteaccount",
     "DeleteAccountResponse": ".deleteaccount",
     "DeleteAccountResponseTypedDict": ".deleteaccount",
+    "DeleteAssessmentRequest": ".deleteassessment",
+    "DeleteAssessmentRequestTypedDict": ".deleteassessment",
+    "DeleteAssessmentResponse": ".deleteassessment",
+    "DeleteAssessmentResponseTypedDict": ".deleteassessment",
     "DeleteIntegrationRequest": ".deleteintegration",
     "DeleteIntegrationRequestTypedDict": ".deleteintegration",
     "DeleteIntegrationResponse": ".deleteintegration",

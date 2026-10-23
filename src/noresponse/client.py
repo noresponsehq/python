@@ -37,6 +37,7 @@ from .webhookendpoints import WebhookEndpoints as _WebhookEndpoints
 from .responses import (
     Account,
     AccountDeletion,
+    AssessmentDeletion,
     Assessment,
     AssessmentOutcome,
     AssessmentPage,
@@ -46,6 +47,7 @@ from .responses import (
     ResponseMeta,
     as_account,
     as_account_deletion,
+    as_assessment_deletion,
     as_assessment,
     as_integration,
     as_integration_list,
@@ -438,6 +440,49 @@ class Assessments(_Assessments):
             http_headers=http_headers,
         )
         return _outcome(response)
+
+    # delete ---------------------------------------------------------------
+
+    def delete(  # type: ignore[override]
+        self,
+        assessment_id: str,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AssessmentDeletion:
+        """Delete one assessment and score its account again from what remains.
+
+        Needs the history scope. account.current_assessment_id names the
+        assessment the account's risk now comes from, and is None when none is
+        left. An unknown or already deleted assessment raises NotFoundError.
+        """
+        response = _sync(super().delete)(
+            assessment_id, retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        return _assessment_deletion(response)
+
+    async def delete_async(  # type: ignore[override]
+        self,
+        assessment_id: str,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AssessmentDeletion:
+        """The asyncio form of delete."""
+        response = await _async(super().delete_async)(
+            assessment_id, retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        return _assessment_deletion(response)
+
+
+def _assessment_deletion(response: Any) -> AssessmentDeletion:
+    if not isinstance(response, models.operations.DeleteAssessmentResponse):
+        return response  # type: ignore[no-any-return]
+    return as_assessment_deletion(response.result, ResponseMeta.from_headers(response.headers))
 
 
 def _assessment(response: Any) -> Assessment:

@@ -144,6 +144,15 @@ receipt = nr.assessments.record_outcome(
 
 Outcomes take an `idempotency_key` the same way `create` does.
 
+### Delete one assessment
+
+```python
+removed = nr.assessments.delete(assessment.assessment_id)
+removed.account.current_assessment_id  # the assessment the account's risk now comes from; None when none is left
+```
+
+It needs the `history` scope; in async code use `delete_async`. Afterwards `assessments.get` of it raises `NotFoundError`, and so does a repeat. To erase a whole account, use `accounts.delete`.
+
 ## Keys
 
 ```python

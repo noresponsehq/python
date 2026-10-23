@@ -39,6 +39,7 @@ from .models.shared import AuthContext, AuthContextTypedDict
 from .responses import (
     Account,
     AccountDeletion,
+    AssessmentDeletion,
     Assessment,
     AssessmentOutcome,
     AssessmentPage,
@@ -79,6 +80,7 @@ __all__ = [
     "Integrations",
     "Account",
     "AccountDeletion",
+    "AssessmentDeletion",
     "Assessment",
     "AssessmentOutcome",
     "AssessmentPage",

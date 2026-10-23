@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.33
+
+* `sdk.assessments.delete()`: **Added**
+
 ## 2.0.32
 
 No changes detected.

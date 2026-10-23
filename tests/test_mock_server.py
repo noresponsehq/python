@@ -47,6 +47,9 @@ def test_accounts_return_the_documented_account_and_page():
     with client() as sdk:
         deletion = sdk.accounts.delete("acct_7f3a9c")
     assert deletion.id == "acct_7f3a9c" and deletion.deleted is True
+    with client() as sdk:
+        removed = sdk.assessments.delete("asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM")
+    assert removed.id.startswith("asm_") and removed.deleted is True and removed.account.id == "acct_7f3a9c"
 
 
 def test_async_create():

@@ -9,6 +9,7 @@ import pytest
 from noresponse import (
     Account,
     AccountDeletion,
+    AssessmentDeletion,
     PermissionDeniedError,
     APIConnectionError,
     APIStatusError,
@@ -48,6 +49,8 @@ INTEGRATIONS = fixture("valid/integration-list.json")
 ACCOUNT = fixture("valid/account.json")
 ACCOUNT_BLOCK = fixture("valid/account-block.json")
 ACCOUNT_DELETION = fixture("valid/account-deletion.json")
+ASSESSMENT_DELETION = fixture("valid/assessment-deletion.json")
+ASSESSMENT_DELETION_LAST = fixture("valid/assessment-deletion-last.json")
 REQUEST = {"account_id": "usr_8f2k1", "identifiers": {"email": "jordan.lee@example.com", "name": "Jordan Lee"}}
 
 
@@ -309,6 +312,32 @@ def test_accounts_delete_erases_and_a_repeat_answers_zero():
         async with sdk:
             erased = await sdk.accounts.delete_async("acct_7f3a9c")
         assert erased.assessments_deleted == 3 and seen[0].method == "DELETE"
+
+    asyncio.run(scenario())
+
+
+def test_assessments_delete_names_the_next_current_assessment():
+    asm = ASSESSMENT_DELETION["id"]
+    sdk, seen = make([answer(ASSESSMENT_DELETION), answer(ASSESSMENT_DELETION_LAST), problem(404, "not_found")], retry_config=NO_RETRIES)
+    deletion = sdk.assessments.delete(asm)
+    assert isinstance(deletion, AssessmentDeletion)
+    assert (seen[0].method, seen[0].url.path, seen[0].content) == ("DELETE", f"/v1/assessments/{asm}", b"")
+    assert deletion.id == asm and deletion.deleted is True and deletion.account.id == "acct_7f3a9c"
+    assert deletion.account.current_assessment_id == ASSESSMENT_DELETION["account"]["current_assessment_id"]
+    assert deletion.meta.request_id == "a" * 32
+    remaining = ASSESSMENT_DELETION["account"]["current_assessment_id"]
+    assert sdk.assessments.delete(remaining).account.current_assessment_id is None
+    assert seen[1].url.path == f"/v1/assessments/{remaining}"
+    with pytest.raises(NotFoundError) as caught:
+        sdk.assessments.delete(asm)
+    assert caught.value.code == "not_found"
+    assert seen[2].url.path == f"/v1/assessments/{asm}"
+
+    async def scenario():
+        sdk, seen = make([answer(ASSESSMENT_DELETION)])
+        async with sdk:
+            removed = await sdk.assessments.delete_async(asm)
+        assert removed.deleted is True and seen[0].method == "DELETE"
 
     asyncio.run(scenario())
 

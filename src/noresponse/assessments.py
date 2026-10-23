@@ -1129,6 +1129,357 @@ class Assessments(BaseSDK):
                 parse_exc_,
             )
 
+    def delete(
+        self,
+        assessment_id: str,
+        *,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.operations.DeleteAssessmentResponse:
+        r"""Delete one assessment.
+
+        Deletes one assessment in the environment of your key, with its versions, evidence and outcomes and the identity-graph marks its outcomes set, and scores its account again from what remains. Afterwards the assessment answers 404 and leaves the account's history. The answer names the account and the assessment its current risk now comes from; current_assessment_id is absent when the account has no assessment with a decision left. Requires the history scope. An unknown, expired or already deleted assessment answers 404, so a repeat answers 404; to erase a whole account idempotently, use accounts.delete.
+
+        :param assessment_id: Path segment, matched case-sensitively. A value that does not match the assessment_id shape answers 404, not 400.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.operations.DeleteAssessmentRequest(
+            assessment_id=assessment_id,
+        )
+
+        _noresponse_response_mode, http_headers = (
+            response_helpers.consume_response_mode(http_headers)
+        )
+        req = self._build_request(
+            method="DELETE",
+            path="/v1/assessments/{assessment_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 8000, 2, 30000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["408", "429", "5XX"])
+
+        def _noresponse_parse_response(http_res):
+            response_data: Any = None
+            if utils.match_response(http_res, "200", "application/json"):
+                return models.operations.DeleteAssessmentResponse(
+                    result=unmarshal_json_response(
+                        models.shared.AssessmentDeletion, http_res
+                    ),
+                    headers=utils.get_response_headers(http_res.headers),
+                )
+            if utils.match_response(http_res, "400", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.BadRequestErrorData, http_res
+                )
+                raise models.errors.BadRequestError(response_data, http_res)
+            if utils.match_response(http_res, "401", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.AuthenticationErrorData, http_res
+                )
+                raise models.errors.AuthenticationError(response_data, http_res)
+            if utils.match_response(http_res, "403", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.PermissionDeniedErrorData, http_res
+                )
+                raise models.errors.PermissionDeniedError(response_data, http_res)
+            if utils.match_response(http_res, "404", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.NotFoundErrorData, http_res
+                )
+                raise models.errors.NotFoundError(response_data, http_res)
+            if utils.match_response(http_res, "409", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.ConflictErrorData, http_res
+                )
+                raise models.errors.ConflictError(response_data, http_res)
+            if utils.match_response(http_res, "429", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.RateLimitErrorData, http_res
+                )
+                raise models.errors.RateLimitError(response_data, http_res)
+            if utils.match_response(http_res, "4XX", "*"):
+                http_res_text = utils.stream_to_text(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+            if utils.match_response(http_res, "5XX", "*"):
+                http_res_text = utils.stream_to_text(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+
+            raise models.errors.APIStatusError("Unexpected response received", http_res)
+
+        _noresponse_hook_ctx = HookContext(
+            config=self.sdk_configuration,
+            base_url=base_url or "",
+            operation_id="deleteAssessment",
+            oauth2_scopes=None,
+            security_source=get_security_from_env(
+                self.sdk_configuration.security, models.shared.Security
+            ),
+            tags=["assessments"],
+            extensions=None,
+            response=ResponseContext(mode=_noresponse_response_mode, execution="sync"),
+        )
+        http_res = self.do_request(
+            hook_ctx=_noresponse_hook_ctx,
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            stream=_noresponse_response_mode == "streaming",
+            retry_config=retry_config,
+        )
+        if _noresponse_response_mode != "parsed":
+            if utils.match_status_codes(["4XX", "5XX"], http_res.status_code):
+                http_res.read()
+                try:
+                    _noresponse_parse_response(http_res)
+                except Exception as parse_exc_:
+                    response_helpers.raise_parse_error(
+                        self.sdk_configuration.__dict__["_hooks"],
+                        AfterParseErrorContext(_noresponse_hook_ctx),
+                        http_res,
+                        parse_exc_,
+                    )
+            _noresponse_response_cls = (
+                response_helpers.StreamedAPIResponse
+                if _noresponse_response_mode == "streaming"
+                else response_helpers.APIResponse
+            )
+            return cast(
+                Any,
+                _noresponse_response_cls(
+                    raw=http_res,
+                    parser=_noresponse_parse_response,
+                    mode="buffered",
+                    client_ref=self,
+                    hook_ctx=AfterParseErrorContext(_noresponse_hook_ctx),
+                    hooks=self.sdk_configuration.__dict__.get("_hooks"),
+                ),
+            )
+        try:
+            return _noresponse_parse_response(http_res)
+        except Exception as parse_exc_:
+            response_helpers.raise_parse_error(
+                self.sdk_configuration.__dict__["_hooks"],
+                AfterParseErrorContext(_noresponse_hook_ctx),
+                http_res,
+                parse_exc_,
+            )
+
+    async def delete_async(
+        self,
+        assessment_id: str,
+        *,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.operations.DeleteAssessmentResponse:
+        r"""Delete one assessment.
+
+        Deletes one assessment in the environment of your key, with its versions, evidence and outcomes and the identity-graph marks its outcomes set, and scores its account again from what remains. Afterwards the assessment answers 404 and leaves the account's history. The answer names the account and the assessment its current risk now comes from; current_assessment_id is absent when the account has no assessment with a decision left. Requires the history scope. An unknown, expired or already deleted assessment answers 404, so a repeat answers 404; to erase a whole account idempotently, use accounts.delete.
+
+        :param assessment_id: Path segment, matched case-sensitively. A value that does not match the assessment_id shape answers 404, not 400.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.operations.DeleteAssessmentRequest(
+            assessment_id=assessment_id,
+        )
+
+        _noresponse_response_mode, http_headers = (
+            response_helpers.consume_response_mode(http_headers)
+        )
+        req = self._build_request_async(
+            method="DELETE",
+            path="/v1/assessments/{assessment_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 8000, 2, 30000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["408", "429", "5XX"])
+
+        async def _noresponse_parse_response(http_res):
+            response_data: Any = None
+            if utils.match_response(http_res, "200", "application/json"):
+                return models.operations.DeleteAssessmentResponse(
+                    result=unmarshal_json_response(
+                        models.shared.AssessmentDeletion, http_res
+                    ),
+                    headers=utils.get_response_headers(http_res.headers),
+                )
+            if utils.match_response(http_res, "400", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.BadRequestErrorData, http_res
+                )
+                raise models.errors.BadRequestError(response_data, http_res)
+            if utils.match_response(http_res, "401", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.AuthenticationErrorData, http_res
+                )
+                raise models.errors.AuthenticationError(response_data, http_res)
+            if utils.match_response(http_res, "403", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.PermissionDeniedErrorData, http_res
+                )
+                raise models.errors.PermissionDeniedError(response_data, http_res)
+            if utils.match_response(http_res, "404", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.NotFoundErrorData, http_res
+                )
+                raise models.errors.NotFoundError(response_data, http_res)
+            if utils.match_response(http_res, "409", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.ConflictErrorData, http_res
+                )
+                raise models.errors.ConflictError(response_data, http_res)
+            if utils.match_response(http_res, "429", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.RateLimitErrorData, http_res
+                )
+                raise models.errors.RateLimitError(response_data, http_res)
+            if utils.match_response(http_res, "4XX", "*"):
+                http_res_text = await utils.stream_to_text_async(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+            if utils.match_response(http_res, "5XX", "*"):
+                http_res_text = await utils.stream_to_text_async(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+
+            raise models.errors.APIStatusError("Unexpected response received", http_res)
+
+        _noresponse_hook_ctx = HookContext(
+            config=self.sdk_configuration,
+            base_url=base_url or "",
+            operation_id="deleteAssessment",
+            oauth2_scopes=None,
+            security_source=get_security_from_env(
+                self.sdk_configuration.security, models.shared.Security
+            ),
+            tags=["assessments"],
+            extensions=None,
+            response=ResponseContext(mode=_noresponse_response_mode, execution="async"),
+        )
+        http_res = await self.do_request_async(
+            hook_ctx=_noresponse_hook_ctx,
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            stream=_noresponse_response_mode == "streaming",
+            retry_config=retry_config,
+        )
+        if _noresponse_response_mode != "parsed":
+            if utils.match_status_codes(["4XX", "5XX"], http_res.status_code):
+                await http_res.aread()
+                try:
+                    await _noresponse_parse_response(http_res)
+                except Exception as parse_exc_:
+                    await response_helpers.raise_parse_error_async(
+                        self.sdk_configuration.__dict__.get("_async_hooks"),
+                        self.sdk_configuration.__dict__.get("_hooks"),
+                        AfterParseErrorContext(_noresponse_hook_ctx),
+                        http_res,
+                        parse_exc_,
+                    )
+            _noresponse_response_cls = (
+                response_helpers.AsyncStreamedAPIResponse
+                if _noresponse_response_mode == "streaming"
+                else response_helpers.AsyncAPIResponse
+            )
+            return cast(
+                Any,
+                _noresponse_response_cls(
+                    raw=http_res,
+                    parser=_noresponse_parse_response,
+                    mode="buffered",
+                    client_ref=self,
+                    hook_ctx=AfterParseErrorContext(_noresponse_hook_ctx),
+                    hooks=self.sdk_configuration.__dict__.get("_hooks"),
+                    async_hooks=self.sdk_configuration.__dict__.get("_async_hooks"),
+                ),
+            )
+        try:
+            return await _noresponse_parse_response(http_res)
+        except Exception as parse_exc_:
+            await response_helpers.raise_parse_error_async(
+                self.sdk_configuration.__dict__.get("_async_hooks"),
+                self.sdk_configuration.__dict__.get("_hooks"),
+                AfterParseErrorContext(_noresponse_hook_ctx),
+                http_res,
+                parse_exc_,
+            )
+
     def record_outcome(
         self,
         assessment_id: str,
@@ -2274,6 +2625,12 @@ class AssessmentsWithRawResponse:
         self.get_async = response_helpers.async_to_raw_response_wrapper(
             sdk.get_async, "http_headers"
         )
+        self.delete = response_helpers.to_raw_response_wrapper(
+            sdk.delete, "http_headers"
+        )
+        self.delete_async = response_helpers.async_to_raw_response_wrapper(
+            sdk.delete_async, "http_headers"
+        )
         self.record_outcome = response_helpers.to_raw_response_wrapper(
             sdk.record_outcome, "http_headers"
         )
@@ -2300,6 +2657,12 @@ class AssessmentsWithStreamingResponse:
         )
         self.get_async = response_helpers.async_to_streamed_response_wrapper(
             sdk.get_async, "http_headers"
+        )
+        self.delete = response_helpers.to_streamed_response_wrapper(
+            sdk.delete, "http_headers"
+        )
+        self.delete_async = response_helpers.async_to_streamed_response_wrapper(
+            sdk.delete_async, "http_headers"
         )
         self.record_outcome = response_helpers.to_streamed_response_wrapper(
             sdk.record_outcome, "http_headers"

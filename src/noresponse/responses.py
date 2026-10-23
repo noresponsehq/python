@@ -14,6 +14,7 @@ from pydantic import BaseModel, PrivateAttr
 
 from .models.shared.account import Account as _Account
 from .models.shared.accountdeletion import AccountDeletion as _AccountDeletion
+from .models.shared.assessmentdeletion import AssessmentDeletion as _AssessmentDeletion
 from .models.shared.assessment import Assessment as _Assessment
 from .models.shared.assessmentoutcome import AssessmentOutcome as _AssessmentOutcome
 from .models.shared.integration import Integration as _Integration
@@ -23,6 +24,7 @@ from .models.shared.keyrotation import KeyRotation as _KeyRotation
 __all__ = [
     "Account",
     "AccountDeletion",
+    "AssessmentDeletion",
     "Assessment",
     "AssessmentOutcome",
     "AssessmentPage",
@@ -130,6 +132,16 @@ class AccountDeletion(_AccountDeletion):
         return self._meta
 
 
+class AssessmentDeletion(_AssessmentDeletion):
+    """A deleted assessment, its account and the assessment the account's risk now comes from (None when none is left)."""
+
+    _meta: ResponseMeta = PrivateAttr(default=_EMPTY)
+
+    @property
+    def meta(self) -> ResponseMeta:
+        return self._meta
+
+
 class Integration(_Integration):
     """A hosted provider integration. secret is set only by create and rotate for Auth0, and shown once."""
 
@@ -168,6 +180,10 @@ def as_account(source: _Account, meta: ResponseMeta) -> Account:
 
 def as_account_deletion(source: _AccountDeletion, meta: ResponseMeta) -> AccountDeletion:
     return _attach(AccountDeletion, source, meta)
+
+
+def as_assessment_deletion(source: _AssessmentDeletion, meta: ResponseMeta) -> AssessmentDeletion:
+    return _attach(AssessmentDeletion, source, meta)
 
 
 def as_integration(source: _Integration, meta: ResponseMeta) -> Integration:

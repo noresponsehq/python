@@ -17,6 +17,11 @@ if TYPE_CHECKING:
         AssessmentAuthContext,
         AssessmentAuthContextTypedDict,
     )
+    from .assessmentdeletion import AssessmentDeletion, AssessmentDeletionTypedDict
+    from .assessmentdeletionaccount import (
+        AssessmentDeletionAccount,
+        AssessmentDeletionAccountTypedDict,
+    )
     from .assessmentflow import AssessmentFlow
     from .assessmentlist import AssessmentList, AssessmentListTypedDict
     from .assessmentoutcome import AssessmentOutcome, AssessmentOutcomeTypedDict
@@ -201,6 +206,10 @@ __all__ = [
     "Assessment",
     "AssessmentAuthContext",
     "AssessmentAuthContextTypedDict",
+    "AssessmentDeletion",
+    "AssessmentDeletionAccount",
+    "AssessmentDeletionAccountTypedDict",
+    "AssessmentDeletionTypedDict",
     "AssessmentFlow",
     "AssessmentList",
     "AssessmentListTypedDict",
@@ -391,6 +400,10 @@ _dynamic_imports: dict[str, str] = {
     "AssessmentTypedDict": ".assessment",
     "AssessmentAuthContext": ".assessmentauthcontext",
     "AssessmentAuthContextTypedDict": ".assessmentauthcontext",
+    "AssessmentDeletion": ".assessmentdeletion",
+    "AssessmentDeletionTypedDict": ".assessmentdeletion",
+    "AssessmentDeletionAccount": ".assessmentdeletionaccount",
+    "AssessmentDeletionAccountTypedDict": ".assessmentdeletionaccount",
     "AssessmentFlow": ".assessmentflow",
     "AssessmentList": ".assessmentlist",
     "AssessmentListTypedDict": ".assessmentlist",

@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: 9aed9b1fa9833a1c70bb8347499bbc2c
+  docChecksum: bb247f5501b4cb81c068b6f579361fd7
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 2.0.32
-  configChecksum: 6239d9c413ed8ac1587d548ad94aacba
+  releaseVersion: 2.0.33
+  configChecksum: e3db765266b6048d8fdb8d46fce86c74
 features:
   python:
     additionalDependencies: 1.1.0
@@ -58,6 +58,10 @@ trackedFiles:
     last_write_checksum: sha1:19e4cc15257b2887b70078f50a8dc166be75a8ab
   docs/models/operations/deleteaccountresponse.md:
     last_write_checksum: sha1:677fc22e5c2a1b00a7eeebd15fca6e625b7cc1b9
+  docs/models/operations/deleteassessmentrequest.md:
+    last_write_checksum: sha1:901e6dee2f7e72368b3e4bbd4631e4e84ab18b29
+  docs/models/operations/deleteassessmentresponse.md:
+    last_write_checksum: sha1:2652f1dc1464b7bbaeaa1133cf1a0028e949bfd1
   docs/models/operations/deleteintegrationrequest.md:
     last_write_checksum: sha1:dde6d01f19bcf983aac15a2f22b9ca2e000b86b0
   docs/models/operations/deleteintegrationresponse.md:
@@ -130,6 +134,10 @@ trackedFiles:
     last_write_checksum: sha1:83cd542aab7c58e052025648a27cfe98f3ea7250
   docs/models/shared/assessmentauthcontext.md:
     last_write_checksum: sha1:8e31861465964d44897a3efd6d41b53430081748
+  docs/models/shared/assessmentdeletion.md:
+    last_write_checksum: sha1:942c3c44b98a85075e9cdbe86a03f5e4ed9dc449
+  docs/models/shared/assessmentdeletionaccount.md:
+    last_write_checksum: sha1:6d28e0c08de0134837ff9012aee8a330cf837003
   docs/models/shared/assessmentflow.md:
     last_write_checksum: sha1:21395461ed91615760dbc3daf1d601b393b918e0
   docs/models/shared/assessmentlist.md:
@@ -351,7 +359,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:b597c55ad0872655b4c18fabb14f167f647aa3ad
   pyproject.toml:
-    last_write_checksum: sha1:76bf80a5a68a97f147ea9c85e8855b3b069dcaf1
+    last_write_checksum: sha1:f84cc02d1435a82f3172fb7aac30683eb9cd9bf4
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -367,11 +375,11 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:eefa555261c0708e268b2d20ed4ee19a05b1e194
+    last_write_checksum: sha1:48c6529f086accaab86caf3ca0a1291acde791c5
   src/noresponse/accounts.py:
     last_write_checksum: sha1:7de04dc42e861dde90109b451918d01b8a37809e
   src/noresponse/assessments.py:
-    last_write_checksum: sha1:841e15173ffbc138d0988493e95f6905ae08f14a
+    last_write_checksum: sha1:197e3b5841fdd483ac1afe0a37b81553016fe317
   src/noresponse/basesdk.py:
     last_write_checksum: sha1:504a1120368ba40f8c5a5f259812c0e344e5b233
   src/noresponse/httpclient.py:
@@ -405,7 +413,7 @@ trackedFiles:
   src/noresponse/models/errors/responsevalidationerror.py:
     last_write_checksum: sha1:75d25eced330a4b3c43729ec087ff5a41cf07577
   src/noresponse/models/operations/__init__.py:
-    last_write_checksum: sha1:52bc7056f69753caf169e824d68ffadb78d259df
+    last_write_checksum: sha1:970c8528e2abd85f0cd005057582523e28234caf
   src/noresponse/models/operations/createassessment.py:
     last_write_checksum: sha1:41910f288e8043a547c1164dfd75d99a187cf328
   src/noresponse/models/operations/createintegration.py:
@@ -414,6 +422,8 @@ trackedFiles:
     last_write_checksum: sha1:8c79d88dae8af33cac5bde0b2f6b52c3e3e87a5b
   src/noresponse/models/operations/deleteaccount.py:
     last_write_checksum: sha1:093bb15fb2317b845a38b94b5f392c47f626ea87
+  src/noresponse/models/operations/deleteassessment.py:
+    last_write_checksum: sha1:3f48a9c8cfa6f317155085a80e090355646f3b5a
   src/noresponse/models/operations/deleteintegration.py:
     last_write_checksum: sha1:103b3db22bd57f0454090c618cbd052e5bdf08ae
   src/noresponse/models/operations/deletewebhookendpoint.py:
@@ -445,7 +455,7 @@ trackedFiles:
   src/noresponse/models/operations/sendwebhooktestevent.py:
     last_write_checksum: sha1:845701b811fc9df26377c00424393a01ff7c836a
   src/noresponse/models/shared/__init__.py:
-    last_write_checksum: sha1:2efba98eac99d743f3979e809c9c8fadeb2752f3
+    last_write_checksum: sha1:0d845bcdcaa3cb7ce4a4518c2d32aa04d8113e65
   src/noresponse/models/shared/account.py:
     last_write_checksum: sha1:9470d39280634a29ba5f79173dd8a5e685c96bd7
   src/noresponse/models/shared/accountdecision.py:
@@ -462,6 +472,10 @@ trackedFiles:
     last_write_checksum: sha1:452a405bc7b73a88c7b4efa4be1d3b36ad636d0a
   src/noresponse/models/shared/assessmentauthcontext.py:
     last_write_checksum: sha1:b37e73bc612d05b58caeb67a7507f454362a513e
+  src/noresponse/models/shared/assessmentdeletion.py:
+    last_write_checksum: sha1:64e2ca318b7f4b73114b46063ab66317ee1d0459
+  src/noresponse/models/shared/assessmentdeletionaccount.py:
+    last_write_checksum: sha1:fec3272f4a9b4a26dcde7c86e08d7b70b5796d47
   src/noresponse/models/shared/assessmentflow.py:
     last_write_checksum: sha1:599a27643a98acc799c04b2318c05df6177c4751
   src/noresponse/models/shared/assessmentlist.py:
@@ -839,6 +853,21 @@ examples:
       responses:
         "200":
           application/json: {"schema_version": "1", "assessment_id": "asm_01JB3C4D5E6F7G8H9JKMNPQRST", "account_id": "acct_8412", "request_id": "req_01", "status": "complete", "recommendation": "allow", "confidence": "high", "risk": {"score": 10, "band": "low", "recommendation": "allow", "block": false, "confidence": "high", "policy_version": "risk-2026-10.3", "policy_basis": "heuristic_unvalidated", "reasons": [{"code": "voip_number", "weight": 25, "identifier": "phone"}, {"code": "breach_name_match", "weight": -15, "identifier": "name"}], "summary": {"phone": {"line_type": "voip", "country": "US"}, "email": {"disposable": false, "accounts_found": 1, "breach": {"found": true, "breach_count": 2, "first_year": 2016, "last_year": 2019, "exposed": ["email", "password", "password_hash"], "in_credential_lists": true, "truncated": false}}, "consistency": {"name": "match"}}, "coverage": {"answered": 4, "failed": 0, "pending": 0}, "details": {"phone_names": [{"value": "Jane Doe", "seen_by": 3}], "breaches": [{"name": "Collection #1", "category": "combolist", "kind": "credential_list", "year": 2019, "matched_on": "email", "exposed": ["email", "password"]}, {"name": "LinkedIn", "domain": "linkedin.com", "category": "social", "kind": "site_breach", "year": 2016, "month": 5, "matched_on": "email", "exposed": ["email", "password_hash"]}], "breach_names": [{"value": "Jane Doe", "seen_in": 2}]}}, "signals": [{"type": "account_presence", "identifier": "email", "outcome": "found", "source_id": "src_3f9a1c", "evidence_ref": "evr_01JB3C4D5E6F7G8H9JKMNPQRSV", "observed_at": "2026-10-18T11:00:00.180Z", "last_checked_at": "2026-10-18T11:00:00.180Z", "freshness": "fresh"}, {"type": "breach_exposure", "identifier": "email", "outcome": "found", "source_id": "src_8d27e4", "evidence_ref": "evr_01JB3C4D5E6F7G8H9JKMNPQRSW", "observed_at": "2026-10-18T11:00:01.900Z", "last_checked_at": "2026-10-18T11:00:01.900Z", "freshness": "fresh"}, {"type": "account_presence", "identifier": "phone", "outcome": "found", "source_id": "src_51b0d7", "evidence_ref": "evr_01JB3C4D5E6F7G8H9JKMNPQRSX", "observed_at": "2026-10-18T11:00:03.700Z", "last_checked_at": "2026-10-18T11:00:03.700Z", "freshness": "fresh"}], "incomplete_sources": [], "policy_version": "risk-2026-10.3", "policy_basis": "heuristic_unvalidated", "assessment_version": 2, "created_at": "2026-10-18T11:00:00.000Z", "updated_at": "2026-10-18T11:00:04.000Z", "expires_at": "2027-10-18T11:00:00.000Z", "timing": {"deadline_ms": 500, "elapsed_ms": 4000}}
+  deleteAssessment:
+    next:
+      parameters:
+        path:
+          assessment_id: "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
+      responses:
+        "200":
+          application/json: {"schema_version": "1", "id": "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "deleted": true, "account": {"id": "acct_7f3a9c", "current_assessment_id": "asm_01JA2Z7Y3N5P8Q2R4S6T8V0W1X"}, "deleted_at": "2026-10-23T09:00:00.000Z"}
+    last:
+      parameters:
+        path:
+          assessment_id: "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
+      responses:
+        "200":
+          application/json: {"schema_version": "1", "id": "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "deleted": true, "account": {"id": "acct_7f3a9c"}, "deleted_at": "2026-10-23T09:00:00.000Z"}
   recordAssessmentOutcome:
     abuse:
       parameters:
