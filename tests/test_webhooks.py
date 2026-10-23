@@ -9,7 +9,9 @@ from noresponse.models.shared.assessment import Assessment
 from noresponse.webhooks import (
     AccountDeleted,
     AssessmentExpired,
+    EndpointDisabled,
     EndpointVerification,
+    TenantDeleted,
     WebhookVerificationError,
     construct_event,
     verification_response,
@@ -135,6 +137,79 @@ def test_account_deleted_event():
         body = {**erased, "data": {**erased["data"], **change}}
         raw, headers = signed(body, "secret", body["id"])
         refused("invalid_payload", raw, headers, {"whk_sdktest01": "secret"}, now=NOW)
+
+
+TENANT_DELETED = {
+    "id": "evt_01JA2ZD3K4M5N6P7Q8R9S0T1V2",
+    "type": "tenant.deleted",
+    "created_at": "2026-10-23T10:00:00.000Z",
+    "data": {
+        "workspace_id": "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM",
+        "environment": "live",
+        "deleted_at": "2026-10-23T10:00:00.000Z",
+    },
+}
+
+ENDPOINT_DISABLED = {
+    "id": "evt_01JA2ZD3K4M5N6P7Q8R9S0T1V3",
+    "type": "webhook_endpoint.disabled",
+    "created_at": "2026-10-23T10:00:00.000Z",
+    "data": {
+        "endpoint_id": "whe_01JA2ZD0E1F2G3H4J5K6M7N8P9",
+        "failing_since": "2026-10-20T10:00:00.000Z",
+        "disabled_at": "2026-10-23T10:00:00.000Z",
+    },
+}
+
+
+def refuses_changed_data(original, changes, removals):
+    bodies = [{**original, "data": {**original["data"], **change}} for change in changes]
+    bodies += [{**original, "data": {k: v for k, v in original["data"].items() if k != key}} for key in removals]
+    for body in bodies:
+        raw, headers = signed(body, "secret", body["id"])
+        refused("invalid_payload", raw, headers, {"whk_sdktest01": "secret"}, now=NOW)
+
+
+def test_tenant_deleted_event():
+    raw, headers = signed(TENANT_DELETED, "secret", TENANT_DELETED["id"])
+    event = construct_event(raw, headers, {"whk_sdktest01": "secret"}, now=NOW)
+    assert event.type == "tenant.deleted" and not event.expired and not event.test
+    assert event.id == TENANT_DELETED["id"] and event.created_at == "2026-10-23T10:00:00.000Z"
+    assert event.data == TenantDeleted("tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "live", "2026-10-23T10:00:00.000Z")
+    with pytest.raises(WebhookVerificationError):
+        verification_response(event)
+    refuses_changed_data(
+        TENANT_DELETED,
+        (
+            {"workspace_id": "-tnt"},
+            {"workspace_id": "tnt/01"},
+            {"workspace_id": 7},
+            {"environment": "staging"},
+            {"environment": "LIVE"},
+            {"deleted_at": "tomorrow"},
+        ),
+        ("workspace_id", "environment", "deleted_at"),
+    )
+
+
+def test_endpoint_disabled_event():
+    raw, headers = signed(ENDPOINT_DISABLED, "secret", ENDPOINT_DISABLED["id"])
+    event = construct_event(raw, headers, {"whk_sdktest01": "secret"}, now=NOW)
+    assert event.type == "webhook_endpoint.disabled" and not event.expired and not event.test
+    assert event.data == EndpointDisabled(
+        "whe_01JA2ZD0E1F2G3H4J5K6M7N8P9", "2026-10-20T10:00:00.000Z", "2026-10-23T10:00:00.000Z"
+    )
+    with pytest.raises(WebhookVerificationError):
+        verification_response(event)
+    refuses_changed_data(
+        ENDPOINT_DISABLED,
+        (
+            {"endpoint_id": "whk_01JA2ZD0E1F2G3H4J5K6M7N8P9"},
+            {"failing_since": "three days ago"},
+            {"disabled_at": "now"},
+        ),
+        ("endpoint_id", "failing_since", "disabled_at"),
+    )
 
 
 def test_unknown_fields_are_accepted():

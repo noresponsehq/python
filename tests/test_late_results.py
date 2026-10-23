@@ -21,7 +21,14 @@ from noresponse import (
     log_only_actions,
     workos_actions,
 )
-from noresponse.webhooks import AccountDeleted, AssessmentExpired, EndpointVerification, WebhookEvent
+from noresponse.webhooks import (
+    AccountDeleted,
+    AssessmentExpired,
+    EndpointDisabled,
+    EndpointVerification,
+    TenantDeleted,
+    WebhookEvent,
+)
 
 FIXTURES = Path(__file__).parent / "fixtures"
 SECRET = "late-result-secret"
@@ -153,6 +160,9 @@ def test_the_default_policy_revokes_on_review_and_block_and_does_nothing_on_allo
     assert late_result_action(ev(AssessmentExpired("asm_x", "acct", 1))) == "none"
     assert late_result_action(WebhookEvent("evt_x", "endpoint.verification", "x", EndpointVerification("whe_x", "c"))) == "none"
     assert late_result_action(WebhookEvent("evt_x", "account.deleted", "x", AccountDeleted("acct_1", 1, "x"))) == "none"
+    assert late_result_action(WebhookEvent("evt_x", "tenant.deleted", "x", TenantDeleted("tnt_1", "live", "x"))) == "none"
+    disabled = EndpointDisabled("whe_1", "x", "x")
+    assert late_result_action(WebhookEvent("evt_x", "webhook_endpoint.disabled", "x", disabled)) == "none"
     assert late_result_action(ev(Data("complete", "step_up")), {"step_up": "ban"}) == "ban"
     assert late_result_action(ev(Data("complete", "block")), {"block": "ban"}) == "ban"
     assert late_result_action(ev(Data("complete", "review")), {"step_up": "ban"}) == "none"

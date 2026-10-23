@@ -292,7 +292,7 @@ Verify the exact bytes you received, then act on the typed event. `secrets` maps
 ```python
 import os
 from noresponse import Webhook, WebhookVerificationError
-from noresponse import AccountDeleted, AssessmentExpired, Assessment
+from noresponse import AccountDeleted, AssessmentExpired, Assessment, EndpointDisabled, TenantDeleted
 
 SECRETS = {
     os.environ["NORESPONSE_WEBHOOK_KEY_ID"]: os.environ["NORESPONSE_WEBHOOK_SECRET"],
@@ -311,6 +311,10 @@ async def handler(request: Request) -> Response:
         return Response(status_code=204)
     if isinstance(event.data, AccountDeleted):  # type "account.deleted": you erased it with accounts.delete
         forget_account(event.data.account_id)
+    elif isinstance(event.data, TenantDeleted):  # the workspace is deleted: the last event this endpoint receives
+        forget_environment(event.data.environment)
+    elif isinstance(event.data, EndpointDisabled):  # another endpoint failed for 72 hours and is disabled
+        alert_ops(event.data.endpoint_id, event.data.failing_since)
     elif isinstance(event.data, AssessmentExpired):
         forget(event.data.assessment_id)  # GET now answers 404
     elif isinstance(event.data, Assessment) and is_newer(event.data):  # keep the highest detail.assessment_version per assessment

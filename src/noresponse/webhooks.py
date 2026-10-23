@@ -23,7 +23,9 @@ __all__ = [
     "DEFAULT_TOLERANCE_SECONDS",
     "AccountDeleted",
     "AssessmentExpired",
+    "EndpointDisabled",
     "EndpointVerification",
+    "TenantDeleted",
     "Webhook",
     "WebhookEvent",
     "WebhookVerificationError",
@@ -42,6 +44,7 @@ _EVENT_ID = re.compile(r"\Aevt_[0-9A-HJKMNP-TV-Z]{26}\Z")
 _ASSESSMENT_ID = re.compile(r"\Aasm_[0-9A-HJKMNP-TV-Z]{26}\Z")
 _ACCOUNT_ID = re.compile(r"\A[A-Za-z0-9][A-Za-z0-9._:|-]{0,127}\Z")
 _ENDPOINT_ID = re.compile(r"\Awhe_[0-9A-HJKMNP-TV-Z]{26}\Z")
+_WORKSPACE_ID = re.compile(r"\A[A-Za-z0-9][A-Za-z0-9_.-]{0,122}\Z")
 _DATETIME = re.compile(r"\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})\Z")
 
 WebhookErrorCode = Literal[
@@ -96,21 +99,45 @@ class AccountDeleted:
 
 
 @dataclass(frozen=True)
+class TenantDeleted:
+    """The workspace was deleted. Sent once per environment before its endpoints
+    are torn down: the last event this endpoint receives."""
+
+    workspace_id: str
+    environment: Literal["live", "test"]
+    deleted_at: str
+
+
+@dataclass(frozen=True)
+class EndpointDisabled:
+    """Another endpoint of this environment was disabled after failing
+    continuously for 72 hours. It receives nothing more until it is verified again."""
+
+    endpoint_id: str
+    failing_since: str
+    """When its deliveries started failing."""
+    disabled_at: str
+
+
+@dataclass(frozen=True)
 class WebhookEvent:
     """A verified delivery.
 
     data is an Assessment (exactly as assessments.get returns it) or an
     AssessmentExpired for type "assessment.updated", an EndpointVerification
-    for type "endpoint.verification", and an AccountDeleted for type
-    "account.deleted". Deliveries are at
+    for type "endpoint.verification", an AccountDeleted for type
+    "account.deleted", a TenantDeleted for type "tenant.deleted" and an
+    EndpointDisabled for type "webhook_endpoint.disabled". Deliveries are at
     least once and unordered: deduplicate on id and keep the highest
     detail.assessment_version per assessment.
     """
 
     id: str
-    type: Literal["assessment.updated", "endpoint.verification", "account.deleted"]
+    type: Literal[
+        "assessment.updated", "endpoint.verification", "account.deleted", "tenant.deleted", "webhook_endpoint.disabled"
+    ]
     created_at: str
-    data: Union[Assessment, AssessmentExpired, EndpointVerification, AccountDeleted]
+    data: Union[Assessment, AssessmentExpired, EndpointVerification, AccountDeleted, TenantDeleted, EndpointDisabled]
     test: bool = False
     """True on an event sent by webhook_endpoints.send_test_event: data is a fixed
     example assessment, not one of yours. Acknowledge it and apply nothing."""
@@ -236,6 +263,31 @@ def construct_event(
         ):
             raise _fail("invalid_payload", "Account deleted event is malformed")
         return WebhookEvent(event_id, "account.deleted", created_at, AccountDeleted(account_id, deleted, deleted_at))
+    if event_type == "tenant.deleted":
+        workspace_id, environment, deleted_at = data.get("workspace_id"), data.get("environment"), data.get("deleted_at")
+        if (
+            not isinstance(workspace_id, str)
+            or _WORKSPACE_ID.fullmatch(workspace_id) is None
+            or environment not in ("live", "test")
+            or not isinstance(deleted_at, str)
+            or not _date_time(deleted_at)
+        ):
+            raise _fail("invalid_payload", "Tenant deleted event is malformed")
+        return WebhookEvent(event_id, "tenant.deleted", created_at, TenantDeleted(workspace_id, environment, deleted_at))
+    if event_type == "webhook_endpoint.disabled":
+        endpoint_id, failing_since, disabled_at = data.get("endpoint_id"), data.get("failing_since"), data.get("disabled_at")
+        if (
+            not isinstance(endpoint_id, str)
+            or _ENDPOINT_ID.fullmatch(endpoint_id) is None
+            or not isinstance(failing_since, str)
+            or not _date_time(failing_since)
+            or not isinstance(disabled_at, str)
+            or not _date_time(disabled_at)
+        ):
+            raise _fail("invalid_payload", "Endpoint disabled event is malformed")
+        return WebhookEvent(
+            event_id, "webhook_endpoint.disabled", created_at, EndpointDisabled(endpoint_id, failing_since, disabled_at)
+        )
     if event_type != "assessment.updated":
         raise _fail("invalid_payload", "Unknown webhook event type")
     if data.get("status") == "expired":
