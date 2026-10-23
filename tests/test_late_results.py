@@ -268,6 +268,123 @@ def test_auth0_review_deletes_sessions_and_refresh_tokens_ban_blocks_first_the_p
     assert all(c.auth == "Bearer mgmt_token" for c in mock.calls)
 
 
+FEATURE_NOT_ENABLED = (403, {"statusCode": 403, "error": "Forbidden", "message": "This feature is not enabled for this tenant.", "errorCode": "feature_not_enabled"})
+
+
+class Auth0WithoutSessionsApi:
+    """An Auth0 tenant on a plan without the sessions API, as a Free tenant answers.
+
+    Both bulk endpoints refuse with 403 feature_not_enabled, while
+    /device-credentials and PATCH /users/{id} work. It keeps the refresh tokens
+    and the blocked flag, so a repeated delivery sees what the first left.
+    """
+
+    def __init__(self, escaped, refresh_tokens_api=False):
+        self.escaped = escaped
+        self.refresh_tokens_api = refresh_tokens_api
+        self.blocked = False
+        self.credentials = [("dcr_a", "refresh_token"), ("dcr_b", "refresh_token"), ("dcr_r", "rotating_refresh_token")]
+
+    def __call__(self, c):
+        user = f"/api/v2/users/{self.escaped}"
+        if c.method == "DELETE" and c.path == user + "/sessions":
+            return FEATURE_NOT_ENABLED
+        if c.method == "DELETE" and c.path == user + "/refresh-tokens":
+            if not self.refresh_tokens_api:
+                return FEATURE_NOT_ENABLED
+            self.credentials = []
+            return 202, None
+        if c.method == "PATCH" and c.path == user:
+            self.blocked = c.body.get("blocked") is True
+            return 200, {"blocked": self.blocked}
+        if c.method == "GET" and c.path == "/api/v2/device-credentials":
+            return 200, [{"id": i, "type": t, "user_id": c.query["user_id"]} for i, t in self.credentials if t == c.query["type"]]
+        if c.method == "DELETE" and c.path.startswith("/api/v2/device-credentials/"):
+            credential = c.path.rsplit("/", 1)[1]
+            if credential not in [i for i, _ in self.credentials]:
+                return 404, {"errorCode": "inexistent_device_credential"}
+            self.credentials = [(i, t) for i, t in self.credentials if i != credential]
+            return 204, None
+        return None
+
+
+def test_auth0_without_the_sessions_api_blocks_deletes_device_credentials_and_reports_ban(mock_provider):
+    user_id = "auth0|64abc0de1234567890abcdef"
+    escaped = "auth0%7C64abc0de1234567890abcdef"
+    tenant = Auth0WithoutSessionsApi(escaped)
+    mock = mock_provider(tenant)
+    auth0 = auth0_actions("mgmt_token", base_url=mock.url + "/api/v2")
+    raw, headers = delivery(REVIEW, user_id)
+
+    result = handle_late_result(raw, headers, SECRETS, auth0, now=NOW)
+    assert result.action == "ban" and result.user_id == user_id
+    assert tenant.blocked and tenant.credentials == []
+    assert [f"{c.method} {c.path} {c.query.get('type', '')}".rstrip() for c in mock.calls] == [
+        f"DELETE /api/v2/users/{escaped}/sessions",
+        f"PATCH /api/v2/users/{escaped}",
+        f"DELETE /api/v2/users/{escaped}/refresh-tokens",
+        "GET /api/v2/device-credentials refresh_token",
+        "GET /api/v2/device-credentials rotating_refresh_token",
+        "DELETE /api/v2/device-credentials/dcr_a",
+        "DELETE /api/v2/device-credentials/dcr_b",
+        "DELETE /api/v2/device-credentials/dcr_r",
+    ]
+    assert all(c.query["user_id"] == user_id for c in mock.calls if c.method == "GET")
+
+    # The same delivery again: still blocked, nothing left to delete, same report.
+    mock.calls.clear()
+    assert handle_late_result(raw, headers, SECRETS, auth0, now=NOW).action == "ban"
+    assert tenant.blocked
+    assert not [c for c in mock.calls if c.method == "DELETE" and c.path.startswith("/api/v2/device-credentials/")]
+
+    # ban blocks first, and the plan refusing the sessions endpoint is no failure.
+    tenant.blocked = False
+    tenant.credentials.append(("dcr_c", "refresh_token"))
+    mock.calls.clear()
+    assert handle_late_result(raw, headers, SECRETS, auth0, now=NOW, policy={"review": "ban"}).action == "ban"
+    assert mock.calls[0].method == "PATCH"
+    assert tenant.blocked and tenant.credentials == []
+
+    # Called directly, revoke_sessions takes the same fallback.
+    tenant.blocked = False
+    auth0.revoke_sessions(user_id)
+    assert tenant.blocked
+
+
+def test_auth0_with_refresh_tokens_but_no_sessions_api_still_blocks_and_a_scope_refusal_never_falls_back(mock_provider):
+    tenant = Auth0WithoutSessionsApi("auth0%7Cabc", refresh_tokens_api=True)
+    mock = mock_provider(tenant)
+    raw, headers = delivery(REVIEW, "auth0|abc")
+    assert handle_late_result(raw, headers, SECRETS, auth0_actions("mgmt_token", base_url=mock.url + "/api/v2"), now=NOW).action == "ban"
+    assert tenant.blocked
+    assert not [c for c in mock.calls if c.path == "/api/v2/device-credentials"]
+
+    scope = (403, {"statusCode": 403, "error": "Forbidden", "message": "Insufficient scope, expected any of: delete:sessions", "errorCode": "insufficient_scope"})
+    scoped = mock_provider(lambda c: scope if c.method == "DELETE" else (200, {}))
+    with pytest.raises(ProviderActionError) as refused:
+        handle_late_result(raw, headers, SECRETS, auth0_actions("mgmt_token", base_url=scoped.url + "/api/v2"), now=NOW)
+    assert refused.value.status == 403 and refused.value.code == "insufficient_scope"
+    assert [c.method for c in scoped.calls] == ["DELETE"]
+
+
+def test_a_provider_without_act_reports_the_action_asked_for():
+    done = []
+
+    class Custom:
+        name = "custom"
+
+        def revoke_sessions(self, user_id):
+            done.append(f"revoke {user_id}")
+
+        def ban(self, user_id):
+            done.append(f"ban {user_id}")
+
+    raw, headers = delivery(REVIEW, "u_1")
+    assert handle_late_result(raw, headers, SECRETS, Custom(), now=NOW).action == "revoke_sessions"
+    assert handle_late_result(raw, headers, SECRETS, Custom(), now=NOW, policy={"review": "ban"}).action == "ban"
+    assert done == ["revoke u_1", "ban u_1"]
+
+
 def test_an_unverified_quiet_or_unmapped_event_makes_no_provider_call_and_a_provider_refusal_raises(mock_provider):
     mock = mock_provider(lambda c: (403, {"error": "insufficient_scope", "secret": "leak"}) if c.method == "DELETE" else None)
     auth0 = auth0_actions("mgmt_token", base_url=mock.url + "/api/v2")
