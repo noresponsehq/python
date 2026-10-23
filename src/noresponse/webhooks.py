@@ -104,7 +104,7 @@ class WebhookEvent:
     for type "endpoint.verification", and an AccountDeleted for type
     "account.deleted". Deliveries are at
     least once and unordered: deduplicate on id and keep the highest
-    assessment_version per assessment.
+    detail.assessment_version per assessment.
     """
 
     id: str

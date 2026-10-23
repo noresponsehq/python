@@ -16,6 +16,7 @@ from .models.shared.account import Account as _Account
 from .models.shared.accountdeletion import AccountDeletion as _AccountDeletion
 from .models.shared.assessmentdeletion import AssessmentDeletion as _AssessmentDeletion
 from .models.shared.assessment import Assessment as _Assessment
+from .models.shared.assessmentdetail import AssessmentDetail
 from .models.shared.assessmentoutcome import AssessmentOutcome as _AssessmentOutcome
 from .models.shared.integration import Integration as _Integration
 from .models.shared.integrationlist import IntegrationList as _IntegrationList
@@ -26,6 +27,7 @@ __all__ = [
     "AccountDeletion",
     "AssessmentDeletion",
     "Assessment",
+    "AssessmentDetail",
     "AssessmentOutcome",
     "AssessmentPage",
     "Integration",
@@ -82,7 +84,12 @@ def _attach(cls: Type[M], source: BaseModel, meta: ResponseMeta) -> M:
 
 
 class Assessment(_Assessment):
-    """An assessment: what to do about a signup, login or other event, and why."""
+    """An assessment of a signup, login or purchase.
+
+    account.risk.decision is what to do (allow, step_up, review or block); account
+    is None while the account's first assessment is pending. detail holds this
+    assessment's own facts: risk, recommendation, signals and assessment_version.
+    """
 
     _meta: ResponseMeta = PrivateAttr(default=_EMPTY)
 
@@ -207,7 +214,7 @@ class AssessmentPage:
         self,
         *,
         account_id: str,
-        items: List[Assessment],
+        items: List[AssessmentDetail],
         next_cursor: Optional[str],
         retention_days: Optional[int],
         meta: ResponseMeta,
@@ -215,7 +222,7 @@ class AssessmentPage:
     ) -> None:
         self.account_id = account_id
         self.items = items
-        """The assessments on this page, each at its latest assessment_version."""
+        """The assessment details on this page, each at its latest assessment_version."""
         self.next_cursor = next_cursor
         """Opaque; pass it back as cursor to continue from this page."""
         self.retention_days = retention_days
@@ -241,13 +248,13 @@ class AssessmentPage:
         page: "AssessmentPage" = await self._fetch(self.next_cursor)
         return page
 
-    def __iter__(self) -> Iterator[Assessment]:
+    def __iter__(self) -> Iterator[AssessmentDetail]:
         page: Optional[AssessmentPage] = self
         while page is not None:
             yield from page.items
             page = page.next_page()
 
-    async def __aiter__(self) -> AsyncIterator[Assessment]:
+    async def __aiter__(self) -> AsyncIterator[AssessmentDetail]:
         page: Optional[AssessmentPage] = self
         while page is not None:
             for item in page.items:

@@ -1,8 +1,8 @@
 """Late-result handlers. Hand-written; not generated.
 
 An assessment can be revised after the signup was allowed: a slow source
-settles and the recommendation rises. NoResponse sends the new version as a
-signed assessment.updated webhook. handle_late_result verifies that delivery
+settles and the account's decision rises. NoResponse sends the new version as
+a signed assessment.updated webhook. handle_late_result verifies that delivery
 with construct_event, picks an action from your policy, and acts through the
 auth provider's admin API: revoke the user's sessions or ban the user.
 
@@ -47,11 +47,11 @@ REVOKE_SESSIONS = "revoke_sessions"
 BAN = "ban"
 _ACTIONS = (NONE, REVOKE_SESSIONS, BAN)
 
-# The action for each recommendation. A recommendation you leave out does nothing.
+# The action for each account decision (account.risk.decision). A decision you leave out does nothing.
 LatePolicy = Mapping[str, str]
 
-# Revoke sessions on review; do nothing on allow or step_up. Banning is opt-in.
-DEFAULT_LATE_RESULT_POLICY: LatePolicy = {"allow": NONE, "step_up": NONE, "review": REVOKE_SESSIONS}
+# Revoke sessions on review and block; do nothing on allow or step_up. Banning is opt-in.
+DEFAULT_LATE_RESULT_POLICY: LatePolicy = {"allow": NONE, "step_up": NONE, "review": REVOKE_SESSIONS, "block": REVOKE_SESSIONS}
 
 # transport(method, url, headers, body) -> (status, response body bytes).
 # The default uses urllib. Pass your own for a proxy or for tests.
@@ -120,21 +120,22 @@ def _text(value: Any) -> Optional[str]:
 
 
 def late_result_action(event: WebhookEvent, policy: Optional[LatePolicy] = None) -> str:
-    """The action your policy names for a verified event.
+    """The action your policy names for a verified event's account.risk.decision.
 
-    Only a served assessment with a recommendation can act; a test event from
-    webhook_endpoints.send_test_event never does.
+    Only a complete or partial assessment whose account has a decision can act;
+    a pending one and a test event from webhook_endpoints.send_test_event never do.
     """
     chosen = DEFAULT_LATE_RESULT_POLICY if policy is None else policy
     data = event.data
     if event.type != "assessment.updated" or event.expired or event.test:
         return NONE
-    recommendation = _text(getattr(data, "recommendation", None))
-    if recommendation is None:
-        recommendation = _text(getattr(getattr(data, "risk", None), "recommendation", None))
-    if recommendation not in ("allow", "step_up", "review"):
+    # A pending answer carries an earlier assessment's decision; acting on it would repeat that action.
+    if _text(getattr(data, "status", None)) == "pending":
         return NONE
-    action = chosen.get(recommendation)
+    decision = _text(getattr(getattr(getattr(data, "account", None), "risk", None), "decision", None))
+    if decision not in ("allow", "step_up", "review", "block"):
+        return NONE
+    action = chosen.get(decision)
     if action is None:
         return NONE
     if action not in _ACTIONS:
@@ -158,7 +159,7 @@ def handle_late_result(
     payload, headers, secrets, tolerance_seconds and now are exactly what
     construct_event takes; a delivery that fails verification raises
     WebhookVerificationError before any provider call. resolve_user_id maps the
-    assessment's account_id to the provider user id (default: the account_id
+    assessment's detail.account_id to the provider user id (default: the account_id
     itself); return None to take no action, or raise to fail the delivery so it
     is retried. A test event acts on nothing. Revoke and ban are safe to repeat,
     but deduplicate on result.event.id and ignore versions older than one you
@@ -168,7 +169,7 @@ def handle_late_result(
     action = late_result_action(event, policy)
     if action == NONE:
         return LateResult(event, NONE)
-    account_id = event.data.account_id  # type: ignore[union-attr]
+    account_id = event.data.detail.account_id  # type: ignore[union-attr]
     user_id = resolve_user_id(account_id, event) if resolve_user_id else account_id
     if not user_id:
         return LateResult(event, NONE)

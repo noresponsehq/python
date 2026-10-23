@@ -9,9 +9,9 @@ from noresponse import NoResponse
 from noresponse._wait import WaitTimeoutError, wait
 
 FIXTURES = Path(__file__).parent / "fixtures"
-PENDING = json.loads((FIXTURES / "valid/assessment-pending.json").read_text())
-COMPLETE = json.loads((FIXTURES / "valid/assessment-complete.json").read_text())
-ID = COMPLETE["assessment_id"]
+PENDING = json.loads((FIXTURES / "valid/assessment-view-pending.json").read_text())
+COMPLETE = json.loads((FIXTURES / "valid/assessment-view-complete.json").read_text())
+ID = COMPLETE["id"]
 
 
 def client(responses):
@@ -40,7 +40,8 @@ def test_wait_polls_until_complete_honouring_retry_after(sleeps):
     sdk, seen = client([(200, PENDING, {"Retry-After": "3"}), (200, PENDING, {"Retry-After": "0"}), (200, COMPLETE, {})])
     result = wait(sdk, ID)
     assert result.status == "complete"
-    assert result.assessment_id == ID
+    assert result.id == ID
+    assert result.account is not None and result.account.risk.decision == COMPLETE["account"]["risk"]["decision"]
     assert sleeps == [3.0, 1.0]
     assert len(seen) == 3
     assert all(r.url.path == f"/v1/assessments/{ID}" for r in seen)
@@ -62,7 +63,7 @@ def test_retry_after_accepts_http_date():
     ) == 5.0
 
 
-PARTIAL = json.loads((FIXTURES / "valid/assessment-partial.json").read_text())
+PARTIAL = json.loads((FIXTURES / "valid/assessment-view-partial.json").read_text())
 
 
 def test_wait_keeps_polling_a_partial_answer_until_complete(sleeps):
@@ -77,7 +78,7 @@ def test_wait_returns_the_latest_partial_answer_at_the_timeout(sleeps):
     sdk, seen = client([(200, PENDING, {"Retry-After": "1"}), (200, PARTIAL, {})])
     result = wait(sdk, ID, timeout=3.5)
     assert result.status == "partial"
-    assert result.assessment_id == PARTIAL["assessment_id"]
+    assert result.id == PARTIAL["id"]
     assert sleeps == [1.0, 1.0, 1.0]
     assert len(seen) == 4
 

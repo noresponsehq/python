@@ -1,11 +1,14 @@
 from __future__ import annotations
-from typing import Literal
+from noresponse.types import UnrecognizedStr
+from typing import Literal, Union
 
 
-Flow = Literal[
-    "signup",
-    "login",
-    "recovery",
-    "profile_change",
+Flow = Union[
+    Literal[
+        "signup",
+        "login",
+        "purchase",
+    ],
+    UnrecognizedStr,
 ]
-r"""The provider flow the assessment gates. Use the top-level flow instead; this member is ignored when the top-level flow is present. Absent means signup."""
+r"""The customer event an assessment is made for: signup (a new account), login (a returning sign-in) or purchase (a payment or credit grant). The account's risk is reported with the decision for this flow."""

@@ -19,7 +19,7 @@ class AccountTypedDict(TypedDict):
     r"""The account_id the tenant sends with its assessments."""
     risk: AccountRiskTypedDict
     decisions_by_flow: AccountDecisionsByFlowTypedDict
-    r"""The decision for each flow. Every flow uses the tenant's signup thresholds today, so all three equal risk.decision."""
+    r"""The decision for each flow. Every flow uses the tenant's signup thresholds today, so all three are equal."""
     assessment_id: str
     r"""The assessment the current risk comes from."""
     updated_at: str
@@ -37,7 +37,7 @@ class Account(BaseModel):
     risk: AccountRisk
 
     decisions_by_flow: AccountDecisionsByFlow
-    r"""The decision for each flow. Every flow uses the tenant's signup thresholds today, so all three equal risk.decision."""
+    r"""The decision for each flow. Every flow uses the tenant's signup thresholds today, so all three are equal."""
 
     assessment_id: str
     r"""The assessment the current risk comes from."""

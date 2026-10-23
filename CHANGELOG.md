@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.0.0
+
+* `sdk.assessments.create()`: 
+  *  `request` **Changed** (Breaking ⚠️)
+  *  `response` **Changed** (Breaking ⚠️)
+* `sdk.assessments.get()`:  `response` **Changed** (Breaking ⚠️)
+
 ## 2.0.33
 
 * `sdk.assessments.delete()`: **Added**

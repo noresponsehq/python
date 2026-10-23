@@ -4,6 +4,7 @@ import json
 import threading
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
+from types import SimpleNamespace
 from urllib.parse import parse_qsl, urlsplit
 
 import pytest
@@ -32,9 +33,17 @@ def fixture(name):
     return json.loads((FIXTURES / name).read_text())
 
 
-REVIEW = fixture("valid/assessment-phone-uncovered-complete.json")
-STEP_UP = fixture("valid/assessment-complete.json")
-PENDING = fixture("valid/assessment-pending.json")
+VIEW = fixture("valid/assessment-view-complete.json")
+
+
+def decided(decision):
+    return {**VIEW, "account": {**VIEW["account"], "risk": {**VIEW["account"]["risk"], "decision": decision}}}
+
+
+REVIEW = decided("review")
+STEP_UP = decided("step_up")
+PENDING = fixture("valid/assessment-view-pending.json")
+KNOWN_PENDING = fixture("valid/assessment-view-pending-known-account.json")
 EXPIRED = fixture("valid/webhook-assessment-expired.json")
 
 
@@ -44,7 +53,7 @@ def delivery(data, account_id=None, **extra):
         "type": "assessment.updated",
         "created_at": "2026-10-18T11:00:04Z",
         **extra,
-        "data": {**data, "account_id": account_id} if account_id else data,
+        "data": {**data, "detail": {**data["detail"], "account_id": account_id}} if account_id else data,
     }
     raw = json.dumps(body).encode("utf-8")
     stamp = str(NOW)
@@ -123,26 +132,30 @@ def mock_provider():
         m.close()
 
 
-def test_the_default_policy_revokes_on_review_and_does_nothing_on_allow_step_up_pending_or_expiry():
+def test_the_default_policy_revokes_on_review_and_block_and_does_nothing_on_allow_step_up_pending_or_expiry():
     def ev(data):
         return WebhookEvent("evt_x", "assessment.updated", "2026-10-18T11:00:04Z", data)
 
     class Data:
-        def __init__(self, status, recommendation=None):
-            self.status, self.recommendation = status, recommendation
+        def __init__(self, status, decision=None):
+            self.status = status
+            self.account = SimpleNamespace(risk=SimpleNamespace(decision=decision)) if decision else None
 
     assert late_result_action(ev(Data("complete", "review"))) == "revoke_sessions"
+    assert late_result_action(ev(Data("complete", "block"))) == "revoke_sessions"
     assert late_result_action(ev(Data("complete", "step_up"))) == "none"
     assert late_result_action(ev(Data("partial", "allow"))) == "none"
     assert late_result_action(ev(Data("pending"))) == "none"
+    assert late_result_action(ev(Data("pending", "review"))) == "none"
     assert late_result_action(ev(AssessmentExpired("asm_x", "acct", 1))) == "none"
     assert late_result_action(WebhookEvent("evt_x", "endpoint.verification", "x", EndpointVerification("whe_x", "c"))) == "none"
     assert late_result_action(WebhookEvent("evt_x", "account.deleted", "x", AccountDeleted("acct_1", 1, "x"))) == "none"
     assert late_result_action(ev(Data("complete", "step_up")), {"step_up": "ban"}) == "ban"
+    assert late_result_action(ev(Data("complete", "block")), {"block": "ban"}) == "ban"
     assert late_result_action(ev(Data("complete", "review")), {"step_up": "ban"}) == "none"
     with pytest.raises(TypeError):
         late_result_action(ev(Data("complete", "review")), {"review": "delete"})
-    assert dict(DEFAULT_LATE_RESULT_POLICY) == {"allow": "none", "step_up": "none", "review": "revoke_sessions"}
+    assert dict(DEFAULT_LATE_RESULT_POLICY) == {"allow": "none", "step_up": "none", "review": "revoke_sessions", "block": "revoke_sessions"}
 
 
 def test_clerk_review_revokes_each_active_session_and_a_ban_policy_bans_the_user(mock_provider):
@@ -160,7 +173,7 @@ def test_clerk_review_revokes_each_active_session_and_a_ban_policy_bans_the_user
     result = handle_late_result(raw, headers, SECRETS, clerk, now=NOW)
     assert result.action == "revoke_sessions"
     assert result.user_id == "user_2EXAMPLE"
-    assert result.event.data.assessment_id == REVIEW["assessment_id"]
+    assert result.event.data.id == REVIEW["id"]
     assert [f"{c.method} {c.path}" for c in mock.calls] == [
         "GET /v1/sessions",
         "POST /v1/sessions/sess_1/revoke",
@@ -397,7 +410,7 @@ def test_an_unverified_quiet_or_unmapped_event_makes_no_provider_call_and_a_prov
     with pytest.raises(WebhookVerificationError) as stale:
         handle_late_result(raw, headers, SECRETS, auth0, now=NOW + 301)
     assert stale.value.code == "invalid_timestamp"
-    for data in (STEP_UP, PENDING, EXPIRED["data"]):
+    for data in (STEP_UP, PENDING, {**KNOWN_PENDING, "account": REVIEW["account"]}, EXPIRED["data"]):
         d_raw, d_headers = delivery(data)
         assert handle_late_result(d_raw, d_headers, SECRETS, auth0, now=NOW).action == "none"
     assert handle_late_result(raw, headers, SECRETS, auth0, now=NOW, resolve_user_id=lambda a, e: None).action == "none"

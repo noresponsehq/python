@@ -23,7 +23,7 @@ if TYPE_CHECKING:
 class NoResponse(BaseSDK):
     r"""NoResponse API: Server-side signup and gateway risk assessment: a recommendation, polling and signed webhooks.
 
-    Assess a signup or gateway event, poll a pending assessment, page through an account's history, record what you later learned, rotate your API key, manage your webhook endpoints, and register hosted endpoints that answer your WorkOS or Auth0 sign-up and sign-in hooks. Every response carries X-Request-ID; every error is an RFC 9457 problem document. Keep the API key on your server.
+    Assess a signup, login or purchase and get back the account's one current risk, poll a pending assessment, page through an account's history, record what you later learned, rotate your API key, manage your webhook endpoints, and register hosted endpoints that answer your WorkOS or Auth0 sign-up and sign-in hooks. Every response carries X-Request-ID; every error is an RFC 9457 problem document. Keep the API key on your server.
     """
 
     @property

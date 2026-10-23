@@ -1,5 +1,4 @@
 from __future__ import annotations
-from .flow import Flow
 from noresponse.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
 from typing import Optional
@@ -7,22 +6,21 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class AssessmentRequestPolicyContextTypedDict(TypedDict):
-    flow: NotRequired[Flow]
-    r"""The provider flow the assessment gates. Use the top-level flow instead; this member is ignored when the top-level flow is present. Absent means signup."""
+    r"""Optional policy inputs: region."""
+
     region: NotRequired[str]
     r"""ISO 3166-1 alpha-2 region of the signup, as the provider determines it."""
 
 
 class AssessmentRequestPolicyContext(BaseModel):
-    flow: Optional[Flow] = None
-    r"""The provider flow the assessment gates. Use the top-level flow instead; this member is ignored when the top-level flow is present. Absent means signup."""
+    r"""Optional policy inputs: region."""
 
     region: Optional[str] = None
     r"""ISO 3166-1 alpha-2 region of the signup, as the provider determines it."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["flow", "region"])
+        optional_fields = set(["region"])
         serialized = handler(self)
         m = {}
 

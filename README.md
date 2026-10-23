@@ -17,15 +17,16 @@ nr = NoResponse()  # reads NORESPONSE_API_KEY
 
 assessment = nr.assessments.create(
     account_id="usr_8f2k1",
+    flow="signup",
     identifiers={"email": "jordan.lee@example.com", "name": "Jordan Lee", "ip": "81.2.69.160"},
 )
 
-if assessment.status == "pending":
-    # No recommendation yet. Apply your fallback now, then wait or take the webhook.
-    assessment = nr.assessments.wait(assessment.assessment_id)
+if assessment.account is None:
+    # The account's first assessment is still pending. Apply your fallback now, then wait or take the webhook.
+    assessment = nr.assessments.wait(assessment.id)
 
-if assessment.risk is not None:
-    print(assessment.risk.recommendation)  # allow, step_up or review
+if assessment.account is not None:
+    print(assessment.account.risk.decision)  # allow, step_up, review or block
 ```
 
 Keep the API key on your server. The client raises `ValueError` at construction without one.
@@ -75,24 +76,26 @@ Every method also takes `server_url`, `timeout_ms` and `http_headers` for that c
 ```python
 assessment = nr.assessments.create(
     account_id="usr_8f2k1",                                    # your opaque account id
+    flow="signup",                                             # signup, login or purchase
+    depth="full",                                              # quick or full; full for signup and purchase, quick for login by default
     identifiers={"email": "jordan.lee@example.com"},           # email, username or phone; name and ip refine the match
-    policy_context={"flow": "signup", "region": "AU"},         # signup, login, recovery or profile_change
+    policy_context={"region": "AU"},
     client_context={"timezone": "Australia/Sydney", "platform": "web", "form_duration_ms": 1800},
     auth_context=auth_context,                                 # a verified session, see below
-    response_mode="standard",                                  # detailed adds signals and risk.details (detailed scope)
+    response_mode="standard",                                  # detailed adds detail.signals and detail.risk.details (detailed scope)
     idempotency_key="signup-usr_8f2k1-0001",
 )
 ```
 
-The answer is the assessment whether the API answered 200 (complete or partial) or 202 (pending). `status` is `complete`, `partial` or `pending`; `risk.recommendation` is `allow`, `step_up` or `review` and is absent while pending.
+The answer is the assessment whether the API answered 200 (complete or partial) or 202 (pending). `status` is `complete`, `partial` or `pending`. Act on `account.risk.decision`: `allow`, `step_up`, `review` or `block`, the account's current decision for this flow. `account` is `None` while the account's first assessment is pending. `detail` holds this assessment's own facts: `detail.risk`, `detail.recommendation`, `detail.signals`, `detail.assessment_version` and, while pending, `detail.assessment_url`.
 
 The idempotency key is generated (a UUID) when you leave it out and is sent again on every retry of that call. Pass your own to make a retry of the same signup from your side replay the same assessment: the API answers the latest version with `meta.idempotent_replayed` true and starts no new work. The same key with a different body answers 409.
 
 ### Get and wait
 
 ```python
-latest = nr.assessments.get(assessment.assessment_id)
-settled = nr.assessments.wait(assessment.assessment_id, timeout=30)
+latest = nr.assessments.get(assessment.id)
+settled = nr.assessments.wait(assessment.id, timeout=30)
 ```
 
 `wait` polls `get` until the status is `complete`, sleeping the server's `Retry-After` (at least one second) between polls. After `timeout` seconds (default 30) it returns the latest answer if that is `partial`, with its status still `partial`, and raises `APITimeoutError` if the assessment is still `pending`. The error is a `WaitTimeoutError` whose `last` attribute is the final pending assessment. Pass `response_mode="detailed"` to either. In async code use `get_async` and `wait_async`.
@@ -101,7 +104,7 @@ settled = nr.assessments.wait(assessment.assessment_id, timeout=30)
 
 ```python
 page = nr.assessments.query(account_id="usr_8f2k1", limit=20)
-page.items       # newest first, each at its latest version
+page.items       # assessment details, newest first, each at its latest version
 page.has_more    # True when another page exists
 page.next_page() # the next page, or None
 
@@ -135,7 +138,7 @@ Every call needs the `history` scope. An account with no decided assessment rais
 
 ```python
 receipt = nr.assessments.record_outcome(
-    assessment.assessment_id,
+    assessment.id,
     outcome="chargeback",  # confirmed_abuse, account_takeover, chargeback, false_positive, legitimate or unknown
     observed_at="2026-10-20T10:00:00Z",
     external_ref="case-42",
@@ -291,7 +294,7 @@ async def handler(request: Request) -> Response:
         forget_account(event.data.account_id)
     elif isinstance(event.data, AssessmentExpired):
         forget(event.data.assessment_id)  # GET now answers 404
-    elif isinstance(event.data, Assessment) and is_newer(event.data):  # keep the highest assessment_version per assessment
+    elif isinstance(event.data, Assessment) and is_newer(event.data):  # keep the highest detail.assessment_version per assessment
         apply(event.data)  # the full assessment, as assessments.get returns it
     return Response(status_code=204)
 ```
@@ -309,7 +312,7 @@ provider = clerk_actions(os.environ["CLERK_SECRET_KEY"])
 result = handle_late_result(raw_body, request.headers, SECRETS, provider, policy={"review": "ban"})
 ```
 
-The default policy revokes sessions on `review` and does nothing otherwise. `ban` blocks the user in Clerk and Auth0; WorkOS has no block, so its ban deletes the user permanently. Pass `resolve_user_id` when the provider's user id is not your `account_id`. A test event from `send_test_event` acts on nothing. A refused provider call raises `ProviderActionError`; answer the webhook with a 5xx so we retry it. A provider 404 means the user or session is already gone and counts as done, so a repeated delivery is safe.
+The policy maps the account's decision (`account.risk.decision`) to an action. The default revokes sessions on `review` and `block` and does nothing otherwise. A pending assessment acts on nothing: its account decision comes from an earlier assessment. `ban` blocks the user in Clerk and Auth0; WorkOS has no block, so its ban deletes the user permanently. Pass `resolve_user_id` when the provider's user id is not your `account_id`. A test event from `send_test_event` acts on nothing. A refused provider call raises `ProviderActionError`; answer the webhook with a 5xx so we retry it. A provider 404 means the user or session is already gone and counts as done, so a repeated delivery is safe.
 
 If your app has its own login, `log_only_actions()` logs what it would revoke or ban (to the `noresponse.late_results` logger at WARNING, or pass `log`) and calls nothing. Use it to try the handler, then subclass `LateResultProvider` with a `name` and the two methods `revoke_sessions(user_id)` and `ban(user_id)`.
 

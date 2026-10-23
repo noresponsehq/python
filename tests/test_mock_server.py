@@ -25,16 +25,17 @@ def test_create_returns_the_documented_assessment():
         res = sdk.assessments.create(
             idempotency_key="mock-server-smoke-0001",
             account_id="acct_7f3a9c",
+            flow="signup",
             identifiers={"email": "new.user@example.com"},
         )
-    assert res.assessment_id.startswith("asm_")
-    assert res.account_id == "acct_7f3a9c"
+    assert res.id.startswith("asm_")
+    assert res.detail.account_id == "acct_7f3a9c"
 
 
 def test_get_returns_the_documented_assessment():
     with client() as sdk:
         res = sdk.assessments.get("asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM")
-    assert res.assessment_id.startswith("asm_")
+    assert res.id.startswith("asm_") and res.detail.assessment_id == res.id
 
 
 def test_accounts_return_the_documented_account_and_page():
@@ -58,7 +59,8 @@ def test_async_create():
             return await sdk.assessments.create_async(
                 idempotency_key="mock-server-smoke-0002",
                 account_id="acct_7f3a9c",
+                flow="signup",
                 identifiers={"email": "new.user@example.com"},
             )
 
-    assert asyncio.run(create()).assessment_id.startswith("asm_")
+    assert asyncio.run(create()).id.startswith("asm_")

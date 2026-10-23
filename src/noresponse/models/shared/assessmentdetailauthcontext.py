@@ -7,7 +7,7 @@ from typing import Optional
 from typing_extensions import NotRequired, TypedDict
 
 
-class AssessmentAuthContextTypedDict(TypedDict):
+class AssessmentDetailAuthContextTypedDict(TypedDict):
     r"""The identity fields of the auth context the assessment was made with, echoed for the tenant's own correlation: the request's auth_context, or the one a hosted provider hook (POST /hooks/{integration_id}) built, with transport provider_hook and its hook_point. Present exactly when the request carried an auth_context, and the same on every revision of the assessment. Values are as the request or the hook sent them; tokens, timestamps, roles and scopes are not echoed, and the echo does not change the score."""
 
     provider: str
@@ -28,7 +28,7 @@ class AssessmentAuthContextTypedDict(TypedDict):
     r"""The provider event a provider_hook context was sent for; absent for any other transport."""
 
 
-class AssessmentAuthContext(BaseModel):
+class AssessmentDetailAuthContext(BaseModel):
     r"""The identity fields of the auth context the assessment was made with, echoed for the tenant's own correlation: the request's auth_context, or the one a hosted provider hook (POST /hooks/{integration_id}) built, with transport provider_hook and its hook_point. Present exactly when the request carried an auth_context, and the same on every revision of the assessment. Values are as the request or the hook sent them; tokens, timestamps, roles and scopes are not echoed, and the echo does not change the score."""
 
     provider: str

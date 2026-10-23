@@ -13,16 +13,20 @@ if TYPE_CHECKING:
     from .accountrisk import AccountRisk, AccountRiskTypedDict
     from .accountriskreason import AccountRiskReason, AccountRiskReasonTypedDict
     from .assessment import Assessment, AssessmentTypedDict
-    from .assessmentauthcontext import (
-        AssessmentAuthContext,
-        AssessmentAuthContextTypedDict,
-    )
     from .assessmentdeletion import AssessmentDeletion, AssessmentDeletionTypedDict
     from .assessmentdeletionaccount import (
         AssessmentDeletionAccount,
         AssessmentDeletionAccountTypedDict,
     )
-    from .assessmentflow import AssessmentFlow
+    from .assessmentdetail import AssessmentDetail, AssessmentDetailTypedDict
+    from .assessmentdetailauthcontext import (
+        AssessmentDetailAuthContext,
+        AssessmentDetailAuthContextTypedDict,
+    )
+    from .assessmentdetailtiming import (
+        AssessmentDetailTiming,
+        AssessmentDetailTimingTypedDict,
+    )
     from .assessmentlist import AssessmentList, AssessmentListTypedDict
     from .assessmentoutcome import AssessmentOutcome, AssessmentOutcomeTypedDict
     from .assessmentoutcomerequest import (
@@ -47,7 +51,6 @@ if TYPE_CHECKING:
         AssessmentRequestPolicyContext,
         AssessmentRequestPolicyContextTypedDict,
     )
-    from .assessmenttiming import AssessmentTiming, AssessmentTimingTypedDict
     from .assurancelevel import AssuranceLevel
     from .authcontext import AuthContext, AuthContextTypedDict
     from .authcontextmfa import AuthContextMfa, AuthContextMfaTypedDict
@@ -204,13 +207,16 @@ __all__ = [
     "AlternateNameUnion",
     "AlternateNameUnionTypedDict",
     "Assessment",
-    "AssessmentAuthContext",
-    "AssessmentAuthContextTypedDict",
     "AssessmentDeletion",
     "AssessmentDeletionAccount",
     "AssessmentDeletionAccountTypedDict",
     "AssessmentDeletionTypedDict",
-    "AssessmentFlow",
+    "AssessmentDetail",
+    "AssessmentDetailAuthContext",
+    "AssessmentDetailAuthContextTypedDict",
+    "AssessmentDetailTiming",
+    "AssessmentDetailTimingTypedDict",
+    "AssessmentDetailTypedDict",
     "AssessmentList",
     "AssessmentListTypedDict",
     "AssessmentOutcome",
@@ -229,8 +235,6 @@ __all__ = [
     "AssessmentRequestPolicyContext",
     "AssessmentRequestPolicyContextTypedDict",
     "AssessmentRequestTypedDict",
-    "AssessmentTiming",
-    "AssessmentTimingTypedDict",
     "AssessmentTypedDict",
     "AssuranceLevel",
     "AuthContext",
@@ -398,13 +402,16 @@ _dynamic_imports: dict[str, str] = {
     "AccountRiskReasonTypedDict": ".accountriskreason",
     "Assessment": ".assessment",
     "AssessmentTypedDict": ".assessment",
-    "AssessmentAuthContext": ".assessmentauthcontext",
-    "AssessmentAuthContextTypedDict": ".assessmentauthcontext",
     "AssessmentDeletion": ".assessmentdeletion",
     "AssessmentDeletionTypedDict": ".assessmentdeletion",
     "AssessmentDeletionAccount": ".assessmentdeletionaccount",
     "AssessmentDeletionAccountTypedDict": ".assessmentdeletionaccount",
-    "AssessmentFlow": ".assessmentflow",
+    "AssessmentDetail": ".assessmentdetail",
+    "AssessmentDetailTypedDict": ".assessmentdetail",
+    "AssessmentDetailAuthContext": ".assessmentdetailauthcontext",
+    "AssessmentDetailAuthContextTypedDict": ".assessmentdetailauthcontext",
+    "AssessmentDetailTiming": ".assessmentdetailtiming",
+    "AssessmentDetailTimingTypedDict": ".assessmentdetailtiming",
     "AssessmentList": ".assessmentlist",
     "AssessmentListTypedDict": ".assessmentlist",
     "AssessmentOutcome": ".assessmentoutcome",
@@ -423,8 +430,6 @@ _dynamic_imports: dict[str, str] = {
     "AssessmentRequestIssuedCredentialTypedDict": ".assessmentrequestissuedcredential",
     "AssessmentRequestPolicyContext": ".assessmentrequestpolicycontext",
     "AssessmentRequestPolicyContextTypedDict": ".assessmentrequestpolicycontext",
-    "AssessmentTiming": ".assessmenttiming",
-    "AssessmentTimingTypedDict": ".assessmenttiming",
     "AssuranceLevel": ".assurancelevel",
     "AuthContext": ".authcontext",
     "AuthContextTypedDict": ".authcontext",

@@ -51,9 +51,11 @@ def test_shared_vector_yields_typed_assessment():
     assert event.id == HEADERS["NR-Webhook-Id"]
     assert event.created_at == "2026-10-14T09:00:02.000Z"
     assert isinstance(event.data, Assessment)
-    assert event.data.assessment_id == "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
-    assert event.data.assessment_version == 2
-    assert event.data.risk is not None and event.data.risk.recommendation == "step_up"
+    assert event.data.id == "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
+    assert event.data.status == "complete"
+    assert event.data.account is not None and event.data.account.risk.decision == "step_up"
+    assert event.data.detail.assessment_version == 2
+    assert event.data.detail.risk is not None and event.data.detail.risk.recommendation == "step_up"
     assert not event.expired
     # A str body and lower-case header names verify the same delivery.
     lower = {k.lower(): v for k, v in HEADERS.items()}
@@ -83,16 +85,17 @@ def test_httpx_headers_keep_repeats_apart():
 
 
 def test_rotation_and_event_id():
-    complete = fixture("valid/assessment-complete.json")
+    complete = fixture("valid/assessment-view-complete.json")
     event = {"id": "evt_01JA2ZB4N5P6Q7R8S9T0VWXYZ2", "type": "assessment.updated", "created_at": "2026-10-18T11:00:04Z", "data": complete}
     both = {"whk_sdktest01": "old-secret", "whk_sdktest02": "new-secret"}
     raw, headers = signed(event, "new-secret", event["id"], "whk_sdktest02")
     verified = construct_event(raw, headers, both, now=NOW)
     assert isinstance(verified.data, Assessment)
-    assert verified.data.assessment_id == complete["assessment_id"]
+    assert verified.data.id == complete["id"]
+    assert verified.data.detail.assessment_version == complete["detail"]["assessment_version"]
     raw, headers = signed(event, "new-secret", "evt_01JA2ZB4N5P6Q7R8S9T0VWXYZ9", "whk_sdktest02")
     refused("invalid_payload", raw, headers, both, now=NOW)
-    pointer = {**event, "data": {"assessment_id": complete["assessment_id"], "assessment_url": "/v1/assessments/x"}}
+    pointer = {**event, "data": {"assessment_id": complete["id"], "assessment_url": "/v1/assessments/x"}}
     raw, headers = signed(pointer, "new-secret", event["id"], "whk_sdktest02")
     refused("invalid_payload", raw, headers, both, now=NOW)
 

@@ -6,11 +6,15 @@ How long the synchronous answer waits for sources. quick waits only for the fast
 
 ```python
 from noresponse.models.shared import Depth
+
+# Open enum: unrecognized values are captured as UnrecognizedStr
 value: Depth = "quick"
 ```
 
 
 ## Values
+
+This is an open enum. Unrecognized values will not fail type checks.
 
 - `"quick"`
 - `"full"`

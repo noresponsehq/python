@@ -15,6 +15,7 @@ from noresponse import (
     APIStatusError,
     APITimeoutError,
     Assessment,
+    AssessmentDetail,
     AssessmentPage,
     Integration,
     IntegrationList,
@@ -38,8 +39,9 @@ def fixture(name):
     return json.loads((FIXTURES / name).read_text())
 
 
-PENDING = fixture("valid/assessment-pending.json")
-COMPLETE = fixture("valid/assessment-complete.json")
+PENDING = fixture("valid/assessment-view-pending.json")
+COMPLETE = fixture("valid/assessment-view-complete.json")
+BLOCK = fixture("valid/assessment-view-block.json")
 LIST = fixture("valid/assessment-list.json")
 OUTCOME = fixture("valid/assessment-outcome.json")
 ROTATION = fixture("valid/key-rotation.json")
@@ -51,7 +53,7 @@ ACCOUNT_BLOCK = fixture("valid/account-block.json")
 ACCOUNT_DELETION = fixture("valid/account-deletion.json")
 ASSESSMENT_DELETION = fixture("valid/assessment-deletion.json")
 ASSESSMENT_DELETION_LAST = fixture("valid/assessment-deletion-last.json")
-REQUEST = {"account_id": "usr_8f2k1", "identifiers": {"email": "jordan.lee@example.com", "name": "Jordan Lee"}}
+REQUEST = {"account_id": "usr_8f2k1", "flow": "signup", "identifiers": {"email": "jordan.lee@example.com", "name": "Jordan Lee"}}
 
 
 def answer(body, status=200, headers=None, problem=False):
@@ -135,23 +137,27 @@ def test_the_key_never_appears_when_the_client_is_printed():
 
 
 def test_create_sends_the_contract_request_and_returns_the_assessment_with_meta():
-    sdk, seen = make([answer(PENDING, 202, {"Retry-After": "2", "Location": "/v1/assessments/" + PENDING["assessment_id"]})])
-    assessment = sdk.assessments.create(**REQUEST, policy_context={"flow": "signup", "region": "AU"})
+    sdk, seen = make([answer(PENDING, 202, {"Retry-After": "2", "Location": "/v1/assessments/" + PENDING["id"]})])
+    assessment = sdk.assessments.create(**{**REQUEST, "flow": "login"}, depth="quick", policy_context={"region": "AU"})
     request = seen[0]
     assert request.method == "POST" and request.url.path == "/v1/assessments"
     assert request.headers["authorization"] == "Bearer " + KEY
     assert UUID.match(request.headers["idempotency-key"])
     assert json.loads(request.content) == {
         "account_id": "usr_8f2k1",
+        "flow": "login",
+        "depth": "quick",
         "identifiers": {"email": "jordan.lee@example.com", "name": "Jordan Lee"},
-        "policy_context": {"flow": "signup", "region": "AU"},
+        "policy_context": {"region": "AU"},
     }
     assert isinstance(assessment, Assessment)
-    assert assessment.status == "pending" and assessment.assessment_id == PENDING["assessment_id"]
-    assert assessment.recommendation is None
+    assert assessment.status == "pending" and assessment.id == PENDING["id"]
+    assert assessment.account is None
+    assert assessment.detail.recommendation is None
+    assert assessment.detail.assessment_url == PENDING["detail"]["assessment_url"]
     assert assessment.meta.request_id == "a" * 32
     assert assessment.meta.retry_after == 2
-    assert assessment.meta.location == "/v1/assessments/" + PENDING["assessment_id"]
+    assert assessment.meta.location == "/v1/assessments/" + PENDING["id"]
     assert assessment.meta.idempotent_replayed is False
     # meta is not part of the body.
     assert "meta" not in assessment.model_dump()
@@ -163,8 +169,19 @@ def test_create_with_an_apps_own_login_leaves_auth_context_out_of_the_body():
     sdk.assessments.create(**REQUEST, auth_context=None)
     assert json.loads(seen[0].content) == {
         "account_id": "usr_8f2k1",
+        "flow": "signup",
         "identifiers": {"email": "jordan.lee@example.com", "name": "Jordan Lee"},
     }
+
+
+def test_the_account_decision_and_the_detail_are_typed():
+    sdk, _ = make([answer(BLOCK)])
+    assessment = sdk.assessments.create(**REQUEST)
+    assert assessment.flow == "signup" and assessment.depth == "full"
+    assert assessment.account is not None and assessment.account.risk.decision == "block"
+    assert assessment.account.risk.score == BLOCK["account"]["risk"]["score"]
+    assert assessment.detail.risk is not None and assessment.detail.risk.block is True
+    assert assessment.detail.assessment_version == BLOCK["detail"]["assessment_version"]
 
 
 def test_idempotency_key_is_generated_once_and_sent_on_every_retry():
@@ -186,10 +203,10 @@ def test_get_sends_response_mode_and_wait_polls_until_settled(monkeypatch):
     import noresponse._wait as wait_module
 
     monkeypatch.setattr(wait_module.time, "sleep", lambda s: slept.append(s))
-    settled = sdk.assessments.wait(PENDING["assessment_id"], timeout=30, response_mode="detailed")
+    settled = sdk.assessments.wait(PENDING["id"], timeout=30, response_mode="detailed")
     assert settled.status == "complete"
     assert slept == [1.0]
-    assert all(r.url.path == "/v1/assessments/" + PENDING["assessment_id"] for r in seen)
+    assert all(r.url.path == "/v1/assessments/" + PENDING["id"] for r in seen)
     assert all(r.url.params["response_mode"] == "detailed" for r in seen)
 
 
@@ -267,7 +284,7 @@ def test_query_pages_iterate_across_every_page():
     page = sdk.assessments.query(account_id="acct_7f3a9c", limit=1)
     assert isinstance(page, AssessmentPage)
     assert page.has_more and page.next_cursor == "cursor-2"
-    assert len(page.items) == len(LIST["items"]) and isinstance(page.items[0], Assessment)
+    assert len(page.items) == len(LIST["items"]) and isinstance(page.items[0], AssessmentDetail)
     ids = [a.assessment_id for a in page]
     assert ids == [a["assessment_id"] for a in LIST["items"]] + [LIST["items"][0]["assessment_id"]]
     assert len(seen) == 2
@@ -394,9 +411,9 @@ def test_async_methods_mirror_the_sync_ones():
         async with sdk:
             created = await sdk.assessments.create_async(**REQUEST)
             assert created.status == "complete" and UUID.match(seen[0].headers["idempotency-key"])
-            got = await sdk.assessments.get_async(created.assessment_id)
-            assert got.assessment_id == created.assessment_id
-            waited = await sdk.assessments.wait_async(created.assessment_id)
+            got = await sdk.assessments.get_async(created.id)
+            assert got.id == created.id
+            waited = await sdk.assessments.wait_async(created.id)
             assert waited.status == "complete"
             page = await sdk.assessments.query_async(account_id="acct_7f3a9c", limit=1)
             everything = [item.assessment_id async for item in page]
@@ -553,4 +570,4 @@ def test_wait_is_callable_from_the_package_root(monkeypatch):
 
     monkeypatch.setattr(wait_module.time, "sleep", lambda s: None)
     sdk, _ = make([answer(PENDING, headers={"Retry-After": "1"}), answer(COMPLETE)])
-    assert noresponse.wait(sdk, PENDING["assessment_id"]).status == "complete"
+    assert noresponse.wait(sdk, PENDING["id"]).status == "complete"

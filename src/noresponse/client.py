@@ -132,10 +132,10 @@ class Assessments(_Assessments):
         self,
         *,
         account_id: str,
+        flow: models.shared.Flow,
         identifiers: Identifiers,
-        idempotency_key: Optional[str] = None,
-        flow: Optional[models.shared.AssessmentFlow] = None,
         depth: Optional[models.shared.Depth] = None,
+        idempotency_key: Optional[str] = None,
         policy_context: Optional[PolicyContext] = None,
         request_id: Optional[str] = None,
         deadline_ms: Optional[int] = None,
@@ -148,16 +148,17 @@ class Assessments(_Assessments):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> Assessment:
-        """Assess a signup, login or other event for abuse.
+        """Assess a signup, login or purchase for abuse.
 
-        The result is the assessment whether the API answered 200 (complete or
-        partial) or 202 (pending: apply your own fallback, then wait() or take
-        the webhook). idempotency_key is generated when omitted and is sent
+        flow is "signup", "login" or "purchase"; depth is "quick" or "full"
+        (default full for signup and purchase, quick for login). The result is
+        the assessment whether the API answered 200 (complete or partial) or
+        202 (pending). Act on account.risk.decision; account is None while the
+        account's first assessment is pending, so apply your own fallback, then
+        wait() or take the webhook. idempotency_key is generated when omitted and is sent
         again on every retry of this call; pass your own, derived from your
         signup attempt, so that a retry from your side replays the same
-        assessment instead of starting new work. flow is "signup", "login" or
-        "purchase"; depth is "quick" or "full" (by default full for signup and
-        purchase, quick for login). issued_credential is
+        assessment instead of starting new work. issued_credential is
         {"sha256": hash_issued_credential(key)} when your gate issued a key.
         """
         response = _sync(super().create)(
@@ -184,10 +185,10 @@ class Assessments(_Assessments):
         self,
         *,
         account_id: str,
+        flow: models.shared.Flow,
         identifiers: Identifiers,
-        idempotency_key: Optional[str] = None,
-        flow: Optional[models.shared.AssessmentFlow] = None,
         depth: Optional[models.shared.Depth] = None,
+        idempotency_key: Optional[str] = None,
         policy_context: Optional[PolicyContext] = None,
         request_id: Optional[str] = None,
         deadline_ms: Optional[int] = None,
@@ -505,7 +506,7 @@ def _page(
     body = response.result
     return AssessmentPage(
         account_id=body.account_id,
-        items=[as_assessment(item) for item in body.items],
+        items=list(body.items),
         next_cursor=body.next_cursor or None,
         retention_days=body.retention_days,
         meta=ResponseMeta.from_headers(response.headers),
