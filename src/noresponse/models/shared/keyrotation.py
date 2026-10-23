@@ -17,10 +17,10 @@ Scope = Union[
 
 
 class KeyRotationTypedDict(TypedDict):
-    r"""The 201 answer of POST /v1/keys/rotate: the new key, shown once, and when the key that was presented stops working. The new key has the scopes of the presented key."""
+    r"""The 201 answer of POST /v1/keys/rotate: the new key, shown once, and when the key that was presented stops working. The new key has the scopes and the environment of the presented key."""
 
     key: str
-    r"""The new credential, nrk_<key id>_<secret>. It is shown only in this answer; store it now."""
+    r"""The new credential, nrk_<mode>_<key id>_<secret>, in the environment of the presented key: nrk_live_ or nrk_test_. It is shown only in this answer; store it now."""
     key_id: str
     r"""The public id of the new key."""
     scopes: List[Scope]
@@ -33,10 +33,10 @@ class KeyRotationTypedDict(TypedDict):
 
 
 class KeyRotation(BaseModel):
-    r"""The 201 answer of POST /v1/keys/rotate: the new key, shown once, and when the key that was presented stops working. The new key has the scopes of the presented key."""
+    r"""The 201 answer of POST /v1/keys/rotate: the new key, shown once, and when the key that was presented stops working. The new key has the scopes and the environment of the presented key."""
 
     key: str
-    r"""The new credential, nrk_<key id>_<secret>. It is shown only in this answer; store it now."""
+    r"""The new credential, nrk_<mode>_<key id>_<secret>, in the environment of the presented key: nrk_live_ or nrk_test_. It is shown only in this answer; store it now."""
 
     key_id: str
     r"""The public id of the new key."""
