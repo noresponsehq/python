@@ -1,6 +1,6 @@
 # Flow
 
-The customer event an assessment is made for: signup (a new account), login (a returning sign-in) or purchase (a payment or credit grant). The account's risk is reported with the decision for this flow.
+The event an assessment is made for: account_creation (a user creates an account), login (a user returns to an existing account) or purchase (a payment or a credit grant). The account's risk is reported with the decision for this flow.
 
 ## Example Usage
 
@@ -8,7 +8,7 @@ The customer event an assessment is made for: signup (a new account), login (a r
 from noresponse.models.shared import Flow
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: Flow = "signup"
+value: Flow = "account_creation"
 ```
 
 
@@ -16,6 +16,6 @@ value: Flow = "signup"
 
 This is an open enum. Unrecognized values will not fail type checks.
 
-- `"signup"`
+- `"account_creation"`
 - `"login"`
 - `"purchase"`

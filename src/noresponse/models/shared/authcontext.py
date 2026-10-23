@@ -29,7 +29,7 @@ class AuthContextTypedDict(TypedDict):
     organization_id: NotRequired[str]
     r"""The active organization or workspace identifier, when the provider issued one."""
     tenant_id: NotRequired[str]
-    r"""The provider tenant identifier, when distinct from organization_id."""
+    r"""The provider workspace identifier, when distinct from organization_id."""
     token_id: NotRequired[str]
     r"""The verified token identifier (`jti`), used for replay and rotation correlation."""
     issued_at: NotRequired[str]
@@ -90,7 +90,7 @@ class AuthContext(BaseModel):
     r"""The active organization or workspace identifier, when the provider issued one."""
 
     tenant_id: Optional[str] = None
-    r"""The provider tenant identifier, when distinct from organization_id."""
+    r"""The provider workspace identifier, when distinct from organization_id."""
 
     token_id: Optional[str] = None
     r"""The verified token identifier (`jti`), used for replay and rotation correlation."""

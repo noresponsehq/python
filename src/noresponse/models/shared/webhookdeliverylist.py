@@ -10,17 +10,17 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class WebhookDeliveryListTypedDict(TypedDict):
-    r"""The 200 answer of GET /v1/webhooks/{endpoint_id}/deliveries: one page of the endpoint's delivery attempts, newest first. Each item is one POST to the endpoint. Attempts are kept for 30 days, or the tenant's retention_days when that is shorter, and are deleted with the assessment they carried. next_cursor is present only when another page exists."""
+    r"""The 200 answer of GET /v1/webhooks/{endpoint_id}/deliveries: one page of the endpoint's delivery attempts, newest first. Each item is one POST to the endpoint. Attempts are kept for 30 days, or the workspace's retention_days when that is shorter, and are deleted with the assessment they carried. next_cursor is present only when another page exists."""
 
     endpoint_id: str
     r"""Opaque id of the endpoint registration."""
     items: List[WebhookDeliveryAttemptTypedDict]
     next_cursor: NotRequired[str]
-    r"""Opaque cursor for the next page, MAC'd by the server and bound to the tenant and endpoint it was issued for. Pass it back unchanged as cursor; a tampered, foreign or expired cursor answers 400 invalid_cursor."""
+    r"""Opaque cursor for the next page, MAC'd by the server and bound to the workspace and endpoint it was issued for. Pass it back unchanged as cursor; a tampered, foreign or expired cursor answers 400 invalid_cursor."""
 
 
 class WebhookDeliveryList(BaseModel):
-    r"""The 200 answer of GET /v1/webhooks/{endpoint_id}/deliveries: one page of the endpoint's delivery attempts, newest first. Each item is one POST to the endpoint. Attempts are kept for 30 days, or the tenant's retention_days when that is shorter, and are deleted with the assessment they carried. next_cursor is present only when another page exists."""
+    r"""The 200 answer of GET /v1/webhooks/{endpoint_id}/deliveries: one page of the endpoint's delivery attempts, newest first. Each item is one POST to the endpoint. Attempts are kept for 30 days, or the workspace's retention_days when that is shorter, and are deleted with the assessment they carried. next_cursor is present only when another page exists."""
 
     endpoint_id: str
     r"""Opaque id of the endpoint registration."""
@@ -28,7 +28,7 @@ class WebhookDeliveryList(BaseModel):
     items: List[WebhookDeliveryAttempt]
 
     next_cursor: Optional[str] = None
-    r"""Opaque cursor for the next page, MAC'd by the server and bound to the tenant and endpoint it was issued for. Pass it back unchanged as cursor; a tampered, foreign or expired cursor answers 400 invalid_cursor."""
+    r"""Opaque cursor for the next page, MAC'd by the server and bound to the workspace and endpoint it was issued for. Pass it back unchanged as cursor; a tampered, foreign or expired cursor answers 400 invalid_cursor."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

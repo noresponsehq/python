@@ -27,7 +27,7 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"proxy_ip"`
 - `"seen_before"`
 - `"shared_ip"`
-- `"many_recent_signups"`
+- `"many_recent_accounts"`
 - `"established_accounts"`
 - `"aged_identity"`
 - `"breach_name_match"`

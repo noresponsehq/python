@@ -17,7 +17,7 @@ class RiskSummaryTypedDict(TypedDict):
     email: NotRequired[RiskSummaryEmailTypedDict]
     username: NotRequired[RiskSummaryUsernameTypedDict]
     ip: NotRequired[IPSummaryTypedDict]
-    r"""Facts about the submitted IP from the offline database and this tenant's own recent assessments. Every member is optional; absent makes no claim."""
+    r"""Facts about the submitted IP from the offline database and this workspace's own recent assessments. Every member is optional; absent makes no claim."""
     consistency: NotRequired[ConsistencyTypedDict]
     r"""Cross-identifier agreement, computed from facts only. Every member is optional; absent makes no claim."""
 
@@ -32,7 +32,7 @@ class RiskSummary(BaseModel):
     username: Optional[RiskSummaryUsername] = None
 
     ip: Optional[IPSummary] = None
-    r"""Facts about the submitted IP from the offline database and this tenant's own recent assessments. Every member is optional; absent makes no claim."""
+    r"""Facts about the submitted IP from the offline database and this workspace's own recent assessments. Every member is optional; absent makes no claim."""
 
     consistency: Optional[Consistency] = None
     r"""Cross-identifier agreement, computed from facts only. Every member is optional; absent makes no claim."""

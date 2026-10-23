@@ -16,7 +16,7 @@ ReasonCode = Union[
         "proxy_ip",
         "seen_before",
         "shared_ip",
-        "many_recent_signups",
+        "many_recent_accounts",
         "established_accounts",
         "aged_identity",
         "breach_name_match",

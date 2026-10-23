@@ -53,7 +53,7 @@ ACCOUNT_BLOCK = fixture("valid/account-block.json")
 ACCOUNT_DELETION = fixture("valid/account-deletion.json")
 ASSESSMENT_DELETION = fixture("valid/assessment-deletion.json")
 ASSESSMENT_DELETION_LAST = fixture("valid/assessment-deletion-last.json")
-REQUEST = {"account_id": "usr_8f2k1", "flow": "signup", "identifiers": {"email": "jordan.lee@example.com", "name": "Jordan Lee"}}
+REQUEST = {"account_id": "usr_8f2k1", "flow": "account_creation", "identifiers": {"email": "jordan.lee@example.com", "name": "Jordan Lee"}}
 
 
 def answer(body, status=200, headers=None, problem=False):
@@ -169,7 +169,7 @@ def test_create_with_an_apps_own_login_leaves_auth_context_out_of_the_body():
     sdk.assessments.create(**REQUEST, auth_context=None)
     assert json.loads(seen[0].content) == {
         "account_id": "usr_8f2k1",
-        "flow": "signup",
+        "flow": "account_creation",
         "identifiers": {"email": "jordan.lee@example.com", "name": "Jordan Lee"},
     }
 
@@ -177,7 +177,7 @@ def test_create_with_an_apps_own_login_leaves_auth_context_out_of_the_body():
 def test_the_account_decision_and_the_detail_are_typed():
     sdk, _ = make([answer(BLOCK)])
     assessment = sdk.assessments.create(**REQUEST)
-    assert assessment.flow == "signup" and assessment.depth == "full"
+    assert assessment.flow == "account_creation" and assessment.depth == "full"
     assert assessment.account is not None and assessment.account.risk.decision == "block"
     assert assessment.account.risk.score == BLOCK["account"]["risk"]["score"]
     assert assessment.detail.risk is not None and assessment.detail.risk.block is True
@@ -191,8 +191,8 @@ def test_idempotency_key_is_generated_once_and_sent_on_every_retry():
     assert seen[0].headers["idempotency-key"] == seen[1].headers["idempotency-key"]
     assert UUID.match(seen[0].headers["idempotency-key"])
     assert assessment.meta.idempotent_replayed is True
-    sdk.assessments.create(**REQUEST, idempotency_key="signup-usr_8f2k1-0001")
-    assert seen[2].headers["idempotency-key"] == "signup-usr_8f2k1-0001"
+    sdk.assessments.create(**REQUEST, idempotency_key="account-usr_8f2k1-0001")
+    assert seen[2].headers["idempotency-key"] == "account-usr_8f2k1-0001"
     other = sdk.assessments.create(**REQUEST)
     assert other is not assessment and seen[3].headers["idempotency-key"] != seen[0].headers["idempotency-key"]
 
@@ -301,7 +301,7 @@ def test_accounts_get_reads_the_current_risk():
     assert account.risk.score == ACCOUNT["risk"]["score"] and account.risk.decision == "step_up"
     assert [reason.code for reason in account.risk.reasons] == [r["code"] for r in ACCOUNT["risk"]["reasons"]]
     flows = account.decisions_by_flow
-    assert (flows.signup, flows.login, flows.purchase) == ("step_up", "step_up", "step_up")
+    assert (flows.account_creation, flows.login, flows.purchase) == ("step_up", "step_up", "step_up")
     assert account.meta.request_id == "a" * 32
     blocked = sdk.accounts.get("tenant:usr|42")
     assert blocked.risk.decision == "block"
@@ -313,7 +313,7 @@ def test_accounts_get_reads_the_current_risk():
 
 def test_accounts_delete_erases_and_a_repeat_answers_zero():
     repeat = {**ACCOUNT_DELETION, "assessments_deleted": 0}
-    sdk, seen = make([answer(ACCOUNT_DELETION), answer(repeat), problem(403, "tenant_forbidden")], retry_config=NO_RETRIES)
+    sdk, seen = make([answer(ACCOUNT_DELETION), answer(repeat), problem(403, "workspace_forbidden")], retry_config=NO_RETRIES)
     deletion = sdk.accounts.delete("acct_7f3a9c")
     assert isinstance(deletion, AccountDeletion)
     assert (seen[0].method, seen[0].url.path, seen[0].content) == ("DELETE", "/v1/accounts/acct_7f3a9c", b"")
@@ -322,7 +322,7 @@ def test_accounts_delete_erases_and_a_repeat_answers_zero():
     assert sdk.accounts.delete("acct_7f3a9c").assessments_deleted == 0
     with pytest.raises(PermissionDeniedError) as caught:
         sdk.accounts.delete("acct_7f3a9c")
-    assert caught.value.code == "tenant_forbidden"
+    assert caught.value.code == "workspace_forbidden"
 
     async def scenario():
         sdk, seen = make([answer(ACCOUNT_DELETION)])

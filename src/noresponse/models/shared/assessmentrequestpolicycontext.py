@@ -9,14 +9,14 @@ class AssessmentRequestPolicyContextTypedDict(TypedDict):
     r"""Optional policy inputs: region."""
 
     region: NotRequired[str]
-    r"""ISO 3166-1 alpha-2 region of the signup, as the provider determines it."""
+    r"""ISO 3166-1 alpha-2 region of the user, as the provider determines it."""
 
 
 class AssessmentRequestPolicyContext(BaseModel):
     r"""Optional policy inputs: region."""
 
     region: Optional[str] = None
-    r"""ISO 3166-1 alpha-2 region of the signup, as the provider determines it."""
+    r"""ISO 3166-1 alpha-2 region of the user, as the provider determines it."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

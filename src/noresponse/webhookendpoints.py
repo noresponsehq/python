@@ -27,7 +27,7 @@ class WebhookEndpoints(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.operations.ListWebhookEndpointsResponse:
-        r"""List the tenant's webhook endpoints.
+        r"""List the workspace's webhook endpoints.
 
         Lists your webhook endpoints in every state, ordered by endpoint_id, with the ids of their signing keys and without secrets. Requires the webhooks scope.
 
@@ -194,7 +194,7 @@ class WebhookEndpoints(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.operations.ListWebhookEndpointsResponse:
-        r"""List the tenant's webhook endpoints.
+        r"""List the workspace's webhook endpoints.
 
         Lists your webhook endpoints in every state, ordered by endpoint_id, with the ids of their signing keys and without secrets. Requires the webhooks scope.
 
@@ -702,7 +702,7 @@ class WebhookEndpoints(BaseSDK):
 
         Deletes the endpoint and its signing keys. Deliveries still queued for it are dropped. Requires the webhooks scope. An endpoint that is already gone answers 404.
 
-        :param endpoint_id: The endpoint's whe_ id. An id that is unknown, malformed or another tenant's answers 404.
+        :param endpoint_id: The endpoint's whe_ id. An id that is unknown, malformed or another workspace's answers 404.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -873,7 +873,7 @@ class WebhookEndpoints(BaseSDK):
 
         Deletes the endpoint and its signing keys. Deliveries still queued for it are dropped. Requires the webhooks scope. An endpoint that is already gone answers 404.
 
-        :param endpoint_id: The endpoint's whe_ id. An id that is unknown, malformed or another tenant's answers 404.
+        :param endpoint_id: The endpoint's whe_ id. An id that is unknown, malformed or another workspace's answers 404.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1050,7 +1050,7 @@ class WebhookEndpoints(BaseSDK):
 
         Issues a new signing key for the endpoint and returns its secret once. Every delivery from now on is signed with it; the key it replaces keeps verifying for 7 days, so your receiver can hold both while it switches. Requires the webhooks scope. Rotation is not idempotent: a retry after a lost answer issues another key, which replaces the first.
 
-        :param endpoint_id: The endpoint's whe_ id. An id that is unknown, malformed or another tenant's answers 404.
+        :param endpoint_id: The endpoint's whe_ id. An id that is unknown, malformed or another workspace's answers 404.
         :param body:
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1224,7 +1224,7 @@ class WebhookEndpoints(BaseSDK):
 
         Issues a new signing key for the endpoint and returns its secret once. Every delivery from now on is signed with it; the key it replaces keeps verifying for 7 days, so your receiver can hold both while it switches. Requires the webhooks scope. Rotation is not idempotent: a retry after a lost answer issues another key, which replaces the first.
 
-        :param endpoint_id: The endpoint's whe_ id. An id that is unknown, malformed or another tenant's answers 404.
+        :param endpoint_id: The endpoint's whe_ id. An id that is unknown, malformed or another workspace's answers 404.
         :param body:
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1398,7 +1398,7 @@ class WebhookEndpoints(BaseSDK):
 
         endpoint.verification sends a signed challenge now and answers whether the endpoint echoed it within 5 seconds; an echo verifies the endpoint, including a disabled one. assessment.updated queues one signed event with test: true and a fixed example assessment in the endpoint's response mode, delivered and retried like any other event; the endpoint must be verified. Both use the endpoint's current signing key. Requires the webhooks scope.
 
-        :param endpoint_id: The endpoint's whe_ id. An id that is unknown, malformed or another tenant's answers 404.
+        :param endpoint_id: The endpoint's whe_ id. An id that is unknown, malformed or another workspace's answers 404.
         :param event: endpoint.verification sends a fresh challenge now, in this call, and the endpoint is verified if it echoes it. assessment.updated queues an event whose data is a fixed example assessment, with test true, delivered and retried like any other; the endpoint must be verified.
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1563,7 +1563,7 @@ class WebhookEndpoints(BaseSDK):
 
         endpoint.verification sends a signed challenge now and answers whether the endpoint echoed it within 5 seconds; an echo verifies the endpoint, including a disabled one. assessment.updated queues one signed event with test: true and a fixed example assessment in the endpoint's response mode, delivered and retried like any other event; the endpoint must be verified. Both use the endpoint's current signing key. Requires the webhooks scope.
 
-        :param endpoint_id: The endpoint's whe_ id. An id that is unknown, malformed or another tenant's answers 404.
+        :param endpoint_id: The endpoint's whe_ id. An id that is unknown, malformed or another workspace's answers 404.
         :param event: endpoint.verification sends a fresh challenge now, in this call, and the endpoint is verified if it echoes it. assessment.updated queues an event whose data is a fixed example assessment, with test true, delivered and retried like any other; the endpoint must be verified.
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1731,9 +1731,9 @@ class WebhookEndpoints(BaseSDK):
     ) -> Optional[models.operations.ListWebhookDeliveriesResponse]:
         r"""List an endpoint's delivery attempts.
 
-        Every POST the endpoint received, newest first: the event id and type, which attempt it was, whether it was a replay, delivered or failed, the response code, why it failed and how long it took. Attempts are kept for 30 days, or your retention_days when that is shorter, and are deleted with the assessment they carried. Requires the webhooks scope. Read-only and safe to retry. The cursor is opaque and bound to your tenant and the endpoint; a tampered or expired cursor answers 400 invalid_cursor.
+        Every POST the endpoint received, newest first: the event id and type, which attempt it was, whether it was a replay, delivered or failed, the response code, why it failed and how long it took. Attempts are kept for 30 days, or your retention_days when that is shorter, and are deleted with the assessment they carried. Requires the webhooks scope. Read-only and safe to retry. The cursor is opaque and bound to your workspace and the endpoint; a tampered or expired cursor answers 400 invalid_cursor.
 
-        :param endpoint_id: The endpoint's whe_ id. An id that is unknown, malformed or another tenant's answers 404.
+        :param endpoint_id: The endpoint's whe_ id. An id that is unknown, malformed or another workspace's answers 404.
         :param limit: Attempts per page.
         :param cursor: next_cursor from the previous page, unchanged.
         :param retries: Override the default retry configuration for this method
@@ -1938,9 +1938,9 @@ class WebhookEndpoints(BaseSDK):
     ) -> Optional[models.operations.ListWebhookDeliveriesResponse]:
         r"""List an endpoint's delivery attempts.
 
-        Every POST the endpoint received, newest first: the event id and type, which attempt it was, whether it was a replay, delivered or failed, the response code, why it failed and how long it took. Attempts are kept for 30 days, or your retention_days when that is shorter, and are deleted with the assessment they carried. Requires the webhooks scope. Read-only and safe to retry. The cursor is opaque and bound to your tenant and the endpoint; a tampered or expired cursor answers 400 invalid_cursor.
+        Every POST the endpoint received, newest first: the event id and type, which attempt it was, whether it was a replay, delivered or failed, the response code, why it failed and how long it took. Attempts are kept for 30 days, or your retention_days when that is shorter, and are deleted with the assessment they carried. Requires the webhooks scope. Read-only and safe to retry. The cursor is opaque and bound to your workspace and the endpoint; a tampered or expired cursor answers 400 invalid_cursor.
 
-        :param endpoint_id: The endpoint's whe_ id. An id that is unknown, malformed or another tenant's answers 404.
+        :param endpoint_id: The endpoint's whe_ id. An id that is unknown, malformed or another workspace's answers 404.
         :param limit: Attempts per page.
         :param cursor: next_cursor from the previous page, unchanged.
         :param retries: Override the default retry configuration for this method
@@ -2155,8 +2155,8 @@ class WebhookEndpoints(BaseSDK):
 
         Queues the event for the endpoint again: the same event id and body it received, with a new NR-Webhook-Timestamp and a signature from the endpoint's current signing key, retried like any other delivery and listed with replay: true. Your receiver deduplicates on the event id. The endpoint must be verified. Requires the webhooks scope. Not idempotent: each call, a retry included, sends the event again.
 
-        :param endpoint_id: The endpoint's whe_ id. An id that is unknown, malformed or another tenant's answers 404.
-        :param event_id: The evt_ id of a delivery the endpoint's log holds, as GET /v1/webhooks/{endpoint_id}/deliveries lists it. An id that is malformed, not sent to this endpoint, past the log's retention or another tenant's answers 404.
+        :param endpoint_id: The endpoint's whe_ id. An id that is unknown, malformed or another workspace's answers 404.
+        :param event_id: The evt_ id of a delivery the endpoint's log holds, as GET /v1/webhooks/{endpoint_id}/deliveries lists it. An id that is malformed, not sent to this endpoint, past the log's retention or another workspace's answers 404.
         :param body:
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -2326,8 +2326,8 @@ class WebhookEndpoints(BaseSDK):
 
         Queues the event for the endpoint again: the same event id and body it received, with a new NR-Webhook-Timestamp and a signature from the endpoint's current signing key, retried like any other delivery and listed with replay: true. Your receiver deduplicates on the event id. The endpoint must be verified. Requires the webhooks scope. Not idempotent: each call, a retry included, sends the event again.
 
-        :param endpoint_id: The endpoint's whe_ id. An id that is unknown, malformed or another tenant's answers 404.
-        :param event_id: The evt_ id of a delivery the endpoint's log holds, as GET /v1/webhooks/{endpoint_id}/deliveries lists it. An id that is malformed, not sent to this endpoint, past the log's retention or another tenant's answers 404.
+        :param endpoint_id: The endpoint's whe_ id. An id that is unknown, malformed or another workspace's answers 404.
+        :param event_id: The evt_ id of a delivery the endpoint's log holds, as GET /v1/webhooks/{endpoint_id}/deliveries lists it. An id that is malformed, not sent to this endpoint, past the log's retention or another workspace's answers 404.
         :param body:
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds

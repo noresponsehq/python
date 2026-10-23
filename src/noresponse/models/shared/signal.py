@@ -18,7 +18,7 @@ class SignalTypedDict(TypedDict):
     outcome: SignalOutcome
     r"""Per-signal outcome. A source that timed out, was blocked or errored reports blocked, unavailable or inconclusive with a reason and is listed in incomplete_sources; not_found is a definite absence."""
     source_id: str
-    r"""Opaque, tenant-scoped projection of the source that produced a signal. It stays stable for your tenant while the projection key is unchanged and reveals no upstream provider, feed, breach table or source record."""
+    r"""Opaque, workspace-scoped projection of the source that produced a signal. It stays stable for your workspace while the projection key is unchanged and reveals no upstream provider, feed, breach table or source record."""
     freshness: Freshness
     r"""Freshness class of the evidence behind a signal. unknown whenever no evidence was obtained."""
     reason: NotRequired[FailureReason]
@@ -44,7 +44,7 @@ class Signal(BaseModel):
     r"""Per-signal outcome. A source that timed out, was blocked or errored reports blocked, unavailable or inconclusive with a reason and is listed in incomplete_sources; not_found is a definite absence."""
 
     source_id: str
-    r"""Opaque, tenant-scoped projection of the source that produced a signal. It stays stable for your tenant while the projection key is unchanged and reveals no upstream provider, feed, breach table or source record."""
+    r"""Opaque, workspace-scoped projection of the source that produced a signal. It stays stable for your workspace while the projection key is unchanged and reveals no upstream provider, feed, breach table or source record."""
 
     freshness: Freshness
     r"""Freshness class of the evidence behind a signal. unknown whenever no evidence was obtained."""

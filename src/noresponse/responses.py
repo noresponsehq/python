@@ -86,7 +86,7 @@ def _attach(cls: Type[M], source: BaseModel, meta: ResponseMeta) -> M:
 
 
 class Assessment(_Assessment):
-    """An assessment of a signup, login or purchase.
+    """An assessment of an account creation, login or purchase.
 
     account.risk.decision is what to do (allow, step_up, review or block); account
     is None while the account's first assessment is pending. detail holds this

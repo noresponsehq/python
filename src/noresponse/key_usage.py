@@ -1,7 +1,7 @@
 """The key usage buffer. Hand-written; not generated.
 
-Your API gateway calls ``record`` once per request made with a key your signup
-gate issued. The buffer keeps the facts in memory and a background thread
+Your API gateway calls ``record`` once per request made with a key your platform
+issued. The buffer keeps the facts in memory and a background thread
 sends them to POST /v1/key_usage/batches: once ``batch_size`` facts are queued,
 every ``flush_interval`` seconds, and on ``flush()``, ``close()`` or interpreter
 exit. ``record`` does not block and does not raise. When the queue is full the

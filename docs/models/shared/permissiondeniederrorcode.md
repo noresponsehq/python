@@ -8,7 +8,7 @@ Machine codes an HTTP 403 answer can carry.
 from noresponse.models.shared import PermissionDeniedErrorCode
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: PermissionDeniedErrorCode = "tenant_forbidden"
+value: PermissionDeniedErrorCode = "workspace_forbidden"
 ```
 
 
@@ -16,4 +16,4 @@ value: PermissionDeniedErrorCode = "tenant_forbidden"
 
 This is an open enum. Unrecognized values will not fail type checks.
 
-- `"tenant_forbidden"`
+- `"workspace_forbidden"`

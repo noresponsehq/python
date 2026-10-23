@@ -7,18 +7,18 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class IPSummaryTypedDict(TypedDict):
-    r"""Facts about the submitted IP from the offline database and this tenant's own recent assessments. Every member is optional; absent makes no claim."""
+    r"""Facts about the submitted IP from the offline database and this workspace's own recent assessments. Every member is optional; absent makes no claim."""
 
     country: NotRequired[str]
     r"""ISO 3166-1 alpha-2 country of the address."""
     type: NotRequired[IPSummaryType]
     r"""The address's network type."""
-    seen_in_tenant: NotRequired[int]
-    r"""Assessments in this tenant with the same IP in the last 24 hours, this one included. A count only."""
+    seen_in_workspace: NotRequired[int]
+    r"""Assessments in this workspace with the same IP in the last 24 hours, this one included. A count only."""
 
 
 class IPSummary(BaseModel):
-    r"""Facts about the submitted IP from the offline database and this tenant's own recent assessments. Every member is optional; absent makes no claim."""
+    r"""Facts about the submitted IP from the offline database and this workspace's own recent assessments. Every member is optional; absent makes no claim."""
 
     country: Optional[str] = None
     r"""ISO 3166-1 alpha-2 country of the address."""
@@ -26,12 +26,12 @@ class IPSummary(BaseModel):
     type: Optional[IPSummaryType] = None
     r"""The address's network type."""
 
-    seen_in_tenant: Optional[int] = None
-    r"""Assessments in this tenant with the same IP in the last 24 hours, this one included. A count only."""
+    seen_in_workspace: Optional[int] = None
+    r"""Assessments in this workspace with the same IP in the last 24 hours, this one included. A count only."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["country", "type", "seen_in_tenant"])
+        optional_fields = set(["country", "type", "seen_in_workspace"])
         serialized = handler(self)
         m = {}
 

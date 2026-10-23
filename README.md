@@ -2,7 +2,7 @@
 
 # noresponse
 
-The NoResponse client for Python. It assesses a signup or gateway event, polls a pending assessment, pages through an account's history, records what you later learned, rotates your API key and verifies webhooks.
+The NoResponse client for Python. It assesses an account creation, login or purchase, polls a pending assessment, pages through an account's history, records what you later learned, rotates your API key and verifies webhooks.
 
 Python 3.10 or later. Sync and asyncio. Fully typed (`py.typed`). The client is generated from the NoResponse OpenAPI document; the thin layer on top of it (defaults, response types, errors, wait, webhooks) is hand-written.
 
@@ -19,7 +19,7 @@ nr = NoResponse()  # reads NORESPONSE_API_KEY
 
 assessment = nr.assessments.create(
     account_id="usr_8f2k1",
-    flow="signup",
+    flow="account_creation",
     identifiers={"email": "jordan.lee@example.com", "name": "Jordan Lee", "ip": "81.2.69.160"},
 )
 
@@ -78,14 +78,14 @@ Every method also takes `server_url`, `timeout_ms` and `http_headers` for that c
 ```python
 assessment = nr.assessments.create(
     account_id="usr_8f2k1",                                    # your opaque account id
-    flow="signup",                                             # signup, login or purchase
-    depth="full",                                              # quick or full; full for signup and purchase, quick for login by default
+    flow="account_creation",                                             # account_creation, login or purchase
+    depth="full",                                              # quick or full; full for account_creation and purchase, quick for login by default
     identifiers={"email": "jordan.lee@example.com"},           # email, username or phone; name and ip refine the match
     policy_context={"region": "AU"},
     client_context={"timezone": "Australia/Sydney", "platform": "web", "form_duration_ms": 1800},
     auth_context=auth_context,                                 # a verified session, see below
     response_mode="standard",                                  # detailed adds detail.signals and detail.risk.details (detailed scope)
-    idempotency_key="signup-usr_8f2k1-0001",
+    idempotency_key="account-usr_8f2k1-0001",
 )
 ```
 
@@ -124,7 +124,7 @@ An account is the `account_id` you send with your assessments. It holds one curr
 account = nr.accounts.get("usr_8f2k1")
 account.risk.score               # 0 (safe) to 100 (risky)
 account.risk.decision            # allow, step_up, review or block
-account.decisions_by_flow.login  # a decision for signup, login and purchase
+account.decisions_by_flow.login  # a decision for account_creation, login and purchase
 account.assessment_id            # the assessment the risk comes from
 
 for assessment in nr.accounts.list_assessments("usr_8f2k1", limit=20):
@@ -249,7 +249,7 @@ nr.assessments.create(account_id="usr_8f2k1", identifiers={"email": email}, retr
 
 ## Issued keys
 
-When your signup gate issues an API key to the new account, send only its hash, as `issued_credential.sha256`; the key itself never leaves your backend.
+When your platform issues an API key to the new account, send only its hash, as `issued_credential.sha256`; the key itself never leaves your backend.
 
 ```python
 from noresponse import hash_issued_credential
@@ -294,7 +294,7 @@ Verify the exact bytes you received, then act on the typed event. `secrets` maps
 ```python
 import os
 from noresponse import Webhook, WebhookVerificationError
-from noresponse import AccountDeleted, AccountRiskChanged, AssessmentExpired, Assessment, EndpointDisabled, TenantDeleted
+from noresponse import AccountDeleted, AccountRiskChanged, AssessmentExpired, Assessment, EndpointDisabled, WorkspaceDeleted
 
 SECRETS = {
     os.environ["NORESPONSE_WEBHOOK_KEY_ID"]: os.environ["NORESPONSE_WEBHOOK_SECRET"],
@@ -313,7 +313,7 @@ async def handler(request: Request) -> Response:
         return Response(status_code=204)
     if isinstance(event.data, AccountDeleted):  # type "account.deleted": you erased it with accounts.delete
         forget_account(event.data.account_id)
-    elif isinstance(event.data, TenantDeleted):  # the workspace is deleted: the last event this endpoint receives
+    elif isinstance(event.data, WorkspaceDeleted):  # the workspace is deleted: the last event this endpoint receives
         forget_environment(event.data.environment)
     elif isinstance(event.data, EndpointDisabled):  # another endpoint failed for 72 hours and is disabled
         alert_ops(event.data.endpoint_id, event.data.failing_since)
@@ -331,7 +331,7 @@ async def handler(request: Request) -> Response:
 
 ### Late results
 
-An assessment can be revised after you allowed the signup. `handle_late_result` verifies the delivery with `construct_event`, applies your policy and acts through your auth provider's admin API:
+An assessment can be revised after you allowed the account creation. `handle_late_result` verifies the delivery with `construct_event`, applies your policy and acts through your auth provider's admin API:
 
 ```python
 from noresponse import clerk_actions, handle_late_result  # or workos_actions, auth0_actions

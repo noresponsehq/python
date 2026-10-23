@@ -11,7 +11,7 @@ from typing_extensions import Annotated, TypedDict
 
 class RotateIntegrationSecretRequestTypedDict(TypedDict):
     integration_id: str
-    r"""Path segment, matched case-sensitively. A value that does not match the integration_id shape, or another tenant's id, answers 404."""
+    r"""Path segment, matched case-sensitively. A value that does not match the integration_id shape, or another workspace's id, answers 404."""
     body: shared_integrationrotationrequest.IntegrationRotationRequestTypedDict
 
 
@@ -19,7 +19,7 @@ class RotateIntegrationSecretRequest(BaseModel):
     integration_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
-    r"""Path segment, matched case-sensitively. A value that does not match the integration_id shape, or another tenant's id, answers 404."""
+    r"""Path segment, matched case-sensitively. A value that does not match the integration_id shape, or another workspace's id, answers 404."""
 
     body: Annotated[
         shared_integrationrotationrequest.IntegrationRotationRequest,

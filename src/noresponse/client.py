@@ -129,7 +129,7 @@ def _key(idempotency_key: Optional[str]) -> str:
 
 
 class Assessments(_Assessments):
-    """Signup and gateway assessments."""
+    """Assessments of account creation, login and purchase."""
 
     # create ---------------------------------------------------------------
 
@@ -153,16 +153,16 @@ class Assessments(_Assessments):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> Assessment:
-        """Assess a signup, login or purchase for abuse.
+        """Assess an account creation, login or purchase for abuse.
 
-        flow is "signup", "login" or "purchase"; depth is "quick" or "full"
-        (default full for signup and purchase, quick for login). The result is
+        flow is "account_creation", "login" or "purchase"; depth is "quick" or "full"
+        (default full for account_creation and purchase, quick for login). The result is
         the assessment whether the API answered 200 (complete or partial) or
         202 (pending). Act on account.risk.decision; account is None while the
         account's first assessment is pending, so apply your own fallback, then
         wait() or take the webhook. idempotency_key is generated when omitted and is sent
         again on every retry of this call; pass your own, derived from your
-        signup attempt, so that a retry from your side replays the same
+        account creation attempt, so that a retry from your side replays the same
         assessment instead of starting new work. issued_credential is
         {"sha256": hash_issued_credential(key)} when your gate issued a key.
         """
@@ -744,7 +744,7 @@ output_tokens and sample_rate."""
 
 
 class KeyUsage(_KeyUsage):
-    """Usage of the API keys your signup gate issued to your accounts. Needs the assess scope.
+    """Usage of the API keys your platform issued to your accounts. Needs the assess scope.
 
     Most callers use ``buffer()``, which batches facts and sends them from a
     background thread; ``record`` sends one batch now.

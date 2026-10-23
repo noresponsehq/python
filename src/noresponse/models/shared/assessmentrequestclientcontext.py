@@ -7,7 +7,7 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class AssessmentRequestClientContextTypedDict(TypedDict):
-    r"""Optional context observed by your signup client. The server parses these hints into coarse features, leaves raw user_agent and opaque ids out of every answer, and weighs a mismatch with the other evidence."""
+    r"""Optional context observed by the client of the user. The server parses these hints into coarse features, leaves raw user_agent and opaque ids out of every answer, and weighs a mismatch with the other evidence."""
 
     timezone: NotRequired[str]
     r"""IANA time-zone name such as Europe/London or America/Los_Angeles. Fixed numeric offsets are not accepted."""
@@ -18,11 +18,11 @@ class AssessmentRequestClientContextTypedDict(TypedDict):
     app_version: NotRequired[str]
     r"""Customer application version, without build metadata that contains secrets."""
     user_agent: NotRequired[str]
-    r"""The raw User-Agent header of the signup request, at most 512 characters. It is parsed into coarse features and left out of every answer."""
+    r"""The raw User-Agent header of the request that the user sent, at most 512 characters. It is parsed into coarse features and left out of every answer."""
     device_id: NotRequired[str]
-    r"""Tenant-scoped opaque identifier your application mints and rotates when the account or device changes. Send an id of your own, not a hardware fingerprint."""
+    r"""Workspace-scoped opaque identifier your application mints and rotates when the account or device changes. Send an id of your own, not a hardware fingerprint."""
     session_id: NotRequired[str]
-    r"""Opaque signup session identifier. It is used for tenant-scoped velocity and replay checks only."""
+    r"""Opaque signup session identifier. It is used for workspace-scoped velocity and replay checks only."""
     form_duration_ms: NotRequired[int]
     r"""Elapsed time from form start to submit. Values below three seconds are a weak automation hint, weighed with the other evidence."""
     client_observed_at: NotRequired[str]
@@ -30,7 +30,7 @@ class AssessmentRequestClientContextTypedDict(TypedDict):
 
 
 class AssessmentRequestClientContext(BaseModel):
-    r"""Optional context observed by your signup client. The server parses these hints into coarse features, leaves raw user_agent and opaque ids out of every answer, and weighs a mismatch with the other evidence."""
+    r"""Optional context observed by the client of the user. The server parses these hints into coarse features, leaves raw user_agent and opaque ids out of every answer, and weighs a mismatch with the other evidence."""
 
     timezone: Optional[str] = None
     r"""IANA time-zone name such as Europe/London or America/Los_Angeles. Fixed numeric offsets are not accepted."""
@@ -45,13 +45,13 @@ class AssessmentRequestClientContext(BaseModel):
     r"""Customer application version, without build metadata that contains secrets."""
 
     user_agent: Optional[str] = None
-    r"""The raw User-Agent header of the signup request, at most 512 characters. It is parsed into coarse features and left out of every answer."""
+    r"""The raw User-Agent header of the request that the user sent, at most 512 characters. It is parsed into coarse features and left out of every answer."""
 
     device_id: Optional[str] = None
-    r"""Tenant-scoped opaque identifier your application mints and rotates when the account or device changes. Send an id of your own, not a hardware fingerprint."""
+    r"""Workspace-scoped opaque identifier your application mints and rotates when the account or device changes. Send an id of your own, not a hardware fingerprint."""
 
     session_id: Optional[str] = None
-    r"""Opaque signup session identifier. It is used for tenant-scoped velocity and replay checks only."""
+    r"""Opaque signup session identifier. It is used for workspace-scoped velocity and replay checks only."""
 
     form_duration_ms: Optional[int] = None
     r"""Elapsed time from form start to submit. Values below three seconds are a weak automation hint, weighed with the other evidence."""

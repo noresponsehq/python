@@ -13,7 +13,7 @@ from noresponse.webhooks import (
     AssessmentExpired,
     EndpointDisabled,
     EndpointVerification,
-    TenantDeleted,
+    WorkspaceDeleted,
     WebhookVerificationError,
     construct_event,
     verification_response,
@@ -141,9 +141,9 @@ def test_account_deleted_event():
         refused("invalid_payload", raw, headers, {"whk_sdktest01": "secret"}, now=NOW)
 
 
-TENANT_DELETED = {
+WORKSPACE_DELETED = {
     "id": "evt_01JA2ZD3K4M5N6P7Q8R9S0T1V2",
-    "type": "tenant.deleted",
+    "type": "workspace.deleted",
     "created_at": "2026-10-23T10:00:00.000Z",
     "data": {
         "workspace_id": "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM",
@@ -172,16 +172,16 @@ def refuses_changed_data(original, changes, removals):
         refused("invalid_payload", raw, headers, {"whk_sdktest01": "secret"}, now=NOW)
 
 
-def test_tenant_deleted_event():
-    raw, headers = signed(TENANT_DELETED, "secret", TENANT_DELETED["id"])
+def test_workspace_deleted_event():
+    raw, headers = signed(WORKSPACE_DELETED, "secret", WORKSPACE_DELETED["id"])
     event = construct_event(raw, headers, {"whk_sdktest01": "secret"}, now=NOW)
-    assert event.type == "tenant.deleted" and not event.expired and not event.test
-    assert event.id == TENANT_DELETED["id"] and event.created_at == "2026-10-23T10:00:00.000Z"
-    assert event.data == TenantDeleted("tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "live", "2026-10-23T10:00:00.000Z")
+    assert event.type == "workspace.deleted" and not event.expired and not event.test
+    assert event.id == WORKSPACE_DELETED["id"] and event.created_at == "2026-10-23T10:00:00.000Z"
+    assert event.data == WorkspaceDeleted("tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "live", "2026-10-23T10:00:00.000Z")
     with pytest.raises(WebhookVerificationError):
         verification_response(event)
     refuses_changed_data(
-        TENANT_DELETED,
+        WORKSPACE_DELETED,
         (
             {"workspace_id": "-tnt"},
             {"workspace_id": "tnt/01"},
@@ -227,11 +227,11 @@ def test_account_risk_changed_event():
     assert account.id == "acct_7f3a9c" and account.schema_version == "1"
     assert account.risk.score == 70 and account.risk.decision == "review"
     assert account.risk.reasons[0].code == "recent_password_exposure" and account.risk.reasons[0].weight == 55
-    assert (account.decisions_by_flow.signup, account.decisions_by_flow.login, account.decisions_by_flow.purchase) == ("review", "review", "review")
+    assert (account.decisions_by_flow.account_creation, account.decisions_by_flow.login, account.decisions_by_flow.purchase) == ("review", "review", "review")
     assert account.assessment_id == "asm_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
     assert account.updated_at == "2026-10-23T09:00:04.812Z"
     previous = event.data.previous_decisions_by_flow
-    assert (previous.signup, previous.login, previous.purchase) == ("allow", "allow", "allow")
+    assert (previous.account_creation, previous.login, previous.purchase) == ("allow", "allow", "allow")
     with pytest.raises(WebhookVerificationError):
         verification_response(event)
     for change in (

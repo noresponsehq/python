@@ -12,7 +12,7 @@ from typing_extensions import Annotated, TypedDict
 
 class RecordKeyUsageRequestTypedDict(TypedDict):
     idempotency_key: str
-    r"""Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the tenant principal and bound to the canonical body for 24 hours."""
+    r"""Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the workspace principal and bound to the canonical body for 24 hours."""
     body: shared_keyusagebatchrequest.KeyUsageBatchRequestTypedDict
 
 
@@ -22,7 +22,7 @@ class RecordKeyUsageRequest(BaseModel):
         pydantic.Field(alias="Idempotency-Key"),
         FieldMetadata(header=HeaderMetadata(style="simple", explode=False)),
     ]
-    r"""Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the tenant principal and bound to the canonical body for 24 hours."""
+    r"""Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the workspace principal and bound to the canonical body for 24 hours."""
 
     body: Annotated[
         shared_keyusagebatchrequest.KeyUsageBatchRequest,

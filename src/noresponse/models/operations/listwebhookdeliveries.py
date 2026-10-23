@@ -9,7 +9,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 class ListWebhookDeliveriesRequestTypedDict(TypedDict):
     endpoint_id: str
-    r"""The endpoint's whe_ id. An id that is unknown, malformed or another tenant's answers 404."""
+    r"""The endpoint's whe_ id. An id that is unknown, malformed or another workspace's answers 404."""
     limit: NotRequired[int]
     r"""Attempts per page."""
     cursor: NotRequired[str]
@@ -20,7 +20,7 @@ class ListWebhookDeliveriesRequest(BaseModel):
     endpoint_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
-    r"""The endpoint's whe_ id. An id that is unknown, malformed or another tenant's answers 404."""
+    r"""The endpoint's whe_ id. An id that is unknown, malformed or another workspace's answers 404."""
 
     limit: Annotated[
         Optional[int],

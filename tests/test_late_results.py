@@ -27,7 +27,7 @@ from noresponse.webhooks import (
     AssessmentExpired,
     EndpointDisabled,
     EndpointVerification,
-    TenantDeleted,
+    WorkspaceDeleted,
     WebhookEvent,
 )
 
@@ -162,11 +162,11 @@ def test_the_default_policy_revokes_on_review_and_block_and_does_nothing_on_allo
     assert late_result_action(ev(AssessmentExpired("asm_x", "acct", 1))) == "none"
     assert late_result_action(WebhookEvent("evt_x", "endpoint.verification", "x", EndpointVerification("whe_x", "c"))) == "none"
     assert late_result_action(WebhookEvent("evt_x", "account.deleted", "x", AccountDeleted("acct_1", 1, "x"))) == "none"
-    assert late_result_action(WebhookEvent("evt_x", "tenant.deleted", "x", TenantDeleted("tnt_1", "live", "x"))) == "none"
+    assert late_result_action(WebhookEvent("evt_x", "workspace.deleted", "x", WorkspaceDeleted("tnt_1", "live", "x"))) == "none"
     disabled = EndpointDisabled("whe_1", "x", "x")
     assert late_result_action(WebhookEvent("evt_x", "webhook_endpoint.disabled", "x", disabled)) == "none"
     blocked = SimpleNamespace(risk=SimpleNamespace(decision="block"))
-    changed = AccountRiskChanged(blocked, SimpleNamespace(signup="allow", login="allow", purchase="allow"))  # type: ignore[arg-type]
+    changed = AccountRiskChanged(blocked, SimpleNamespace(account_creation="allow", login="allow", purchase="allow"))  # type: ignore[arg-type]
     assert late_result_action(WebhookEvent("evt_x", "account.risk_changed", "x", changed)) == "none"
     assert late_result_action(ev(Data("complete", "step_up")), {"step_up": "ban"}) == "ban"
     assert late_result_action(ev(Data("complete", "block")), {"block": "ban"}) == "ban"

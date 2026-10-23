@@ -1,5 +1,40 @@
 # Changelog
 
+## 5.0.0
+
+* `sdk.assessments.create()`: 
+  *  `request.flow` **Changed** (Breaking ⚠️)
+  *  `response` **Changed** (Breaking ⚠️)
+  *  `error.code` **Changed** (Breaking ⚠️)
+* `sdk.assessments.get()`: 
+  *  `response` **Changed** (Breaking ⚠️)
+  *  `error.code` **Changed** (Breaking ⚠️)
+* `sdk.assessments.delete()`:  `error.code` **Changed** (Breaking ⚠️)
+* `sdk.assessments.record_outcome()`:  `error.code` **Changed** (Breaking ⚠️)
+* `sdk.assessments.query()`: 
+  *  `response.items[].risk` **Changed** (Breaking ⚠️)
+  *  `error.code` **Changed** (Breaking ⚠️)
+* `sdk.accounts.get()`: 
+  *  `response` **Changed** (Breaking ⚠️)
+  *  `error.code` **Changed** (Breaking ⚠️)
+* `sdk.accounts.delete()`:  `error.code` **Changed** (Breaking ⚠️)
+* `sdk.accounts.list_assessments()`: 
+  *  `response.items[].risk` **Changed** (Breaking ⚠️)
+  *  `error.code` **Changed** (Breaking ⚠️)
+* `sdk.key_usage.record()`:  `error.code` **Changed** (Breaking ⚠️)
+* `sdk.keys.rotate()`:  `error.code` **Changed** (Breaking ⚠️)
+* `sdk.integrations.create()`:  `error.code` **Changed** (Breaking ⚠️)
+* `sdk.integrations.list()`:  `error.code` **Changed** (Breaking ⚠️)
+* `sdk.integrations.delete()`:  `error.code` **Changed** (Breaking ⚠️)
+* `sdk.integrations.rotate()`:  `error.code` **Changed** (Breaking ⚠️)
+* `sdk.webhook_endpoints.list()`:  `error.code` **Changed** (Breaking ⚠️)
+* `sdk.webhook_endpoints.create()`:  `error.code` **Changed** (Breaking ⚠️)
+* `sdk.webhook_endpoints.delete()`:  `error.code` **Changed** (Breaking ⚠️)
+* `sdk.webhook_endpoints.rotate_signing_key()`:  `error.code` **Changed** (Breaking ⚠️)
+* `sdk.webhook_endpoints.send_test_event()`:  `error.code` **Changed** (Breaking ⚠️)
+* `sdk.webhook_endpoints.list_deliveries()`:  `error.code` **Changed** (Breaking ⚠️)
+* `sdk.webhook_endpoints.replay_delivery()`:  `error.code` **Changed** (Breaking ⚠️)
+
 ## 4.0.1
 
 No changes detected.

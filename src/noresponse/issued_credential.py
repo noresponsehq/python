@@ -1,4 +1,4 @@
-"""Hash an API key your signup gate issued. Hand-written; not generated."""
+"""Hash an API key your platform issued. Hand-written; not generated."""
 
 from __future__ import annotations
 

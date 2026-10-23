@@ -19,7 +19,7 @@ class RecordAssessmentOutcomeRequestTypedDict(TypedDict):
     assessment_id: str
     r"""Path segment, matched case-sensitively. A value that does not match the assessment_id shape answers 404, not 400."""
     idempotency_key: str
-    r"""Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the tenant principal and bound to the canonical body for 24 hours."""
+    r"""Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the workspace principal and bound to the canonical body for 24 hours."""
     body: shared_assessmentoutcomerequest.AssessmentOutcomeRequestTypedDict
 
 
@@ -34,7 +34,7 @@ class RecordAssessmentOutcomeRequest(BaseModel):
         pydantic.Field(alias="Idempotency-Key"),
         FieldMetadata(header=HeaderMetadata(style="simple", explode=False)),
     ]
-    r"""Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the tenant principal and bound to the canonical body for 24 hours."""
+    r"""Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the workspace principal and bound to the canonical body for 24 hours."""
 
     body: Annotated[
         shared_assessmentoutcomerequest.AssessmentOutcomeRequest,

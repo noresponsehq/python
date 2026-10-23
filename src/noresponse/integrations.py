@@ -365,7 +365,7 @@ class Integrations(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.operations.ListIntegrationsResponse:
-        r"""List the tenant's integrations.
+        r"""List the workspace's integrations.
 
         Every integration, oldest first. Listings carry no secrets. Requires the integrations scope.
 
@@ -532,7 +532,7 @@ class Integrations(BaseSDK):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.operations.ListIntegrationsResponse:
-        r"""List the tenant's integrations.
+        r"""List the workspace's integrations.
 
         Every integration, oldest first. Listings carry no secrets. Requires the integrations scope.
 
@@ -707,7 +707,7 @@ class Integrations(BaseSDK):
 
         Removes the integration and its secrets; its endpoint answers 404 from then on, so remove the Action from the provider first. Requires the integrations scope. An unknown or already deleted integration answers 404.
 
-        :param integration_id: Path segment, matched case-sensitively. A value that does not match the integration_id shape, or another tenant's id, answers 404.
+        :param integration_id: Path segment, matched case-sensitively. A value that does not match the integration_id shape, or another workspace's id, answers 404.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -878,7 +878,7 @@ class Integrations(BaseSDK):
 
         Removes the integration and its secrets; its endpoint answers 404 from then on, so remove the Action from the provider first. Requires the integrations scope. An unknown or already deleted integration answers 404.
 
-        :param integration_id: Path segment, matched case-sensitively. A value that does not match the integration_id shape, or another tenant's id, answers 404.
+        :param integration_id: Path segment, matched case-sensitively. A value that does not match the integration_id shape, or another workspace's id, answers 404.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1052,7 +1052,7 @@ class Integrations(BaseSDK):
 
         For Auth0, send {} and the answer's secret is the new shared secret, shown once. For WorkOS, regenerate the Actions secret in the WorkOS dashboard and send it as signing_secret. The replaced secret is still accepted for 24 hours (previous_secret_expires_at). Requires the integrations scope. Not idempotent: a retry after a lost answer rotates again.
 
-        :param integration_id: Path segment, matched case-sensitively. A value that does not match the integration_id shape, or another tenant's id, answers 404.
+        :param integration_id: Path segment, matched case-sensitively. A value that does not match the integration_id shape, or another workspace's id, answers 404.
         :param signing_secret: The WorkOS Actions signing secret, as the WorkOS dashboard shows it: 16 to 256 printable ASCII characters with no spaces. It is stored sealed and is not returned.
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1221,7 +1221,7 @@ class Integrations(BaseSDK):
 
         For Auth0, send {} and the answer's secret is the new shared secret, shown once. For WorkOS, regenerate the Actions secret in the WorkOS dashboard and send it as signing_secret. The replaced secret is still accepted for 24 hours (previous_secret_expires_at). Requires the integrations scope. Not idempotent: a retry after a lost answer rotates again.
 
-        :param integration_id: Path segment, matched case-sensitively. A value that does not match the integration_id shape, or another tenant's id, answers 404.
+        :param integration_id: Path segment, matched case-sensitively. A value that does not match the integration_id shape, or another workspace's id, answers 404.
         :param signing_secret: The WorkOS Actions signing secret, as the WorkOS dashboard shows it: 16 to 256 printable ASCII characters with no spaces. It is stored sealed and is not returned.
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds

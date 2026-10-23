@@ -27,7 +27,7 @@ __all__ = [
     "AssessmentExpired",
     "EndpointDisabled",
     "EndpointVerification",
-    "TenantDeleted",
+    "WorkspaceDeleted",
     "Webhook",
     "WebhookEvent",
     "WebhookVerificationError",
@@ -101,7 +101,7 @@ class AccountDeleted:
 
 
 @dataclass(frozen=True)
-class TenantDeleted:
+class WorkspaceDeleted:
     """The workspace was deleted. Sent once per environment before its endpoints
     are torn down: the last event this endpoint receives."""
 
@@ -142,7 +142,7 @@ class WebhookEvent:
     data is an Assessment (exactly as assessments.get returns it) or an
     AssessmentExpired for type "assessment.updated", an EndpointVerification
     for type "endpoint.verification", an AccountDeleted for type
-    "account.deleted", a TenantDeleted for type "tenant.deleted", an
+    "account.deleted", a WorkspaceDeleted for type "workspace.deleted", an
     EndpointDisabled for type "webhook_endpoint.disabled" and an
     AccountRiskChanged for type "account.risk_changed". Deliveries are at
     least once and unordered: deduplicate on id and keep the highest
@@ -154,13 +154,13 @@ class WebhookEvent:
         "assessment.updated",
         "endpoint.verification",
         "account.deleted",
-        "tenant.deleted",
+        "workspace.deleted",
         "webhook_endpoint.disabled",
         "account.risk_changed",
     ]
     created_at: str
     data: Union[
-        Assessment, AssessmentExpired, EndpointVerification, AccountDeleted, TenantDeleted, EndpointDisabled, AccountRiskChanged
+        Assessment, AssessmentExpired, EndpointVerification, AccountDeleted, WorkspaceDeleted, EndpointDisabled, AccountRiskChanged
     ]
     test: bool = False
     """True on an event sent by webhook_endpoints.send_test_event: data is a fixed
@@ -287,7 +287,7 @@ def construct_event(
         ):
             raise _fail("invalid_payload", "Account deleted event is malformed")
         return WebhookEvent(event_id, "account.deleted", created_at, AccountDeleted(account_id, deleted, deleted_at))
-    if event_type == "tenant.deleted":
+    if event_type == "workspace.deleted":
         workspace_id, environment, deleted_at = data.get("workspace_id"), data.get("environment"), data.get("deleted_at")
         if (
             not isinstance(workspace_id, str)
@@ -296,8 +296,8 @@ def construct_event(
             or not isinstance(deleted_at, str)
             or not _date_time(deleted_at)
         ):
-            raise _fail("invalid_payload", "Tenant deleted event is malformed")
-        return WebhookEvent(event_id, "tenant.deleted", created_at, TenantDeleted(workspace_id, environment, deleted_at))
+            raise _fail("invalid_payload", "Workspace deleted event is malformed")
+        return WebhookEvent(event_id, "workspace.deleted", created_at, WorkspaceDeleted(workspace_id, environment, deleted_at))
     if event_type == "webhook_endpoint.disabled":
         endpoint_id, failing_since, disabled_at = data.get("endpoint_id"), data.get("failing_since"), data.get("disabled_at")
         if (

@@ -7,14 +7,14 @@ from typing_extensions import Annotated, TypedDict
 
 class DeleteWebhookEndpointRequestTypedDict(TypedDict):
     endpoint_id: str
-    r"""The endpoint's whe_ id. An id that is unknown, malformed or another tenant's answers 404."""
+    r"""The endpoint's whe_ id. An id that is unknown, malformed or another workspace's answers 404."""
 
 
 class DeleteWebhookEndpointRequest(BaseModel):
     endpoint_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
-    r"""The endpoint's whe_ id. An id that is unknown, malformed or another tenant's answers 404."""
+    r"""The endpoint's whe_ id. An id that is unknown, malformed or another workspace's answers 404."""
 
 
 class DeleteWebhookEndpointResponseTypedDict(TypedDict):
