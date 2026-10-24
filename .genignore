@@ -11,7 +11,6 @@
 /src/noresponse/errors.py
 /src/noresponse/responses.py
 /src/noresponse/_wait.py
-/src/noresponse/webhooks.py
 /src/noresponse/late_results.py
 /tests/test_*.py
 # Generated pages that describe the raw operations, not the client in this folder.

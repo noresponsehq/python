@@ -52,19 +52,17 @@ from .responses import (
     ResponseMeta,
 )
 from ._wait import DEFAULT_WAIT_SECONDS, WaitTimeoutError, wait, wait_async
-from .webhooks import (
+from .models.shared import (
     AccountDeleted,
     AccountRiskChanged,
     AssessmentExpired,
-    EndpointDisabled,
     EndpointVerification,
-    WorkspaceDeleted,
-    Webhook,
+    WebhookEndpointDisabled,
     WebhookEvent,
-    WebhookVerificationError,
-    construct_event,
-    verification_response,
+    WebhookVerificationResponse,
+    WorkspaceDeleted,
 )
+from .webhook_verification import WebhookVerificationError, construct_event
 from .late_results import (
     DEFAULT_LATE_RESULT_POLICY,
     LateResult,
@@ -116,7 +114,6 @@ __all__ = [
     "DEFAULT_WAIT_SECONDS",
     "wait",
     "wait_async",
-    "Webhook",
     "from_workos",
     "hash_issued_credential",
     "from_clerk",
@@ -130,14 +127,14 @@ __all__ = [
     "from_ory_oauth2",
     "from_oidc",
     "construct_event",
-    "verification_response",
+    "WebhookVerificationResponse",
     "WebhookVerificationError",
     "WebhookEvent",
     "AssessmentExpired",
     "EndpointVerification",
     "AccountDeleted",
     "WorkspaceDeleted",
-    "EndpointDisabled",
+    "WebhookEndpointDisabled",
     "AccountRiskChanged",
     "DEFAULT_LATE_RESULT_POLICY",
     "LateResult",

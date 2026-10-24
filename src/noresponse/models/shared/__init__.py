@@ -9,8 +9,15 @@ if TYPE_CHECKING:
         AccountDecisionsByFlow,
         AccountDecisionsByFlowTypedDict,
     )
+    from .accountdeleted import AccountDeleted, AccountDeletedTypedDict
+    from .accountdeletedevent import AccountDeletedEvent, AccountDeletedEventTypedDict
     from .accountdeletion import AccountDeletion, AccountDeletionTypedDict
     from .accountrisk import AccountRisk, AccountRiskTypedDict
+    from .accountriskchanged import AccountRiskChanged, AccountRiskChangedTypedDict
+    from .accountriskchangedevent import (
+        AccountRiskChangedEvent,
+        AccountRiskChangedEventTypedDict,
+    )
     from .accountriskreason import AccountRiskReason, AccountRiskReasonTypedDict
     from .assessment import Assessment, AssessmentTypedDict
     from .assessmentdeletion import AssessmentDeletion, AssessmentDeletionTypedDict
@@ -27,6 +34,7 @@ if TYPE_CHECKING:
         AssessmentDetailTiming,
         AssessmentDetailTimingTypedDict,
     )
+    from .assessmentexpired import AssessmentExpired, AssessmentExpiredTypedDict
     from .assessmentlist import AssessmentList, AssessmentListTypedDict
     from .assessmentoutcome import AssessmentOutcome, AssessmentOutcomeTypedDict
     from .assessmentoutcomerequest import (
@@ -51,6 +59,14 @@ if TYPE_CHECKING:
         AssessmentRequestPolicyContext,
         AssessmentRequestPolicyContextTypedDict,
     )
+    from .assessmentupdateddata import (
+        AssessmentUpdatedData,
+        AssessmentUpdatedDataTypedDict,
+    )
+    from .assessmentupdatedevent import (
+        AssessmentUpdatedEvent,
+        AssessmentUpdatedEventTypedDict,
+    )
     from .assurancelevel import AssuranceLevel
     from .authcontext import AuthContext, AuthContextTypedDict
     from .authcontextmfa import AuthContextMfa, AuthContextMfaTypedDict
@@ -68,6 +84,15 @@ if TYPE_CHECKING:
     from .consistencyvalue import ConsistencyValue
     from .country import Country
     from .depth import Depth
+    from .endpointverification import (
+        EndpointVerification,
+        EndpointVerificationTypedDict,
+    )
+    from .endpointverificationevent import (
+        EndpointVerificationEvent,
+        EndpointVerificationEventTypedDict,
+    )
+    from .environment import Environment
     from .failure import Failure
     from .failurereason import FailureReason
     from .flow import Flow
@@ -175,12 +200,21 @@ if TYPE_CHECKING:
         WebhookEndpointCreated,
         WebhookEndpointCreatedTypedDict,
     )
+    from .webhookendpointdisabled import (
+        WebhookEndpointDisabled,
+        WebhookEndpointDisabledTypedDict,
+    )
+    from .webhookendpointdisabledevent import (
+        WebhookEndpointDisabledEvent,
+        WebhookEndpointDisabledEventTypedDict,
+    )
     from .webhookendpointlist import WebhookEndpointList, WebhookEndpointListTypedDict
     from .webhookendpointrequest import (
         WebhookEndpointRequest,
         WebhookEndpointRequestTypedDict,
     )
     from .webhookendpointstate import WebhookEndpointState
+    from .webhookevent import WebhookEvent, WebhookEventTypedDict
     from .webhookkeyrotation import WebhookKeyRotation, WebhookKeyRotationTypedDict
     from .webhookkeyrotationrequest import (
         WebhookKeyRotationRequest,
@@ -194,15 +228,32 @@ if TYPE_CHECKING:
     from .webhooktest import WebhookTest, WebhookTestTypedDict
     from .webhooktestrequest import WebhookTestRequest, WebhookTestRequestTypedDict
     from .webhooktestrequestevent import WebhookTestRequestEvent
+    from .webhookverificationresponse import (
+        WebhookVerificationResponse,
+        WebhookVerificationResponseTypedDict,
+    )
+    from .workspacedeleted import WorkspaceDeleted, WorkspaceDeletedTypedDict
+    from .workspacedeletedevent import (
+        WorkspaceDeletedEvent,
+        WorkspaceDeletedEventTypedDict,
+    )
 
 __all__ = [
     "Account",
     "AccountDecision",
     "AccountDecisionsByFlow",
     "AccountDecisionsByFlowTypedDict",
+    "AccountDeleted",
+    "AccountDeletedEvent",
+    "AccountDeletedEventTypedDict",
+    "AccountDeletedTypedDict",
     "AccountDeletion",
     "AccountDeletionTypedDict",
     "AccountRisk",
+    "AccountRiskChanged",
+    "AccountRiskChangedEvent",
+    "AccountRiskChangedEventTypedDict",
+    "AccountRiskChangedTypedDict",
     "AccountRiskReason",
     "AccountRiskReasonTypedDict",
     "AccountRiskTypedDict",
@@ -222,6 +273,8 @@ __all__ = [
     "AssessmentDetailTiming",
     "AssessmentDetailTimingTypedDict",
     "AssessmentDetailTypedDict",
+    "AssessmentExpired",
+    "AssessmentExpiredTypedDict",
     "AssessmentList",
     "AssessmentListTypedDict",
     "AssessmentOutcome",
@@ -241,6 +294,10 @@ __all__ = [
     "AssessmentRequestPolicyContextTypedDict",
     "AssessmentRequestTypedDict",
     "AssessmentTypedDict",
+    "AssessmentUpdatedData",
+    "AssessmentUpdatedDataTypedDict",
+    "AssessmentUpdatedEvent",
+    "AssessmentUpdatedEventTypedDict",
     "AssuranceLevel",
     "AuthContext",
     "AuthContextMfa",
@@ -267,6 +324,11 @@ __all__ = [
     "EmailTypedDict",
     "EmailUnion",
     "EmailUnionTypedDict",
+    "EndpointVerification",
+    "EndpointVerificationEvent",
+    "EndpointVerificationEventTypedDict",
+    "EndpointVerificationTypedDict",
+    "Environment",
     "Failure",
     "FailureReason",
     "Flow",
@@ -373,12 +435,18 @@ __all__ = [
     "WebhookEndpoint",
     "WebhookEndpointCreated",
     "WebhookEndpointCreatedTypedDict",
+    "WebhookEndpointDisabled",
+    "WebhookEndpointDisabledEvent",
+    "WebhookEndpointDisabledEventTypedDict",
+    "WebhookEndpointDisabledTypedDict",
     "WebhookEndpointList",
     "WebhookEndpointListTypedDict",
     "WebhookEndpointRequest",
     "WebhookEndpointRequestTypedDict",
     "WebhookEndpointState",
     "WebhookEndpointTypedDict",
+    "WebhookEvent",
+    "WebhookEventTypedDict",
     "WebhookKeyRotation",
     "WebhookKeyRotationRequest",
     "WebhookKeyRotationRequestTypedDict",
@@ -392,10 +460,16 @@ __all__ = [
     "WebhookTestRequestEvent",
     "WebhookTestRequestTypedDict",
     "WebhookTestTypedDict",
+    "WebhookVerificationResponse",
+    "WebhookVerificationResponseTypedDict",
     "Website",
     "WebsiteTypedDict",
     "WebsiteUnion",
     "WebsiteUnionTypedDict",
+    "WorkspaceDeleted",
+    "WorkspaceDeletedEvent",
+    "WorkspaceDeletedEventTypedDict",
+    "WorkspaceDeletedTypedDict",
 ]
 
 _dynamic_imports: dict[str, str] = {
@@ -404,10 +478,18 @@ _dynamic_imports: dict[str, str] = {
     "AccountDecision": ".accountdecision",
     "AccountDecisionsByFlow": ".accountdecisionsbyflow",
     "AccountDecisionsByFlowTypedDict": ".accountdecisionsbyflow",
+    "AccountDeleted": ".accountdeleted",
+    "AccountDeletedTypedDict": ".accountdeleted",
+    "AccountDeletedEvent": ".accountdeletedevent",
+    "AccountDeletedEventTypedDict": ".accountdeletedevent",
     "AccountDeletion": ".accountdeletion",
     "AccountDeletionTypedDict": ".accountdeletion",
     "AccountRisk": ".accountrisk",
     "AccountRiskTypedDict": ".accountrisk",
+    "AccountRiskChanged": ".accountriskchanged",
+    "AccountRiskChangedTypedDict": ".accountriskchanged",
+    "AccountRiskChangedEvent": ".accountriskchangedevent",
+    "AccountRiskChangedEventTypedDict": ".accountriskchangedevent",
     "AccountRiskReason": ".accountriskreason",
     "AccountRiskReasonTypedDict": ".accountriskreason",
     "Assessment": ".assessment",
@@ -422,6 +504,8 @@ _dynamic_imports: dict[str, str] = {
     "AssessmentDetailAuthContextTypedDict": ".assessmentdetailauthcontext",
     "AssessmentDetailTiming": ".assessmentdetailtiming",
     "AssessmentDetailTimingTypedDict": ".assessmentdetailtiming",
+    "AssessmentExpired": ".assessmentexpired",
+    "AssessmentExpiredTypedDict": ".assessmentexpired",
     "AssessmentList": ".assessmentlist",
     "AssessmentListTypedDict": ".assessmentlist",
     "AssessmentOutcome": ".assessmentoutcome",
@@ -440,6 +524,10 @@ _dynamic_imports: dict[str, str] = {
     "AssessmentRequestIssuedCredentialTypedDict": ".assessmentrequestissuedcredential",
     "AssessmentRequestPolicyContext": ".assessmentrequestpolicycontext",
     "AssessmentRequestPolicyContextTypedDict": ".assessmentrequestpolicycontext",
+    "AssessmentUpdatedData": ".assessmentupdateddata",
+    "AssessmentUpdatedDataTypedDict": ".assessmentupdateddata",
+    "AssessmentUpdatedEvent": ".assessmentupdatedevent",
+    "AssessmentUpdatedEventTypedDict": ".assessmentupdatedevent",
     "AssuranceLevel": ".assurancelevel",
     "AuthContext": ".authcontext",
     "AuthContextTypedDict": ".authcontext",
@@ -462,6 +550,11 @@ _dynamic_imports: dict[str, str] = {
     "ConsistencyValue": ".consistencyvalue",
     "Country": ".country",
     "Depth": ".depth",
+    "EndpointVerification": ".endpointverification",
+    "EndpointVerificationTypedDict": ".endpointverification",
+    "EndpointVerificationEvent": ".endpointverificationevent",
+    "EndpointVerificationEventTypedDict": ".endpointverificationevent",
+    "Environment": ".environment",
     "Failure": ".failure",
     "FailureReason": ".failurereason",
     "Flow": ".flow",
@@ -581,11 +674,17 @@ _dynamic_imports: dict[str, str] = {
     "WebhookEndpointTypedDict": ".webhookendpoint",
     "WebhookEndpointCreated": ".webhookendpointcreated",
     "WebhookEndpointCreatedTypedDict": ".webhookendpointcreated",
+    "WebhookEndpointDisabled": ".webhookendpointdisabled",
+    "WebhookEndpointDisabledTypedDict": ".webhookendpointdisabled",
+    "WebhookEndpointDisabledEvent": ".webhookendpointdisabledevent",
+    "WebhookEndpointDisabledEventTypedDict": ".webhookendpointdisabledevent",
     "WebhookEndpointList": ".webhookendpointlist",
     "WebhookEndpointListTypedDict": ".webhookendpointlist",
     "WebhookEndpointRequest": ".webhookendpointrequest",
     "WebhookEndpointRequestTypedDict": ".webhookendpointrequest",
     "WebhookEndpointState": ".webhookendpointstate",
+    "WebhookEvent": ".webhookevent",
+    "WebhookEventTypedDict": ".webhookevent",
     "WebhookKeyRotation": ".webhookkeyrotation",
     "WebhookKeyRotationTypedDict": ".webhookkeyrotation",
     "WebhookKeyRotationRequest": ".webhookkeyrotationrequest",
@@ -599,6 +698,12 @@ _dynamic_imports: dict[str, str] = {
     "WebhookTestRequest": ".webhooktestrequest",
     "WebhookTestRequestTypedDict": ".webhooktestrequest",
     "WebhookTestRequestEvent": ".webhooktestrequestevent",
+    "WebhookVerificationResponse": ".webhookverificationresponse",
+    "WebhookVerificationResponseTypedDict": ".webhookverificationresponse",
+    "WorkspaceDeleted": ".workspacedeleted",
+    "WorkspaceDeletedTypedDict": ".workspacedeleted",
+    "WorkspaceDeletedEvent": ".workspacedeletedevent",
+    "WorkspaceDeletedEventTypedDict": ".workspacedeletedevent",
 }
 
 

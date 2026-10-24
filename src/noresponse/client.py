@@ -64,7 +64,7 @@ from .types import UNSET, OptionalNullable
 from .utils import RetryConfig
 from .utils.logger import Logger, NoOpLogger
 from ._wait import DEFAULT_WAIT_SECONDS, wait, wait_async
-from .webhooks import Webhook
+from . import webhook_verification
 
 __all__ = ["DEFAULT_BASE_URL", "DEFAULT_TIMEOUT_MS", "Accounts", "Assessments", "Integrations", "KeyUsage", "Keys", "NoResponse"]
 
@@ -1280,7 +1280,7 @@ class NoResponse(_NoResponse):
     clients it opened. Keep the API key on your server.
     """
 
-    webhooks = Webhook
+    webhooks = webhook_verification
     """Webhook verification: ``nr.webhooks.construct_event(payload, headers, secrets)``."""
 
     assessments: Assessments  # type: ignore[assignment]

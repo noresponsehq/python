@@ -21,15 +21,6 @@ from noresponse import (
     log_only_actions,
     workos_actions,
 )
-from noresponse.webhooks import (
-    AccountDeleted,
-    AccountRiskChanged,
-    AssessmentExpired,
-    EndpointDisabled,
-    EndpointVerification,
-    WorkspaceDeleted,
-    WebhookEvent,
-)
 
 FIXTURES = Path(__file__).parent / "fixtures"
 SECRET = "late-result-secret"
@@ -145,8 +136,11 @@ def mock_provider():
 
 
 def test_the_default_policy_revokes_on_review_and_block_and_does_nothing_on_allow_step_up_pending_or_expiry():
+    def event(type, data):
+        return SimpleNamespace(id="evt_x", type=type, created_at="2026-10-18T11:00:04Z", test=None, data=data)
+
     def ev(data):
-        return WebhookEvent("evt_x", "assessment.updated", "2026-10-18T11:00:04Z", data)
+        return event("assessment.updated", data)
 
     class Data:
         def __init__(self, status, decision=None):
@@ -159,18 +153,18 @@ def test_the_default_policy_revokes_on_review_and_block_and_does_nothing_on_allo
     assert late_result_action(ev(Data("partial", "allow"))) == "none"
     assert late_result_action(ev(Data("pending"))) == "none"
     assert late_result_action(ev(Data("pending", "review"))) == "none"
-    assert late_result_action(ev(AssessmentExpired("asm_x", "acct", 1))) == "none"
-    assert late_result_action(WebhookEvent("evt_x", "endpoint.verification", "x", EndpointVerification("whe_x", "c"))) == "none"
-    assert late_result_action(WebhookEvent("evt_x", "account.deleted", "x", AccountDeleted("acct_1", 1, "x"))) == "none"
-    assert late_result_action(WebhookEvent("evt_x", "workspace.deleted", "x", WorkspaceDeleted("tnt_1", "live", "x"))) == "none"
-    disabled = EndpointDisabled("whe_1", "x", "x")
-    assert late_result_action(WebhookEvent("evt_x", "webhook_endpoint.disabled", "x", disabled)) == "none"
+    assert late_result_action(ev(SimpleNamespace(assessment_id="asm_x", account_id="acct", assessment_version=1, status="expired", change_reason="expired"))) == "none"
+    assert late_result_action(event("endpoint.verification", SimpleNamespace(endpoint_id="whe_x", challenge="c"))) == "none"
+    assert late_result_action(event("account.deleted", SimpleNamespace(account_id="acct_1", assessments_deleted=1, deleted_at="x"))) == "none"
+    assert late_result_action(event("workspace.deleted", SimpleNamespace(workspace_id="tnt_1", environment="live", deleted_at="x"))) == "none"
+    disabled = SimpleNamespace(endpoint_id="whe_1", failing_since="x", disabled_at="x")
+    assert late_result_action(event("webhook_endpoint.disabled", disabled)) == "none"
     blocked = SimpleNamespace(id="acct_1", risk=SimpleNamespace(decision="block"), decisions_by_flow=SimpleNamespace(account_creation="block", login="block", purchase="block"))
-    changed = AccountRiskChanged(blocked, SimpleNamespace(account_creation="allow", login="allow", purchase="allow"))  # type: ignore[arg-type]
-    assert late_result_action(WebhookEvent("evt_x", "account.risk_changed", "x", changed)) == "revoke_sessions"
+    changed = SimpleNamespace(account=blocked, previous_decisions_by_flow=SimpleNamespace(account_creation="allow", login="allow", purchase="allow"))
+    assert late_result_action(event("account.risk_changed", changed)) == "revoke_sessions"
     # A change to another flow with the login decision as it was acts on nothing.
-    unchanged = AccountRiskChanged(blocked, SimpleNamespace(account_creation="allow", login="block", purchase="allow"))  # type: ignore[arg-type]
-    assert late_result_action(WebhookEvent("evt_x", "account.risk_changed", "x", unchanged)) == "none"
+    unchanged = SimpleNamespace(account=blocked, previous_decisions_by_flow=SimpleNamespace(account_creation="allow", login="block", purchase="allow"))
+    assert late_result_action(event("account.risk_changed", unchanged)) == "none"
     assert late_result_action(ev(Data("complete", "step_up")), {"step_up": "ban"}) == "ban"
     assert late_result_action(ev(Data("complete", "block")), {"block": "ban"}) == "ban"
     assert late_result_action(ev(Data("complete", "review")), {"step_up": "ban"}) == "none"

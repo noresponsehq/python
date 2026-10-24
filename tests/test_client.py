@@ -538,9 +538,9 @@ def test_raw_responses_are_still_available():
 
 
 def test_webhook_namespace_is_on_the_client():
-    from noresponse import Webhook, construct_event
+    from noresponse import construct_event, webhook_verification
 
-    assert NoResponse.webhooks is Webhook and Webhook.construct_event is construct_event
+    assert NoResponse.webhooks is webhook_verification and NoResponse.webhooks.construct_event is construct_event
 
 
 def test_debug_logging_leaves_out_the_key_and_the_bodies(monkeypatch):

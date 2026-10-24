@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: adcdeda95f630f5f62d7c4bf223bf08e
+  docChecksum: 94fc24fee306bb648bae0ef2e738866f
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 5.1.1
-  configChecksum: 3ed0cdba2c9556895c5f6cbf6fdb3e03
+  releaseVersion: 6.0.0
+  configChecksum: bda730e06a556150e789d941e41488fe
 features:
   python:
     additionalDependencies: 1.1.0
@@ -29,6 +29,8 @@ features:
     retries: 3.1.2
     sdkHooks: 1.3.0
     unions: 3.1.12
+    webhookHandlers: 0.1.0
+    webhooks: 2.0.0
 trackedFiles:
   .gitattributes:
     last_write_checksum: sha1:53134de3ada576f37c22276901e1b5b6d85cd2da
@@ -124,10 +126,18 @@ trackedFiles:
     last_write_checksum: sha1:1f8ea49199ea413ec46da1430832db55ab1a448b
   docs/models/shared/accountdecisionsbyflow.md:
     last_write_checksum: sha1:743d4a6394d638bb25d713193de14f272ad87d17
+  docs/models/shared/accountdeleted.md:
+    last_write_checksum: sha1:eae55dc117051341b7f948efb7b4f37f951cf730
+  docs/models/shared/accountdeletedevent.md:
+    last_write_checksum: sha1:3ae0089a4c3c11bfe1ff991efdf52cab7d8ae5f6
   docs/models/shared/accountdeletion.md:
     last_write_checksum: sha1:64a6cee325840930c4972d1dd0110ddb3655451c
   docs/models/shared/accountrisk.md:
     last_write_checksum: sha1:ab79a53d40406e985589ce609a884bc9ef586575
+  docs/models/shared/accountriskchanged.md:
+    last_write_checksum: sha1:74adf9ed60049165b5b2498b30c16d0ff7ea3802
+  docs/models/shared/accountriskchangedevent.md:
+    last_write_checksum: sha1:4c2c5269e2a38d7b87b63dc332a2ef093b130ca8
   docs/models/shared/accountriskreason.md:
     last_write_checksum: sha1:221b4523cb63a7a668995a3f123fe6862a6b9b49
   docs/models/shared/alternatename.md:
@@ -146,6 +156,8 @@ trackedFiles:
     last_write_checksum: sha1:f059c7a84543fa2a757beea7f71026c5a1bf0782
   docs/models/shared/assessmentdetailtiming.md:
     last_write_checksum: sha1:235bec364c0ad7ad3a2ae1e162b376c5935354cf
+  docs/models/shared/assessmentexpired.md:
+    last_write_checksum: sha1:a4f1b154a02f6e7c2b5ff5674cc7f9a49076d3d3
   docs/models/shared/assessmentlist.md:
     last_write_checksum: sha1:2947310523cf19582e29694100622d00f9e8dc45
   docs/models/shared/assessmentoutcome.md:
@@ -164,6 +176,10 @@ trackedFiles:
     last_write_checksum: sha1:ac3ad479e3a4f51fd3938b21d0e40fb8eee67c65
   docs/models/shared/assessmentrequestpolicycontext.md:
     last_write_checksum: sha1:0fab7027e06252709861ecbe036abadedef7fc38
+  docs/models/shared/assessmentupdateddata.md:
+    last_write_checksum: sha1:ab05ce8d9e0db2a2d752a093c24861122e01752a
+  docs/models/shared/assessmentupdatedevent.md:
+    last_write_checksum: sha1:485592e1472739caf9557dd5f809d7c23bc724fc
   docs/models/shared/assurancelevel.md:
     last_write_checksum: sha1:5282e9b32241e928ed2615c116469c98c10081eb
   docs/models/shared/authcontext.md:
@@ -202,6 +218,12 @@ trackedFiles:
     last_write_checksum: sha1:fa23b6c9fc6e2d5db9bf8991a2209112b7ceb840
   docs/models/shared/emailunion.md:
     last_write_checksum: sha1:30031ce228b45a96b6b6875d16a89c8d1c513625
+  docs/models/shared/endpointverification.md:
+    last_write_checksum: sha1:fd45f22520d633530b238b214c1a0189e68b5f71
+  docs/models/shared/endpointverificationevent.md:
+    last_write_checksum: sha1:87a003c04ac2188ba5357f536b46db98a8c7de27
+  docs/models/shared/environment.md:
+    last_write_checksum: sha1:dbd32fc1545c357e8ca96bb2e5ef6221d813245e
   docs/models/shared/failure.md:
     last_write_checksum: sha1:fefe42d97d0a76b445759be6ce9aa4717c5df9ee
   docs/models/shared/failurereason.md:
@@ -336,12 +358,18 @@ trackedFiles:
     last_write_checksum: sha1:a7f54b47fa059690d401d8c2d8e8518df5cc79bb
   docs/models/shared/webhookendpointcreated.md:
     last_write_checksum: sha1:ec2c7ae2ad90c3768c32f8ea6b2828c254f63fdc
+  docs/models/shared/webhookendpointdisabled.md:
+    last_write_checksum: sha1:4ac66d2df8eabff2191cbce8cf03c77f48e200ec
+  docs/models/shared/webhookendpointdisabledevent.md:
+    last_write_checksum: sha1:23affc8d58a8141630d9e30ea0bb3736f4afbb9b
   docs/models/shared/webhookendpointlist.md:
     last_write_checksum: sha1:6a0f08872deebe3b3f43abda6dad3ce541cee10b
   docs/models/shared/webhookendpointrequest.md:
     last_write_checksum: sha1:d648e628cbf39bc5ef25022077a0a4a43f0309cf
   docs/models/shared/webhookendpointstate.md:
     last_write_checksum: sha1:f356b30b6b8e0a50501408041db333248050b0d7
+  docs/models/shared/webhookevent.md:
+    last_write_checksum: sha1:7e811b0c6801e98ca7a4167ba6af7087803c6a35
   docs/models/shared/webhookkeyrotation.md:
     last_write_checksum: sha1:b1540360b660a59e4d9cbc6c4dce8bde5a072eac
   docs/models/shared/webhookkeyrotationrequest.md:
@@ -356,10 +384,16 @@ trackedFiles:
     last_write_checksum: sha1:17ad33729e3ec649f3c5da43f8ffc29819d78cc4
   docs/models/shared/webhooktestrequestevent.md:
     last_write_checksum: sha1:66ff0a1c4a793c51ce63cf8a7d948740fe39e217
+  docs/models/shared/webhookverificationresponse.md:
+    last_write_checksum: sha1:f5613004671d236311b8c6aac80dcc466904502e
   docs/models/shared/website.md:
     last_write_checksum: sha1:0c51cc841fa8bca9e86405df9cb958841a5a4134
   docs/models/shared/websiteunion.md:
     last_write_checksum: sha1:3d6d61f9b8d68b89c7c99159bffcbfe156294e67
+  docs/models/shared/workspacedeleted.md:
+    last_write_checksum: sha1:cccf5a3d94c146849649d76d09006caffff0911f
+  docs/models/shared/workspacedeletedevent.md:
+    last_write_checksum: sha1:606409ba1e3d5eff04434b64c5ec960170f5eecb
   docs/models/utils/retryconfig.md:
     last_write_checksum: sha1:562c0f21e308ad10c27f85f75704c15592c6929d
   py.typed:
@@ -367,7 +401,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:b597c55ad0872655b4c18fabb14f167f647aa3ad
   pyproject.toml:
-    last_write_checksum: sha1:89bd47dcc7da154535a07f633043e9aabc48445c
+    last_write_checksum: sha1:9190bef8c8e92a5a6ca798299f4c3e2f4fc098bf
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -383,7 +417,7 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:fa67413bf8a32f7bdffbced0c3cbc96db8ada2b9
+    last_write_checksum: sha1:e3a4d8e314bac29fab42c89b643592a80c2291f0
   src/noresponse/accounts.py:
     last_write_checksum: sha1:ebef8b45fa2bca9a7de52b914cf03a3cfd702649
   src/noresponse/assessments.py:
@@ -467,17 +501,25 @@ trackedFiles:
   src/noresponse/models/operations/sendwebhooktestevent.py:
     last_write_checksum: sha1:aac90eb4072e3900ea16cb1b6169d46c11835908
   src/noresponse/models/shared/__init__.py:
-    last_write_checksum: sha1:99ba0655515cc52f9029e1fca5c0eeb01ca2952d
+    last_write_checksum: sha1:ab7043b17fcb722881c18917afce537f947085c9
   src/noresponse/models/shared/account.py:
     last_write_checksum: sha1:fa75598b43f4930dc9aef7fbd90bd0245ec73e74
   src/noresponse/models/shared/accountdecision.py:
     last_write_checksum: sha1:fc3583004988b363224622f778d72e9c3b30a55e
   src/noresponse/models/shared/accountdecisionsbyflow.py:
     last_write_checksum: sha1:8d7df65b11c79810292874646413fd646cc35ebf
+  src/noresponse/models/shared/accountdeleted.py:
+    last_write_checksum: sha1:3b319aa8c5bc09e94e6968bfd1ea2a25c5237c4a
+  src/noresponse/models/shared/accountdeletedevent.py:
+    last_write_checksum: sha1:1303da3ac5e4e9276473de84a052bd36ff20a662
   src/noresponse/models/shared/accountdeletion.py:
     last_write_checksum: sha1:bdcf60eab583d184e05dcae04cb208044b472be9
   src/noresponse/models/shared/accountrisk.py:
     last_write_checksum: sha1:76680bf3d251e9a302999b3e42b66c6d81ae1e64
+  src/noresponse/models/shared/accountriskchanged.py:
+    last_write_checksum: sha1:21232dd98e79952975ca7384b878311b31b97701
+  src/noresponse/models/shared/accountriskchangedevent.py:
+    last_write_checksum: sha1:b6994bac210f3ee169460b4545a79e2a7796d1bd
   src/noresponse/models/shared/accountriskreason.py:
     last_write_checksum: sha1:00a4c06e9b4ee4bbe1f9d45660a47cdb8154878e
   src/noresponse/models/shared/assessment.py:
@@ -492,6 +534,8 @@ trackedFiles:
     last_write_checksum: sha1:fae4a1586e97df229a00bb9156cb5ec6d316f43e
   src/noresponse/models/shared/assessmentdetailtiming.py:
     last_write_checksum: sha1:37c25e6a44a11c08c9e59a123f8c2775d4355ed4
+  src/noresponse/models/shared/assessmentexpired.py:
+    last_write_checksum: sha1:39c0feb99da5844c5b869cc663b3da735c08a18e
   src/noresponse/models/shared/assessmentlist.py:
     last_write_checksum: sha1:8c030671ddc714e1d0447eb4d50cb326c786b5ef
   src/noresponse/models/shared/assessmentoutcome.py:
@@ -510,6 +554,10 @@ trackedFiles:
     last_write_checksum: sha1:3a9223d576a750bff66a3f82d70f6c9e1c7c522e
   src/noresponse/models/shared/assessmentrequestpolicycontext.py:
     last_write_checksum: sha1:a5a743725028c99299975393fcde8e84bdf87fbe
+  src/noresponse/models/shared/assessmentupdateddata.py:
+    last_write_checksum: sha1:659c650f22586feb57cb27b84399233d1a5650f8
+  src/noresponse/models/shared/assessmentupdatedevent.py:
+    last_write_checksum: sha1:19ad7a3da86ba2147fc75d3960138a9498abc373
   src/noresponse/models/shared/assurancelevel.py:
     last_write_checksum: sha1:20f56472c43d70727b44ee6cb2dabc77bb1e7361
   src/noresponse/models/shared/authcontext.py:
@@ -544,6 +592,12 @@ trackedFiles:
     last_write_checksum: sha1:93492de81afdddd31e1a7ef1d5cc36172ccdcedb
   src/noresponse/models/shared/depth.py:
     last_write_checksum: sha1:af2862b32049fcf7001ed2989ce550d0e1c95a59
+  src/noresponse/models/shared/endpointverification.py:
+    last_write_checksum: sha1:667756c1fc3bade0ebbd58917ea531d907ec311d
+  src/noresponse/models/shared/endpointverificationevent.py:
+    last_write_checksum: sha1:955a258973eb841e6555168a067f9d40d7197037
+  src/noresponse/models/shared/environment.py:
+    last_write_checksum: sha1:6002e2b0b046640c910481c1660b12a45c5547ac
   src/noresponse/models/shared/failure.py:
     last_write_checksum: sha1:3ea8e382523008e9675411e9e092181cdb910988
   src/noresponse/models/shared/failurereason.py:
@@ -660,12 +714,18 @@ trackedFiles:
     last_write_checksum: sha1:52e410e85b710d2f3c29782ce834d93f3e116146
   src/noresponse/models/shared/webhookendpointcreated.py:
     last_write_checksum: sha1:81dcb6a5c43fdf04575e58f08c1127ba8b99f63c
+  src/noresponse/models/shared/webhookendpointdisabled.py:
+    last_write_checksum: sha1:91c1ed2b57067c8c888624c216d36e4b148961ed
+  src/noresponse/models/shared/webhookendpointdisabledevent.py:
+    last_write_checksum: sha1:0104939dcb3a95b293ab438001f7ff57efadf090
   src/noresponse/models/shared/webhookendpointlist.py:
     last_write_checksum: sha1:3abd232d48cb7b7e3de6a6435f1f48c050c83310
   src/noresponse/models/shared/webhookendpointrequest.py:
     last_write_checksum: sha1:c5cae2d9ef633e126db786ebd05a13e85de7db00
   src/noresponse/models/shared/webhookendpointstate.py:
     last_write_checksum: sha1:38f1c98ff93ce70953ee7a0a6b0737e4f7f8a968
+  src/noresponse/models/shared/webhookevent.py:
+    last_write_checksum: sha1:9e01681d6a81c9b0dcd452504c9f6bf690e93d01
   src/noresponse/models/shared/webhookkeyrotation.py:
     last_write_checksum: sha1:aa3c1302da3a30d37d81d20985925c454477528e
   src/noresponse/models/shared/webhookkeyrotationrequest.py:
@@ -680,6 +740,12 @@ trackedFiles:
     last_write_checksum: sha1:4266d4df0d243eea177ceb82709caebb9aabf3d5
   src/noresponse/models/shared/webhooktestrequestevent.py:
     last_write_checksum: sha1:49ff74a6623dd9b2691590ab1acd505505277982
+  src/noresponse/models/shared/webhookverificationresponse.py:
+    last_write_checksum: sha1:67e62b21ea5efa0f6ed6c628251d572fb98a415e
+  src/noresponse/models/shared/workspacedeleted.py:
+    last_write_checksum: sha1:b5b886b6c5d43f3e5ea5f5b521c47a3afdae5367
+  src/noresponse/models/shared/workspacedeletedevent.py:
+    last_write_checksum: sha1:313033740716c189c1fa4dfa9b6b51c7fe50748b
   src/noresponse/py.typed:
     last_write_checksum: sha1:8efc425ffe830805ffcc0f3055871bdcdc542c60
   src/noresponse/sdk.py:
@@ -730,6 +796,8 @@ trackedFiles:
     last_write_checksum: sha1:8de35476260bdf73434a8b03cec18834c1a97591
   src/noresponse/utils/values.py:
     last_write_checksum: sha1:c5d5982598e3cdb758ef0e687a513d9dc2690ef0
+  src/noresponse/webhook_verification.py:
+    last_write_checksum: sha1:9e2ee5be648c7fd7a9008dd64da4d78128d71107
   src/noresponse/webhookendpoints.py:
     last_write_checksum: sha1:0aae0119180d9bfab70f2d4476a4411e8662c08e
 examples:

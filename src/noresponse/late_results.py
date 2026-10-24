@@ -25,7 +25,8 @@ from dataclasses import dataclass
 from typing import Any, Callable, Mapping, Optional, Tuple, Union
 from urllib.parse import quote, urlencode
 
-from .webhooks import DEFAULT_TOLERANCE_SECONDS, Headers, WebhookEvent, construct_event
+from .models.shared import WebhookEvent
+from .webhook_verification import DEFAULT_TOLERANCE_SECONDS, Headers, construct_event
 
 __all__ = [
     "DEFAULT_LATE_RESULT_POLICY",
@@ -110,7 +111,7 @@ class LateResultProvider:
 
 @dataclass(frozen=True)
 class LateResult:
-    # The verified event. Answer an endpoint.verification with verification_response(event).
+    # The verified event. Answer an endpoint.verification with a WebhookVerificationResponse echoing its challenge.
     event: WebhookEvent
     # The action that ran. "none" when the policy, the event or the user id
     # called for nothing. It can be stronger than the policy's action when the
@@ -134,7 +135,7 @@ def late_result_action(event: WebhookEvent, policy: Optional[LatePolicy] = None)
     """
     chosen = DEFAULT_LATE_RESULT_POLICY if policy is None else policy
     data = event.data
-    if event.type not in ("assessment.updated", "account.risk_changed") or event.expired or event.test:
+    if event.type not in ("assessment.updated", "account.risk_changed") or (event.type == "assessment.updated" and event.test is True):
         return NONE
     # A pending answer carries an earlier assessment's decision; acting on it would repeat that action.
     if _text(getattr(data, "status", None)) == "pending":
@@ -162,7 +163,7 @@ def late_result_action(event: WebhookEvent, policy: Optional[LatePolicy] = None)
 def handle_late_result(
     payload: Union[bytes, str],
     headers: Headers,
-    secrets: Mapping[str, Union[str, bytes]],
+    secrets: Mapping[str, str],
     provider: LateResultProvider,
     *,
     policy: Optional[LatePolicy] = None,
