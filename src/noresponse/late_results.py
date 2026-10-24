@@ -134,12 +134,21 @@ def late_result_action(event: WebhookEvent, policy: Optional[LatePolicy] = None)
     """
     chosen = DEFAULT_LATE_RESULT_POLICY if policy is None else policy
     data = event.data
-    if event.type != "assessment.updated" or event.expired or event.test:
+    if event.type not in ("assessment.updated", "account.risk_changed") or event.expired or event.test:
         return NONE
     # A pending answer carries an earlier assessment's decision; acting on it would repeat that action.
     if _text(getattr(data, "status", None)) == "pending":
         return NONE
-    decision = _text(getattr(getattr(getattr(data, "account", None), "risk", None), "decision", None))
+    account = getattr(data, "account", None)
+    if event.type == "account.risk_changed":
+        # The event is sent when any flow's decision changes; sessions are about the login
+        # decision, so an unchanged login decision acts on nothing.
+        decision = _text(getattr(getattr(account, "decisions_by_flow", None), "login", None))
+        previous = _text(getattr(getattr(data, "previous_decisions_by_flow", None), "login", None))
+        if previous == decision:
+            return NONE
+    else:
+        decision = _text(getattr(getattr(account, "risk", None), "decision", None))
     if decision not in ("allow", "step_up", "review", "block"):
         return NONE
     action = chosen.get(decision)
@@ -176,7 +185,7 @@ def handle_late_result(
     action = late_result_action(event, policy)
     if action == NONE:
         return LateResult(event, NONE)
-    account_id = event.data.detail.account_id  # type: ignore[union-attr]
+    account_id = event.data.account.id if event.type == "account.risk_changed" else event.data.detail.account_id  # type: ignore[union-attr]
     user_id = resolve_user_id(account_id, event) if resolve_user_id else account_id
     if not user_id:
         return LateResult(event, NONE)

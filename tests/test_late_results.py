@@ -165,9 +165,12 @@ def test_the_default_policy_revokes_on_review_and_block_and_does_nothing_on_allo
     assert late_result_action(WebhookEvent("evt_x", "workspace.deleted", "x", WorkspaceDeleted("tnt_1", "live", "x"))) == "none"
     disabled = EndpointDisabled("whe_1", "x", "x")
     assert late_result_action(WebhookEvent("evt_x", "webhook_endpoint.disabled", "x", disabled)) == "none"
-    blocked = SimpleNamespace(risk=SimpleNamespace(decision="block"))
+    blocked = SimpleNamespace(id="acct_1", risk=SimpleNamespace(decision="block"), decisions_by_flow=SimpleNamespace(account_creation="block", login="block", purchase="block"))
     changed = AccountRiskChanged(blocked, SimpleNamespace(account_creation="allow", login="allow", purchase="allow"))  # type: ignore[arg-type]
-    assert late_result_action(WebhookEvent("evt_x", "account.risk_changed", "x", changed)) == "none"
+    assert late_result_action(WebhookEvent("evt_x", "account.risk_changed", "x", changed)) == "revoke_sessions"
+    # A change to another flow with the login decision as it was acts on nothing.
+    unchanged = AccountRiskChanged(blocked, SimpleNamespace(account_creation="allow", login="block", purchase="allow"))  # type: ignore[arg-type]
+    assert late_result_action(WebhookEvent("evt_x", "account.risk_changed", "x", unchanged)) == "none"
     assert late_result_action(ev(Data("complete", "step_up")), {"step_up": "ban"}) == "ban"
     assert late_result_action(ev(Data("complete", "block")), {"block": "ban"}) == "ban"
     assert late_result_action(ev(Data("complete", "review")), {"step_up": "ban"}) == "none"
@@ -482,10 +485,10 @@ def test_an_unverified_quiet_or_unmapped_event_makes_no_provider_call_and_a_prov
     for data in (STEP_UP, PENDING, {**KNOWN_PENDING, "account": REVIEW["account"]}, EXPIRED["data"]):
         d_raw, d_headers = delivery(data)
         assert handle_late_result(d_raw, d_headers, SECRETS, auth0, now=NOW).action == "none"
-    # account.risk_changed is verified and typed, and acts on nothing: the
-    # assessment.updated that moved the decision does.
+    # account.risk_changed independently changes the login decision.
     c_raw, c_headers = delivery(RISK_CHANGED["data"], type=RISK_CHANGED["type"])
-    ignored = handle_late_result(c_raw, c_headers, SECRETS, auth0, now=NOW)
+    ignored = handle_late_result(c_raw, c_headers, SECRETS, auth0, now=NOW, resolve_user_id=lambda a, e: None)
+    assert late_result_action(ignored.event) == "revoke_sessions"
     assert ignored.action == "none" and ignored.event.type == "account.risk_changed"
     assert ignored.event.data.account.decisions_by_flow.login == "review"
     assert handle_late_result(raw, headers, SECRETS, auth0, now=NOW, resolve_user_id=lambda a, e: None).action == "none"

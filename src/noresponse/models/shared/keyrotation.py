@@ -8,6 +8,7 @@ Scope = Union[
     Literal[
         "assess",
         "history",
+        "delete",
         "webhooks",
         "detailed",
         "integrations",
