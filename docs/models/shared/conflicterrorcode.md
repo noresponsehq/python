@@ -21,3 +21,4 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"webhook_endpoint_limit_reached"`
 - `"webhook_endpoint_unverified"`
 - `"too_many_integrations"`
+- `"risk_version_ahead"`

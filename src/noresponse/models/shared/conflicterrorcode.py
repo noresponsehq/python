@@ -10,6 +10,7 @@ ConflictErrorCode = Union[
         "webhook_endpoint_limit_reached",
         "webhook_endpoint_unverified",
         "too_many_integrations",
+        "risk_version_ahead",
     ],
     UnrecognizedStr,
 ]
