@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.0.0
+
+No changes detected.
+
 ## 6.0.1
 
 * `sdk.accounts.list_changed()`: **Added**

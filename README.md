@@ -329,20 +329,36 @@ async def handler(request: Request) -> Response:
 
 `construct_event(payload, headers, secrets, tolerance_seconds=300)` takes the raw body (`bytes` or the exact text) and any header mapping or list of pairs, and refuses a repeated signature header, a delivery older than 300 seconds, an unknown key id or a bad signature with a `WebhookVerificationError` whose `code` says which. Deliveries are at least once: deduplicate on `event.id`. The same functions are on `Webhook`, on `nr.webhooks` and in the `noresponse` namespace.
 
-### Late results
+### Late enforcement
 
-An assessment can be revised after you allowed the account creation. `handle_late_result` verifies the delivery with `construct_event`, applies your policy and acts through your auth provider's admin API:
+A decision can rise after you admitted the account, once a slow source settles. `account.risk_changed` wakes your handler; `handle_risk_change` verifies it, reads the account's current risk (the event's own copy is ignored), asks you where the account is in your flow, and enforces it through your identity provider:
 
 ```python
-from noresponse import clerk_actions, handle_late_result  # or workos_actions, auth0_actions
+from noresponse import AccountStateAnswer, FlowPolicy, handle_risk_change, identity_provider
 
-provider = clerk_actions(os.environ["CLERK_SECRET_KEY"])
-result = handle_late_result(raw_body, request.headers, SECRETS, provider, policy={"review": "ban"})
+clerk = identity_provider("clerk", token=os.environ["CLERK_SECRET_KEY"])  # or "workos", or "auth0" with domain=
+
+
+def account_state(account):
+    user = users.find(account.id)  # your store
+    return AccountStateAnswer(user.state, user.clerk_id, user.enforced_risk_version) if user else None
+
+
+result = handle_risk_change(nr, raw_body, request.headers, SECRETS, provider=clerk, get_account_state=account_state,
+                            flows={"login": FlowPolicy(reinstate=True)})  # reinstatement is off by default
+if result.risk_version is not None:
+    users.update(result.account.id, enforced_risk_version=result.risk_version)
 ```
 
-The policy maps the account's decision (`account.risk.decision`) to an action. The default revokes sessions on `review` and `block` and does nothing otherwise. A pending assessment acts on nothing: its account decision comes from an earlier assessment. `ban` blocks the user in Clerk and Auth0; WorkOS has no block, so its ban deletes the user permanently. Pass `resolve_user_id` when the provider's user id is not your `account_id`. A test event from `send_test_event` acts on nothing. An `account.risk_changed` event acts on its new `login` decision when that decision changed; one that moved only another flow's decision acts on nothing. A refused provider call raises `ProviderActionError`; answer the webhook with a 5xx so we retry it. A provider 404 means the user or session is already gone and counts as done, so a repeated delivery is safe.
+| State | Flow | Decision | Actions |
+|---|---|---|---|
+| `onboarding` | `account_creation` | `review`, `block` | `fail_onboarding`, `revoke_sessions` |
+| `provisional` | `account_creation` | `review`, `block` | `reject_activation`, `revoke_sessions` |
+| `active` | `login` | `review` | `revoke_sessions` |
+| `active` | `login` | `block` | `restrict`, `revoke_sessions` |
+| `restricted` | `login` | `allow` | `unrestrict`, only with `reinstate` |
 
-If your app has its own login, `log_only_actions()` logs what it would revoke or ban (to the `noresponse.late_results` logger at WARNING, or pass `log`) and calls nothing. Use it to try the handler, then subclass `LateResultProvider` with a `name` and the two methods `revoke_sessions(user_id)` and `ban(user_id)`.
+Nothing deletes a user. Clerk bans (and unbans), Auth0 sets `blocked`, and WorkOS, which has no block, writes `noresponse_state` to the user's metadata (gate sign-in on it) and revokes every session. On an Auth0 plan without the sessions API the revoke blocks the user too and reports `restrict`. Each action, or `none` when nothing is needed, is recorded with `accounts.record_enforcement` at the `risk_version` read, and `result.enforcements` lists them. A refused action is recorded as `failed` and raises `ProviderActionError`: answer 5xx so the delivery is retried. A test event, an erased account and an account at or below `enforced_risk_version` act on nothing (`result.skipped`). To catch up after dropped deliveries, pass each account of `nr.accounts.list_changed(unenforced=True)` to `enforce_account`. For your own user store, `custom_provider({"restrict": ..., "revoke_sessions": ...})` takes one function per action you support; an action without one is recorded as failed.
 
 ## Logging
 
