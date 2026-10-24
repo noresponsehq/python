@@ -24,6 +24,8 @@ class AccountTypedDict(TypedDict):
     r"""The assessment the current risk comes from."""
     updated_at: str
     r"""updated_at of that assessment's latest revision."""
+    risk_version: int
+    r"""The version of the account's current risk. It increases every time the account's current risk or decisions_by_flow changes, and does not decrease. Of two copies of an account, the one with the higher risk_version is newer. account.risk_changed carries the risk_version that its change made."""
     schema_version: Literal["1"]
     r"""Version of the body shape."""
 
@@ -44,6 +46,9 @@ class Account(BaseModel):
 
     updated_at: str
     r"""updated_at of that assessment's latest revision."""
+
+    risk_version: int
+    r"""The version of the account's current risk. It increases every time the account's current risk or decisions_by_flow changes, and does not decrease. Of two copies of an account, the one with the higher risk_version is newer. account.risk_changed carries the risk_version that its change made."""
 
     schema_version: Annotated[
         Annotated[Literal["1"], AfterValidator(validate_const("1"))],

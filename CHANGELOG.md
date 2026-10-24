@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.1.1
+
+* `sdk.assessments.create()`:  `response.account.risk_version` **Added**
+* `sdk.assessments.get()`:  `response.account.risk_version` **Added**
+* `sdk.accounts.get()`:  `response.risk_version` **Added**
+
 ## 5.1.0
 
 * `sdk.keys.rotate()`:  `response.scopes[].enum(delete)` **Added**
