@@ -1,5 +1,12 @@
 # Changelog
 
+## 7.0.1
+
+* `sdk.assessments.create()`:  `response.account.risk.decision.enum(held)` **Added**
+* `sdk.assessments.get()`:  `response.account.risk.decision.enum(held)` **Added**
+* `sdk.accounts.list_changed()`:  `response.items[].risk.decision.enum(held)` **Added**
+* `sdk.accounts.get()`:  `response.risk.decision.enum(held)` **Added**
+
 ## 7.0.0
 
 No changes detected.
