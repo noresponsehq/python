@@ -45,6 +45,8 @@ ReasonCode = Union[
         "young_email_domain",
         "email_domain_no_mx",
         "email_domain_nonexistent",
+        "forum_sanctioned",
+        "prior_payment_abuse",
     ],
     UnrecognizedStr,
 ]

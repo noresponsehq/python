@@ -1,5 +1,14 @@
 # Changelog
 
+## 7.1.5
+
+* `sdk.assessments.create()`:  `response.account.risk.reasons[].code` **Changed**
+* `sdk.assessments.get()`:  `response.account.risk.reasons[].code` **Changed**
+* `sdk.assessments.query()`:  `response.items[].risk.reasons[].code` **Changed**
+* `sdk.accounts.list_changed()`:  `response.items[].risk.reasons[].code` **Changed**
+* `sdk.accounts.get()`:  `response.risk.reasons[].code` **Changed**
+* `sdk.accounts.list_assessments()`:  `response.items[].risk.reasons[].code` **Changed**
+
 ## 7.1.4
 
 No changes detected.
