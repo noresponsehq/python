@@ -13,6 +13,12 @@ if TYPE_CHECKING:
         CreateIntegrationResponse,
         CreateIntegrationResponseTypedDict,
     )
+    from .createkey import (
+        CreateKeyRequest,
+        CreateKeyRequestTypedDict,
+        CreateKeyResponse,
+        CreateKeyResponseTypedDict,
+    )
     from .createwebhookendpoint import (
         CreateWebhookEndpointResponse,
         CreateWebhookEndpointResponseTypedDict,
@@ -53,6 +59,12 @@ if TYPE_CHECKING:
         GetAssessmentResponse,
         GetAssessmentResponseTypedDict,
     )
+    from .getsettings import (
+        GetSettingsRequest,
+        GetSettingsRequestTypedDict,
+        GetSettingsResponse,
+        GetSettingsResponseTypedDict,
+    )
     from .listaccountassessments import (
         ListAccountAssessmentsRequest,
         ListAccountAssessmentsRequestTypedDict,
@@ -68,6 +80,12 @@ if TYPE_CHECKING:
     from .listintegrations import (
         ListIntegrationsResponse,
         ListIntegrationsResponseTypedDict,
+    )
+    from .listkeys import (
+        ListKeysRequest,
+        ListKeysRequestTypedDict,
+        ListKeysResponse,
+        ListKeysResponseTypedDict,
     )
     from .listwebhookdeliveries import (
         ListWebhookDeliveriesRequest,
@@ -107,6 +125,12 @@ if TYPE_CHECKING:
         ReplayWebhookDeliveryResponse,
         ReplayWebhookDeliveryResponseTypedDict,
     )
+    from .revokekey import (
+        RevokeKeyRequest,
+        RevokeKeyRequestTypedDict,
+        RevokeKeyResponse,
+        RevokeKeyResponseTypedDict,
+    )
     from .rotateapikey import RotateAPIKeyResponse, RotateAPIKeyResponseTypedDict
     from .rotateintegrationsecret import (
         RotateIntegrationSecretRequest,
@@ -126,6 +150,12 @@ if TYPE_CHECKING:
         SendWebhookTestEventResponse,
         SendWebhookTestEventResponseTypedDict,
     )
+    from .updatesettings import (
+        UpdateSettingsRequest,
+        UpdateSettingsRequestTypedDict,
+        UpdateSettingsResponse,
+        UpdateSettingsResponseTypedDict,
+    )
 
 __all__ = [
     "CreateAssessmentRequest",
@@ -134,6 +164,10 @@ __all__ = [
     "CreateAssessmentResponseTypedDict",
     "CreateIntegrationResponse",
     "CreateIntegrationResponseTypedDict",
+    "CreateKeyRequest",
+    "CreateKeyRequestTypedDict",
+    "CreateKeyResponse",
+    "CreateKeyResponseTypedDict",
     "CreateWebhookEndpointResponse",
     "CreateWebhookEndpointResponseTypedDict",
     "DeleteAccountRequest",
@@ -160,6 +194,10 @@ __all__ = [
     "GetAssessmentRequestTypedDict",
     "GetAssessmentResponse",
     "GetAssessmentResponseTypedDict",
+    "GetSettingsRequest",
+    "GetSettingsRequestTypedDict",
+    "GetSettingsResponse",
+    "GetSettingsResponseTypedDict",
     "ListAccountAssessmentsRequest",
     "ListAccountAssessmentsRequestTypedDict",
     "ListAccountAssessmentsResponse",
@@ -170,6 +208,10 @@ __all__ = [
     "ListAccountsResponseTypedDict",
     "ListIntegrationsResponse",
     "ListIntegrationsResponseTypedDict",
+    "ListKeysRequest",
+    "ListKeysRequestTypedDict",
+    "ListKeysResponse",
+    "ListKeysResponseTypedDict",
     "ListWebhookDeliveriesRequest",
     "ListWebhookDeliveriesRequestTypedDict",
     "ListWebhookDeliveriesResponse",
@@ -194,6 +236,10 @@ __all__ = [
     "ReplayWebhookDeliveryRequestTypedDict",
     "ReplayWebhookDeliveryResponse",
     "ReplayWebhookDeliveryResponseTypedDict",
+    "RevokeKeyRequest",
+    "RevokeKeyRequestTypedDict",
+    "RevokeKeyResponse",
+    "RevokeKeyResponseTypedDict",
     "RotateAPIKeyResponse",
     "RotateAPIKeyResponseTypedDict",
     "RotateIntegrationSecretRequest",
@@ -208,6 +254,10 @@ __all__ = [
     "SendWebhookTestEventRequestTypedDict",
     "SendWebhookTestEventResponse",
     "SendWebhookTestEventResponseTypedDict",
+    "UpdateSettingsRequest",
+    "UpdateSettingsRequestTypedDict",
+    "UpdateSettingsResponse",
+    "UpdateSettingsResponseTypedDict",
 ]
 
 _dynamic_imports: dict[str, str] = {
@@ -217,6 +267,10 @@ _dynamic_imports: dict[str, str] = {
     "CreateAssessmentResponseTypedDict": ".createassessment",
     "CreateIntegrationResponse": ".createintegration",
     "CreateIntegrationResponseTypedDict": ".createintegration",
+    "CreateKeyRequest": ".createkey",
+    "CreateKeyRequestTypedDict": ".createkey",
+    "CreateKeyResponse": ".createkey",
+    "CreateKeyResponseTypedDict": ".createkey",
     "CreateWebhookEndpointResponse": ".createwebhookendpoint",
     "CreateWebhookEndpointResponseTypedDict": ".createwebhookendpoint",
     "DeleteAccountRequest": ".deleteaccount",
@@ -243,6 +297,10 @@ _dynamic_imports: dict[str, str] = {
     "GetAssessmentRequestTypedDict": ".getassessment",
     "GetAssessmentResponse": ".getassessment",
     "GetAssessmentResponseTypedDict": ".getassessment",
+    "GetSettingsRequest": ".getsettings",
+    "GetSettingsRequestTypedDict": ".getsettings",
+    "GetSettingsResponse": ".getsettings",
+    "GetSettingsResponseTypedDict": ".getsettings",
     "ListAccountAssessmentsRequest": ".listaccountassessments",
     "ListAccountAssessmentsRequestTypedDict": ".listaccountassessments",
     "ListAccountAssessmentsResponse": ".listaccountassessments",
@@ -253,6 +311,10 @@ _dynamic_imports: dict[str, str] = {
     "ListAccountsResponseTypedDict": ".listaccounts",
     "ListIntegrationsResponse": ".listintegrations",
     "ListIntegrationsResponseTypedDict": ".listintegrations",
+    "ListKeysRequest": ".listkeys",
+    "ListKeysRequestTypedDict": ".listkeys",
+    "ListKeysResponse": ".listkeys",
+    "ListKeysResponseTypedDict": ".listkeys",
     "ListWebhookDeliveriesRequest": ".listwebhookdeliveries",
     "ListWebhookDeliveriesRequestTypedDict": ".listwebhookdeliveries",
     "ListWebhookDeliveriesResponse": ".listwebhookdeliveries",
@@ -277,6 +339,10 @@ _dynamic_imports: dict[str, str] = {
     "ReplayWebhookDeliveryRequestTypedDict": ".replaywebhookdelivery",
     "ReplayWebhookDeliveryResponse": ".replaywebhookdelivery",
     "ReplayWebhookDeliveryResponseTypedDict": ".replaywebhookdelivery",
+    "RevokeKeyRequest": ".revokekey",
+    "RevokeKeyRequestTypedDict": ".revokekey",
+    "RevokeKeyResponse": ".revokekey",
+    "RevokeKeyResponseTypedDict": ".revokekey",
     "RotateAPIKeyResponse": ".rotateapikey",
     "RotateAPIKeyResponseTypedDict": ".rotateapikey",
     "RotateIntegrationSecretRequest": ".rotateintegrationsecret",
@@ -291,6 +357,10 @@ _dynamic_imports: dict[str, str] = {
     "SendWebhookTestEventRequestTypedDict": ".sendwebhooktestevent",
     "SendWebhookTestEventResponse": ".sendwebhooktestevent",
     "SendWebhookTestEventResponseTypedDict": ".sendwebhooktestevent",
+    "UpdateSettingsRequest": ".updatesettings",
+    "UpdateSettingsRequestTypedDict": ".updatesettings",
+    "UpdateSettingsResponse": ".updatesettings",
+    "UpdateSettingsResponseTypedDict": ".updatesettings",
 }
 
 

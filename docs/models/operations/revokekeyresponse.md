@@ -1,0 +1,9 @@
+# RevokeKeyResponse
+
+
+## Fields
+
+| Field                                    | Type                                     | Required                                 | Description                              |
+| ---------------------------------------- | ---------------------------------------- | ---------------------------------------- | ---------------------------------------- |
+| `headers`                                | Dict[str, List[*str*]]                   | :heavy_check_mark:                       | N/A                                      |
+| `result`                                 | [shared.Key](../../models/shared/key.md) | :heavy_check_mark:                       | N/A                                      |

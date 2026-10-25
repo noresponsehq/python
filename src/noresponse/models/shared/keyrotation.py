@@ -4,7 +4,7 @@ from typing import List, Literal, Union
 from typing_extensions import TypedDict
 
 
-Scope = Union[
+KeyRotationScope = Union[
     Literal[
         "assess",
         "history",
@@ -12,6 +12,7 @@ Scope = Union[
         "webhooks",
         "detailed",
         "integrations",
+        "management",
     ],
     UnrecognizedStr,
 ]
@@ -24,7 +25,7 @@ class KeyRotationTypedDict(TypedDict):
     r"""The new credential, nrk_<mode>_<key id>_<secret>, in the environment of the presented key: nrk_live_ or nrk_test_. It is shown only in this answer; store it now."""
     key_id: str
     r"""The public id of the new key."""
-    scopes: List[Scope]
+    scopes: List[KeyRotationScope]
     r"""The scopes of the new key: those of the presented key."""
     created_at: str
     previous_key_id: str
@@ -42,7 +43,7 @@ class KeyRotation(BaseModel):
     key_id: str
     r"""The public id of the new key."""
 
-    scopes: List[Scope]
+    scopes: List[KeyRotationScope]
     r"""The scopes of the new key: those of the presented key."""
 
     created_at: str

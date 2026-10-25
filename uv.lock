@@ -212,7 +212,7 @@ wheels = [
 
 [[package]]
 name = "noresponse"
-version = "7.0.5"
+version = "7.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "httpcore" },

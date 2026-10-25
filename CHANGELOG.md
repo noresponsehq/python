@@ -1,5 +1,38 @@
 # Changelog
 
+## 7.1.0
+
+* `sdk.keys.create()`: **Added**
+* `sdk.keys.list()`: **Added**
+* `sdk.keys.revoke()`: **Added**
+* `sdk.settings.get()`: **Added**
+* `sdk.settings.update()`: **Added**
+* `sdk.assessments.create()`:  `error.code` **Changed**
+* `sdk.assessments.get()`:  `error.code` **Changed**
+* `sdk.assessments.delete()`:  `error.code` **Changed**
+* `sdk.assessments.record_outcome()`:  `error.code` **Changed**
+* `sdk.assessments.query()`:  `error.code` **Changed**
+* `sdk.accounts.list_changed()`:  `error.code` **Changed**
+* `sdk.accounts.get()`:  `error.code` **Changed**
+* `sdk.accounts.delete()`:  `error.code` **Changed**
+* `sdk.accounts.list_assessments()`:  `error.code` **Changed**
+* `sdk.accounts.record_enforcement()`:  `error.code` **Changed**
+* `sdk.key_usage.record()`:  `error.code` **Changed**
+* `sdk.keys.rotate()`: 
+  *  `response.scopes[].enum(management)` **Added**
+  *  `error.code` **Changed**
+* `sdk.integrations.create()`:  `error.code` **Changed**
+* `sdk.integrations.list()`:  `error.code` **Changed**
+* `sdk.integrations.delete()`:  `error.code` **Changed**
+* `sdk.integrations.rotate()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.list()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.create()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.delete()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.rotate_signing_key()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.send_test_event()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.list_deliveries()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.replay_delivery()`:  `error.code` **Changed**
+
 ## 7.0.5
 
 No changes detected.

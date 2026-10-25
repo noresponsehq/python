@@ -7,7 +7,7 @@ client.py, which wraps the generated one.
 
 from __future__ import annotations
 
-from .client import Accounts, Assessments, Integrations, KeyUsage, Keys, NoResponse
+from .client import Accounts, Assessments, Integrations, KeyUsage, Keys, NoResponse, Settings
 from .key_usage import KeyUsageBuffer, KeyUsageStats
 from .auth import (
     from_auth0,
@@ -47,6 +47,8 @@ from .responses import (
     AssessmentPage,
     Integration,
     IntegrationList,
+    Key,
+    KeyList,
     KeyRotation,
     KeyUsageBatch,
     ResponseMeta,
@@ -81,6 +83,9 @@ __all__ = [
     "Accounts",
     "Assessments",
     "Keys",
+    "Key",
+    "KeyList",
+    "Settings",
     "KeyUsage",
     "KeyUsageBatch",
     "KeyUsageBuffer",

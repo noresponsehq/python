@@ -17,3 +17,4 @@ value: PermissionDeniedErrorCode = "workspace_forbidden"
 This is an open enum. Unrecognized values will not fail type checks.
 
 - `"workspace_forbidden"`
+- `"role_forbidden"`

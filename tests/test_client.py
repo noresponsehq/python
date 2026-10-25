@@ -434,6 +434,39 @@ def test_record_outcome_and_key_rotation():
     assert json.loads(seen[1].content) == {"overlap_seconds": 3600}
 
 
+def test_keys_and_settings_manage_the_signing_keys_environment():
+    created = fixture("valid/key-created-by-management-key.json")
+    listed = fixture("valid/key-list.json")
+    revoked = fixture("valid/key-revoked.json")
+    settings = fixture("valid/settings.json")
+    workspace = created["workspace_id"]
+    sdk, seen = make([answer(created, 201), answer(listed), answer(revoked), answer(settings), answer(settings),
+                      problem(409, "self_revocation"), problem(503, "service_unavailable", {"retry-after": "1"})])
+    key = sdk.keys.create(workspace, environment="live", scopes=["assess", "management"])
+    assert key.key == created["key"] and key.created_by == created["created_by"] and key.meta.request_id == "a" * 32
+    assert len(sdk.keys.list(workspace).items) == len(listed["items"])
+    assert sdk.keys.revoke(workspace, revoked["id"]).status == "revoked"
+    assert sdk.settings.get(workspace, "live").retention_days == settings["retention_days"]
+    assert sdk.settings.update(workspace, "live", retention_days=30, flows={"login": {"step_up": 25}}).environment == "live"
+    with pytest.raises(ConflictError):
+        sdk.keys.revoke(workspace, revoked["id"])
+    # Creating a key is never retried: a retry would mint a second key.
+    with pytest.raises(Exception):
+        sdk.keys.create(workspace, environment="live", scopes=["assess"])
+    assert [(r.method, r.url.path) for r in seen] == [
+        ("POST", f"/v1/workspaces/{workspace}/keys"),
+        ("GET", f"/v1/workspaces/{workspace}/keys"),
+        ("DELETE", f"/v1/workspaces/{workspace}/keys/{revoked['id']}"),
+        ("GET", f"/v1/workspaces/{workspace}/settings/live"),
+        ("PATCH", f"/v1/workspaces/{workspace}/settings/live"),
+        ("DELETE", f"/v1/workspaces/{workspace}/keys/{revoked['id']}"),
+        ("POST", f"/v1/workspaces/{workspace}/keys"),
+    ]
+    assert json.loads(seen[0].content) == {"environment": "live", "scopes": ["assess", "management"]}
+    assert json.loads(seen[4].content) == {"retention_days": 30, "flows": {"login": {"step_up": 25}}}
+    assert all("nr-acting-user" not in r.headers for r in seen)
+
+
 def test_webhook_endpoints_register_list_rotate_test_and_delete_without_retrying_writes():
     created = fixture("valid/webhook-endpoint-created.json")
     listed = fixture("valid/webhook-endpoint-list.json")

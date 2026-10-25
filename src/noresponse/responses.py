@@ -20,8 +20,11 @@ from .models.shared.assessmentdetail import AssessmentDetail
 from .models.shared.assessmentoutcome import AssessmentOutcome as _AssessmentOutcome
 from .models.shared.integration import Integration as _Integration
 from .models.shared.integrationlist import IntegrationList as _IntegrationList
+from .models.shared.key import Key as _Key
+from .models.shared.keylist import KeyList as _KeyList
 from .models.shared.keyrotation import KeyRotation as _KeyRotation
 from .models.shared.keyusagebatch import KeyUsageBatch as _KeyUsageBatch
+from .models.shared.settings import Settings as _Settings
 
 __all__ = [
     "Account",
@@ -33,9 +36,12 @@ __all__ = [
     "AssessmentPage",
     "Integration",
     "IntegrationList",
+    "Key",
+    "KeyList",
     "KeyRotation",
     "KeyUsageBatch",
     "ResponseMeta",
+    "Settings",
 ]
 
 
@@ -179,6 +185,48 @@ class IntegrationList(_IntegrationList):
     @property
     def meta(self) -> ResponseMeta:
         return self._meta
+
+
+class Key(_Key):
+    """One API key. key, the secret, is set only by keys.create, and shown once."""
+
+    _meta: ResponseMeta = PrivateAttr(default=_EMPTY)
+
+    @property
+    def meta(self) -> ResponseMeta:
+        return self._meta
+
+
+class KeyList(_KeyList):
+    """The keys of the signing key's environment, newest first, with no secrets."""
+
+    _meta: ResponseMeta = PrivateAttr(default=_EMPTY)
+
+    @property
+    def meta(self) -> ResponseMeta:
+        return self._meta
+
+
+class Settings(_Settings):
+    """The settings of one environment."""
+
+    _meta: ResponseMeta = PrivateAttr(default=_EMPTY)
+
+    @property
+    def meta(self) -> ResponseMeta:
+        return self._meta
+
+
+def as_key(source: _Key, meta: ResponseMeta) -> Key:
+    return _attach(Key, source, meta)
+
+
+def as_key_list(source: _KeyList, meta: ResponseMeta) -> KeyList:
+    return _attach(KeyList, source, meta)
+
+
+def as_settings(source: _Settings, meta: ResponseMeta) -> Settings:
+    return _attach(Settings, source, meta)
 
 
 def as_assessment(source: _Assessment, meta: ResponseMeta = _EMPTY) -> Assessment:

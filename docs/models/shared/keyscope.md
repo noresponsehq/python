@@ -1,12 +1,12 @@
-# Scope
+# KeyScope
 
 ## Example Usage
 
 ```python
-from noresponse.models.shared import Scope
+from noresponse.models.shared import KeyScope
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: Scope = "assess"
+value: KeyScope = "assess"
 ```
 
 
@@ -20,3 +20,4 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"webhooks"`
 - `"detailed"`
 - `"integrations"`
+- `"management"`

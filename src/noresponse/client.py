@@ -34,6 +34,7 @@ from .errors import APIConnectionError, APITimeoutError
 from .httpclient import AsyncHttpClient, HttpClient
 from .integrations import Integrations as _Integrations
 from .keys import Keys as _Keys
+from .settings import Settings as _Settings
 from .keyusage import KeyUsage as _KeyUsage
 from .key_usage import KeyUsageBuffer
 from .webhookendpoints import WebhookEndpoints as _WebhookEndpoints
@@ -46,15 +47,21 @@ from .responses import (
     AssessmentPage,
     Integration,
     IntegrationList,
+    Key,
+    KeyList,
     KeyRotation,
     KeyUsageBatch,
     ResponseMeta,
+    Settings as SettingsModel,
     as_account,
     as_account_deletion,
     as_assessment_deletion,
     as_assessment,
     as_integration,
     as_integration_list,
+    as_key,
+    as_key_list,
+    as_settings,
     as_key_usage_batch,
     as_outcome,
     as_rotation,
@@ -66,7 +73,7 @@ from .utils.logger import Logger, NoOpLogger
 from ._wait import DEFAULT_WAIT_SECONDS, wait, wait_async
 from . import webhook_verification
 
-__all__ = ["DEFAULT_BASE_URL", "DEFAULT_TIMEOUT_MS", "Accounts", "Assessments", "Integrations", "KeyUsage", "Keys", "NoResponse"]
+__all__ = ["DEFAULT_BASE_URL", "DEFAULT_TIMEOUT_MS", "Accounts", "Assessments", "Integrations", "KeyUsage", "Keys", "NoResponse", "Settings"]
 
 DEFAULT_BASE_URL = "https://api.noresponse.org"
 DEFAULT_TIMEOUT_MS = 10_000
@@ -734,6 +741,189 @@ class Keys(_Keys):
         )
         return _rotation(response)
 
+    # With the management scope: the keys of the signing key's environment.
+
+    def create(  # type: ignore[override]
+        self,
+        workspace_id: str,
+        *,
+        environment: Union[models.shared.KeyEnvironment, str],
+        scopes: Iterable[Union[models.shared.KeyRequestScope, str]],
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Key:
+        """Create a key in the signing key's environment, with scopes the signing key holds.
+
+        Needs the management scope. The secret is in key, shown once. Not
+        idempotent, so never retried: a retry after a lost answer creates a
+        second key.
+        """
+        response = _sync(super().create)(
+            workspace_id, environment=cast(Any, environment), scopes=cast(Any, list(scopes)),
+            server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers,
+        )
+        return _answer(response, as_key)
+
+    async def create_async(  # type: ignore[override]
+        self,
+        workspace_id: str,
+        *,
+        environment: Union[models.shared.KeyEnvironment, str],
+        scopes: Iterable[Union[models.shared.KeyRequestScope, str]],
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Key:
+        """The asyncio form of create."""
+        response = await _async(super().create_async)(
+            workspace_id, environment=cast(Any, environment), scopes=cast(Any, list(scopes)),
+            server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers,
+        )
+        return _answer(response, as_key)
+
+    def list(  # type: ignore[override]
+        self,
+        workspace_id: str,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> KeyList:
+        """The keys of the signing key's environment, newest first, without secrets. Needs the management scope."""
+        response = _sync(super().list)(
+            workspace_id, retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        return _answer(response, as_key_list)
+
+    async def list_async(  # type: ignore[override]
+        self,
+        workspace_id: str,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> KeyList:
+        """The asyncio form of list."""
+        response = await _async(super().list_async)(
+            workspace_id, retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        return _answer(response, as_key_list)
+
+    def revoke(  # type: ignore[override]
+        self,
+        workspace_id: str,
+        key_id: str,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Key:
+        """Revoke a key of the signing key's environment at once. A key cannot revoke itself. Needs the management scope."""
+        response = _sync(super().revoke)(
+            workspace_id, key_id, retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        return _answer(response, as_key)
+
+    async def revoke_async(  # type: ignore[override]
+        self,
+        workspace_id: str,
+        key_id: str,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Key:
+        """The asyncio form of revoke."""
+        response = await _async(super().revoke_async)(
+            workspace_id, key_id, retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers
+        )
+        return _answer(response, as_key)
+
+
+class Settings(_Settings):
+    """The settings of the signing key's environment. Every method needs the management scope."""
+
+    def get(  # type: ignore[override]
+        self,
+        workspace_id: str,
+        environment: Union[models.shared.KeyEnvironment, str],
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> SettingsModel:
+        """Read the environment's settings; the other environment answers 404."""
+        response = _sync(super().get)(
+            workspace_id, cast(Any, environment), retries=retries, server_url=server_url, timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_settings)
+
+    async def get_async(  # type: ignore[override]
+        self,
+        workspace_id: str,
+        environment: Union[models.shared.KeyEnvironment, str],
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> SettingsModel:
+        """The asyncio form of get."""
+        response = await _async(super().get_async)(
+            workspace_id, cast(Any, environment), retries=retries, server_url=server_url, timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_settings)
+
+    def update(  # type: ignore[override]
+        self,
+        workspace_id: str,
+        environment: Union[models.shared.KeyEnvironment, str],
+        *,
+        retention_days: Optional[int] = None,
+        refused_sources: Optional[Iterable[Union[models.shared.SourceID, str]]] = None,
+        flows: Optional[Union[models.shared.SettingsRequestFlows, models.shared.SettingsRequestFlowsTypedDict]] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> SettingsModel:
+        """Change only what you name, in one transaction."""
+        response = _sync(super().update)(
+            workspace_id, cast(Any, environment), retention_days=retention_days,
+            refused_sources=cast(Any, None if refused_sources is None else list(refused_sources)), flows=flows,
+            retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers,
+        )
+        return _answer(response, as_settings)
+
+    async def update_async(  # type: ignore[override]
+        self,
+        workspace_id: str,
+        environment: Union[models.shared.KeyEnvironment, str],
+        *,
+        retention_days: Optional[int] = None,
+        refused_sources: Optional[Iterable[Union[models.shared.SourceID, str]]] = None,
+        flows: Optional[Union[models.shared.SettingsRequestFlows, models.shared.SettingsRequestFlowsTypedDict]] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> SettingsModel:
+        """The asyncio form of update."""
+        response = await _async(super().update_async)(
+            workspace_id, cast(Any, environment), retention_days=retention_days,
+            refused_sources=cast(Any, None if refused_sources is None else list(refused_sources)), flows=flows,
+            retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers,
+        )
+        return _answer(response, as_settings)
+
 
 KeyUsageEvents = Union[
     Iterable[models.shared.KeyUsageEvent],
@@ -1203,6 +1393,11 @@ class Integrations(_Integrations):
         return _integration(response)
 
 
+def _answer(response: Any, convert: Callable[[Any, ResponseMeta], R]) -> R:
+    """The model a generated response carries, with its headers as meta."""
+    return convert(response.result, ResponseMeta.from_headers(response.headers))
+
+
 def _integration(response: Any) -> Integration:
     if not isinstance(
         response, (models.operations.CreateIntegrationResponse, models.operations.RotateIntegrationSecretResponse)
@@ -1286,6 +1481,7 @@ class NoResponse(_NoResponse):
     assessments: Assessments  # type: ignore[assignment]
     accounts: Accounts  # type: ignore[assignment]
     keys: Keys  # type: ignore[assignment]
+    settings: Settings  # type: ignore[assignment]
     key_usage: KeyUsage  # type: ignore[assignment]
     webhook_endpoints: WebhookEndpoints  # type: ignore[assignment]
     integrations: Integrations  # type: ignore[assignment]
@@ -1293,6 +1489,7 @@ class NoResponse(_NoResponse):
         "assessments": ("noresponse.client", "Assessments"),
         "accounts": ("noresponse.client", "Accounts"),
         "keys": ("noresponse.client", "Keys"),
+        "settings": ("noresponse.client", "Settings"),
         "key_usage": ("noresponse.client", "KeyUsage"),
         "webhook_endpoints": ("noresponse.client", "WebhookEndpoints"),
         "integrations": ("noresponse.client", "Integrations"),
