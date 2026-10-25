@@ -293,8 +293,8 @@ Verify the exact bytes you received, then act on the typed event. `secrets` maps
 
 ```python
 import os
-from noresponse import Webhook, WebhookVerificationError
-from noresponse import AccountDeleted, AccountRiskChanged, AssessmentExpired, Assessment, EndpointDisabled, WorkspaceDeleted
+from noresponse import construct_event, WebhookVerificationError
+from noresponse import AccountDeleted, AccountRiskChanged, AssessmentExpired, EndpointVerification, WebhookEndpointDisabled, WorkspaceDeleted
 
 SECRETS = {
     os.environ["NORESPONSE_WEBHOOK_KEY_ID"]: os.environ["NORESPONSE_WEBHOOK_SECRET"],
@@ -304,30 +304,29 @@ SECRETS = {
 @app.post("/webhooks/noresponse")  # FastAPI: await request.body() is the raw body
 async def handler(request: Request) -> Response:
     try:
-        event = Webhook.construct_event(await request.body(), request.headers, SECRETS)
+        event = construct_event(await request.body(), request.headers, SECRETS)
     except WebhookVerificationError:
         return Response(status_code=400)
-    if event.type == "endpoint.verification":
-        return JSONResponse(Webhook.verification_response(event))
-    if event.test:  # send_test_event's fixed example assessment: apply nothing
+    data = event.data
+    if isinstance(data, EndpointVerification):
+        return JSONResponse({"challenge": data.challenge})
+    if isinstance(data, AccountRiskChanged):
+        # The one event to act on: a flow's decision changed, at data.account.risk_version.
+        # This verifier alone does not enforce it: use handle_risk_change (below) as this endpoint's receiver.
         return Response(status_code=204)
-    if isinstance(event.data, AccountDeleted):  # type "account.deleted": you erased it with accounts.delete
-        forget_account(event.data.account_id)
-    elif isinstance(event.data, WorkspaceDeleted):  # the workspace is deleted: the last event this endpoint receives
-        forget_environment(event.data.environment)
-    elif isinstance(event.data, EndpointDisabled):  # another endpoint failed for 72 hours and is disabled
-        alert_ops(event.data.endpoint_id, event.data.failing_since)
-    elif isinstance(event.data, AccountRiskChanged):  # type "account.risk_changed": a flow's decision changed
-        # data.account is the Account accounts.get returns; previous_decisions_by_flow holds the decisions it replaced.
-        apply_decisions(event.data.account.id, event.data.account.decisions_by_flow)
-    elif isinstance(event.data, AssessmentExpired):
-        forget(event.data.assessment_id)  # GET now answers 404
-    elif isinstance(event.data, Assessment) and is_newer(event.data):  # keep the highest detail.assessment_version per assessment
-        apply(event.data)  # the full assessment, as assessments.get returns it
+    if isinstance(data, AccountDeleted):  # you erased it with accounts.delete
+        forget_account(data.account_id, data.deleted_at)
+    elif isinstance(data, WorkspaceDeleted):  # the workspace is deleted: the last event this endpoint receives
+        forget_environment(data.environment)
+    elif isinstance(data, WebhookEndpointDisabled):  # another endpoint failed for 72 hours and is disabled
+        alert_ops(data.endpoint_id, data.failing_since)
+    elif isinstance(data, AssessmentExpired):
+        forget(data.assessment_id)  # GET now answers 404
+    # Any other assessment.updated reports progress only: apply nothing.
     return Response(status_code=204)
 ```
 
-`construct_event(payload, headers, secrets, tolerance_seconds=300)` takes the raw body (`bytes` or the exact text) and any header mapping or list of pairs, and refuses a repeated signature header, a delivery older than 300 seconds, an unknown key id or a bad signature with a `WebhookVerificationError` whose `code` says which. Deliveries are at least once: deduplicate on `event.id`. The same functions are on `Webhook`, on `nr.webhooks` and in the `noresponse` namespace.
+`construct_event(payload, headers, secrets, tolerance_seconds=300)` takes the raw body (`bytes` or the exact text) and any header mapping or list of pairs, and refuses a repeated signature header, a delivery older than 300 seconds, an unknown key id or a bad signature with a `WebhookVerificationError` whose `code` says which. Deliveries are at least once: deduplicate on `event.id`. The same function is `nr.webhooks.construct_event`.
 
 ### Late enforcement
 
@@ -359,6 +358,8 @@ if result.risk_version is not None:
 | `restricted` | `login` | `allow` | `unrestrict`, only with `reinstate` |
 
 Nothing deletes a user. Clerk bans (and unbans), Auth0 sets `blocked`, and WorkOS, which has no block, writes `noresponse_state` to the user's metadata (gate sign-in on it) and revokes every session. On an Auth0 plan without the sessions API the revoke blocks the user too and reports `restrict`. Each action, or `none` when nothing is needed, is recorded with `accounts.record_enforcement` at the `risk_version` read, and `result.enforcements` lists them. A refused action is recorded as `failed` and raises `ProviderActionError`: answer 5xx so the delivery is retried. A test event, an erased account and an account at or below `enforced_risk_version` act on nothing (`result.skipped`). To catch up after dropped deliveries, pass each account of `nr.accounts.list_changed(unenforced=True)` to `enforce_account`. For your own user store, `custom_provider({"restrict": ..., "revoke_sessions": ...})` takes one function per action you support; an action without one is recorded as failed.
+
+A held flow (workspace settings `admission: held`) answers `held` until its investigation completes or `hold_seconds` pass, and the handler records `none` for it. When the final decision arrives as `account.risk_changed`, an `onboarding` or `provisional` account fails onboarding or is refused activation on `review` or `block`. On `allow` the handler does nothing, so admit the account yourself from the result's account. See https://docs.noresponse.org/guides/late-results.
 
 ## Logging
 
