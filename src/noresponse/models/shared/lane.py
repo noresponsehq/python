@@ -8,8 +8,9 @@ Lane = Union[
         "accounts",
         "phone",
         "breach",
+        "domain",
         "ip",
     ],
     UnrecognizedStr,
 ]
-r"""An evidence lane: accounts (account presence for email and username), phone, breach and ip."""
+r"""An evidence lane: accounts (account presence for email and username), phone, breach, domain (the email domain's registration) and ip."""

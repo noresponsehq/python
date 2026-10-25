@@ -1,6 +1,6 @@
 # Lane
 
-An evidence lane: accounts (account presence for email and username), phone, breach and ip.
+An evidence lane: accounts (account presence for email and username), phone, breach, domain (the email domain's registration) and ip.
 
 ## Example Usage
 
@@ -19,4 +19,5 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"accounts"`
 - `"phone"`
 - `"breach"`
+- `"domain"`
 - `"ip"`

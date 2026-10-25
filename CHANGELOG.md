@@ -1,5 +1,12 @@
 # Changelog
 
+## 7.0.3
+
+* `sdk.assessments.create()`:  `response.detail.incomplete_sources[].lane.enum(domain)` **Added**
+* `sdk.assessments.get()`:  `response.detail.incomplete_sources[].lane.enum(domain)` **Added**
+* `sdk.assessments.query()`:  `response.items[].incomplete_sources[].lane.enum(domain)` **Added**
+* `sdk.accounts.list_assessments()`:  `response.items[].incomplete_sources[].lane.enum(domain)` **Added**
+
 ## 7.0.2
 
 No changes detected.
