@@ -15,7 +15,7 @@ class BreachTypedDict(TypedDict):
     kind: BreachKind
     r"""Who is in the table: site_breach, a site's own users; credential_list, a combolist or compilation; stealer_log, malware or botnet victims; scrape; hacking_forum, a criminal hacking, cracking or carding community; abuse_service, the customers of DDoS-for-hire, account generators, dump or card shops, darknet markets, stalkerware or breach-lookup services; darkweb_site, an onion site of unknown purpose."""
     matched_on: BreachSelector
-    r"""The submitted identifier a breach table matched on: email or username. Phone and name are not breach selectors."""
+    r"""The submitted email or username whose own search matched the table. A submitted full name is searched as well, and what it finds feeds the identity's reasons rather than this list."""
     domain: NotRequired[str]
     r"""The breached site's domain, lower case. Absent when the table has none (a credential list, for example)."""
     category: NotRequired[str]
@@ -36,7 +36,7 @@ class Breach(BaseModel):
     r"""Who is in the table: site_breach, a site's own users; credential_list, a combolist or compilation; stealer_log, malware or botnet victims; scrape; hacking_forum, a criminal hacking, cracking or carding community; abuse_service, the customers of DDoS-for-hire, account generators, dump or card shops, darknet markets, stalkerware or breach-lookup services; darkweb_site, an onion site of unknown purpose."""
 
     matched_on: BreachSelector
-    r"""The submitted identifier a breach table matched on: email or username. Phone and name are not breach selectors."""
+    r"""The submitted email or username whose own search matched the table. A submitted full name is searched as well, and what it finds feeds the identity's reasons rather than this list."""
 
     domain: Optional[str] = None
     r"""The breached site's domain, lower case. Absent when the table has none (a credential list, for example)."""

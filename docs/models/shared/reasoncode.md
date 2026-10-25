@@ -58,3 +58,9 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"email_domain_nonexistent"`
 - `"forum_sanctioned"`
 - `"prior_payment_abuse"`
+- `"ip_history_match"`
+- `"identity_attribute_conflict"`
+- `"impossible_identity_age"`
+- `"breach_shared_ip"`
+- `"nationality_mismatch"`
+- `"minor_identity"`
