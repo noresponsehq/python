@@ -7,6 +7,7 @@ IntegrationPlatform = Union[
     Literal[
         "workos",
         "auth0",
+        "supabase",
     ],
     UnrecognizedStr,
 ]

@@ -1,5 +1,13 @@
 # Changelog
 
+## 7.1.6
+
+* `sdk.integrations.create()`: 
+  *  `request.platform.enum(supabase)` **Added**
+  *  `response.platform.enum(supabase)` **Added**
+* `sdk.integrations.list()`:  `response.items[].platform.enum(supabase)` **Added**
+* `sdk.integrations.rotate()`:  `response.platform.enum(supabase)` **Added**
+
 ## 7.1.5
 
 * `sdk.assessments.create()`:  `response.account.risk.reasons[].code` **Changed**
