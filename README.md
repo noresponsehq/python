@@ -1,10 +1,14 @@
-<img src="https://raw.githubusercontent.com/noresponsehq/.github/main/profile/sdk-header.png" alt="NoResponse" width="100%">
+<a href="https://noresponse.org"><img src="https://raw.githubusercontent.com/noresponsehq/.github/main/profile/sdk-header.png" alt="NoResponse · Identity Intelligence" width="100%"></a>
 
-# noresponse
+# NoResponse for Python
 
-The NoResponse client for Python. It assesses an account creation, login or purchase, polls a pending assessment, pages through an account's history, records what you later learned, rotates your API key and verifies webhooks.
+Assess sign-ups, logins and purchases with the NoResponse Identity Intelligence API.
 
-Python 3.10 or later. Sync and asyncio. Fully typed (`py.typed`). The client is generated from the NoResponse OpenAPI document; the thin layer on top of it (defaults, response types, errors, wait, webhooks) is hand-written.
+Python 3.10+ · Sync and asyncio · Fully typed.
+
+[Documentation](https://docs.noresponse.org/sdks/python) · [API reference](https://docs.noresponse.org/api-reference) · [Releases](https://github.com/noresponsehq/python/releases)
+
+## Install
 
 ```sh
 pip install noresponse
@@ -42,6 +46,19 @@ async with NoResponse() as nr:
         identifiers={"email": "jordan.lee@example.com"},
     )
 ```
+
+## Go further
+
+| Task | Guide |
+| --- | --- |
+| Configure this client and explore its methods | [Python SDK guide](https://docs.noresponse.org/sdks/python) |
+| Act when an account's decision changes | [Late results](https://docs.noresponse.org/guides/late-results) |
+| Explore request and response fields | [API reference](https://docs.noresponse.org/api-reference) |
+
+<details>
+<summary><strong>SDK reference</strong> · configuration, methods, errors and webhooks</summary>
+
+[Configuration](#configuration) · [Assessments](#assessments) · [Keys](#keys) · [Integrations](#integrations) · [Response metadata](#response-metadata) · [Errors](#errors) · [Retries](#retries) · [Issued keys](#issued-keys) · [Key usage](#key-usage) · [Webhooks](#webhooks) · [Logging](#logging) · [Raw responses](#raw-responses)
 
 ## Configuration
 
@@ -371,8 +388,11 @@ Set `NORESPONSE_LOG=debug`, or pass `debug_logger`, to get one line per request 
 
 `nr.assessments.with_raw_response.get(...)` returns an object with `status_code`, `headers`, `request_id` and `http_response`. Its `parse()` returns the generated envelope, whose `result` is the model. Use it when you need the status line or every header.
 
+</details>
+
 ## Support
 
-Documentation: https://docs.noresponse.org. Issues: https://github.com/noresponsehq/python/issues. Quote `meta.request_id` or `error.request_id` when you write to us.
+[Open an issue](https://github.com/noresponsehq/python/issues) and include the request ID from the response or error.
+Keep API keys and personal data out of issues.
 
-Apache-2.0.
+[Apache-2.0](LICENSE).
