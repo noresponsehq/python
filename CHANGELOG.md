@@ -1,5 +1,9 @@
 # Changelog
 
+## 7.0.5
+
+No changes detected.
+
 ## 7.0.4
 
 * `sdk.assessments.create()`:  `response.account.risk.reasons[].code` **Changed**
