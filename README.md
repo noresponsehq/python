@@ -351,7 +351,9 @@ if result.risk_version is not None:
 
 | State | Flow | Decision | Actions |
 |---|---|---|---|
+| `onboarding` | `account_creation` | `allow` | `activate` |
 | `onboarding` | `account_creation` | `review`, `block` | `fail_onboarding`, `revoke_sessions` |
+| `provisional` | `account_creation` | `allow` | `activate` |
 | `provisional` | `account_creation` | `review`, `block` | `reject_activation`, `revoke_sessions` |
 | `active` | `login` | `review` | `revoke_sessions` |
 | `active` | `login` | `block` | `restrict`, `revoke_sessions` |
@@ -359,7 +361,7 @@ if result.risk_version is not None:
 
 Nothing deletes a user. Clerk bans (and unbans), Auth0 sets `blocked`, and WorkOS, which has no block, writes `noresponse_state` to the user's metadata (gate sign-in on it) and revokes every session. On an Auth0 plan without the sessions API the revoke blocks the user too and reports `restrict`. Each action, or `none` when nothing is needed, is recorded with `accounts.record_enforcement` at the `risk_version` read, and `result.enforcements` lists them. A refused action is recorded as `failed` and raises `ProviderActionError`: answer 5xx so the delivery is retried. A test event, an erased account and an account at or below `enforced_risk_version` act on nothing (`result.skipped`). To catch up after dropped deliveries, pass each account of `nr.accounts.list_changed(unenforced=True)` to `enforce_account`. For your own user store, `custom_provider({"restrict": ..., "revoke_sessions": ...})` takes one function per action you support; an action without one is recorded as failed.
 
-A held flow (workspace settings `admission: held`) answers `held` until its investigation completes or `hold_seconds` pass, and the handler records `none` for it. When the final decision arrives as `account.risk_changed`, an `onboarding` or `provisional` account fails onboarding or is refused activation on `review` or `block`. On `allow` the handler does nothing, so admit the account yourself from the result's account. See https://docs.noresponse.org/guides/late-results.
+A held flow (workspace settings `admission: held`) answers `held` until its investigation completes or `hold_seconds` pass, and the handler records `none` for it. When the final decision arrives as `account.risk_changed`, an `onboarding` or `provisional` account fails onboarding or is refused activation on `review` or `block`. On `allow` the handler records `activate` (no provider call; a custom provider runs its own `activate`), so admit the account when the result's enforcements hold it. An account at `allow` that needs no change, such as an `active` one after a held login, is recorded as `none`. Either way the account leaves the unenforced list. See https://docs.noresponse.org/guides/late-results.
 
 ## Logging
 

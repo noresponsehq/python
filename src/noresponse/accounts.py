@@ -36,7 +36,7 @@ class Accounts(BaseSDK):
 
         :param changed_since: next_cursor from an earlier page, unchanged. Absent, the list starts from the oldest change.
         :param limit: Most accounts per page.
-        :param unenforced: true lists only accounts with a decision other than allow for some flow and no applied enforcement at their current risk_version.
+        :param unenforced: true lists only accounts with no applied enforcement at their current risk_version that have a decision other than allow for some flow or a hold no later applied enforcement resolved.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -214,7 +214,7 @@ class Accounts(BaseSDK):
 
         :param changed_since: next_cursor from an earlier page, unchanged. Absent, the list starts from the oldest change.
         :param limit: Most accounts per page.
-        :param unenforced: true lists only accounts with a decision other than allow for some flow and no applied enforcement at their current risk_version.
+        :param unenforced: true lists only accounts with no applied enforcement at their current risk_version that have a decision other than allow for some flow or a hold no later applied enforcement resolved.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1527,7 +1527,7 @@ class Accounts(BaseSDK):
         :param account_id: The account_id the workspace sends with its assessments, as one path segment (percent-encode '|' and ':' if the client requires it). A value that does not match the account_id shape answers 400 invalid_request.
         :param risk_version: The account's risk_version the workspace acted on, as read from GET /v1/accounts/{account_id}, GET /v1/accounts, an assessment answer or account.risk_changed. A version older than the account's current one is accepted and stored; a version newer than the current one answers 409 risk_version_ahead.
         :param flow: The event an assessment is made for: account_creation (a user creates an account), login (a user returns to an existing account) or purchase (a payment or a credit grant). The account's risk is reported with the decision for this flow.
-        :param action: What the workspace did in its identity provider: revoke_sessions (signed the account out everywhere), restrict (limited what the account can do), unrestrict (lifted an earlier restriction), fail_onboarding (stopped an account that was still onboarding), reject_activation (refused to activate a provisional account) or none (decided to take no action).
+        :param action: What the workspace did in its identity provider: revoke_sessions (signed the account out everywhere), restrict (limited what the account can do), unrestrict (lifted an earlier restriction), fail_onboarding (stopped an account that was still onboarding), reject_activation (refused to activate a provisional account), activate (let a held onboarding or provisional account in) or none (decided to take no action).
         :param state_before: The account's state in the workspace's identity provider just before the action: onboarding, provisional (created, not yet activated), active, restricted or rejected.
         :param status: applied when the identity provider accepted the action, failed when it refused it or could not be reached. Only applied counts as enforced.
         :param provider: The identity provider the action ran in; custom for the workspace's own user store.
@@ -1725,7 +1725,7 @@ class Accounts(BaseSDK):
         :param account_id: The account_id the workspace sends with its assessments, as one path segment (percent-encode '|' and ':' if the client requires it). A value that does not match the account_id shape answers 400 invalid_request.
         :param risk_version: The account's risk_version the workspace acted on, as read from GET /v1/accounts/{account_id}, GET /v1/accounts, an assessment answer or account.risk_changed. A version older than the account's current one is accepted and stored; a version newer than the current one answers 409 risk_version_ahead.
         :param flow: The event an assessment is made for: account_creation (a user creates an account), login (a user returns to an existing account) or purchase (a payment or a credit grant). The account's risk is reported with the decision for this flow.
-        :param action: What the workspace did in its identity provider: revoke_sessions (signed the account out everywhere), restrict (limited what the account can do), unrestrict (lifted an earlier restriction), fail_onboarding (stopped an account that was still onboarding), reject_activation (refused to activate a provisional account) or none (decided to take no action).
+        :param action: What the workspace did in its identity provider: revoke_sessions (signed the account out everywhere), restrict (limited what the account can do), unrestrict (lifted an earlier restriction), fail_onboarding (stopped an account that was still onboarding), reject_activation (refused to activate a provisional account), activate (let a held onboarding or provisional account in) or none (decided to take no action).
         :param state_before: The account's state in the workspace's identity provider just before the action: onboarding, provisional (created, not yet activated), active, restricted or rejected.
         :param status: applied when the identity provider accepted the action, failed when it refused it or could not be reached. Only applied counts as enforced.
         :param provider: The identity provider the action ran in; custom for the workspace's own user store.

@@ -13,7 +13,7 @@ class ListAccountsRequestTypedDict(TypedDict):
     limit: NotRequired[int]
     r"""Most accounts per page."""
     unenforced: NotRequired[bool]
-    r"""true lists only accounts with a decision other than allow for some flow and no applied enforcement at their current risk_version."""
+    r"""true lists only accounts with no applied enforcement at their current risk_version that have a decision other than allow for some flow or a hold no later applied enforcement resolved."""
 
 
 class ListAccountsRequest(BaseModel):
@@ -33,7 +33,7 @@ class ListAccountsRequest(BaseModel):
         Optional[bool],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = False
-    r"""true lists only accounts with a decision other than allow for some flow and no applied enforcement at their current risk_version."""
+    r"""true lists only accounts with no applied enforcement at their current risk_version that have a decision other than allow for some flow or a hold no later applied enforcement resolved."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

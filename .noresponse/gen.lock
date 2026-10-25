@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: 53c2c437fecd007105d1140662890921
+  docChecksum: 15665e0e5f2f22c2c15d1fd48304e763
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 7.1.0
-  configChecksum: 72e20a0013a9f852b536ca2adf0f3193
+  releaseVersion: 7.1.1
+  configChecksum: 0e361ba340d1537eb23a0e4b632d225f
 features:
   python:
     additionalDependencies: 1.1.0
@@ -95,7 +95,7 @@ trackedFiles:
   docs/models/operations/listaccountassessmentsresponse.md:
     last_write_checksum: sha1:bcd96312d44298baff7085755ff5d21076816de1
   docs/models/operations/listaccountsrequest.md:
-    last_write_checksum: sha1:fb20ec473efb921f4fbbb89636c0f08027ce8306
+    last_write_checksum: sha1:dcb0998441b12eb39a7b479dd71d1fe83c56ab2b
   docs/models/operations/listaccountsresponse.md:
     last_write_checksum: sha1:fa568b77c6b7fc999d41d81d1c59bc6701211022
   docs/models/operations/listintegrationsresponse.md:
@@ -259,13 +259,13 @@ trackedFiles:
   docs/models/shared/endpointverificationevent.md:
     last_write_checksum: sha1:87a003c04ac2188ba5357f536b46db98a8c7de27
   docs/models/shared/enforcement.md:
-    last_write_checksum: sha1:873fbeae839be580f53e471beb45ee73f7793444
+    last_write_checksum: sha1:f465ac843d01e369e3a3f72d3a63b70d7648bb42
   docs/models/shared/enforcementaction.md:
-    last_write_checksum: sha1:c603fd7b12e2ce886bf38b515c1821b7e849e7b0
+    last_write_checksum: sha1:ab5952b2c407661a11b2fba904e8dbe5eb823c8d
   docs/models/shared/enforcementprovider.md:
     last_write_checksum: sha1:d8bf45ea185a765fbdcdd9898ff82ebc329556c3
   docs/models/shared/enforcementrequest.md:
-    last_write_checksum: sha1:0b6e014b27baf226860d3a8d37ff7b7de78b971d
+    last_write_checksum: sha1:f0054d8b613a70aa2143e41dc485b2e21c197253
   docs/models/shared/enforcementstate.md:
     last_write_checksum: sha1:def60e635c56af8a4f149f0849c6ef599e34c815
   docs/models/shared/enforcementstatus.md:
@@ -479,7 +479,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:b597c55ad0872655b4c18fabb14f167f647aa3ad
   pyproject.toml:
-    last_write_checksum: sha1:fd91ce3b1c78147453af818c3bbe1fa939131577
+    last_write_checksum: sha1:007d1f0c6a62d9483e1c29ab615a93047f027efe
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -495,9 +495,9 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:69fd06205b5c9f2644fbe3c2cdc6aefba085b633
+    last_write_checksum: sha1:f852a5830bb96ecc0af9f213e38a62bd917169f3
   src/noresponse/accounts.py:
-    last_write_checksum: sha1:9da62cc6787e0ff656bda8016af0b66de0adc66e
+    last_write_checksum: sha1:b28c2d6e6fce50e5d7ae14d33eda67b77173d40b
   src/noresponse/assessments.py:
     last_write_checksum: sha1:1bff0587f856a97c29a978461f593031b323d699
   src/noresponse/basesdk.py:
@@ -561,7 +561,7 @@ trackedFiles:
   src/noresponse/models/operations/listaccountassessments.py:
     last_write_checksum: sha1:aca5e624223471ef738b6b7eab581f013f09ba49
   src/noresponse/models/operations/listaccounts.py:
-    last_write_checksum: sha1:2ae08d69ce7853c5022fa37d715929bffebba704
+    last_write_checksum: sha1:646bf464718fb32903735a20e5228dea58a27eb7
   src/noresponse/models/operations/listintegrations.py:
     last_write_checksum: sha1:c3a3899da39715e9cb6b10d520315a2a29abb4eb
   src/noresponse/models/operations/listkeys.py:
@@ -695,13 +695,13 @@ trackedFiles:
   src/noresponse/models/shared/endpointverificationevent.py:
     last_write_checksum: sha1:955a258973eb841e6555168a067f9d40d7197037
   src/noresponse/models/shared/enforcement.py:
-    last_write_checksum: sha1:a8197d6a945cb480a377e4c956a1155d41424af2
+    last_write_checksum: sha1:e3da2628cf6bdcdf710d569500f6f3a5c388dfd8
   src/noresponse/models/shared/enforcementaction.py:
-    last_write_checksum: sha1:cae0446a7adc7b0c63f588ee4214bd59d39e1cc9
+    last_write_checksum: sha1:b95c5b83b739b67f257f24e7c12b6ea27dfe63a4
   src/noresponse/models/shared/enforcementprovider.py:
     last_write_checksum: sha1:8a7b8fd14fce160752ffa03e37c4d6db52cbfe9a
   src/noresponse/models/shared/enforcementrequest.py:
-    last_write_checksum: sha1:aa9eb698d7efda5760907e620330a43e6da8a499
+    last_write_checksum: sha1:21b90e20572b9b46a02e617357d6dfe2dba243cb
   src/noresponse/models/shared/enforcementstate.py:
     last_write_checksum: sha1:0513c74cea64284c292cd4b4749ad2a64432edec
   src/noresponse/models/shared/enforcementstatus.py:

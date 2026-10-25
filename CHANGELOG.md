@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.1.1
+
+* `sdk.accounts.record_enforcement()`: 
+  *  `request.action.enum(activate)` **Added**
+  *  `response.action.enum(activate)` **Added**
+
 ## 7.1.0
 
 * `sdk.keys.create()`: **Added**
