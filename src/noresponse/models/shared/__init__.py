@@ -21,6 +21,7 @@ if TYPE_CHECKING:
     )
     from .accountriskreason import AccountRiskReason, AccountRiskReasonTypedDict
     from .admission import Admission
+    from .agreement import Agreement
     from .assessment import Assessment, AssessmentTypedDict
     from .assessmentdeletion import AssessmentDeletion, AssessmentDeletionTypedDict
     from .assessmentdeletionaccount import (
@@ -70,6 +71,7 @@ if TYPE_CHECKING:
         AssessmentUpdatedEventTypedDict,
     )
     from .assurancelevel import AssuranceLevel
+    from .attributeagreement import AttributeAgreement, AttributeAgreementTypedDict
     from .authcontext import AuthContext, AuthContextTypedDict
     from .authcontextmfa import AuthContextMfa, AuthContextMfaTypedDict
     from .authenticationerrorcode import AuthenticationErrorCode
@@ -87,6 +89,7 @@ if TYPE_CHECKING:
     from .country import Country
     from .defaultdepth import DefaultDepth
     from .depth import Depth
+    from .direction import Direction
     from .endpointverification import (
         EndpointVerification,
         EndpointVerificationTypedDict,
@@ -107,9 +110,15 @@ if TYPE_CHECKING:
     from .flow import Flow
     from .flowchange import FlowChange, FlowChangeTypedDict
     from .flowsettings import FlowSettings, FlowSettingsTypedDict
+    from .footprint import Footprint, FootprintTypedDict
+    from .footprintcoherence import FootprintCoherence, FootprintCoherenceTypedDict
+    from .footprintfamily import FootprintFamily
+    from .footprinttimeline import FootprintTimeline, FootprintTimelineTypedDict
     from .freshness import Freshness
     from .hookpoint import HookPoint
+    from .identifier import Identifier
     from .identifierkind import IdentifierKind
+    from .impact import Impact
     from .incompletereason import IncompleteReason
     from .incompletesource import IncompleteSource, IncompleteSourceTypedDict
     from .integration import Integration, IntegrationTypedDict
@@ -190,6 +199,8 @@ if TYPE_CHECKING:
         RiskDetailsBreachName,
         RiskDetailsBreachNameTypedDict,
     )
+    from .riskdetailsevent import RiskDetailsEvent, RiskDetailsEventTypedDict
+    from .riskdetailseventkind import RiskDetailsEventKind
     from .riskdetailsphonename import (
         RiskDetailsPhoneName,
         RiskDetailsPhoneNameTypedDict,
@@ -286,6 +297,7 @@ __all__ = [
     "AccountRiskTypedDict",
     "AccountTypedDict",
     "Admission",
+    "Agreement",
     "AlternateName",
     "AlternateNameTypedDict",
     "AlternateNameUnion",
@@ -327,6 +339,8 @@ __all__ = [
     "AssessmentUpdatedEvent",
     "AssessmentUpdatedEventTypedDict",
     "AssuranceLevel",
+    "AttributeAgreement",
+    "AttributeAgreementTypedDict",
     "AuthContext",
     "AuthContextMfa",
     "AuthContextMfaTypedDict",
@@ -349,6 +363,7 @@ __all__ = [
     "Country",
     "DefaultDepth",
     "Depth",
+    "Direction",
     "Email",
     "EmailTypedDict",
     "EmailUnion",
@@ -373,12 +388,21 @@ __all__ = [
     "FlowChangeTypedDict",
     "FlowSettings",
     "FlowSettingsTypedDict",
+    "Footprint",
+    "FootprintCoherence",
+    "FootprintCoherenceTypedDict",
+    "FootprintFamily",
+    "FootprintTimeline",
+    "FootprintTimelineTypedDict",
+    "FootprintTypedDict",
     "Freshness",
     "HookPoint",
     "IPSummary",
     "IPSummaryType",
     "IPSummaryTypedDict",
+    "Identifier",
     "IdentifierKind",
+    "Impact",
     "IncompleteReason",
     "IncompleteSource",
     "IncompleteSourceTypedDict",
@@ -446,6 +470,9 @@ __all__ = [
     "RiskDetails",
     "RiskDetailsBreachName",
     "RiskDetailsBreachNameTypedDict",
+    "RiskDetailsEvent",
+    "RiskDetailsEventKind",
+    "RiskDetailsEventTypedDict",
     "RiskDetailsPhoneName",
     "RiskDetailsPhoneNameTypedDict",
     "RiskDetailsTypedDict",
@@ -556,6 +583,7 @@ _dynamic_imports: dict[str, str] = {
     "AccountRiskReason": ".accountriskreason",
     "AccountRiskReasonTypedDict": ".accountriskreason",
     "Admission": ".admission",
+    "Agreement": ".agreement",
     "Assessment": ".assessment",
     "AssessmentTypedDict": ".assessment",
     "AssessmentDeletion": ".assessmentdeletion",
@@ -593,6 +621,8 @@ _dynamic_imports: dict[str, str] = {
     "AssessmentUpdatedEvent": ".assessmentupdatedevent",
     "AssessmentUpdatedEventTypedDict": ".assessmentupdatedevent",
     "AssuranceLevel": ".assurancelevel",
+    "AttributeAgreement": ".attributeagreement",
+    "AttributeAgreementTypedDict": ".attributeagreement",
     "AuthContext": ".authcontext",
     "AuthContextTypedDict": ".authcontext",
     "AuthContextMfa": ".authcontextmfa",
@@ -615,6 +645,7 @@ _dynamic_imports: dict[str, str] = {
     "Country": ".country",
     "DefaultDepth": ".defaultdepth",
     "Depth": ".depth",
+    "Direction": ".direction",
     "EndpointVerification": ".endpointverification",
     "EndpointVerificationTypedDict": ".endpointverification",
     "EndpointVerificationEvent": ".endpointverificationevent",
@@ -635,9 +666,18 @@ _dynamic_imports: dict[str, str] = {
     "FlowChangeTypedDict": ".flowchange",
     "FlowSettings": ".flowsettings",
     "FlowSettingsTypedDict": ".flowsettings",
+    "Footprint": ".footprint",
+    "FootprintTypedDict": ".footprint",
+    "FootprintCoherence": ".footprintcoherence",
+    "FootprintCoherenceTypedDict": ".footprintcoherence",
+    "FootprintFamily": ".footprintfamily",
+    "FootprintTimeline": ".footprinttimeline",
+    "FootprintTimelineTypedDict": ".footprinttimeline",
     "Freshness": ".freshness",
     "HookPoint": ".hookpoint",
+    "Identifier": ".identifier",
     "IdentifierKind": ".identifierkind",
+    "Impact": ".impact",
     "IncompleteReason": ".incompletereason",
     "IncompleteSource": ".incompletesource",
     "IncompleteSourceTypedDict": ".incompletesource",
@@ -730,6 +770,9 @@ _dynamic_imports: dict[str, str] = {
     "RiskDetailsTypedDict": ".riskdetails",
     "RiskDetailsBreachName": ".riskdetailsbreachname",
     "RiskDetailsBreachNameTypedDict": ".riskdetailsbreachname",
+    "RiskDetailsEvent": ".riskdetailsevent",
+    "RiskDetailsEventTypedDict": ".riskdetailsevent",
+    "RiskDetailsEventKind": ".riskdetailseventkind",
     "RiskDetailsPhoneName": ".riskdetailsphonename",
     "RiskDetailsPhoneNameTypedDict": ".riskdetailsphonename",
     "RiskReason": ".riskreason",

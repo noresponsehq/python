@@ -16,7 +16,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class RiskTypedDict(TypedDict):
-    r"""The one risk decision for this event. score is 0 (safe) to 100 (risky): the sum of the weights of the reasons that fired, clamped to 0 to 100, from hand-set versioned weights. Every answer with a recommendation carries it, and the top-level recommendation equals risk.recommendation. It names no source or provider."""
+    r"""The one risk decision for this event. score is 0 (safe) to 100 (risky), set by the reasons that fired under a hand-set, versioned heuristic policy. Each reason carries its direction and impact band; the policy's weights are not published. Every answer with a recommendation carries it, and the top-level recommendation equals risk.recommendation. It names no source or provider."""
 
     score: int
     band: Band
@@ -26,9 +26,9 @@ class RiskTypedDict(TypedDict):
     confidence: RiskConfidence
     r"""How much of the planned evidence answered; it says nothing about risk."""
     policy_version: str
-    r"""Version of the hand-authored heuristic weights that produced the recommendation, for example 'risk-2026-10.7'. A workspace threshold override adds a +t<N> suffix, e.g. 'risk-2026-10.7+t3'."""
+    r"""Version of the hand-authored heuristic policy that produced the recommendation, for example 'risk-2026-10.7'. A workspace threshold override adds a +t<N> suffix, e.g. 'risk-2026-10.7+t3'."""
     reasons: List[RiskReasonTypedDict]
-    r"""Every reason that fired, highest weight first. The weights sum to score before clamping."""
+    r"""Every reason that fired: risk-raising reasons first, then neutral, then risk-lowering, each strongest impact band first and then by code. The policy's numeric weights are kept private, so a reason carries only its direction and impact band."""
     coverage: RiskCoverageTypedDict
     r"""Sources counted by state, not named."""
     block: NotRequired[bool]
@@ -44,7 +44,7 @@ class RiskTypedDict(TypedDict):
 
 
 class Risk(BaseModel):
-    r"""The one risk decision for this event. score is 0 (safe) to 100 (risky): the sum of the weights of the reasons that fired, clamped to 0 to 100, from hand-set versioned weights. Every answer with a recommendation carries it, and the top-level recommendation equals risk.recommendation. It names no source or provider."""
+    r"""The one risk decision for this event. score is 0 (safe) to 100 (risky), set by the reasons that fired under a hand-set, versioned heuristic policy. Each reason carries its direction and impact band; the policy's weights are not published. Every answer with a recommendation carries it, and the top-level recommendation equals risk.recommendation. It names no source or provider."""
 
     score: int
 
@@ -58,10 +58,10 @@ class Risk(BaseModel):
     r"""How much of the planned evidence answered; it says nothing about risk."""
 
     policy_version: str
-    r"""Version of the hand-authored heuristic weights that produced the recommendation, for example 'risk-2026-10.7'. A workspace threshold override adds a +t<N> suffix, e.g. 'risk-2026-10.7+t3'."""
+    r"""Version of the hand-authored heuristic policy that produced the recommendation, for example 'risk-2026-10.7'. A workspace threshold override adds a +t<N> suffix, e.g. 'risk-2026-10.7+t3'."""
 
     reasons: List[RiskReason]
-    r"""Every reason that fired, highest weight first. The weights sum to score before clamping."""
+    r"""Every reason that fired: risk-raising reasons first, then neutral, then risk-lowering, each strongest impact band first and then by code. The policy's numeric weights are kept private, so a reason carries only its direction and impact band."""
 
     coverage: RiskCoverage
     r"""Sources counted by state, not named."""

@@ -1,5 +1,6 @@
 from __future__ import annotations
 from .consistency import Consistency, ConsistencyTypedDict
+from .footprint import Footprint, FootprintTypedDict
 from .ipsummary import IPSummary, IPSummaryTypedDict
 from .risksummaryemail import RiskSummaryEmail, RiskSummaryEmailTypedDict
 from .risksummaryphone import RiskSummaryPhone, RiskSummaryPhoneTypedDict
@@ -20,6 +21,8 @@ class RiskSummaryTypedDict(TypedDict):
     r"""Facts about the submitted IP from the offline database and this workspace's own recent assessments. Every member is optional; absent makes no claim."""
     consistency: NotRequired[ConsistencyTypedDict]
     r"""Cross-identifier agreement, computed from facts only. Every member is optional; absent makes no claim."""
+    footprint: NotRequired[FootprintTypedDict]
+    r"""How long and how widely the signup's email and username have existed, and how far independent sources agree on the person behind them, in years and counts only. families are the kinds of evidence that found either identifier. Omitted when nothing found them: a footprint lookup that failed makes no claim, and absence is no_digital_footprint's to state."""
 
 
 class RiskSummary(BaseModel):
@@ -37,9 +40,14 @@ class RiskSummary(BaseModel):
     consistency: Optional[Consistency] = None
     r"""Cross-identifier agreement, computed from facts only. Every member is optional; absent makes no claim."""
 
+    footprint: Optional[Footprint] = None
+    r"""How long and how widely the signup's email and username have existed, and how far independent sources agree on the person behind them, in years and counts only. families are the kinds of evidence that found either identifier. Omitted when nothing found them: a footprint lookup that failed makes no claim, and absence is no_digital_footprint's to state."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["phone", "email", "username", "ip", "consistency"])
+        optional_fields = set(
+            ["phone", "email", "username", "ip", "consistency", "footprint"]
+        )
         serialized = handler(self)
         m = {}
 
