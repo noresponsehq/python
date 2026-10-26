@@ -1,5 +1,14 @@
 # Changelog
 
+## 8.0.0
+
+* `sdk.assessments.create()`:  `response` **Changed** (Breaking ⚠️)
+* `sdk.assessments.get()`:  `response` **Changed** (Breaking ⚠️)
+* `sdk.assessments.query()`:  `response.items[].risk.reasons[].weight` **Removed** (Breaking ⚠️)
+* `sdk.accounts.list_changed()`:  `response.items[].risk.reasons[].weight` **Removed** (Breaking ⚠️)
+* `sdk.accounts.get()`:  `response.risk.reasons[].weight` **Removed** (Breaking ⚠️)
+* `sdk.accounts.list_assessments()`:  `response.items[].risk.reasons[].weight` **Removed** (Breaking ⚠️)
+
 ## 7.2.2
 
 No changes detected.
