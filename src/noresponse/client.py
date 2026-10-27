@@ -9,7 +9,7 @@ A thin layer over the generated operations that makes the common path short:
   the response headers on its meta attribute;
 * connection failures and timeouts raise APIConnectionError and APITimeoutError;
 * query and accounts.list_assessments return an AssessmentPage you can iterate
-  across pages;
+  across pages, and accounts.list_changed returns the AccountList page;
 * key_usage.buffer() batches key usage and sends it from a background thread.
 
 Each method has an async twin with the suffix _async.
@@ -41,10 +41,12 @@ from .webhookendpoints import WebhookEndpoints as _WebhookEndpoints
 from .responses import (
     Account,
     AccountDeletion,
+    AccountList,
     AssessmentDeletion,
     Assessment,
     AssessmentOutcome,
     AssessmentPage,
+    Enforcement,
     Integration,
     IntegrationList,
     Key,
@@ -55,6 +57,8 @@ from .responses import (
     Settings as SettingsModel,
     as_account,
     as_account_deletion,
+    as_account_list,
+    as_enforcement,
     as_assessment_deletion,
     as_assessment,
     as_integration,
@@ -685,6 +689,109 @@ class Accounts(_Accounts):
             )
 
         return _page(response, fetch)
+
+    def list_changed(  # type: ignore[override]
+        self,
+        *,
+        changed_since: Optional[str] = None,
+        limit: Optional[int] = 50,
+        unenforced: Optional[bool] = False,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AccountList:
+        """The accounts whose risk changed, oldest change first.
+
+        Pass next_cursor back as changed_since to read the changes after this
+        page. With unenforced=True, only the accounts that still need action.
+        """
+        response = _sync(super().list_changed)(
+            changed_since=changed_since, limit=limit, unenforced=unenforced,
+            retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers,
+        )
+        return _account_list(response)
+
+    async def list_changed_async(  # type: ignore[override]
+        self,
+        *,
+        changed_since: Optional[str] = None,
+        limit: Optional[int] = 50,
+        unenforced: Optional[bool] = False,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AccountList:
+        """The asyncio form of list_changed."""
+        response = await _async(super().list_changed_async)(
+            changed_since=changed_since, limit=limit, unenforced=unenforced,
+            retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers,
+        )
+        return _account_list(response)
+
+    def record_enforcement(  # type: ignore[override]
+        self,
+        account_id: str,
+        *,
+        risk_version: int,
+        flow: models.shared.Flow,
+        action: models.shared.EnforcementAction,
+        state_before: models.shared.EnforcementState,
+        status: models.shared.EnforcementStatus,
+        provider: models.shared.EnforcementProvider,
+        error_code: Optional[str] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Enforcement:
+        """Record what you did to the account in your auth provider at one risk_version.
+
+        A repeat of the same record returns the stored record, so a retry is safe.
+        """
+        response = _sync(super().record_enforcement)(
+            account_id, risk_version=risk_version, flow=flow, action=action, state_before=state_before,
+            status=status, provider=provider, error_code=error_code,
+            retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers,
+        )
+        return _enforcement(response)
+
+    async def record_enforcement_async(  # type: ignore[override]
+        self,
+        account_id: str,
+        *,
+        risk_version: int,
+        flow: models.shared.Flow,
+        action: models.shared.EnforcementAction,
+        state_before: models.shared.EnforcementState,
+        status: models.shared.EnforcementStatus,
+        provider: models.shared.EnforcementProvider,
+        error_code: Optional[str] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> Enforcement:
+        """The asyncio form of record_enforcement."""
+        response = await _async(super().record_enforcement_async)(
+            account_id, risk_version=risk_version, flow=flow, action=action, state_before=state_before,
+            status=status, provider=provider, error_code=error_code,
+            retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers,
+        )
+        return _enforcement(response)
+
+
+def _account_list(response: Any) -> AccountList:
+    if not isinstance(response, models.operations.ListAccountsResponse):
+        return response  # type: ignore[no-any-return]
+    return as_account_list(response.result, ResponseMeta.from_headers(response.headers))
+
+
+def _enforcement(response: Any) -> Enforcement:
+    if not isinstance(response, models.operations.RecordEnforcementResponse):
+        return response  # type: ignore[no-any-return]
+    return as_enforcement(response.result, ResponseMeta.from_headers(response.headers))
 
 
 def _account(response: Any) -> Account:

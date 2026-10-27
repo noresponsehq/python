@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.1.0
+
+No changes detected.
+
 ## 8.0.3
 
 * `sdk.assessments.create()`:  `response.detail.risk.summary.ip.asn` **Added**

@@ -7,6 +7,7 @@ repr().
 
 from __future__ import annotations
 
+import warnings
 from dataclasses import dataclass, field
 from typing import Any, AsyncIterator, Callable, Iterator, List, Mapping, Optional, Sequence, Type, TypeVar
 
@@ -14,10 +15,12 @@ from pydantic import BaseModel, PrivateAttr
 
 from .models.shared.account import Account as _Account
 from .models.shared.accountdeletion import AccountDeletion as _AccountDeletion
+from .models.shared.accountlist import AccountList as _AccountList
 from .models.shared.assessmentdeletion import AssessmentDeletion as _AssessmentDeletion
 from .models.shared.assessment import Assessment as _Assessment
 from .models.shared.assessmentdetail import AssessmentDetail
 from .models.shared.assessmentoutcome import AssessmentOutcome as _AssessmentOutcome
+from .models.shared.enforcement import Enforcement as _Enforcement
 from .models.shared.integration import Integration as _Integration
 from .models.shared.integrationlist import IntegrationList as _IntegrationList
 from .models.shared.key import Key as _Key
@@ -29,11 +32,13 @@ from .models.shared.settings import Settings as _Settings
 __all__ = [
     "Account",
     "AccountDeletion",
+    "AccountList",
     "AssessmentDeletion",
     "Assessment",
     "AssessmentDetail",
     "AssessmentOutcome",
     "AssessmentPage",
+    "Enforcement",
     "Integration",
     "IntegrationList",
     "Key",
@@ -155,6 +160,45 @@ class AccountDeletion(_AccountDeletion):
     @property
     def meta(self) -> ResponseMeta:
         return self._meta
+
+
+class _Enveloped(BaseModel):
+    """A model with meta that still answers headers, and in each subclass
+    result, as the response envelope did that accounts.list_changed and
+    accounts.record_enforcement returned before 8.1. Code written for the
+    envelope keeps running; read the model and its meta instead."""
+
+    _meta: ResponseMeta = PrivateAttr(default=_EMPTY)
+
+    @property
+    def meta(self) -> ResponseMeta:
+        return self._meta
+
+    @property
+    def headers(self) -> Mapping[str, Sequence[str]]:
+        """Deprecated: meta.headers. Removed in 9.0."""
+        warnings.warn("headers moved to meta.headers", DeprecationWarning, stacklevel=2)
+        return self._meta.headers
+
+
+class AccountList(_Enveloped, _AccountList):
+    """One page of the accounts whose risk changed. Pass next_cursor back as changed_since."""
+
+    @property
+    def result(self) -> "AccountList":
+        """Deprecated: the page itself. Removed in 9.0."""
+        warnings.warn("list_changed returns the AccountList now; read it directly", DeprecationWarning, stacklevel=2)
+        return self
+
+
+class Enforcement(_Enveloped, _Enforcement):
+    """The record of what you did to an account in your auth provider."""
+
+    @property
+    def result(self) -> "Enforcement":
+        """Deprecated: the record itself. Removed in 9.0."""
+        warnings.warn("record_enforcement returns the Enforcement now; read it directly", DeprecationWarning, stacklevel=2)
+        return self
 
 
 class AssessmentDeletion(_AssessmentDeletion):
@@ -327,3 +371,11 @@ class AssessmentPage:
 
     def __repr__(self) -> str:
         return f"AssessmentPage(account_id={self.account_id!r}, items={len(self.items)}, has_more={self.has_more})"
+
+
+def as_account_list(source: _AccountList, meta: ResponseMeta) -> AccountList:
+    return _attach(AccountList, source, meta)
+
+
+def as_enforcement(source: _Enforcement, meta: ResponseMeta) -> Enforcement:
+    return _attach(Enforcement, source, meta)

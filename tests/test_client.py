@@ -9,6 +9,8 @@ import pytest
 from noresponse import (
     Account,
     AccountDeletion,
+    AccountList,
+    Enforcement,
     AssessmentDeletion,
     PermissionDeniedError,
     APIConnectionError,
@@ -51,6 +53,8 @@ INTEGRATIONS = fixture("valid/integration-list.json")
 ACCOUNT = fixture("valid/account.json")
 ACCOUNT_BLOCK = fixture("valid/account-block.json")
 ACCOUNT_DELETION = fixture("valid/account-deletion.json")
+ACCOUNT_LIST = fixture("valid/account-list.json")
+ENFORCEMENT = fixture("valid/enforcement.json")
 ASSESSMENT_DELETION = fixture("valid/assessment-deletion.json")
 ASSESSMENT_DELETION_LAST = fixture("valid/assessment-deletion-last.json")
 REQUEST = {"account_id": "usr_8f2k1", "flow": "account_creation", "identifiers": {"email": "jordan.lee@example.com", "name": "Jordan Lee"}}
@@ -309,6 +313,43 @@ def test_accounts_get_reads_the_current_risk():
     with pytest.raises(NotFoundError) as caught:
         sdk.accounts.get("acct_missing")
     assert caught.value.code == "not_found"
+
+
+def test_accounts_list_changed_and_record_enforcement_return_the_model():
+    # NOR-627: like every other method, the model itself with meta, not the envelope.
+    sdk, seen = make([answer(ACCOUNT_LIST), answer(ENFORCEMENT, 201)], retry_config=NO_RETRIES)
+    page = sdk.accounts.list_changed(unenforced=True, changed_since="c1", limit=10)
+    assert isinstance(page, AccountList)
+    assert (seen[0].method, seen[0].url.path) == ("GET", "/v1/accounts")
+    assert dict(seen[0].url.params) == {"changed_since": "c1", "limit": "10", "unenforced": "true"}
+    assert [account.id for account in page.items] == [item["id"] for item in ACCOUNT_LIST["items"]]
+    assert page.next_cursor == ACCOUNT_LIST["next_cursor"] and page.meta.request_id == "a" * 32
+    record = sdk.accounts.record_enforcement(
+        "acct_7f3a9c", risk_version=3, flow="account_creation", action="restrict",
+        state_before="provisional", status="applied", provider="clerk",
+    )
+    assert isinstance(record, Enforcement)
+    assert (seen[1].method, seen[1].url.path) == ("POST", "/v1/accounts/acct_7f3a9c/enforcements")
+    assert json.loads(seen[1].content)["action"] == "restrict" and record.id == ENFORCEMENT["id"]
+    # Code written for the 8.0 envelope still runs, with a DeprecationWarning.
+    with pytest.warns(DeprecationWarning):
+        assert page.result is page
+    with pytest.warns(DeprecationWarning):
+        assert record.result is record
+    with pytest.warns(DeprecationWarning):
+        assert record.headers["x-request-id"] == ["a" * 32]
+
+    async def scenario():
+        sdk, _ = make([answer(ACCOUNT_LIST), answer(ENFORCEMENT, 201)])
+        async with sdk:
+            listed = await sdk.accounts.list_changed_async(unenforced=True)
+            recorded = await sdk.accounts.record_enforcement_async(
+                "acct_7f3a9c", risk_version=3, flow="account_creation", action="restrict",
+                state_before="provisional", status="applied", provider="clerk",
+            )
+        assert isinstance(listed, AccountList) and isinstance(recorded, Enforcement)
+
+    asyncio.run(scenario())
 
 
 def test_accounts_delete_erases_and_a_repeat_answers_zero():
