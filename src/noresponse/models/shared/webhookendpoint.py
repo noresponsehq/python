@@ -24,6 +24,12 @@ class WebhookEndpointTypedDict(TypedDict):
     r"""The keys a receiver may see in NR-Webhook-Key-Id, oldest first. The last one signs every new delivery; an older one keeps verifying until its expires_at."""
     verified_at: NotRequired[str]
     r"""When the endpoint last echoed a challenge. Absent until it first does."""
+    failing_since: NotRequired[str]
+    r"""The first failed delivery attempt of the endpoint's current failure streak. Absent while its latest attempt succeeded, before any attempt failed, and after it is verified again."""
+    last_failure_at: NotRequired[str]
+    r"""The latest failed delivery attempt of the current failure streak; present exactly when failing_since is. A failure more than 2 hours after it starts a new streak."""
+    disabled_at: NotRequired[str]
+    r"""When the endpoint was disabled after failing continuously for 72 hours, as in the webhook_endpoint.disabled event. Present while state is disabled; absent before and after it is verified again."""
 
 
 class WebhookEndpoint(BaseModel):
@@ -49,9 +55,20 @@ class WebhookEndpoint(BaseModel):
     verified_at: Optional[str] = None
     r"""When the endpoint last echoed a challenge. Absent until it first does."""
 
+    failing_since: Optional[str] = None
+    r"""The first failed delivery attempt of the endpoint's current failure streak. Absent while its latest attempt succeeded, before any attempt failed, and after it is verified again."""
+
+    last_failure_at: Optional[str] = None
+    r"""The latest failed delivery attempt of the current failure streak; present exactly when failing_since is. A failure more than 2 hours after it starts a new streak."""
+
+    disabled_at: Optional[str] = None
+    r"""When the endpoint was disabled after failing continuously for 72 hours, as in the webhook_endpoint.disabled event. Present while state is disabled; absent before and after it is verified again."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["verified_at"])
+        optional_fields = set(
+            ["verified_at", "failing_since", "last_failure_at", "disabled_at"]
+        )
         serialized = handler(self)
         m = {}
 

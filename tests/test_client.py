@@ -518,7 +518,10 @@ def test_webhook_endpoints_register_list_rotate_test_and_delete_without_retrying
     endpoint_id = created["endpoint"]["endpoint_id"]
     endpoint = sdk.webhook_endpoints.create(url="https://hooks.example.com/noresponse")
     assert endpoint.signing_secret.secret == created["signing_secret"]["secret"] and endpoint.endpoint.state == "unverified"
-    assert len(sdk.webhook_endpoints.list().items[0].signing_keys) == 2
+    endpoints = sdk.webhook_endpoints.list().items
+    assert len(endpoints[0].signing_keys) == 2 and endpoints[0].disabled_at is None
+    disabled = listed["items"][1]
+    assert (endpoints[1].failing_since, endpoints[1].last_failure_at, endpoints[1].disabled_at) == (disabled["failing_since"], disabled["last_failure_at"], disabled["disabled_at"])
     assert sdk.webhook_endpoints.rotate_signing_key(endpoint_id).previous_key_id == rotated["previous_key_id"]
     assert sdk.webhook_endpoints.send_test_event(endpoint_id, event="assessment.updated").delivery_id == sent["delivery_id"]
     assert sdk.webhook_endpoints.delete(endpoint_id) is None
