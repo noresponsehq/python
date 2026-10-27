@@ -13,6 +13,8 @@ class IPSummaryTypedDict(TypedDict):
     r"""ISO 3166-1 alpha-2 country of the address."""
     type: NotRequired[IPSummaryType]
     r"""The address's network type."""
+    asn: NotRequired[int]
+    r"""Autonomous system number of the network that announces the address, from the offline database. Absent when unknown."""
     seen_in_workspace: NotRequired[int]
     r"""Assessments in this workspace with the same IP in the last 24 hours, this one included. A count only."""
 
@@ -26,12 +28,15 @@ class IPSummary(BaseModel):
     type: Optional[IPSummaryType] = None
     r"""The address's network type."""
 
+    asn: Optional[int] = None
+    r"""Autonomous system number of the network that announces the address, from the offline database. Absent when unknown."""
+
     seen_in_workspace: Optional[int] = None
     r"""Assessments in this workspace with the same IP in the last 24 hours, this one included. A count only."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["country", "type", "seen_in_workspace"])
+        optional_fields = set(["country", "type", "asn", "seen_in_workspace"])
         serialized = handler(self)
         m = {}
 

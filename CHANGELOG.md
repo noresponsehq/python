@@ -1,5 +1,12 @@
 # Changelog
 
+## 8.0.3
+
+* `sdk.assessments.create()`:  `response.detail.risk.summary.ip.asn` **Added**
+* `sdk.assessments.get()`:  `response.detail.risk.summary.ip.asn` **Added**
+* `sdk.assessments.query()`:  `response.items[].risk.summary.ip.asn` **Added**
+* `sdk.accounts.list_assessments()`:  `response.items[].risk.summary.ip.asn` **Added**
+
 ## 8.0.2
 
 No changes detected.
