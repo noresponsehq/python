@@ -13,6 +13,8 @@ ConflictErrorCode = Union[
         "risk_version_ahead",
         "key_limit_reached",
         "self_revocation",
+        "list_entry_exists",
+        "list_limit_reached",
     ],
     UnrecognizedStr,
 ]

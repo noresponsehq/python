@@ -18,6 +18,8 @@ class RiskReasonTypedDict(TypedDict):
     impact: Impact
     identifier: NotRequired[ReasonIdentifier]
     r"""The submitted identifier or client context field a reason concerns; absent when it concerns the whole assessment. Client context is a claimed hint, not a device fingerprint."""
+    list_entry_id: NotRequired[str]
+    r"""The list entry a list_match reason applied. No other reason carries it."""
 
 
 class RiskReason(BaseModel):
@@ -33,9 +35,12 @@ class RiskReason(BaseModel):
     identifier: Optional[ReasonIdentifier] = None
     r"""The submitted identifier or client context field a reason concerns; absent when it concerns the whole assessment. Client context is a claimed hint, not a device fingerprint."""
 
+    list_entry_id: Optional[str] = None
+    r"""The list entry a list_match reason applied. No other reason carries it."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["identifier"])
+        optional_fields = set(["identifier", "list_entry_id"])
         serialized = handler(self)
         m = {}
 

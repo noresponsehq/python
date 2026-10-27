@@ -53,6 +53,7 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"prior_abuse_link"`
 - `"test_scenario"`
 - `"shared_api_key"`
+- `"list_match"`
 - `"young_email_domain"`
 - `"email_domain_no_mx"`
 - `"email_domain_nonexistent"`

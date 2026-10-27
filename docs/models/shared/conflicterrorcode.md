@@ -24,3 +24,5 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"risk_version_ahead"`
 - `"key_limit_reached"`
 - `"self_revocation"`
+- `"list_entry_exists"`
+- `"list_limit_reached"`
