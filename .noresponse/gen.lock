@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: bd7a39251380c8052bb2a358d7847156
+  docChecksum: 706615fc2a298d8b1a8d2c29fb2ffe49
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 8.3.0
-  configChecksum: 86802d88d41722d2d1c5737ae4e45e1c
+  releaseVersion: 8.4.0
+  configChecksum: c4c4a682d325c6293b6a7b61b1d00912
 features:
   python:
     additionalDependencies: 1.1.0
@@ -249,7 +249,7 @@ trackedFiles:
   docs/models/shared/admission.md:
     last_write_checksum: sha1:e9971443b7de4fe9f452338356caee4c86c2cd66
   docs/models/shared/aggregatebucket.md:
-    last_write_checksum: sha1:f1c2d64c49d63cdc0073aa5c76cfd26a3e13b9d1
+    last_write_checksum: sha1:8ff762153750e9294b4813273c86bd9f6da837d2
   docs/models/shared/aggregatedimension.md:
     last_write_checksum: sha1:10e220c61aa02120715152c4933610e372bbdc98
   docs/models/shared/aggregategroup.md:
@@ -258,6 +258,8 @@ trackedFiles:
     last_write_checksum: sha1:cbcc31cdadc34cea3231464f2b129eb2a3f1b3fd
   docs/models/shared/aggregatescorecount.md:
     last_write_checksum: sha1:c7aefd7ec2de6bc90a9e736d83c570e0ecc1b100
+  docs/models/shared/aggregatescoreoutcome.md:
+    last_write_checksum: sha1:6fe8fc40abaff89390c9e9f3bfd20b3dc46419f1
   docs/models/shared/agreement.md:
     last_write_checksum: sha1:203f5366a1f7941c573ba1747157e95fdea90d34
   docs/models/shared/alternatename.md:
@@ -271,11 +273,11 @@ trackedFiles:
   docs/models/shared/assessmentaggregate.md:
     last_write_checksum: sha1:99024c4a70d25d5f151b0f5e0d0398d962fbf3af
   docs/models/shared/assessmentaggregatemetric.md:
-    last_write_checksum: sha1:00611e91bb7d525c5adb681830692db387655abc
+    last_write_checksum: sha1:d0bdab36ed2ffe210af34cf3646a8c738886c1ba
   docs/models/shared/assessmentaggregaterequest.md:
-    last_write_checksum: sha1:9d0d0aec6da64fa4c0220e32f88f4e6327c3ff37
+    last_write_checksum: sha1:95163458ff498d687a366ee7c4a7fdcebe6b388b
   docs/models/shared/assessmentaggregaterequestmetric.md:
-    last_write_checksum: sha1:ef9742ff4051c389906802e0d284f8ced91ff0d0
+    last_write_checksum: sha1:0f56325e000e7f96a9d5db7a61d0eacb3343274d
   docs/models/shared/assessmentdeletion.md:
     last_write_checksum: sha1:1b3a457acf1aad70ccac844e0544f1a1d1e81019
   docs/models/shared/assessmentdeletionaccount.md:
@@ -641,7 +643,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:b00adf52bf1a4ddd1c683d4d478e73554a987043
   pyproject.toml:
-    last_write_checksum: sha1:4af010801ff75ae281d59f80668adfa2851b2238
+    last_write_checksum: sha1:f0a0d0615055612646150564cce4e81af95fc0a3
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -657,11 +659,11 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:b1a15944e4d955f93de824b5533386b142ae862f
+    last_write_checksum: sha1:3c0cef4975edd95175fc9fe595cf18e5e5b59472
   src/noresponse/accounts.py:
     last_write_checksum: sha1:80ee7ca315d8fea63a5fe9c51a63be95940180a5
   src/noresponse/assessments.py:
-    last_write_checksum: sha1:9c145653d285c3917e2ce644ecb5a2249f6c5807
+    last_write_checksum: sha1:065efedd6db21b6222ae6287efeb0e2c4331db0c
   src/noresponse/basesdk.py:
     last_write_checksum: sha1:504a1120368ba40f8c5a5f259812c0e344e5b233
   src/noresponse/httpclient.py:
@@ -787,7 +789,7 @@ trackedFiles:
   src/noresponse/models/operations/updatesettings.py:
     last_write_checksum: sha1:a1c4d3af6ff0780cafd90d92347319266b0a4a5b
   src/noresponse/models/shared/__init__.py:
-    last_write_checksum: sha1:cbe7f6c82f2f85c5a1c0211181d1b9a8f2008665
+    last_write_checksum: sha1:7a8d9b820555c097f7cb4af3f67cf66d9daeef89
   src/noresponse/models/shared/account.py:
     last_write_checksum: sha1:776f3ab4597212e0151452619ccf32c619b320da
   src/noresponse/models/shared/accountbinding.py:
@@ -831,7 +833,7 @@ trackedFiles:
   src/noresponse/models/shared/admission.py:
     last_write_checksum: sha1:f7781d1cd2d5b711757f93103a333efda95891ae
   src/noresponse/models/shared/aggregatebucket.py:
-    last_write_checksum: sha1:6ad50170a111453b91b378a2413eead6cdff23c0
+    last_write_checksum: sha1:45fedd1d5d28f3db5914f5071c7c77dbf91ca7c4
   src/noresponse/models/shared/aggregatedimension.py:
     last_write_checksum: sha1:ce8ae3f70d7a36b75a56b0b60149797927097db4
   src/noresponse/models/shared/aggregategroup.py:
@@ -840,6 +842,8 @@ trackedFiles:
     last_write_checksum: sha1:3e8213722c8ce7a2b44130523be41ceac0555989
   src/noresponse/models/shared/aggregatescorecount.py:
     last_write_checksum: sha1:651067c272343d591470cdca751693379890080c
+  src/noresponse/models/shared/aggregatescoreoutcome.py:
+    last_write_checksum: sha1:03fc10511b0010724cb8ef99c9eb7371910e9292
   src/noresponse/models/shared/agreement.py:
     last_write_checksum: sha1:35b6146e30e844b4b44ebed17a1fbac421d8c984
   src/noresponse/models/shared/answerrevision.py:
@@ -847,9 +851,9 @@ trackedFiles:
   src/noresponse/models/shared/assessment.py:
     last_write_checksum: sha1:a2b89c0c7c5a4462f837bd1c403fd58ff6a61679
   src/noresponse/models/shared/assessmentaggregate.py:
-    last_write_checksum: sha1:ae63d59250355df6b3bfc630c1dc9b140e98592b
+    last_write_checksum: sha1:4556b9dfcaa475595687c66dd14ea7b55996ce3f
   src/noresponse/models/shared/assessmentaggregaterequest.py:
-    last_write_checksum: sha1:3701065a2065146140b0be798973a7df585e87bc
+    last_write_checksum: sha1:db1191bfe8824ca33d23ac91762187ee657ef945
   src/noresponse/models/shared/assessmentdeletion.py:
     last_write_checksum: sha1:e09f3f48ec0b76e76021dafada5a1d51715e701f
   src/noresponse/models/shared/assessmentdeletionaccount.py:

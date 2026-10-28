@@ -44,6 +44,10 @@ if TYPE_CHECKING:
     from .aggregategroup import AggregateGroup, AggregateGroupTypedDict
     from .aggregatelateflip import AggregateLateFlip, AggregateLateFlipTypedDict
     from .aggregatescorecount import AggregateScoreCount, AggregateScoreCountTypedDict
+    from .aggregatescoreoutcome import (
+        AggregateScoreOutcome,
+        AggregateScoreOutcomeTypedDict,
+    )
     from .agreement import Agreement
     from .answerrevision import AnswerRevision
     from .assessment import Assessment, AssessmentTypedDict
@@ -401,6 +405,8 @@ __all__ = [
     "AggregateLateFlipTypedDict",
     "AggregateScoreCount",
     "AggregateScoreCountTypedDict",
+    "AggregateScoreOutcome",
+    "AggregateScoreOutcomeTypedDict",
     "Agreement",
     "AlternateName",
     "AlternateNameTypedDict",
@@ -761,6 +767,8 @@ _dynamic_imports: dict[str, str] = {
     "AggregateLateFlipTypedDict": ".aggregatelateflip",
     "AggregateScoreCount": ".aggregatescorecount",
     "AggregateScoreCountTypedDict": ".aggregatescorecount",
+    "AggregateScoreOutcome": ".aggregatescoreoutcome",
+    "AggregateScoreOutcomeTypedDict": ".aggregatescoreoutcome",
     "Agreement": ".agreement",
     "AnswerRevision": ".answerrevision",
     "Assessment": ".assessment",

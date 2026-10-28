@@ -2,6 +2,7 @@ from __future__ import annotations
 from .aggregategroup import AggregateGroup, AggregateGroupTypedDict
 from .aggregatelateflip import AggregateLateFlip, AggregateLateFlipTypedDict
 from .aggregatescorecount import AggregateScoreCount, AggregateScoreCountTypedDict
+from .aggregatescoreoutcome import AggregateScoreOutcome, AggregateScoreOutcomeTypedDict
 from noresponse.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
 from typing import List, Optional
@@ -15,6 +16,8 @@ class AggregateBucketTypedDict(TypedDict):
     groups: NotRequired[List[AggregateGroupTypedDict]]
     r"""With metric count and group_by: the bucket's counts of the groups answered, largest group first."""
     score_histogram: NotRequired[List[AggregateScoreCountTypedDict]]
+    score_outcomes: NotRequired[List[AggregateScoreOutcomeTypedDict]]
+    r"""With metric score_outcomes: the score_histogram's first answers whose assessment has a reported outcome, by its latest. A bin's count less its score_outcomes is the first answers with none reported."""
     late_flips: NotRequired[List[AggregateLateFlipTypedDict]]
 
 
@@ -29,11 +32,16 @@ class AggregateBucket(BaseModel):
 
     score_histogram: Optional[List[AggregateScoreCount]] = None
 
+    score_outcomes: Optional[List[AggregateScoreOutcome]] = None
+    r"""With metric score_outcomes: the score_histogram's first answers whose assessment has a reported outcome, by its latest. A bin's count less its score_outcomes is the first answers with none reported."""
+
     late_flips: Optional[List[AggregateLateFlip]] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["count", "groups", "score_histogram", "late_flips"])
+        optional_fields = set(
+            ["count", "groups", "score_histogram", "score_outcomes", "late_flips"]
+        )
         serialized = handler(self)
         m = {}
 

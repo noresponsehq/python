@@ -16,6 +16,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 AssessmentAggregateRequestMetric = Literal[
     "count",
     "score_histogram",
+    "score_outcomes",
     "late_flips",
 ]
 
@@ -32,7 +33,7 @@ class AssessmentAggregateRequestTypedDict(TypedDict):
     group_by: NotRequired[List[AggregateDimension]]
     r"""At most two dimensions to count by, of which at most one is reason, lane, country or asn. An assessment counts once in each of its reasons and incomplete lanes, so those groups can add up to more than the bucket's count."""
     metrics: NotRequired[List[AssessmentAggregateRequestMetric]]
-    r"""count: each bucket's count and groups. score_histogram: first answers by flow and 5-point score bucket. late_flips: changes of an assessment's account decision for its flow after its first answer, by from, to and delay."""
+    r"""count: each bucket's count and groups. score_histogram: first answers by flow and 5-point score bucket. score_outcomes: the histogram's first answers that have a reported outcome, by flow, 5-point score bucket and the latest outcome reported for the assessment (POST /v1/assessments/{assessment_id}/outcomes); the rest of a bin has none reported. late_flips: changes of an assessment's account decision for its flow after its first answer, by from, to and delay."""
     limit: NotRequired[int]
     r"""The most groups answered: the largest over the whole range, then by value. groups_truncated says when there were more."""
     flow: NotRequired[Flow]
@@ -63,7 +64,7 @@ class AssessmentAggregateRequest(BaseModel):
     r"""At most two dimensions to count by, of which at most one is reason, lane, country or asn. An assessment counts once in each of its reasons and incomplete lanes, so those groups can add up to more than the bucket's count."""
 
     metrics: Optional[List[AssessmentAggregateRequestMetric]] = None
-    r"""count: each bucket's count and groups. score_histogram: first answers by flow and 5-point score bucket. late_flips: changes of an assessment's account decision for its flow after its first answer, by from, to and delay."""
+    r"""count: each bucket's count and groups. score_histogram: first answers by flow and 5-point score bucket. score_outcomes: the histogram's first answers that have a reported outcome, by flow, 5-point score bucket and the latest outcome reported for the assessment (POST /v1/assessments/{assessment_id}/outcomes); the rest of a bin has none reported. late_flips: changes of an assessment's account decision for its flow after its first answer, by from, to and delay."""
 
     limit: Optional[int] = 20
     r"""The most groups answered: the largest over the whole range, then by value. groups_truncated says when there were more."""

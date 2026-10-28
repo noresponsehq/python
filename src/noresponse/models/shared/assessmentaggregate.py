@@ -15,6 +15,7 @@ AssessmentAggregateMetric = Union[
     Literal[
         "count",
         "score_histogram",
+        "score_outcomes",
         "late_flips",
     ],
     UnrecognizedStr,
