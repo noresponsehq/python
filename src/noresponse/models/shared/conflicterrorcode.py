@@ -15,6 +15,7 @@ ConflictErrorCode = Union[
         "self_revocation",
         "list_entry_exists",
         "list_limit_reached",
+        "list_entry_too_broad",
     ],
     UnrecognizedStr,
 ]

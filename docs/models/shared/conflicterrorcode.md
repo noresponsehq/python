@@ -26,3 +26,4 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"self_revocation"`
 - `"list_entry_exists"`
 - `"list_limit_reached"`
+- `"list_entry_too_broad"`

@@ -389,7 +389,7 @@ class Lists(BaseSDK):
     ) -> models.operations.CreateListEntryResponse:
         r"""Add an entry to an environment's list.
 
-        Adds an exact email (kind email) or an email domain (kind email_domain) to the signing key's environment's list with the action block or allow, and answers the entry with its value in canonical form. An account matches when one of its assessments sent the email, or an email of the domain: a block entry decides block for every flow and an allow entry allow, block winning when both match, and the account's risk carries list_match with the entry's id while its score is unchanged. Every matching account is re-decided at once and sends account.risk_changed when its decision changes. A value already on the list answers 409 list_entry_exists; a full list, or an entry matching more than 5,000 accounts, 409 list_limit_reached. Requires the management scope; the other environment answers 404 not_found.
+        Adds an exact email (kind email) or an email domain (kind email_domain) to the signing key's environment's list with the action block or allow, and answers the entry with its value in canonical form. An account matches when one of its assessments sent the email, or an email of the domain: a block entry decides block for every flow and an allow entry allow, block winning when both match, and the account's risk carries list_match with the entry's id while its score is unchanged. Every matching account is re-decided at once and sends account.risk_changed when its decision changes. A value already on the list answers 409 list_entry_exists, a full list 409 list_limit_reached, and an entry matching more than 5,000 accounts 409 list_entry_too_broad. Requires the management scope; the other environment answers 404 not_found.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
@@ -581,7 +581,7 @@ class Lists(BaseSDK):
     ) -> models.operations.CreateListEntryResponse:
         r"""Add an entry to an environment's list.
 
-        Adds an exact email (kind email) or an email domain (kind email_domain) to the signing key's environment's list with the action block or allow, and answers the entry with its value in canonical form. An account matches when one of its assessments sent the email, or an email of the domain: a block entry decides block for every flow and an allow entry allow, block winning when both match, and the account's risk carries list_match with the entry's id while its score is unchanged. Every matching account is re-decided at once and sends account.risk_changed when its decision changes. A value already on the list answers 409 list_entry_exists; a full list, or an entry matching more than 5,000 accounts, 409 list_limit_reached. Requires the management scope; the other environment answers 404 not_found.
+        Adds an exact email (kind email) or an email domain (kind email_domain) to the signing key's environment's list with the action block or allow, and answers the entry with its value in canonical form. An account matches when one of its assessments sent the email, or an email of the domain: a block entry decides block for every flow and an allow entry allow, block winning when both match, and the account's risk carries list_match with the entry's id while its score is unchanged. Every matching account is re-decided at once and sends account.risk_changed when its decision changes. A value already on the list answers 409 list_entry_exists, a full list 409 list_limit_reached, and an entry matching more than 5,000 accounts 409 list_entry_too_broad. Requires the management scope; the other environment answers 404 not_found.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
@@ -773,7 +773,7 @@ class Lists(BaseSDK):
     ) -> models.operations.DeleteListEntryResponse:
         r"""Remove an entry from an environment's list.
 
-        Removes an entry from the signing key's environment's list and re-decides every account it matched, each sending account.risk_changed when its decision changes. An unknown or already removed entry answers 404 not_found. Requires the management scope.
+        Removes an entry from the signing key's environment's list and re-decides the accounts it matched, the 5,000 most recently assessed at most, each sending account.risk_changed when its decision changes. An unknown or already removed entry answers 404 not_found. Requires the management scope.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
@@ -950,7 +950,7 @@ class Lists(BaseSDK):
     ) -> models.operations.DeleteListEntryResponse:
         r"""Remove an entry from an environment's list.
 
-        Removes an entry from the signing key's environment's list and re-decides every account it matched, each sending account.risk_changed when its decision changes. An unknown or already removed entry answers 404 not_found. Requires the management scope.
+        Removes an entry from the signing key's environment's list and re-decides the accounts it matched, the 5,000 most recently assessed at most, each sending account.risk_changed when its decision changes. An unknown or already removed entry answers 404 not_found. Requires the management scope.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
