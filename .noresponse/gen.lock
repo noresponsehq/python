@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: 706615fc2a298d8b1a8d2c29fb2ffe49
+  docChecksum: c7633ce527060e650571dab1ee1e88d6
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 8.4.0
-  configChecksum: c4c4a682d325c6293b6a7b61b1d00912
+  releaseVersion: 8.4.1
+  configChecksum: 0f4b3186944e70c59fd0513e672c2bef
 features:
   python:
     additionalDependencies: 1.1.0
@@ -537,7 +537,7 @@ trackedFiles:
   docs/models/shared/riskcoverage.md:
     last_write_checksum: sha1:b8fac8aeb799017352412576d5065a1fb8662a33
   docs/models/shared/riskdetails.md:
-    last_write_checksum: sha1:ff4d4e6a9ca7a94b78542777938cede21ee1ccc5
+    last_write_checksum: sha1:1faa94c93423a58858a086fb716cc5f07522395a
   docs/models/shared/riskdetailsbreachname.md:
     last_write_checksum: sha1:52b6225e3d0a5e6d82aab759bfcaf98753a44655
   docs/models/shared/riskdetailsevent.md:
@@ -643,7 +643,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:b00adf52bf1a4ddd1c683d4d478e73554a987043
   pyproject.toml:
-    last_write_checksum: sha1:f0a0d0615055612646150564cce4e81af95fc0a3
+    last_write_checksum: sha1:83c4104f624174092c64b32d1824085e6c945b0a
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -659,7 +659,7 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:3c0cef4975edd95175fc9fe595cf18e5e5b59472
+    last_write_checksum: sha1:f00522528a0b20749ec7ef8e397028649c4d79fe
   src/noresponse/accounts.py:
     last_write_checksum: sha1:80ee7ca315d8fea63a5fe9c51a63be95940180a5
   src/noresponse/assessments.py:
@@ -1093,7 +1093,7 @@ trackedFiles:
   src/noresponse/models/shared/riskcoverage.py:
     last_write_checksum: sha1:a875a10f200b4bd4a713520eaeda1c299cb9f783
   src/noresponse/models/shared/riskdetails.py:
-    last_write_checksum: sha1:571dfc077a992130a7f5475ab73e8370e0b1e33c
+    last_write_checksum: sha1:bf4b0d496c0d60748f3dabacc4aa4e440694df36
   src/noresponse/models/shared/riskdetailsbreachname.py:
     last_write_checksum: sha1:2d2a66d48a5f70d08a16e41a56db64845eb30d05
   src/noresponse/models/shared/riskdetailsevent.py:

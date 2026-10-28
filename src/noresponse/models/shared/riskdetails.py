@@ -14,11 +14,11 @@ class RiskDetailsTypedDict(TypedDict):
 
     phone_names: NotRequired[List[RiskDetailsPhoneNameTypedDict]]
     breaches: NotRequired[List[BreachTypedDict]]
-    r"""The matching breach tables, newest first, at most 50."""
+    r"""The matching breach tables, newest first, at most 100."""
     breach_names: NotRequired[List[RiskDetailsBreachNameTypedDict]]
     r"""Names found next to the identifiers in breach records, merged, with the number of distinct tables each was seen in."""
     events: NotRequired[List[RiskDetailsEventTypedDict]]
-    r"""The identity's dated footprint events, newest first, at most 100: the year and month, what happened (created, last_active, breached), the site, its category, the kind of evidence and the identifier it belongs to. No breach value: dates are coarsened to the month."""
+    r"""The identity's dated footprint events, newest first, at most 300: the year and month, what happened (created, last_active, breached), the site, its category, the kind of evidence and the identifier it belongs to. No breach value: dates are coarsened to the month."""
 
 
 class RiskDetails(BaseModel):
@@ -27,13 +27,13 @@ class RiskDetails(BaseModel):
     phone_names: Optional[List[RiskDetailsPhoneName]] = None
 
     breaches: Optional[List[Breach]] = None
-    r"""The matching breach tables, newest first, at most 50."""
+    r"""The matching breach tables, newest first, at most 100."""
 
     breach_names: Optional[List[RiskDetailsBreachName]] = None
     r"""Names found next to the identifiers in breach records, merged, with the number of distinct tables each was seen in."""
 
     events: Optional[List[RiskDetailsEvent]] = None
-    r"""The identity's dated footprint events, newest first, at most 100: the year and month, what happened (created, last_active, breached), the site, its category, the kind of evidence and the identifier it belongs to. No breach value: dates are coarsened to the month."""
+    r"""The identity's dated footprint events, newest first, at most 300: the year and month, what happened (created, last_active, breached), the site, its category, the kind of evidence and the identifier it belongs to. No breach value: dates are coarsened to the month."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
