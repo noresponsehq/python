@@ -33,6 +33,7 @@ from .models.shared.settings import Settings as _Settings
 
 __all__ = [
     "AssessmentSearchPage",
+    "AssessmentAggregate",
     "AssessmentRevision",
     "AccountBinding",
     "AccountOutcome",
@@ -124,6 +125,14 @@ class AssessmentSearchPage(_WithMeta, _shared.AssessmentSearchPage):
 
 def as_assessment_search_page(source: _shared.AssessmentSearchPage, meta: ResponseMeta) -> AssessmentSearchPage:
     return _attach(AssessmentSearchPage, source, meta)
+
+
+class AssessmentAggregate(_WithMeta, _shared.AssessmentAggregate):
+    """The validated AssessmentAggregate response with HTTP metadata."""
+
+
+def as_assessment_aggregate(source: _shared.AssessmentAggregate, meta: ResponseMeta) -> AssessmentAggregate:
+    return _attach(AssessmentAggregate, source, meta)
 
 
 class AssessmentRevision(_WithMeta, _shared.AssessmentRevision):

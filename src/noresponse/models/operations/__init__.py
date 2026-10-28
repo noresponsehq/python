@@ -3,6 +3,10 @@ from typing import Any, TYPE_CHECKING
 from noresponse.utils.dynamic_imports import lazy_getattr, lazy_dir
 
 if TYPE_CHECKING:
+    from .aggregateassessments import (
+        AggregateAssessmentsResponse,
+        AggregateAssessmentsResponseTypedDict,
+    )
     from .associatecredential import (
         AssociateCredentialRequest,
         AssociateCredentialRequestTypedDict,
@@ -240,6 +244,8 @@ if TYPE_CHECKING:
     )
 
 __all__ = [
+    "AggregateAssessmentsResponse",
+    "AggregateAssessmentsResponseTypedDict",
     "AssociateCredentialRequest",
     "AssociateCredentialRequestTypedDict",
     "AssociateCredentialResponse",
@@ -397,6 +403,8 @@ __all__ = [
 ]
 
 _dynamic_imports: dict[str, str] = {
+    "AggregateAssessmentsResponse": ".aggregateassessments",
+    "AggregateAssessmentsResponseTypedDict": ".aggregateassessments",
     "AssociateCredentialRequest": ".associatecredential",
     "AssociateCredentialRequestTypedDict": ".associatecredential",
     "AssociateCredentialResponse": ".associatecredential",

@@ -1,16 +1,20 @@
 # Decision
 
-The decision of the assessment's latest stored revision: block when its stored risk.block is true, otherwise its recommendation. This is not the account's current decision or held-admission state. Combined with recommendation using AND.
+An assessment's own decision: block when its stored risk.block is true, otherwise its recommendation. It is not the account's decision or held-admission state.
 
 ## Example Usage
 
 ```python
 from noresponse.models.shared import Decision
+
+# Open enum: unrecognized values are captured as UnrecognizedStr
 value: Decision = "allow"
 ```
 
 
 ## Values
+
+This is an open enum. Unrecognized values will not fail type checks.
 
 - `"allow"`
 - `"step_up"`

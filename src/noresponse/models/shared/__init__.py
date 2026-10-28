@@ -39,8 +39,24 @@ if TYPE_CHECKING:
     )
     from .accountriskreason import AccountRiskReason, AccountRiskReasonTypedDict
     from .admission import Admission
+    from .aggregatebucket import AggregateBucket, AggregateBucketTypedDict
+    from .aggregatedimension import AggregateDimension
+    from .aggregategroup import AggregateGroup, AggregateGroupTypedDict
+    from .aggregatelateflip import AggregateLateFlip, AggregateLateFlipTypedDict
+    from .aggregatescorecount import AggregateScoreCount, AggregateScoreCountTypedDict
     from .agreement import Agreement
+    from .answerrevision import AnswerRevision
     from .assessment import Assessment, AssessmentTypedDict
+    from .assessmentaggregate import (
+        AssessmentAggregate,
+        AssessmentAggregateMetric,
+        AssessmentAggregateTypedDict,
+    )
+    from .assessmentaggregaterequest import (
+        AssessmentAggregateRequest,
+        AssessmentAggregateRequestMetric,
+        AssessmentAggregateRequestTypedDict,
+    )
     from .assessmentdeletion import AssessmentDeletion, AssessmentDeletionTypedDict
     from .assessmentdeletionaccount import (
         AssessmentDeletionAccount,
@@ -109,6 +125,7 @@ if TYPE_CHECKING:
     from .breachkind import BreachKind
     from .breachselector import BreachSelector
     from .breachsummary import BreachSummary, BreachSummaryTypedDict
+    from .bucket import Bucket
     from .confidence import Confidence
     from .conflicterrorcode import ConflictErrorCode
     from .consistency import Consistency, ConsistencyTypedDict
@@ -131,6 +148,7 @@ if TYPE_CHECKING:
     from .decision import Decision
     from .decisionreceipt import DecisionReceipt, DecisionReceiptTypedDict
     from .defaultdepth import DefaultDepth
+    from .delay import Delay
     from .depth import Depth
     from .direction import Direction
     from .endpointverification import (
@@ -199,6 +217,7 @@ if TYPE_CHECKING:
     from .listentrykind import ListEntryKind
     from .listentrylist import ListEntryList, ListEntryListTypedDict
     from .listentryrequest import ListEntryRequest, ListEntryRequestTypedDict
+    from .listmatch import ListMatch
     from .notfounderrorcode import NotFoundErrorCode
     from .onexpiry import OnExpiry
     from .outcome import Outcome
@@ -373,12 +392,28 @@ __all__ = [
     "AccountRiskTypedDict",
     "AccountTypedDict",
     "Admission",
+    "AggregateBucket",
+    "AggregateBucketTypedDict",
+    "AggregateDimension",
+    "AggregateGroup",
+    "AggregateGroupTypedDict",
+    "AggregateLateFlip",
+    "AggregateLateFlipTypedDict",
+    "AggregateScoreCount",
+    "AggregateScoreCountTypedDict",
     "Agreement",
     "AlternateName",
     "AlternateNameTypedDict",
     "AlternateNameUnion",
     "AlternateNameUnionTypedDict",
+    "AnswerRevision",
     "Assessment",
+    "AssessmentAggregate",
+    "AssessmentAggregateMetric",
+    "AssessmentAggregateRequest",
+    "AssessmentAggregateRequestMetric",
+    "AssessmentAggregateRequestTypedDict",
+    "AssessmentAggregateTypedDict",
     "AssessmentDeletion",
     "AssessmentDeletionAccount",
     "AssessmentDeletionAccountTypedDict",
@@ -437,6 +472,7 @@ __all__ = [
     "BreachSummary",
     "BreachSummaryTypedDict",
     "BreachTypedDict",
+    "Bucket",
     "Confidence",
     "ConflictErrorCode",
     "Consistency",
@@ -457,6 +493,7 @@ __all__ = [
     "DecisionReceipt",
     "DecisionReceiptTypedDict",
     "DefaultDepth",
+    "Delay",
     "Depth",
     "Direction",
     "Email",
@@ -545,6 +582,7 @@ __all__ = [
     "ListEntryRequest",
     "ListEntryRequestTypedDict",
     "ListEntryTypedDict",
+    "ListMatch",
     "Location",
     "LocationTypedDict",
     "LocationUnion",
@@ -714,9 +752,25 @@ _dynamic_imports: dict[str, str] = {
     "AccountRiskReason": ".accountriskreason",
     "AccountRiskReasonTypedDict": ".accountriskreason",
     "Admission": ".admission",
+    "AggregateBucket": ".aggregatebucket",
+    "AggregateBucketTypedDict": ".aggregatebucket",
+    "AggregateDimension": ".aggregatedimension",
+    "AggregateGroup": ".aggregategroup",
+    "AggregateGroupTypedDict": ".aggregategroup",
+    "AggregateLateFlip": ".aggregatelateflip",
+    "AggregateLateFlipTypedDict": ".aggregatelateflip",
+    "AggregateScoreCount": ".aggregatescorecount",
+    "AggregateScoreCountTypedDict": ".aggregatescorecount",
     "Agreement": ".agreement",
+    "AnswerRevision": ".answerrevision",
     "Assessment": ".assessment",
     "AssessmentTypedDict": ".assessment",
+    "AssessmentAggregate": ".assessmentaggregate",
+    "AssessmentAggregateMetric": ".assessmentaggregate",
+    "AssessmentAggregateTypedDict": ".assessmentaggregate",
+    "AssessmentAggregateRequest": ".assessmentaggregaterequest",
+    "AssessmentAggregateRequestMetric": ".assessmentaggregaterequest",
+    "AssessmentAggregateRequestTypedDict": ".assessmentaggregaterequest",
     "AssessmentDeletion": ".assessmentdeletion",
     "AssessmentDeletionTypedDict": ".assessmentdeletion",
     "AssessmentDeletionAccount": ".assessmentdeletionaccount",
@@ -774,6 +828,7 @@ _dynamic_imports: dict[str, str] = {
     "BreachSelector": ".breachselector",
     "BreachSummary": ".breachsummary",
     "BreachSummaryTypedDict": ".breachsummary",
+    "Bucket": ".bucket",
     "Confidence": ".confidence",
     "ConflictErrorCode": ".conflicterrorcode",
     "Consistency": ".consistency",
@@ -794,6 +849,7 @@ _dynamic_imports: dict[str, str] = {
     "DecisionReceipt": ".decisionreceipt",
     "DecisionReceiptTypedDict": ".decisionreceipt",
     "DefaultDepth": ".defaultdepth",
+    "Delay": ".delay",
     "Depth": ".depth",
     "Direction": ".direction",
     "EndpointVerification": ".endpointverification",
@@ -877,6 +933,7 @@ _dynamic_imports: dict[str, str] = {
     "ListEntryListTypedDict": ".listentrylist",
     "ListEntryRequest": ".listentryrequest",
     "ListEntryRequestTypedDict": ".listentryrequest",
+    "ListMatch": ".listmatch",
     "NotFoundErrorCode": ".notfounderrorcode",
     "OnExpiry": ".onexpiry",
     "Outcome": ".outcome",

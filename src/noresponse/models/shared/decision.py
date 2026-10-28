@@ -1,11 +1,15 @@
 from __future__ import annotations
-from typing import Literal
+from noresponse.types import UnrecognizedStr
+from typing import Literal, Union
 
 
-Decision = Literal[
-    "allow",
-    "step_up",
-    "review",
-    "block",
+Decision = Union[
+    Literal[
+        "allow",
+        "step_up",
+        "review",
+        "block",
+    ],
+    UnrecognizedStr,
 ]
-r"""The decision of the assessment's latest stored revision: block when its stored risk.block is true, otherwise its recommendation. This is not the account's current decision or held-admission state. Combined with recommendation using AND."""
+r"""An assessment's own decision: block when its stored risk.block is true, otherwise its recommendation. It is not the account's decision or held-admission state."""

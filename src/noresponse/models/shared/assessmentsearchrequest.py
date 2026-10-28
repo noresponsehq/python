@@ -1,4 +1,5 @@
 from __future__ import annotations
+from .answerrevision import AnswerRevision
 from .decision import Decision
 from .flow import Flow
 from .recommendation import Recommendation
@@ -30,7 +31,9 @@ class AssessmentSearchRequestTypedDict(TypedDict):
     response_mode: NotRequired[ResponseMode]
     r"""standard returns the consolidated risk response; detailed adds merged provider-neutral facts when the key has detailed scope. There is no raw mode."""
     decision: NotRequired[Decision]
-    r"""The decision of the assessment's latest stored revision: block when its stored risk.block is true, otherwise its recommendation. This is not the account's current decision or held-admission state. Combined with recommendation using AND."""
+    r"""An assessment's own decision: block when its stored risk.block is true, otherwise its recommendation. It is not the account's decision or held-admission state."""
+    revision: NotRequired[AnswerRevision]
+    r"""Which answer of each assessment the filters describe: latest, the latest stored revision, or first, the first answer, as served when the assessment was first answered (POST /v1/assessments/aggregate counts first answers). A cell of an aggregate drills down to POST /v1/assessments/search with the same filters, revision first and the cell's bucket as from and to."""
 
 
 class AssessmentSearchRequest(BaseModel):
@@ -61,7 +64,10 @@ class AssessmentSearchRequest(BaseModel):
     r"""standard returns the consolidated risk response; detailed adds merged provider-neutral facts when the key has detailed scope. There is no raw mode."""
 
     decision: Optional[Decision] = None
-    r"""The decision of the assessment's latest stored revision: block when its stored risk.block is true, otherwise its recommendation. This is not the account's current decision or held-admission state. Combined with recommendation using AND."""
+    r"""An assessment's own decision: block when its stored risk.block is true, otherwise its recommendation. It is not the account's decision or held-admission state."""
+
+    revision: Optional[AnswerRevision] = None
+    r"""Which answer of each assessment the filters describe: latest, the latest stored revision, or first, the first answer, as served when the assessment was first answered (POST /v1/assessments/aggregate counts first answers). A cell of an aggregate drills down to POST /v1/assessments/search with the same filters, revision first and the cell's bucket as from and to."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -75,6 +81,7 @@ class AssessmentSearchRequest(BaseModel):
                 "cursor",
                 "response_mode",
                 "decision",
+                "revision",
             ]
         )
         serialized = handler(self)

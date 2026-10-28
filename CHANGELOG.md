@@ -1,5 +1,10 @@
 # Changelog
 
+## 8.3.0
+
+* `sdk.assessments.aggregate()`: **Added**
+* `sdk.assessments.search()`:  `request.revision` **Added**
+
 ## 8.2.1
 
 * `sdk.assessments.create()`:  `response.detail.identifiers` **Added**
