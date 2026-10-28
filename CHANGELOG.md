@@ -1,5 +1,62 @@
 # Changelog
 
+## 8.2.0
+
+* `sdk.assessments.search()`: **Added**
+* `sdk.assessments.retrieve_version()`: **Added**
+* `sdk.assessments.bind_account()`: **Added**
+* `sdk.accounts.record_outcome()`: **Added**
+* `sdk.accounts.list_outcomes()`: **Added**
+* `sdk.accounts.retrieve_decision()`: **Added**
+* `sdk.accounts.associate_credential()`: **Added**
+* `sdk.accounts.list_credentials()`: **Added**
+* `sdk.accounts.retire_credential()`: **Added**
+* `sdk.accounts.export()`: **Added**
+* `sdk.requests.list()`: **Added**
+* `sdk.assessments.create()`: 
+  *  `response.account.risk.reasons[].code.enum(reported_account_abuse)` **Added**
+  *  `error.code` **Changed**
+* `sdk.assessments.get()`: 
+  *  `response.account.risk.reasons[].code.enum(reported_account_abuse)` **Added**
+  *  `error.code` **Changed**
+* `sdk.assessments.delete()`:  `error.code` **Changed**
+* `sdk.assessments.record_outcome()`:  `error.code` **Changed**
+* `sdk.assessments.query()`: 
+  *  `response.items[].risk.reasons[].code.enum(reported_account_abuse)` **Added**
+  *  `error.code` **Changed**
+* `sdk.accounts.list_changed()`: 
+  *  `response.items[].risk.reasons[].code.enum(reported_account_abuse)` **Added**
+  *  `error.code` **Changed**
+* `sdk.accounts.get()`: 
+  *  `response.risk.reasons[].code.enum(reported_account_abuse)` **Added**
+  *  `error.code` **Changed**
+* `sdk.accounts.delete()`:  `error.code` **Changed**
+* `sdk.accounts.list_assessments()`: 
+  *  `response.items[].risk.reasons[].code.enum(reported_account_abuse)` **Added**
+  *  `error.code` **Changed**
+* `sdk.accounts.record_enforcement()`:  `error.code` **Changed**
+* `sdk.key_usage.record()`:  `error.code` **Changed**
+* `sdk.keys.rotate()`:  `error.code` **Changed**
+* `sdk.keys.create()`:  `error.code` **Changed**
+* `sdk.keys.list()`:  `error.code` **Changed**
+* `sdk.keys.revoke()`:  `error.code` **Changed**
+* `sdk.integrations.create()`:  `error.code` **Changed**
+* `sdk.integrations.list()`:  `error.code` **Changed**
+* `sdk.integrations.delete()`:  `error.code` **Changed**
+* `sdk.integrations.rotate()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.list()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.create()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.delete()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.rotate_signing_key()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.send_test_event()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.list_deliveries()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.replay_delivery()`:  `error.code` **Changed**
+* `sdk.settings.get()`:  `error.code` **Changed**
+* `sdk.settings.update()`:  `error.code` **Changed**
+* `sdk.lists.list()`:  `error.code` **Changed**
+* `sdk.lists.create()`:  `error.code` **Changed**
+* `sdk.lists.delete()`:  `error.code` **Changed**
+
 ## 8.1.3
 
 * `sdk.assessments.create()`:  `error.code.enum(list_entry_too_broad)` **Added**

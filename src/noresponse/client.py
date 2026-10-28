@@ -29,6 +29,7 @@ from typing_extensions import ParamSpec
 
 from . import models
 from .accounts import Accounts as _Accounts
+from .requests import Requests as _Requests
 from .assessments import Assessments as _Assessments
 from .errors import APIConnectionError, APITimeoutError
 from .httpclient import AsyncHttpClient, HttpClient
@@ -39,6 +40,26 @@ from .keyusage import KeyUsage as _KeyUsage
 from .key_usage import KeyUsageBuffer
 from .webhookendpoints import WebhookEndpoints as _WebhookEndpoints
 from .responses import (
+    AssessmentSearchPage,
+    as_assessment_search_page,
+    AssessmentRevision,
+    as_assessment_revision,
+    AccountBinding,
+    as_account_binding,
+    AccountOutcome,
+    as_account_outcome,
+    AccountOutcomePage,
+    as_account_outcome_page,
+    AccountDecisionSnapshot,
+    as_account_decision_snapshot,
+    CredentialAssociation,
+    as_credential_association,
+    CredentialPage,
+    as_credential_page,
+    AccountExport,
+    as_account_export,
+    RequestDiagnosticPage,
+    as_request_diagnostic_page,
     Account,
     AccountDeletion,
     AccountList,
@@ -77,7 +98,7 @@ from .utils.logger import Logger, NoOpLogger
 from ._wait import DEFAULT_WAIT_SECONDS, wait, wait_async
 from . import webhook_verification
 
-__all__ = ["DEFAULT_BASE_URL", "DEFAULT_TIMEOUT_MS", "Accounts", "Assessments", "Integrations", "KeyUsage", "Keys", "NoResponse", "Settings"]
+__all__ = ["DEFAULT_BASE_URL", "DEFAULT_TIMEOUT_MS", "Accounts", "Assessments", "Integrations", "KeyUsage", "Keys", "NoResponse", "Requests", "Settings"]
 
 DEFAULT_BASE_URL = "https://api.noresponse.org"
 DEFAULT_TIMEOUT_MS = 10_000
@@ -143,6 +164,168 @@ class Assessments(_Assessments):
     """Assessments of account creation, login and purchase."""
 
     # create ---------------------------------------------------------------
+
+    def search(  # type: ignore[override]
+        self,
+        *,
+        from_: str,
+        to: str,
+        account_id: Optional[str] = None,
+        flow: Optional[models.shared.Flow] = None,
+        status: Optional[models.shared.Status] = None,
+        recommendation: Optional[models.shared.Recommendation] = None,
+        decision: Optional[models.shared.AssessmentSearchRequestDecision] = None,
+        limit: Optional[int] = 20,
+        cursor: Optional[str] = None,
+        response_mode: Optional[models.shared.ResponseMode] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AssessmentSearchPage:
+        """Return the AssessmentSearchPage directly, with headers on meta."""
+        response = _sync(super().search)(
+            from_=from_,
+            to=to,
+            account_id=account_id,
+            flow=flow,
+            status=status,
+            recommendation=recommendation,
+            decision=decision,
+            limit=limit,
+            cursor=cursor,
+            response_mode=response_mode,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_assessment_search_page)
+
+    async def search_async(  # type: ignore[override]
+        self,
+        *,
+        from_: str,
+        to: str,
+        account_id: Optional[str] = None,
+        flow: Optional[models.shared.Flow] = None,
+        status: Optional[models.shared.Status] = None,
+        recommendation: Optional[models.shared.Recommendation] = None,
+        decision: Optional[models.shared.AssessmentSearchRequestDecision] = None,
+        limit: Optional[int] = 20,
+        cursor: Optional[str] = None,
+        response_mode: Optional[models.shared.ResponseMode] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AssessmentSearchPage:
+        """Return the AssessmentSearchPage directly, with headers on meta."""
+        response = await _async(super().search_async)(
+            from_=from_,
+            to=to,
+            account_id=account_id,
+            flow=flow,
+            status=status,
+            recommendation=recommendation,
+            decision=decision,
+            limit=limit,
+            cursor=cursor,
+            response_mode=response_mode,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_assessment_search_page)
+
+    def retrieve_version(  # type: ignore[override]
+        self,
+        assessment_id: str,
+        version: int,
+        *,
+        response_mode: Optional[models.shared.ResponseMode] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AssessmentRevision:
+        """Return the AssessmentRevision directly, with headers on meta."""
+        response = _sync(super().retrieve_version)(
+            assessment_id,
+            version,
+            response_mode=response_mode,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_assessment_revision)
+
+    async def retrieve_version_async(  # type: ignore[override]
+        self,
+        assessment_id: str,
+        version: int,
+        *,
+        response_mode: Optional[models.shared.ResponseMode] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AssessmentRevision:
+        """Return the AssessmentRevision directly, with headers on meta."""
+        response = await _async(super().retrieve_version_async)(
+            assessment_id,
+            version,
+            response_mode=response_mode,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_assessment_revision)
+
+    def bind_account(  # type: ignore[override]
+        self,
+        assessment_id: str,
+        *,
+        account_id: str,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AccountBinding:
+        """Return the AccountBinding directly, with headers on meta."""
+        response = _sync(super().bind_account)(
+            assessment_id,
+            account_id=account_id,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_account_binding)
+
+    async def bind_account_async(  # type: ignore[override]
+        self,
+        assessment_id: str,
+        *,
+        account_id: str,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AccountBinding:
+        """Return the AccountBinding directly, with headers on meta."""
+        response = await _async(super().bind_account_async)(
+            assessment_id,
+            account_id=account_id,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_account_binding)
 
     def create(  # type: ignore[override]
         self,
@@ -535,8 +718,327 @@ class Accounts(_Accounts):
 
     An account is the account_id you send with your assessments. It holds one
     current risk, the risk of its latest assessment with a decision, and its
-    assessments are its history. Every method needs the history scope.
+    assessments are its history. Reads need history; reports and credential
+    associations need assess; retiring an association needs delete.
     """
+
+    def record_outcome(  # type: ignore[override]
+        self,
+        account_id: str,
+        *,
+        outcome: models.shared.Outcome,
+        idempotency_key: Optional[str] = None,
+        observed_at: Optional[str] = None,
+        external_ref: Optional[str] = None,
+        supersedes: Optional[str] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AccountOutcome:
+        """Return the AccountOutcome directly, with headers on meta."""
+        response = _sync(super().record_outcome)(
+            account_id,
+            outcome=outcome,
+            idempotency_key=_key(idempotency_key),
+            observed_at=observed_at,
+            external_ref=external_ref,
+            supersedes=supersedes,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_account_outcome)
+
+    async def record_outcome_async(  # type: ignore[override]
+        self,
+        account_id: str,
+        *,
+        outcome: models.shared.Outcome,
+        idempotency_key: Optional[str] = None,
+        observed_at: Optional[str] = None,
+        external_ref: Optional[str] = None,
+        supersedes: Optional[str] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AccountOutcome:
+        """Return the AccountOutcome directly, with headers on meta."""
+        response = await _async(super().record_outcome_async)(
+            account_id,
+            outcome=outcome,
+            idempotency_key=_key(idempotency_key),
+            observed_at=observed_at,
+            external_ref=external_ref,
+            supersedes=supersedes,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_account_outcome)
+
+    def list_outcomes(  # type: ignore[override]
+        self,
+        account_id: str,
+        *,
+        limit: Optional[int] = 20,
+        cursor: Optional[str] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AccountOutcomePage:
+        """Return the AccountOutcomePage directly, with headers on meta."""
+        response = _sync(super().list_outcomes)(
+            account_id,
+            limit=limit,
+            cursor=cursor,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_account_outcome_page)
+
+    async def list_outcomes_async(  # type: ignore[override]
+        self,
+        account_id: str,
+        *,
+        limit: Optional[int] = 20,
+        cursor: Optional[str] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AccountOutcomePage:
+        """Return the AccountOutcomePage directly, with headers on meta."""
+        response = await _async(super().list_outcomes_async)(
+            account_id,
+            limit=limit,
+            cursor=cursor,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_account_outcome_page)
+
+    def retrieve_decision(  # type: ignore[override]
+        self,
+        account_id: str,
+        risk_version: int,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AccountDecisionSnapshot:
+        """Return the AccountDecisionSnapshot directly, with headers on meta."""
+        response = _sync(super().retrieve_decision)(
+            account_id,
+            risk_version,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_account_decision_snapshot)
+
+    async def retrieve_decision_async(  # type: ignore[override]
+        self,
+        account_id: str,
+        risk_version: int,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AccountDecisionSnapshot:
+        """Return the AccountDecisionSnapshot directly, with headers on meta."""
+        response = await _async(super().retrieve_decision_async)(
+            account_id,
+            risk_version,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_account_decision_snapshot)
+
+    def associate_credential(  # type: ignore[override]
+        self,
+        account_id: str,
+        *,
+        sha256: str,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> CredentialAssociation:
+        """Return the CredentialAssociation directly, with headers on meta."""
+        response = _sync(super().associate_credential)(
+            account_id,
+            sha256=sha256,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_credential_association)
+
+    async def associate_credential_async(  # type: ignore[override]
+        self,
+        account_id: str,
+        *,
+        sha256: str,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> CredentialAssociation:
+        """Return the CredentialAssociation directly, with headers on meta."""
+        response = await _async(super().associate_credential_async)(
+            account_id,
+            sha256=sha256,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_credential_association)
+
+    def list_credentials(  # type: ignore[override]
+        self,
+        account_id: str,
+        *,
+        limit: Optional[int] = 20,
+        cursor: Optional[str] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> CredentialPage:
+        """Return the CredentialPage directly, with headers on meta."""
+        response = _sync(super().list_credentials)(
+            account_id,
+            limit=limit,
+            cursor=cursor,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_credential_page)
+
+    async def list_credentials_async(  # type: ignore[override]
+        self,
+        account_id: str,
+        *,
+        limit: Optional[int] = 20,
+        cursor: Optional[str] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> CredentialPage:
+        """Return the CredentialPage directly, with headers on meta."""
+        response = await _async(super().list_credentials_async)(
+            account_id,
+            limit=limit,
+            cursor=cursor,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_credential_page)
+
+    def retire_credential(  # type: ignore[override]
+        self,
+        account_id: str,
+        credential_id: str,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> CredentialAssociation:
+        """Return the CredentialAssociation directly, with headers on meta."""
+        response = _sync(super().retire_credential)(
+            account_id,
+            credential_id,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_credential_association)
+
+    async def retire_credential_async(  # type: ignore[override]
+        self,
+        account_id: str,
+        credential_id: str,
+        *,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> CredentialAssociation:
+        """Return the CredentialAssociation directly, with headers on meta."""
+        response = await _async(super().retire_credential_async)(
+            account_id,
+            credential_id,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_credential_association)
+
+    def export(  # type: ignore[override]
+        self,
+        account_id: str,
+        *,
+        response_mode: Optional[models.shared.ResponseMode] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AccountExport:
+        """Return the AccountExport directly, with headers on meta."""
+        response = _sync(super().export)(
+            account_id,
+            response_mode=response_mode,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_account_export)
+
+    async def export_async(  # type: ignore[override]
+        self,
+        account_id: str,
+        *,
+        response_mode: Optional[models.shared.ResponseMode] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> AccountExport:
+        """Return the AccountExport directly, with headers on meta."""
+        response = await _async(super().export_async)(
+            account_id,
+            response_mode=response_mode,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_account_export)
 
     def get(  # type: ignore[override]
         self,
@@ -1525,6 +2027,72 @@ def _deleted(response: Any) -> ResponseMeta:
     return ResponseMeta.from_headers(response.headers)
 
 
+class Requests(_Requests):
+    """Bounded request diagnostics, without request bodies or secrets."""
+
+    def list(  # type: ignore[override]
+        self,
+        *,
+        from_: str,
+        to: str,
+        request_id: Optional[str] = None,
+        route: Optional[str] = None,
+        status: Optional[int] = None,
+        limit: Optional[int] = 50,
+        cursor: Optional[str] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> RequestDiagnosticPage:
+        """Return the RequestDiagnosticPage directly, with headers on meta."""
+        response = _sync(super().list)(
+            from_=from_,
+            to=to,
+            request_id=request_id,
+            route=route,
+            status=status,
+            limit=limit,
+            cursor=cursor,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_request_diagnostic_page)
+
+    async def list_async(  # type: ignore[override]
+        self,
+        *,
+        from_: str,
+        to: str,
+        request_id: Optional[str] = None,
+        route: Optional[str] = None,
+        status: Optional[int] = None,
+        limit: Optional[int] = 50,
+        cursor: Optional[str] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> RequestDiagnosticPage:
+        """Return the RequestDiagnosticPage directly, with headers on meta."""
+        response = await _async(super().list_async)(
+            from_=from_,
+            to=to,
+            request_id=request_id,
+            route=route,
+            status=status,
+            limit=limit,
+            cursor=cursor,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_request_diagnostic_page)
+
+
 class _SafeLogger:
     """Passes the debug lines the generated client writes to a logger, without the API key or any body.
 
@@ -1587,6 +2155,7 @@ class NoResponse(_NoResponse):
 
     assessments: Assessments  # type: ignore[assignment]
     accounts: Accounts  # type: ignore[assignment]
+    requests: Requests  # type: ignore[assignment]
     keys: Keys  # type: ignore[assignment]
     settings: Settings  # type: ignore[assignment]
     key_usage: KeyUsage  # type: ignore[assignment]
@@ -1595,6 +2164,7 @@ class NoResponse(_NoResponse):
     _sub_sdk_map: Dict[str, Any] = {
         "assessments": ("noresponse.client", "Assessments"),
         "accounts": ("noresponse.client", "Accounts"),
+        "requests": ("noresponse.client", "Requests"),
         "keys": ("noresponse.client", "Keys"),
         "settings": ("noresponse.client", "Settings"),
         "key_usage": ("noresponse.client", "KeyUsage"),

@@ -19,6 +19,7 @@ if TYPE_CHECKING:
     from noresponse.keys import Keys
     from noresponse.keyusage import KeyUsage
     from noresponse.lists import Lists
+    from noresponse.requests import Requests
     from noresponse.settings import Settings
     from noresponse.webhookendpoints import WebhookEndpoints
 
@@ -49,6 +50,7 @@ class NoResponse(BaseSDK):
     webhook_endpoints: "WebhookEndpoints"
     r"""Your webhook endpoints: register, list, rotate signing keys, send test events and delete."""
     settings: "Settings"
+    requests: "Requests"
     lists: "Lists"
     _sub_sdk_map = {
         "assessments": ("noresponse.assessments", "Assessments"),
@@ -58,6 +60,7 @@ class NoResponse(BaseSDK):
         "integrations": ("noresponse.integrations", "Integrations"),
         "webhook_endpoints": ("noresponse.webhookendpoints", "WebhookEndpoints"),
         "settings": ("noresponse.settings", "Settings"),
+        "requests": ("noresponse.requests", "Requests"),
         "lists": ("noresponse.lists", "Lists"),
     }
 
@@ -249,6 +252,10 @@ class NoResponseWithRawResponse:
         return self._sdk.settings.with_raw_response
 
     @property
+    def requests(self):
+        return self._sdk.requests.with_raw_response
+
+    @property
     def lists(self):
         return self._sdk.lists.with_raw_response
 
@@ -284,6 +291,10 @@ class NoResponseWithStreamingResponse:
     @property
     def settings(self):
         return self._sdk.settings.with_streaming_response
+
+    @property
+    def requests(self):
+        return self._sdk.requests.with_streaming_response
 
     @property
     def lists(self):

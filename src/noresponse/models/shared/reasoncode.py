@@ -54,6 +54,7 @@ ReasonCode = Union[
         "breach_shared_ip",
         "nationality_mismatch",
         "minor_identity",
+        "reported_account_abuse",
     ],
     UnrecognizedStr,
 ]

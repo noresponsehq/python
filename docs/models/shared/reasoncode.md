@@ -65,3 +65,4 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"breach_shared_ip"`
 - `"nationality_mismatch"`
 - `"minor_identity"`
+- `"reported_account_abuse"`

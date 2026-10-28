@@ -13,6 +13,8 @@ from typing import Any, AsyncIterator, Callable, Iterator, List, Mapping, Option
 
 from pydantic import BaseModel, PrivateAttr
 
+from .models import shared as _shared
+
 from .models.shared.account import Account as _Account
 from .models.shared.accountdeletion import AccountDeletion as _AccountDeletion
 from .models.shared.accountlist import AccountList as _AccountList
@@ -30,6 +32,16 @@ from .models.shared.keyusagebatch import KeyUsageBatch as _KeyUsageBatch
 from .models.shared.settings import Settings as _Settings
 
 __all__ = [
+    "AssessmentSearchPage",
+    "AssessmentRevision",
+    "AccountBinding",
+    "AccountOutcome",
+    "AccountOutcomePage",
+    "AccountDecisionSnapshot",
+    "CredentialAssociation",
+    "CredentialPage",
+    "AccountExport",
+    "RequestDiagnosticPage",
     "Account",
     "AccountDeletion",
     "AccountList",
@@ -94,6 +106,96 @@ def _attach(cls: Type[M], source: BaseModel, meta: ResponseMeta) -> M:
     out = cls.model_construct(_fields_set=set(source.model_fields_set), **values)
     out._meta = meta  # type: ignore[attr-defined]  # pylint: disable=protected-access
     return out
+
+
+class _WithMeta(BaseModel):
+    """Response metadata is private state, never an extra wire member."""
+
+    _meta: ResponseMeta = PrivateAttr(default=_EMPTY)
+
+    @property
+    def meta(self) -> ResponseMeta:
+        return self._meta
+
+
+class AssessmentSearchPage(_WithMeta, _shared.AssessmentSearchPage):
+    """The validated AssessmentSearchPage response with HTTP metadata."""
+
+
+def as_assessment_search_page(source: _shared.AssessmentSearchPage, meta: ResponseMeta) -> AssessmentSearchPage:
+    return _attach(AssessmentSearchPage, source, meta)
+
+
+class AssessmentRevision(_WithMeta, _shared.AssessmentRevision):
+    """The validated AssessmentRevision response with HTTP metadata."""
+
+
+def as_assessment_revision(source: _shared.AssessmentRevision, meta: ResponseMeta) -> AssessmentRevision:
+    return _attach(AssessmentRevision, source, meta)
+
+
+class AccountBinding(_WithMeta, _shared.AccountBinding):
+    """The validated AccountBinding response with HTTP metadata."""
+
+
+def as_account_binding(source: _shared.AccountBinding, meta: ResponseMeta) -> AccountBinding:
+    return _attach(AccountBinding, source, meta)
+
+
+class AccountOutcome(_WithMeta, _shared.AccountOutcome):
+    """The validated AccountOutcome response with HTTP metadata."""
+
+
+def as_account_outcome(source: _shared.AccountOutcome, meta: ResponseMeta) -> AccountOutcome:
+    return _attach(AccountOutcome, source, meta)
+
+
+class AccountOutcomePage(_WithMeta, _shared.AccountOutcomePage):
+    """The validated AccountOutcomePage response with HTTP metadata."""
+
+
+def as_account_outcome_page(source: _shared.AccountOutcomePage, meta: ResponseMeta) -> AccountOutcomePage:
+    return _attach(AccountOutcomePage, source, meta)
+
+
+class AccountDecisionSnapshot(_WithMeta, _shared.AccountDecisionSnapshot):
+    """The validated AccountDecisionSnapshot response with HTTP metadata."""
+
+
+def as_account_decision_snapshot(source: _shared.AccountDecisionSnapshot, meta: ResponseMeta) -> AccountDecisionSnapshot:
+    return _attach(AccountDecisionSnapshot, source, meta)
+
+
+class CredentialAssociation(_WithMeta, _shared.CredentialAssociation):
+    """The validated CredentialAssociation response with HTTP metadata."""
+
+
+def as_credential_association(source: _shared.CredentialAssociation, meta: ResponseMeta) -> CredentialAssociation:
+    return _attach(CredentialAssociation, source, meta)
+
+
+class CredentialPage(_WithMeta, _shared.CredentialPage):
+    """The validated CredentialPage response with HTTP metadata."""
+
+
+def as_credential_page(source: _shared.CredentialPage, meta: ResponseMeta) -> CredentialPage:
+    return _attach(CredentialPage, source, meta)
+
+
+class AccountExport(_WithMeta, _shared.AccountExport):
+    """The validated AccountExport response with HTTP metadata."""
+
+
+def as_account_export(source: _shared.AccountExport, meta: ResponseMeta) -> AccountExport:
+    return _attach(AccountExport, source, meta)
+
+
+class RequestDiagnosticPage(_WithMeta, _shared.RequestDiagnosticPage):
+    """The validated RequestDiagnosticPage response with HTTP metadata."""
+
+
+def as_request_diagnostic_page(source: _shared.RequestDiagnosticPage, meta: ResponseMeta) -> RequestDiagnosticPage:
+    return _attach(RequestDiagnosticPage, source, meta)
 
 
 class Assessment(_Assessment):

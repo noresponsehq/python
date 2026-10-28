@@ -2611,6 +2611,1655 @@ class Assessments(BaseSDK):
                 parse_exc_,
             )
 
+    def search(
+        self,
+        *,
+        from_: str,
+        to: str,
+        account_id: Optional[str] = None,
+        flow: Optional[models.shared.Flow] = None,
+        status: Optional[models.shared.Status] = None,
+        recommendation: Optional[models.shared.Recommendation] = None,
+        limit: Optional[int] = 20,
+        cursor: Optional[str] = None,
+        response_mode: Optional[models.shared.ResponseMode] = None,
+        decision: Optional[models.shared.Decision] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.operations.SearchAssessmentsResponse:
+        r"""Search assessments across this environment
+
+        Search retained assessments created in [from,to), over at most 366 days. Filters use each assessment decision, rather than the current account decision. Results can change between pages. Keep the assessment version to retrieve the exact decision later. This read does not require an idempotency key.
+
+        :param from_:
+        :param to:
+        :param account_id: Your own opaque identifier for the account being checked, scoped to your workspace. Use an id you mint, with no direct identifier (email, phone, name or national id) in it. '|' is accepted so an Auth0 user id such as 'auth0|64abc' passes unchanged; '@', '+', '
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.shared.AssessmentSearchRequest(
+            from_=from_,
+            to=to,
+            account_id=account_id,
+            flow=flow,
+            status=status,
+            recommendation=recommendation,
+            limit=limit,
+            cursor=cursor,
+            response_mode=response_mode,
+            decision=decision,
+        )
+
+        _noresponse_response_mode, http_headers = response_helpers.consume_response_mode(http_headers)
+        req = self._build_request(
+            method="POST",
+            path="/v1/assessments/search",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(request, False, False, "json", models.shared.AssessmentSearchRequest),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig("backoff", utils.BackoffStrategy(500, 8000, 2, 30000), True)
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "408",
+                "429",
+                "5XX"
+            ])
+
+        def _noresponse_parse_response(http_res):
+
+
+            response_data: Any = None
+            if utils.match_response(http_res, "200", "application/json"):
+                return models.operations.SearchAssessmentsResponse(result=unmarshal_json_response(models.shared.AssessmentSearchPage, http_res )
+                , headers=utils.get_response_headers(http_res.headers))
+            if utils.match_response(http_res, "400", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.BadRequestErrorData, http_res)
+                raise models.errors.BadRequestError(response_data, http_res)
+            if utils.match_response(http_res, "401", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.AuthenticationErrorData, http_res)
+                raise models.errors.AuthenticationError(response_data, http_res)
+            if utils.match_response(http_res, "403", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.PermissionDeniedErrorData, http_res)
+                raise models.errors.PermissionDeniedError(response_data, http_res)
+            if utils.match_response(http_res, "404", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.NotFoundErrorData, http_res)
+                raise models.errors.NotFoundError(response_data, http_res)
+            if utils.match_response(http_res, "409", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.ConflictErrorData, http_res)
+                raise models.errors.ConflictError(response_data, http_res)
+            if utils.match_response(http_res, "429", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.RateLimitErrorData, http_res)
+                raise models.errors.RateLimitError(response_data, http_res)
+            if utils.match_response(http_res, "4XX", "*"):
+                http_res_text =  utils.stream_to_text(http_res)
+                raise models.errors.APIStatusError("API error occurred", http_res, http_res_text)
+            if utils.match_response(http_res, "5XX", "*"):
+                http_res_text =  utils.stream_to_text(http_res)
+                raise models.errors.APIStatusError("API error occurred", http_res, http_res_text)
+
+            raise models.errors.APIStatusError("Unexpected response received", http_res)
+        _noresponse_hook_ctx = HookContext(config=self.sdk_configuration, base_url=base_url or "", operation_id="searchAssessments", oauth2_scopes=None, security_source=get_security_from_env(self.sdk_configuration.security, models.shared.Security), tags=["assessments"], extensions=None, response=ResponseContext(mode=_noresponse_response_mode, execution="sync"))
+        http_res = self.do_request(
+            hook_ctx=_noresponse_hook_ctx,
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX","5XX"], c),
+            stream=_noresponse_response_mode == "streaming",
+            retry_config=retry_config
+        )
+        if _noresponse_response_mode != "parsed":
+            if utils.match_status_codes(["4XX","5XX"], http_res.status_code):
+                http_res.read()
+                try:
+                    _noresponse_parse_response(http_res)
+                except Exception as parse_exc_:
+                    response_helpers.raise_parse_error(self.sdk_configuration.__dict__['_hooks'],
+                        AfterParseErrorContext(_noresponse_hook_ctx),
+                        http_res,
+                        parse_exc_,
+                    )
+            _noresponse_response_cls = (
+                response_helpers.StreamedAPIResponse
+                if _noresponse_response_mode == "streaming"
+                else response_helpers.APIResponse
+            )
+            return cast(Any, _noresponse_response_cls(
+                raw=http_res,
+                parser=_noresponse_parse_response,
+                mode="buffered",
+                client_ref=self,
+                hook_ctx=AfterParseErrorContext(_noresponse_hook_ctx),
+                hooks=self.sdk_configuration.__dict__.get("_hooks"),
+
+            ))
+        try:
+            return _noresponse_parse_response(http_res)
+        except Exception as parse_exc_:
+            response_helpers.raise_parse_error(self.sdk_configuration.__dict__['_hooks'],
+                AfterParseErrorContext(_noresponse_hook_ctx),
+                http_res,
+                parse_exc_,
+            ) and whitespace are refused by the pattern, as is an exact-shape JWT; a hex digest such as a SHA-256 is allowed, because hashing an internal id is a common pseudonymous scheme. A value such as '07700900123' or 'jane.doe.gmail.com' cannot be told apart from an opaque id. It travels in bodies, and in a URL only as the path segment of GET /v1/accounts/{account_id} and its /assessments. An assessment requested by a provider hook at pre_registration, which has no account yet, carries the server-issued account_id pre: followed by its assessment_id.
+        :param flow: The event an assessment is made for: account_creation (a user creates an account), login (a user returns to an existing account) or purchase (a payment or a credit grant). The account's risk is reported with the decision for this flow.
+        :param status: complete: final; nothing is still running. A lane that failed or missed its 10 s deadline stays listed in incomplete_sources, and confidence is lower. partial: a recommendation exists and at least one lane is still running or did not settle (see incomplete_sources). pending: nothing usable before the deadline; no recommendation yet, poll or wait for the webhook.
+        :param recommendation: The recommended action: allow, step_up or review. Your application applies it.
+        :param limit:
+        :param cursor: Opaque, expiring cursor bound to this environment, operation and every filter. Keep the filters unchanged.
+        :param response_mode: standard returns the consolidated risk response; detailed adds merged provider-neutral facts when the key has detailed scope. There is no raw mode.
+        :param decision: The decision of the assessment's latest stored revision: block when its stored risk.block is true, otherwise its recommendation. This is not the account's current decision or held-admission state. Combined with recommendation using AND.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.shared.AssessmentSearchRequest(
+            from_=from_,
+            to=to,
+            account_id=account_id,
+            flow=flow,
+            status=status,
+            recommendation=recommendation,
+            limit=limit,
+            cursor=cursor,
+            response_mode=response_mode,
+            decision=decision,
+        )
+
+        _noresponse_response_mode, http_headers = (
+            response_helpers.consume_response_mode(http_headers)
+        )
+        req = self._build_request(
+            method="POST",
+            path="/v1/assessments/search",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request, False, False, "json", models.shared.AssessmentSearchRequest
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 8000, 2, 30000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["408", "429", "5XX"])
+
+        def _noresponse_parse_response(http_res):
+            response_data: Any = None
+            if utils.match_response(http_res, "200", "application/json"):
+                return models.operations.SearchAssessmentsResponse(
+                    result=unmarshal_json_response(
+                        models.shared.AssessmentSearchPage, http_res
+                    ),
+                    headers=utils.get_response_headers(http_res.headers),
+                )
+            if utils.match_response(http_res, "400", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.BadRequestErrorData, http_res
+                )
+                raise models.errors.BadRequestError(response_data, http_res)
+            if utils.match_response(http_res, "401", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.AuthenticationErrorData, http_res
+                )
+                raise models.errors.AuthenticationError(response_data, http_res)
+            if utils.match_response(http_res, "403", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.PermissionDeniedErrorData, http_res
+                )
+                raise models.errors.PermissionDeniedError(response_data, http_res)
+            if utils.match_response(http_res, "404", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.NotFoundErrorData, http_res
+                )
+                raise models.errors.NotFoundError(response_data, http_res)
+            if utils.match_response(http_res, "409", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.ConflictErrorData, http_res
+                )
+                raise models.errors.ConflictError(response_data, http_res)
+            if utils.match_response(http_res, "429", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.RateLimitErrorData, http_res
+                )
+                raise models.errors.RateLimitError(response_data, http_res)
+            if utils.match_response(http_res, "4XX", "*"):
+                http_res_text = utils.stream_to_text(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+            if utils.match_response(http_res, "5XX", "*"):
+                http_res_text = utils.stream_to_text(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+
+            raise models.errors.APIStatusError("Unexpected response received", http_res)
+
+        _noresponse_hook_ctx = HookContext(
+            config=self.sdk_configuration,
+            base_url=base_url or "",
+            operation_id="searchAssessments",
+            oauth2_scopes=None,
+            security_source=get_security_from_env(
+                self.sdk_configuration.security, models.shared.Security
+            ),
+            tags=["assessments"],
+            extensions=None,
+            response=ResponseContext(mode=_noresponse_response_mode, execution="sync"),
+        )
+        http_res = self.do_request(
+            hook_ctx=_noresponse_hook_ctx,
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            stream=_noresponse_response_mode == "streaming",
+            retry_config=retry_config,
+        )
+        if _noresponse_response_mode != "parsed":
+            if utils.match_status_codes(["4XX", "5XX"], http_res.status_code):
+                http_res.read()
+                try:
+                    _noresponse_parse_response(http_res)
+                except Exception as parse_exc_:
+                    response_helpers.raise_parse_error(
+                        self.sdk_configuration.__dict__["_hooks"],
+                        AfterParseErrorContext(_noresponse_hook_ctx),
+                        http_res,
+                        parse_exc_,
+                    )
+            _noresponse_response_cls = (
+                response_helpers.StreamedAPIResponse
+                if _noresponse_response_mode == "streaming"
+                else response_helpers.APIResponse
+            )
+            return cast(
+                Any,
+                _noresponse_response_cls(
+                    raw=http_res,
+                    parser=_noresponse_parse_response,
+                    mode="buffered",
+                    client_ref=self,
+                    hook_ctx=AfterParseErrorContext(_noresponse_hook_ctx),
+                    hooks=self.sdk_configuration.__dict__.get("_hooks"),
+                ),
+            )
+        try:
+            return _noresponse_parse_response(http_res)
+        except Exception as parse_exc_:
+            response_helpers.raise_parse_error(
+                self.sdk_configuration.__dict__["_hooks"],
+                AfterParseErrorContext(_noresponse_hook_ctx),
+                http_res,
+                parse_exc_,
+            )
+
+    async def search_async(
+        self,
+        *,
+        from_: str,
+        to: str,
+        account_id: Optional[str] = None,
+        flow: Optional[models.shared.Flow] = None,
+        status: Optional[models.shared.Status] = None,
+        recommendation: Optional[models.shared.Recommendation] = None,
+        limit: Optional[int] = 20,
+        cursor: Optional[str] = None,
+        response_mode: Optional[models.shared.ResponseMode] = None,
+        decision: Optional[models.shared.Decision] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.operations.SearchAssessmentsResponse:
+        r"""Search assessments across this environment
+
+        Search retained assessments created in [from,to), over at most 366 days. Filters use each assessment decision, rather than the current account decision. Results can change between pages. Keep the assessment version to retrieve the exact decision later. This read does not require an idempotency key.
+
+        :param from_:
+        :param to:
+        :param account_id: Your own opaque identifier for the account being checked, scoped to your workspace. Use an id you mint, with no direct identifier (email, phone, name or national id) in it. '|' is accepted so an Auth0 user id such as 'auth0|64abc' passes unchanged; '@', '+', '
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.shared.AssessmentSearchRequest(
+            from_=from_,
+            to=to,
+            account_id=account_id,
+            flow=flow,
+            status=status,
+            recommendation=recommendation,
+            limit=limit,
+            cursor=cursor,
+            response_mode=response_mode,
+            decision=decision,
+        )
+
+        _noresponse_response_mode, http_headers = response_helpers.consume_response_mode(http_headers)
+        req = self._build_request_async(
+            method="POST",
+            path="/v1/assessments/search",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(request, False, False, "json", models.shared.AssessmentSearchRequest),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig("backoff", utils.BackoffStrategy(500, 8000, 2, 30000), True)
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "408",
+                "429",
+                "5XX"
+            ])
+
+        async def _noresponse_parse_response(http_res):
+
+
+            response_data: Any = None
+            if utils.match_response(http_res, "200", "application/json"):
+                return models.operations.SearchAssessmentsResponse(result=unmarshal_json_response(models.shared.AssessmentSearchPage, http_res )
+                , headers=utils.get_response_headers(http_res.headers))
+            if utils.match_response(http_res, "400", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.BadRequestErrorData, http_res)
+                raise models.errors.BadRequestError(response_data, http_res)
+            if utils.match_response(http_res, "401", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.AuthenticationErrorData, http_res)
+                raise models.errors.AuthenticationError(response_data, http_res)
+            if utils.match_response(http_res, "403", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.PermissionDeniedErrorData, http_res)
+                raise models.errors.PermissionDeniedError(response_data, http_res)
+            if utils.match_response(http_res, "404", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.NotFoundErrorData, http_res)
+                raise models.errors.NotFoundError(response_data, http_res)
+            if utils.match_response(http_res, "409", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.ConflictErrorData, http_res)
+                raise models.errors.ConflictError(response_data, http_res)
+            if utils.match_response(http_res, "429", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.RateLimitErrorData, http_res)
+                raise models.errors.RateLimitError(response_data, http_res)
+            if utils.match_response(http_res, "4XX", "*"):
+                http_res_text = await utils.stream_to_text_async(http_res)
+                raise models.errors.APIStatusError("API error occurred", http_res, http_res_text)
+            if utils.match_response(http_res, "5XX", "*"):
+                http_res_text = await utils.stream_to_text_async(http_res)
+                raise models.errors.APIStatusError("API error occurred", http_res, http_res_text)
+
+            raise models.errors.APIStatusError("Unexpected response received", http_res)
+        _noresponse_hook_ctx = HookContext(config=self.sdk_configuration, base_url=base_url or "", operation_id="searchAssessments", oauth2_scopes=None, security_source=get_security_from_env(self.sdk_configuration.security, models.shared.Security), tags=["assessments"], extensions=None, response=ResponseContext(mode=_noresponse_response_mode, execution="async"))
+        http_res = await self.do_request_async(
+            hook_ctx=_noresponse_hook_ctx,
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX","5XX"], c),
+            stream=_noresponse_response_mode == "streaming",
+            retry_config=retry_config
+        )
+        if _noresponse_response_mode != "parsed":
+            if utils.match_status_codes(["4XX","5XX"], http_res.status_code):
+                await http_res.aread()
+                try:
+                    await _noresponse_parse_response(http_res)
+                except Exception as parse_exc_:
+                    await response_helpers.raise_parse_error_async(self.sdk_configuration.__dict__.get('_async_hooks'), self.sdk_configuration.__dict__.get('_hooks'),
+                        AfterParseErrorContext(_noresponse_hook_ctx),
+                        http_res,
+                        parse_exc_,
+                    )
+            _noresponse_response_cls = (
+                response_helpers.AsyncStreamedAPIResponse
+                if _noresponse_response_mode == "streaming"
+                else response_helpers.AsyncAPIResponse
+            )
+            return cast(Any, _noresponse_response_cls(
+                raw=http_res,
+                parser=_noresponse_parse_response,
+                mode="buffered",
+                client_ref=self,
+                hook_ctx=AfterParseErrorContext(_noresponse_hook_ctx),
+                hooks=self.sdk_configuration.__dict__.get("_hooks"),
+                async_hooks=self.sdk_configuration.__dict__.get('_async_hooks'),
+            ))
+        try:
+            return await _noresponse_parse_response(http_res)
+        except Exception as parse_exc_:
+            await response_helpers.raise_parse_error_async(self.sdk_configuration.__dict__.get('_async_hooks'), self.sdk_configuration.__dict__.get('_hooks'),
+                AfterParseErrorContext(_noresponse_hook_ctx),
+                http_res,
+                parse_exc_,
+            ) and whitespace are refused by the pattern, as is an exact-shape JWT; a hex digest such as a SHA-256 is allowed, because hashing an internal id is a common pseudonymous scheme. A value such as '07700900123' or 'jane.doe.gmail.com' cannot be told apart from an opaque id. It travels in bodies, and in a URL only as the path segment of GET /v1/accounts/{account_id} and its /assessments. An assessment requested by a provider hook at pre_registration, which has no account yet, carries the server-issued account_id pre: followed by its assessment_id.
+        :param flow: The event an assessment is made for: account_creation (a user creates an account), login (a user returns to an existing account) or purchase (a payment or a credit grant). The account's risk is reported with the decision for this flow.
+        :param status: complete: final; nothing is still running. A lane that failed or missed its 10 s deadline stays listed in incomplete_sources, and confidence is lower. partial: a recommendation exists and at least one lane is still running or did not settle (see incomplete_sources). pending: nothing usable before the deadline; no recommendation yet, poll or wait for the webhook.
+        :param recommendation: The recommended action: allow, step_up or review. Your application applies it.
+        :param limit:
+        :param cursor: Opaque, expiring cursor bound to this environment, operation and every filter. Keep the filters unchanged.
+        :param response_mode: standard returns the consolidated risk response; detailed adds merged provider-neutral facts when the key has detailed scope. There is no raw mode.
+        :param decision: The decision of the assessment's latest stored revision: block when its stored risk.block is true, otherwise its recommendation. This is not the account's current decision or held-admission state. Combined with recommendation using AND.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.shared.AssessmentSearchRequest(
+            from_=from_,
+            to=to,
+            account_id=account_id,
+            flow=flow,
+            status=status,
+            recommendation=recommendation,
+            limit=limit,
+            cursor=cursor,
+            response_mode=response_mode,
+            decision=decision,
+        )
+
+        _noresponse_response_mode, http_headers = (
+            response_helpers.consume_response_mode(http_headers)
+        )
+        req = self._build_request_async(
+            method="POST",
+            path="/v1/assessments/search",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=False,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request, False, False, "json", models.shared.AssessmentSearchRequest
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 8000, 2, 30000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["408", "429", "5XX"])
+
+        async def _noresponse_parse_response(http_res):
+            response_data: Any = None
+            if utils.match_response(http_res, "200", "application/json"):
+                return models.operations.SearchAssessmentsResponse(
+                    result=unmarshal_json_response(
+                        models.shared.AssessmentSearchPage, http_res
+                    ),
+                    headers=utils.get_response_headers(http_res.headers),
+                )
+            if utils.match_response(http_res, "400", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.BadRequestErrorData, http_res
+                )
+                raise models.errors.BadRequestError(response_data, http_res)
+            if utils.match_response(http_res, "401", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.AuthenticationErrorData, http_res
+                )
+                raise models.errors.AuthenticationError(response_data, http_res)
+            if utils.match_response(http_res, "403", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.PermissionDeniedErrorData, http_res
+                )
+                raise models.errors.PermissionDeniedError(response_data, http_res)
+            if utils.match_response(http_res, "404", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.NotFoundErrorData, http_res
+                )
+                raise models.errors.NotFoundError(response_data, http_res)
+            if utils.match_response(http_res, "409", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.ConflictErrorData, http_res
+                )
+                raise models.errors.ConflictError(response_data, http_res)
+            if utils.match_response(http_res, "429", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.RateLimitErrorData, http_res
+                )
+                raise models.errors.RateLimitError(response_data, http_res)
+            if utils.match_response(http_res, "4XX", "*"):
+                http_res_text = await utils.stream_to_text_async(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+            if utils.match_response(http_res, "5XX", "*"):
+                http_res_text = await utils.stream_to_text_async(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+
+            raise models.errors.APIStatusError("Unexpected response received", http_res)
+
+        _noresponse_hook_ctx = HookContext(
+            config=self.sdk_configuration,
+            base_url=base_url or "",
+            operation_id="searchAssessments",
+            oauth2_scopes=None,
+            security_source=get_security_from_env(
+                self.sdk_configuration.security, models.shared.Security
+            ),
+            tags=["assessments"],
+            extensions=None,
+            response=ResponseContext(mode=_noresponse_response_mode, execution="async"),
+        )
+        http_res = await self.do_request_async(
+            hook_ctx=_noresponse_hook_ctx,
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            stream=_noresponse_response_mode == "streaming",
+            retry_config=retry_config,
+        )
+        if _noresponse_response_mode != "parsed":
+            if utils.match_status_codes(["4XX", "5XX"], http_res.status_code):
+                await http_res.aread()
+                try:
+                    await _noresponse_parse_response(http_res)
+                except Exception as parse_exc_:
+                    await response_helpers.raise_parse_error_async(
+                        self.sdk_configuration.__dict__.get("_async_hooks"),
+                        self.sdk_configuration.__dict__.get("_hooks"),
+                        AfterParseErrorContext(_noresponse_hook_ctx),
+                        http_res,
+                        parse_exc_,
+                    )
+            _noresponse_response_cls = (
+                response_helpers.AsyncStreamedAPIResponse
+                if _noresponse_response_mode == "streaming"
+                else response_helpers.AsyncAPIResponse
+            )
+            return cast(
+                Any,
+                _noresponse_response_cls(
+                    raw=http_res,
+                    parser=_noresponse_parse_response,
+                    mode="buffered",
+                    client_ref=self,
+                    hook_ctx=AfterParseErrorContext(_noresponse_hook_ctx),
+                    hooks=self.sdk_configuration.__dict__.get("_hooks"),
+                    async_hooks=self.sdk_configuration.__dict__.get("_async_hooks"),
+                ),
+            )
+        try:
+            return await _noresponse_parse_response(http_res)
+        except Exception as parse_exc_:
+            await response_helpers.raise_parse_error_async(
+                self.sdk_configuration.__dict__.get("_async_hooks"),
+                self.sdk_configuration.__dict__.get("_hooks"),
+                AfterParseErrorContext(_noresponse_hook_ctx),
+                http_res,
+                parse_exc_,
+            )
+
+    def retrieve_version(
+        self,
+        assessment_id: str,
+        version: int,
+        *,
+        response_mode: Optional[models.shared.ResponseMode] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.operations.GetAssessmentVersionResponse:
+        r"""Retrieve an exact assessment revision
+
+        Retrieve a retained assessment version with its original decision, policy, flow and depth. This response excludes the current account decision. Current retention and response-mode permissions still apply.
+
+        :param assessment_id: Path segment, matched case-sensitively. A value that does not match the assessment_id shape answers 404, not 400.
+        :param version: The stored assessment_version, in canonical decimal form. An unavailable or malformed version answers 404.
+        :param response_mode: Optional standard or separately authorised detailed customer view; raw is rejected.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.operations.GetAssessmentVersionRequest(
+            assessment_id=assessment_id,
+            response_mode=response_mode,
+            version=version,
+        )
+
+        _noresponse_response_mode, http_headers = (
+            response_helpers.consume_response_mode(http_headers)
+        )
+        req = self._build_request(
+            method="GET",
+            path="/v1/assessments/{assessment_id}/versions/{version}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 8000, 2, 30000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["408", "429", "5XX"])
+
+        def _noresponse_parse_response(http_res):
+            response_data: Any = None
+            if utils.match_response(http_res, "200", "application/json"):
+                return models.operations.GetAssessmentVersionResponse(
+                    result=unmarshal_json_response(
+                        models.shared.AssessmentRevision, http_res
+                    ),
+                    headers=utils.get_response_headers(http_res.headers),
+                )
+            if utils.match_response(http_res, "400", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.BadRequestErrorData, http_res
+                )
+                raise models.errors.BadRequestError(response_data, http_res)
+            if utils.match_response(http_res, "401", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.AuthenticationErrorData, http_res
+                )
+                raise models.errors.AuthenticationError(response_data, http_res)
+            if utils.match_response(http_res, "403", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.PermissionDeniedErrorData, http_res
+                )
+                raise models.errors.PermissionDeniedError(response_data, http_res)
+            if utils.match_response(http_res, "404", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.NotFoundErrorData, http_res
+                )
+                raise models.errors.NotFoundError(response_data, http_res)
+            if utils.match_response(http_res, "409", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.ConflictErrorData, http_res
+                )
+                raise models.errors.ConflictError(response_data, http_res)
+            if utils.match_response(http_res, "429", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.RateLimitErrorData, http_res
+                )
+                raise models.errors.RateLimitError(response_data, http_res)
+            if utils.match_response(http_res, "4XX", "*"):
+                http_res_text = utils.stream_to_text(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+            if utils.match_response(http_res, "5XX", "*"):
+                http_res_text = utils.stream_to_text(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+
+            raise models.errors.APIStatusError("Unexpected response received", http_res)
+
+        _noresponse_hook_ctx = HookContext(
+            config=self.sdk_configuration,
+            base_url=base_url or "",
+            operation_id="getAssessmentVersion",
+            oauth2_scopes=None,
+            security_source=get_security_from_env(
+                self.sdk_configuration.security, models.shared.Security
+            ),
+            tags=["assessments"],
+            extensions=None,
+            response=ResponseContext(mode=_noresponse_response_mode, execution="sync"),
+        )
+        http_res = self.do_request(
+            hook_ctx=_noresponse_hook_ctx,
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            stream=_noresponse_response_mode == "streaming",
+            retry_config=retry_config,
+        )
+        if _noresponse_response_mode != "parsed":
+            if utils.match_status_codes(["4XX", "5XX"], http_res.status_code):
+                http_res.read()
+                try:
+                    _noresponse_parse_response(http_res)
+                except Exception as parse_exc_:
+                    response_helpers.raise_parse_error(
+                        self.sdk_configuration.__dict__["_hooks"],
+                        AfterParseErrorContext(_noresponse_hook_ctx),
+                        http_res,
+                        parse_exc_,
+                    )
+            _noresponse_response_cls = (
+                response_helpers.StreamedAPIResponse
+                if _noresponse_response_mode == "streaming"
+                else response_helpers.APIResponse
+            )
+            return cast(
+                Any,
+                _noresponse_response_cls(
+                    raw=http_res,
+                    parser=_noresponse_parse_response,
+                    mode="buffered",
+                    client_ref=self,
+                    hook_ctx=AfterParseErrorContext(_noresponse_hook_ctx),
+                    hooks=self.sdk_configuration.__dict__.get("_hooks"),
+                ),
+            )
+        try:
+            return _noresponse_parse_response(http_res)
+        except Exception as parse_exc_:
+            response_helpers.raise_parse_error(
+                self.sdk_configuration.__dict__["_hooks"],
+                AfterParseErrorContext(_noresponse_hook_ctx),
+                http_res,
+                parse_exc_,
+            )
+
+    async def retrieve_version_async(
+        self,
+        assessment_id: str,
+        version: int,
+        *,
+        response_mode: Optional[models.shared.ResponseMode] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.operations.GetAssessmentVersionResponse:
+        r"""Retrieve an exact assessment revision
+
+        Retrieve a retained assessment version with its original decision, policy, flow and depth. This response excludes the current account decision. Current retention and response-mode permissions still apply.
+
+        :param assessment_id: Path segment, matched case-sensitively. A value that does not match the assessment_id shape answers 404, not 400.
+        :param version: The stored assessment_version, in canonical decimal form. An unavailable or malformed version answers 404.
+        :param response_mode: Optional standard or separately authorised detailed customer view; raw is rejected.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.operations.GetAssessmentVersionRequest(
+            assessment_id=assessment_id,
+            response_mode=response_mode,
+            version=version,
+        )
+
+        _noresponse_response_mode, http_headers = (
+            response_helpers.consume_response_mode(http_headers)
+        )
+        req = self._build_request_async(
+            method="GET",
+            path="/v1/assessments/{assessment_id}/versions/{version}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 8000, 2, 30000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["408", "429", "5XX"])
+
+        async def _noresponse_parse_response(http_res):
+            response_data: Any = None
+            if utils.match_response(http_res, "200", "application/json"):
+                return models.operations.GetAssessmentVersionResponse(
+                    result=unmarshal_json_response(
+                        models.shared.AssessmentRevision, http_res
+                    ),
+                    headers=utils.get_response_headers(http_res.headers),
+                )
+            if utils.match_response(http_res, "400", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.BadRequestErrorData, http_res
+                )
+                raise models.errors.BadRequestError(response_data, http_res)
+            if utils.match_response(http_res, "401", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.AuthenticationErrorData, http_res
+                )
+                raise models.errors.AuthenticationError(response_data, http_res)
+            if utils.match_response(http_res, "403", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.PermissionDeniedErrorData, http_res
+                )
+                raise models.errors.PermissionDeniedError(response_data, http_res)
+            if utils.match_response(http_res, "404", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.NotFoundErrorData, http_res
+                )
+                raise models.errors.NotFoundError(response_data, http_res)
+            if utils.match_response(http_res, "409", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.ConflictErrorData, http_res
+                )
+                raise models.errors.ConflictError(response_data, http_res)
+            if utils.match_response(http_res, "429", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.RateLimitErrorData, http_res
+                )
+                raise models.errors.RateLimitError(response_data, http_res)
+            if utils.match_response(http_res, "4XX", "*"):
+                http_res_text = await utils.stream_to_text_async(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+            if utils.match_response(http_res, "5XX", "*"):
+                http_res_text = await utils.stream_to_text_async(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+
+            raise models.errors.APIStatusError("Unexpected response received", http_res)
+
+        _noresponse_hook_ctx = HookContext(
+            config=self.sdk_configuration,
+            base_url=base_url or "",
+            operation_id="getAssessmentVersion",
+            oauth2_scopes=None,
+            security_source=get_security_from_env(
+                self.sdk_configuration.security, models.shared.Security
+            ),
+            tags=["assessments"],
+            extensions=None,
+            response=ResponseContext(mode=_noresponse_response_mode, execution="async"),
+        )
+        http_res = await self.do_request_async(
+            hook_ctx=_noresponse_hook_ctx,
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            stream=_noresponse_response_mode == "streaming",
+            retry_config=retry_config,
+        )
+        if _noresponse_response_mode != "parsed":
+            if utils.match_status_codes(["4XX", "5XX"], http_res.status_code):
+                await http_res.aread()
+                try:
+                    await _noresponse_parse_response(http_res)
+                except Exception as parse_exc_:
+                    await response_helpers.raise_parse_error_async(
+                        self.sdk_configuration.__dict__.get("_async_hooks"),
+                        self.sdk_configuration.__dict__.get("_hooks"),
+                        AfterParseErrorContext(_noresponse_hook_ctx),
+                        http_res,
+                        parse_exc_,
+                    )
+            _noresponse_response_cls = (
+                response_helpers.AsyncStreamedAPIResponse
+                if _noresponse_response_mode == "streaming"
+                else response_helpers.AsyncAPIResponse
+            )
+            return cast(
+                Any,
+                _noresponse_response_cls(
+                    raw=http_res,
+                    parser=_noresponse_parse_response,
+                    mode="buffered",
+                    client_ref=self,
+                    hook_ctx=AfterParseErrorContext(_noresponse_hook_ctx),
+                    hooks=self.sdk_configuration.__dict__.get("_hooks"),
+                    async_hooks=self.sdk_configuration.__dict__.get("_async_hooks"),
+                ),
+            )
+        try:
+            return await _noresponse_parse_response(http_res)
+        except Exception as parse_exc_:
+            await response_helpers.raise_parse_error_async(
+                self.sdk_configuration.__dict__.get("_async_hooks"),
+                self.sdk_configuration.__dict__.get("_hooks"),
+                AfterParseErrorContext(_noresponse_hook_ctx),
+                http_res,
+                parse_exc_,
+            )
+
+    def bind_account(
+        self,
+        assessment_id: str,
+        *,
+        account_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.operations.BindProvisionalAccountResponse:
+        r"""Bind a provisional signup account
+
+        One-time association to an opaque stable customer account. The assessment is its natural idempotency key. Repeating the same binding returns its first receipt; a conflicting target is refused. No arbitrary account merging.
+
+        :param assessment_id: Path segment, matched case-sensitively. A value that does not match the assessment_id shape answers 404, not 400.
+        :param account_id: Your own opaque identifier for the account being checked, scoped to your workspace. Use an id you mint, with no direct identifier (email, phone, name or national id) in it. '|' is accepted so an Auth0 user id such as 'auth0|64abc' passes unchanged; '@', '+', '
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.operations.BindProvisionalAccountRequest(
+            assessment_id=assessment_id,
+            body=models.shared.AccountBindingRequest(
+                account_id=account_id,
+            ),
+        )
+
+        _noresponse_response_mode, http_headers = response_helpers.consume_response_mode(http_headers)
+        req = self._build_request(
+            method="POST",
+            path="/v1/assessments/{assessment_id}/bind",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(request.body, False, False, "json", models.shared.AccountBindingRequest),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig("backoff", utils.BackoffStrategy(500, 8000, 2, 30000), True)
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "408",
+                "429",
+                "5XX"
+            ])
+
+        def _noresponse_parse_response(http_res):
+
+
+            response_data: Any = None
+            if utils.match_response(http_res, ["200","201"], "application/json"):
+                return models.operations.BindProvisionalAccountResponse(result=unmarshal_json_response(models.shared.AccountBinding, http_res )
+                , headers=utils.get_response_headers(http_res.headers))
+            if utils.match_response(http_res, "400", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.BadRequestErrorData, http_res)
+                raise models.errors.BadRequestError(response_data, http_res)
+            if utils.match_response(http_res, "401", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.AuthenticationErrorData, http_res)
+                raise models.errors.AuthenticationError(response_data, http_res)
+            if utils.match_response(http_res, "403", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.PermissionDeniedErrorData, http_res)
+                raise models.errors.PermissionDeniedError(response_data, http_res)
+            if utils.match_response(http_res, "404", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.NotFoundErrorData, http_res)
+                raise models.errors.NotFoundError(response_data, http_res)
+            if utils.match_response(http_res, "409", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.ConflictErrorData, http_res)
+                raise models.errors.ConflictError(response_data, http_res)
+            if utils.match_response(http_res, "429", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.RateLimitErrorData, http_res)
+                raise models.errors.RateLimitError(response_data, http_res)
+            if utils.match_response(http_res, "4XX", "*"):
+                http_res_text =  utils.stream_to_text(http_res)
+                raise models.errors.APIStatusError("API error occurred", http_res, http_res_text)
+            if utils.match_response(http_res, "5XX", "*"):
+                http_res_text =  utils.stream_to_text(http_res)
+                raise models.errors.APIStatusError("API error occurred", http_res, http_res_text)
+
+            raise models.errors.APIStatusError("Unexpected response received", http_res)
+        _noresponse_hook_ctx = HookContext(config=self.sdk_configuration, base_url=base_url or "", operation_id="bindProvisionalAccount", oauth2_scopes=None, security_source=get_security_from_env(self.sdk_configuration.security, models.shared.Security), tags=["assessments"], extensions=None, response=ResponseContext(mode=_noresponse_response_mode, execution="sync"))
+        http_res = self.do_request(
+            hook_ctx=_noresponse_hook_ctx,
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX","5XX"], c),
+            stream=_noresponse_response_mode == "streaming",
+            retry_config=retry_config
+        )
+        if _noresponse_response_mode != "parsed":
+            if utils.match_status_codes(["4XX","5XX"], http_res.status_code):
+                http_res.read()
+                try:
+                    _noresponse_parse_response(http_res)
+                except Exception as parse_exc_:
+                    response_helpers.raise_parse_error(self.sdk_configuration.__dict__['_hooks'],
+                        AfterParseErrorContext(_noresponse_hook_ctx),
+                        http_res,
+                        parse_exc_,
+                    )
+            _noresponse_response_cls = (
+                response_helpers.StreamedAPIResponse
+                if _noresponse_response_mode == "streaming"
+                else response_helpers.APIResponse
+            )
+            return cast(Any, _noresponse_response_cls(
+                raw=http_res,
+                parser=_noresponse_parse_response,
+                mode="buffered",
+                client_ref=self,
+                hook_ctx=AfterParseErrorContext(_noresponse_hook_ctx),
+                hooks=self.sdk_configuration.__dict__.get("_hooks"),
+
+            ))
+        try:
+            return _noresponse_parse_response(http_res)
+        except Exception as parse_exc_:
+            response_helpers.raise_parse_error(self.sdk_configuration.__dict__['_hooks'],
+                AfterParseErrorContext(_noresponse_hook_ctx),
+                http_res,
+                parse_exc_,
+            ) and whitespace are refused by the pattern, as is an exact-shape JWT; a hex digest such as a SHA-256 is allowed, because hashing an internal id is a common pseudonymous scheme. A value such as '07700900123' or 'jane.doe.gmail.com' cannot be told apart from an opaque id. It travels in bodies, and in a URL only as the path segment of GET /v1/accounts/{account_id} and its /assessments. An assessment requested by a provider hook at pre_registration, which has no account yet, carries the server-issued account_id pre: followed by its assessment_id.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.operations.BindProvisionalAccountRequest(
+            assessment_id=assessment_id,
+            body=models.shared.AccountBindingRequest(
+                account_id=account_id,
+            ),
+        )
+
+        _noresponse_response_mode, http_headers = (
+            response_helpers.consume_response_mode(http_headers)
+        )
+        req = self._build_request(
+            method="POST",
+            path="/v1/assessments/{assessment_id}/bind",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.body, False, False, "json", models.shared.AccountBindingRequest
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 8000, 2, 30000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["408", "429", "5XX"])
+
+        def _noresponse_parse_response(http_res):
+            response_data: Any = None
+            if utils.match_response(http_res, ["200", "201"], "application/json"):
+                return models.operations.BindProvisionalAccountResponse(
+                    result=unmarshal_json_response(
+                        models.shared.AccountBinding, http_res
+                    ),
+                    headers=utils.get_response_headers(http_res.headers),
+                )
+            if utils.match_response(http_res, "400", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.BadRequestErrorData, http_res
+                )
+                raise models.errors.BadRequestError(response_data, http_res)
+            if utils.match_response(http_res, "401", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.AuthenticationErrorData, http_res
+                )
+                raise models.errors.AuthenticationError(response_data, http_res)
+            if utils.match_response(http_res, "403", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.PermissionDeniedErrorData, http_res
+                )
+                raise models.errors.PermissionDeniedError(response_data, http_res)
+            if utils.match_response(http_res, "404", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.NotFoundErrorData, http_res
+                )
+                raise models.errors.NotFoundError(response_data, http_res)
+            if utils.match_response(http_res, "409", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.ConflictErrorData, http_res
+                )
+                raise models.errors.ConflictError(response_data, http_res)
+            if utils.match_response(http_res, "429", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.RateLimitErrorData, http_res
+                )
+                raise models.errors.RateLimitError(response_data, http_res)
+            if utils.match_response(http_res, "4XX", "*"):
+                http_res_text = utils.stream_to_text(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+            if utils.match_response(http_res, "5XX", "*"):
+                http_res_text = utils.stream_to_text(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+
+            raise models.errors.APIStatusError("Unexpected response received", http_res)
+
+        _noresponse_hook_ctx = HookContext(
+            config=self.sdk_configuration,
+            base_url=base_url or "",
+            operation_id="bindProvisionalAccount",
+            oauth2_scopes=None,
+            security_source=get_security_from_env(
+                self.sdk_configuration.security, models.shared.Security
+            ),
+            tags=["assessments"],
+            extensions=None,
+            response=ResponseContext(mode=_noresponse_response_mode, execution="sync"),
+        )
+        http_res = self.do_request(
+            hook_ctx=_noresponse_hook_ctx,
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            stream=_noresponse_response_mode == "streaming",
+            retry_config=retry_config,
+        )
+        if _noresponse_response_mode != "parsed":
+            if utils.match_status_codes(["4XX", "5XX"], http_res.status_code):
+                http_res.read()
+                try:
+                    _noresponse_parse_response(http_res)
+                except Exception as parse_exc_:
+                    response_helpers.raise_parse_error(
+                        self.sdk_configuration.__dict__["_hooks"],
+                        AfterParseErrorContext(_noresponse_hook_ctx),
+                        http_res,
+                        parse_exc_,
+                    )
+            _noresponse_response_cls = (
+                response_helpers.StreamedAPIResponse
+                if _noresponse_response_mode == "streaming"
+                else response_helpers.APIResponse
+            )
+            return cast(
+                Any,
+                _noresponse_response_cls(
+                    raw=http_res,
+                    parser=_noresponse_parse_response,
+                    mode="buffered",
+                    client_ref=self,
+                    hook_ctx=AfterParseErrorContext(_noresponse_hook_ctx),
+                    hooks=self.sdk_configuration.__dict__.get("_hooks"),
+                ),
+            )
+        try:
+            return _noresponse_parse_response(http_res)
+        except Exception as parse_exc_:
+            response_helpers.raise_parse_error(
+                self.sdk_configuration.__dict__["_hooks"],
+                AfterParseErrorContext(_noresponse_hook_ctx),
+                http_res,
+                parse_exc_,
+            )
+
+    async def bind_account_async(
+        self,
+        assessment_id: str,
+        *,
+        account_id: str,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.operations.BindProvisionalAccountResponse:
+        r"""Bind a provisional signup account
+
+        One-time association to an opaque stable customer account. The assessment is its natural idempotency key. Repeating the same binding returns its first receipt; a conflicting target is refused. No arbitrary account merging.
+
+        :param assessment_id: Path segment, matched case-sensitively. A value that does not match the assessment_id shape answers 404, not 400.
+        :param account_id: Your own opaque identifier for the account being checked, scoped to your workspace. Use an id you mint, with no direct identifier (email, phone, name or national id) in it. '|' is accepted so an Auth0 user id such as 'auth0|64abc' passes unchanged; '@', '+', '
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.operations.BindProvisionalAccountRequest(
+            assessment_id=assessment_id,
+            body=models.shared.AccountBindingRequest(
+                account_id=account_id,
+            ),
+        )
+
+        _noresponse_response_mode, http_headers = response_helpers.consume_response_mode(http_headers)
+        req = self._build_request_async(
+            method="POST",
+            path="/v1/assessments/{assessment_id}/bind",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(request.body, False, False, "json", models.shared.AccountBindingRequest),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig("backoff", utils.BackoffStrategy(500, 8000, 2, 30000), True)
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, [
+                "408",
+                "429",
+                "5XX"
+            ])
+
+        async def _noresponse_parse_response(http_res):
+
+
+            response_data: Any = None
+            if utils.match_response(http_res, ["200","201"], "application/json"):
+                return models.operations.BindProvisionalAccountResponse(result=unmarshal_json_response(models.shared.AccountBinding, http_res )
+                , headers=utils.get_response_headers(http_res.headers))
+            if utils.match_response(http_res, "400", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.BadRequestErrorData, http_res)
+                raise models.errors.BadRequestError(response_data, http_res)
+            if utils.match_response(http_res, "401", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.AuthenticationErrorData, http_res)
+                raise models.errors.AuthenticationError(response_data, http_res)
+            if utils.match_response(http_res, "403", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.PermissionDeniedErrorData, http_res)
+                raise models.errors.PermissionDeniedError(response_data, http_res)
+            if utils.match_response(http_res, "404", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.NotFoundErrorData, http_res)
+                raise models.errors.NotFoundError(response_data, http_res)
+            if utils.match_response(http_res, "409", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.ConflictErrorData, http_res)
+                raise models.errors.ConflictError(response_data, http_res)
+            if utils.match_response(http_res, "429", "application/problem+json"):
+                response_data = unmarshal_json_response(models.errors.RateLimitErrorData, http_res)
+                raise models.errors.RateLimitError(response_data, http_res)
+            if utils.match_response(http_res, "4XX", "*"):
+                http_res_text = await utils.stream_to_text_async(http_res)
+                raise models.errors.APIStatusError("API error occurred", http_res, http_res_text)
+            if utils.match_response(http_res, "5XX", "*"):
+                http_res_text = await utils.stream_to_text_async(http_res)
+                raise models.errors.APIStatusError("API error occurred", http_res, http_res_text)
+
+            raise models.errors.APIStatusError("Unexpected response received", http_res)
+        _noresponse_hook_ctx = HookContext(config=self.sdk_configuration, base_url=base_url or "", operation_id="bindProvisionalAccount", oauth2_scopes=None, security_source=get_security_from_env(self.sdk_configuration.security, models.shared.Security), tags=["assessments"], extensions=None, response=ResponseContext(mode=_noresponse_response_mode, execution="async"))
+        http_res = await self.do_request_async(
+            hook_ctx=_noresponse_hook_ctx,
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX","5XX"], c),
+            stream=_noresponse_response_mode == "streaming",
+            retry_config=retry_config
+        )
+        if _noresponse_response_mode != "parsed":
+            if utils.match_status_codes(["4XX","5XX"], http_res.status_code):
+                await http_res.aread()
+                try:
+                    await _noresponse_parse_response(http_res)
+                except Exception as parse_exc_:
+                    await response_helpers.raise_parse_error_async(self.sdk_configuration.__dict__.get('_async_hooks'), self.sdk_configuration.__dict__.get('_hooks'),
+                        AfterParseErrorContext(_noresponse_hook_ctx),
+                        http_res,
+                        parse_exc_,
+                    )
+            _noresponse_response_cls = (
+                response_helpers.AsyncStreamedAPIResponse
+                if _noresponse_response_mode == "streaming"
+                else response_helpers.AsyncAPIResponse
+            )
+            return cast(Any, _noresponse_response_cls(
+                raw=http_res,
+                parser=_noresponse_parse_response,
+                mode="buffered",
+                client_ref=self,
+                hook_ctx=AfterParseErrorContext(_noresponse_hook_ctx),
+                hooks=self.sdk_configuration.__dict__.get("_hooks"),
+                async_hooks=self.sdk_configuration.__dict__.get('_async_hooks'),
+            ))
+        try:
+            return await _noresponse_parse_response(http_res)
+        except Exception as parse_exc_:
+            await response_helpers.raise_parse_error_async(self.sdk_configuration.__dict__.get('_async_hooks'), self.sdk_configuration.__dict__.get('_hooks'),
+                AfterParseErrorContext(_noresponse_hook_ctx),
+                http_res,
+                parse_exc_,
+            ) and whitespace are refused by the pattern, as is an exact-shape JWT; a hex digest such as a SHA-256 is allowed, because hashing an internal id is a common pseudonymous scheme. A value such as '07700900123' or 'jane.doe.gmail.com' cannot be told apart from an opaque id. It travels in bodies, and in a URL only as the path segment of GET /v1/accounts/{account_id} and its /assessments. An assessment requested by a provider hook at pre_registration, which has no account yet, carries the server-issued account_id pre: followed by its assessment_id.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.operations.BindProvisionalAccountRequest(
+            assessment_id=assessment_id,
+            body=models.shared.AccountBindingRequest(
+                account_id=account_id,
+            ),
+        )
+
+        _noresponse_response_mode, http_headers = (
+            response_helpers.consume_response_mode(http_headers)
+        )
+        req = self._build_request_async(
+            method="POST",
+            path="/v1/assessments/{assessment_id}/bind",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.body, False, False, "json", models.shared.AccountBindingRequest
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 8000, 2, 30000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["408", "429", "5XX"])
+
+        async def _noresponse_parse_response(http_res):
+            response_data: Any = None
+            if utils.match_response(http_res, ["200", "201"], "application/json"):
+                return models.operations.BindProvisionalAccountResponse(
+                    result=unmarshal_json_response(
+                        models.shared.AccountBinding, http_res
+                    ),
+                    headers=utils.get_response_headers(http_res.headers),
+                )
+            if utils.match_response(http_res, "400", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.BadRequestErrorData, http_res
+                )
+                raise models.errors.BadRequestError(response_data, http_res)
+            if utils.match_response(http_res, "401", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.AuthenticationErrorData, http_res
+                )
+                raise models.errors.AuthenticationError(response_data, http_res)
+            if utils.match_response(http_res, "403", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.PermissionDeniedErrorData, http_res
+                )
+                raise models.errors.PermissionDeniedError(response_data, http_res)
+            if utils.match_response(http_res, "404", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.NotFoundErrorData, http_res
+                )
+                raise models.errors.NotFoundError(response_data, http_res)
+            if utils.match_response(http_res, "409", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.ConflictErrorData, http_res
+                )
+                raise models.errors.ConflictError(response_data, http_res)
+            if utils.match_response(http_res, "429", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.RateLimitErrorData, http_res
+                )
+                raise models.errors.RateLimitError(response_data, http_res)
+            if utils.match_response(http_res, "4XX", "*"):
+                http_res_text = await utils.stream_to_text_async(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+            if utils.match_response(http_res, "5XX", "*"):
+                http_res_text = await utils.stream_to_text_async(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+
+            raise models.errors.APIStatusError("Unexpected response received", http_res)
+
+        _noresponse_hook_ctx = HookContext(
+            config=self.sdk_configuration,
+            base_url=base_url or "",
+            operation_id="bindProvisionalAccount",
+            oauth2_scopes=None,
+            security_source=get_security_from_env(
+                self.sdk_configuration.security, models.shared.Security
+            ),
+            tags=["assessments"],
+            extensions=None,
+            response=ResponseContext(mode=_noresponse_response_mode, execution="async"),
+        )
+        http_res = await self.do_request_async(
+            hook_ctx=_noresponse_hook_ctx,
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            stream=_noresponse_response_mode == "streaming",
+            retry_config=retry_config,
+        )
+        if _noresponse_response_mode != "parsed":
+            if utils.match_status_codes(["4XX", "5XX"], http_res.status_code):
+                await http_res.aread()
+                try:
+                    await _noresponse_parse_response(http_res)
+                except Exception as parse_exc_:
+                    await response_helpers.raise_parse_error_async(
+                        self.sdk_configuration.__dict__.get("_async_hooks"),
+                        self.sdk_configuration.__dict__.get("_hooks"),
+                        AfterParseErrorContext(_noresponse_hook_ctx),
+                        http_res,
+                        parse_exc_,
+                    )
+            _noresponse_response_cls = (
+                response_helpers.AsyncStreamedAPIResponse
+                if _noresponse_response_mode == "streaming"
+                else response_helpers.AsyncAPIResponse
+            )
+            return cast(
+                Any,
+                _noresponse_response_cls(
+                    raw=http_res,
+                    parser=_noresponse_parse_response,
+                    mode="buffered",
+                    client_ref=self,
+                    hook_ctx=AfterParseErrorContext(_noresponse_hook_ctx),
+                    hooks=self.sdk_configuration.__dict__.get("_hooks"),
+                    async_hooks=self.sdk_configuration.__dict__.get("_async_hooks"),
+                ),
+            )
+        try:
+            return await _noresponse_parse_response(http_res)
+        except Exception as parse_exc_:
+            await response_helpers.raise_parse_error_async(
+                self.sdk_configuration.__dict__.get("_async_hooks"),
+                self.sdk_configuration.__dict__.get("_hooks"),
+                AfterParseErrorContext(_noresponse_hook_ctx),
+                http_res,
+                parse_exc_,
+            )
+
 
 class AssessmentsWithRawResponse:
     def __init__(self, sdk: Assessments) -> None:
@@ -2640,6 +4289,24 @@ class AssessmentsWithRawResponse:
         self.query = response_helpers.to_raw_response_wrapper(sdk.query, "http_headers")
         self.query_async = response_helpers.async_to_raw_response_wrapper(
             sdk.query_async, "http_headers"
+        )
+        self.search = response_helpers.to_raw_response_wrapper(
+            sdk.search, "http_headers"
+        )
+        self.search_async = response_helpers.async_to_raw_response_wrapper(
+            sdk.search_async, "http_headers"
+        )
+        self.retrieve_version = response_helpers.to_raw_response_wrapper(
+            sdk.retrieve_version, "http_headers"
+        )
+        self.retrieve_version_async = response_helpers.async_to_raw_response_wrapper(
+            sdk.retrieve_version_async, "http_headers"
+        )
+        self.bind_account = response_helpers.to_raw_response_wrapper(
+            sdk.bind_account, "http_headers"
+        )
+        self.bind_account_async = response_helpers.async_to_raw_response_wrapper(
+            sdk.bind_account_async, "http_headers"
         )
 
 
@@ -2675,4 +4342,24 @@ class AssessmentsWithStreamingResponse:
         )
         self.query_async = response_helpers.async_to_streamed_response_wrapper(
             sdk.query_async, "http_headers"
+        )
+        self.search = response_helpers.to_streamed_response_wrapper(
+            sdk.search, "http_headers"
+        )
+        self.search_async = response_helpers.async_to_streamed_response_wrapper(
+            sdk.search_async, "http_headers"
+        )
+        self.retrieve_version = response_helpers.to_streamed_response_wrapper(
+            sdk.retrieve_version, "http_headers"
+        )
+        self.retrieve_version_async = (
+            response_helpers.async_to_streamed_response_wrapper(
+                sdk.retrieve_version_async, "http_headers"
+            )
+        )
+        self.bind_account = response_helpers.to_streamed_response_wrapper(
+            sdk.bind_account, "http_headers"
+        )
+        self.bind_account_async = response_helpers.async_to_streamed_response_wrapper(
+            sdk.bind_account_async, "http_headers"
         )

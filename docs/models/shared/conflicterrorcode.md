@@ -24,6 +24,9 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"risk_version_ahead"`
 - `"key_limit_reached"`
 - `"self_revocation"`
+- `"outcome_conflict"`
+- `"credential_conflict"`
+- `"binding_conflict"`
 - `"list_entry_exists"`
 - `"list_limit_reached"`
 - `"list_entry_too_broad"`
