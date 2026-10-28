@@ -1,5 +1,15 @@
 # Changelog
 
+## 8.2.1
+
+* `sdk.assessments.create()`:  `response.detail.identifiers` **Added**
+* `sdk.assessments.get()`:  `response.detail.identifiers` **Added**
+* `sdk.assessments.query()`:  `response.items[].identifiers` **Added**
+* `sdk.assessments.search()`:  `response.items[].detail.identifiers` **Added**
+* `sdk.assessments.retrieve_version()`:  `response.detail.identifiers` **Added**
+* `sdk.accounts.list_assessments()`:  `response.items[].identifiers` **Added**
+* `sdk.accounts.export()`:  `response.assessments[].detail.identifiers` **Added**
+
 ## 8.2.0
 
 * `sdk.assessments.search()`: **Added**

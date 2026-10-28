@@ -268,6 +268,7 @@ if TYPE_CHECKING:
     from .risksummaryphone import RiskSummaryPhone, RiskSummaryPhoneTypedDict
     from .risksummaryusername import RiskSummaryUsername, RiskSummaryUsernameTypedDict
     from .security import Security, SecurityTypedDict
+    from .sentidentifiers import SentIdentifiers, SentIdentifiersTypedDict
     from .settings import Settings, SettingsTypedDict
     from .settingsflows import SettingsFlows, SettingsFlowsTypedDict
     from .settingsrequest import SettingsRequest, SettingsRequestTypedDict
@@ -598,6 +599,8 @@ __all__ = [
     "RiskTypedDict",
     "Security",
     "SecurityTypedDict",
+    "SentIdentifiers",
+    "SentIdentifiersTypedDict",
     "Settings",
     "SettingsFlows",
     "SettingsFlowsTypedDict",
@@ -948,6 +951,8 @@ _dynamic_imports: dict[str, str] = {
     "RiskSummaryUsernameTypedDict": ".risksummaryusername",
     "Security": ".security",
     "SecurityTypedDict": ".security",
+    "SentIdentifiers": ".sentidentifiers",
+    "SentIdentifiersTypedDict": ".sentidentifiers",
     "Settings": ".settings",
     "SettingsTypedDict": ".settings",
     "SettingsFlows": ".settingsflows",

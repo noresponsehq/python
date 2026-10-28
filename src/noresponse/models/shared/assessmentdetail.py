@@ -11,6 +11,7 @@ from .confidence import Confidence
 from .incompletesource import IncompleteSource, IncompleteSourceTypedDict
 from .recommendation import Recommendation
 from .risk import Risk, RiskTypedDict
+from .sentidentifiers import SentIdentifiers, SentIdentifiersTypedDict
 from .signal import Signal, SignalTypedDict
 from .status import Status
 from noresponse.types import BaseModel, UNSET_SENTINEL
@@ -47,6 +48,8 @@ class AssessmentDetailTypedDict(TypedDict):
     timing: AssessmentDetailTimingTypedDict
     schema_version: Literal["1"]
     r"""Version of the body shape."""
+    identifiers: NotRequired[SentIdentifiersTypedDict]
+    r"""The identifiers an assessment was sent: each member of the request's identifiers object exactly as received, before the server normalised it (the email domain keeps its case, the name its Unicode form). A member the request did not send is absent. NoResponse keeps them encrypted under the workspace's own key, does not index or log them, and deletes them with the assessment: on DELETE of the assessment or its account, at its expires_at, and with the workspace."""
     request_id: NotRequired[str]
     r"""An optional provider correlation id, echoed back. It is not an idempotency key. Refuses an exact-shape JWT or a bare 40, 64 or 128 character hex digest; a UUID is accepted."""
     recommendation: NotRequired[Recommendation]
@@ -103,6 +106,9 @@ class AssessmentDetail(BaseModel):
     ] = "1"
     r"""Version of the body shape."""
 
+    identifiers: Optional[SentIdentifiers] = None
+    r"""The identifiers an assessment was sent: each member of the request's identifiers object exactly as received, before the server normalised it (the email domain keeps its case, the name its Unicode form). A member the request did not send is absent. NoResponse keeps them encrypted under the workspace's own key, does not index or log them, and deletes them with the assessment: on DELETE of the assessment or its account, at its expires_at, and with the workspace."""
+
     request_id: Optional[str] = None
     r"""An optional provider correlation id, echoed back. It is not an idempotency key. Refuses an exact-shape JWT or a bare 40, 64 or 128 character hex digest; a UUID is accepted."""
 
@@ -134,6 +140,7 @@ class AssessmentDetail(BaseModel):
     def serialize_model(self, handler):
         optional_fields = set(
             [
+                "identifiers",
                 "request_id",
                 "recommendation",
                 "risk",
