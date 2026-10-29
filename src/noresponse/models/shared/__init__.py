@@ -171,6 +171,7 @@ if TYPE_CHECKING:
     from .conflicterrorcode import ConflictErrorCode
     from .consistency import Consistency, ConsistencyTypedDict
     from .consistencyvalue import ConsistencyValue
+    from .consolelookups import ConsoleLookups, ConsoleLookupsTypedDict
     from .cost import Cost, CostTypedDict
     from .country import Country
     from .coverage import Coverage, CoverageTypedDict
@@ -770,6 +771,8 @@ __all__ = [
     "Consistency",
     "ConsistencyTypedDict",
     "ConsistencyValue",
+    "ConsoleLookups",
+    "ConsoleLookupsTypedDict",
     "Cost",
     "CostTypedDict",
     "Country",
@@ -1361,6 +1364,8 @@ _dynamic_imports: dict[str, str] = {
     "Consistency": ".consistency",
     "ConsistencyTypedDict": ".consistency",
     "ConsistencyValue": ".consistencyvalue",
+    "ConsoleLookups": ".consolelookups",
+    "ConsoleLookupsTypedDict": ".consolelookups",
     "Cost": ".cost",
     "CostTypedDict": ".cost",
     "Country": ".country",

@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: 79c78abd35da0aef7c4885dd309c7a44
+  docChecksum: 9ece318308711c2b31be5b30179cc5d2
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 9.0.0
-  configChecksum: c9fdce119669ed50c136b0fbef51d51e
+  releaseVersion: 9.1.0
+  configChecksum: d1a83f09ed374a44779ed0f91832397f
 features:
   python:
     additionalDependencies: 1.1.0
@@ -610,6 +610,8 @@ trackedFiles:
     last_write_checksum: sha1:de5c27e53ccd287193c5428ba1bf5d7fef75c404
   docs/models/shared/consistencyvalue.md:
     last_write_checksum: sha1:bf7836ffc883e1d83f8cc0041fa1c46bc31f23fa
+  docs/models/shared/consolelookups.md:
+    last_write_checksum: sha1:2f74e7f90c4427fca60c4070f0fd7eb900dc0dd9
   docs/models/shared/cost.md:
     last_write_checksum: sha1:61b850b8d83a08ef1244fb3c7e857c3f5247b0f0
   docs/models/shared/country.md:
@@ -1063,7 +1065,7 @@ trackedFiles:
   docs/models/shared/transport.md:
     last_write_checksum: sha1:ea41299bcbe262cf1b869cfedc9d91fd41fcea30
   docs/models/shared/usage.md:
-    last_write_checksum: sha1:0ac21efbadb035a13fd624c38334f74f7b289669
+    last_write_checksum: sha1:be5dff4c2dd0d383cf336ee4c12feb6de0a9229a
   docs/models/shared/usagecount.md:
     last_write_checksum: sha1:0534112e56f7a29f3a7ef30f2ec57008f93357ee
   docs/models/shared/usagecountdepth.md:
@@ -1131,7 +1133,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:b00adf52bf1a4ddd1c683d4d478e73554a987043
   pyproject.toml:
-    last_write_checksum: sha1:8022849f739eab2f54783ba2282b1fcc84e28ec5
+    last_write_checksum: sha1:7f80ab7db6dbc4e3e0aa7dcbd0491d77a46e809e
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -1147,7 +1149,7 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:508dc398ccca9ca47265f7e7c348fbdb03a03ed6
+    last_write_checksum: sha1:ef14e643e020f375759e8c2d1b17f0567af44968
   src/noresponse/accounts.py:
     last_write_checksum: sha1:8d3d9eb6190e2bca35614368fae5b74a5a96d62d
   src/noresponse/assessments.py:
@@ -1399,7 +1401,7 @@ trackedFiles:
   src/noresponse/models/operations/updatesettings.py:
     last_write_checksum: sha1:a1c4d3af6ff0780cafd90d92347319266b0a4a5b
   src/noresponse/models/shared/__init__.py:
-    last_write_checksum: sha1:1bf3d4377f99679535f56fba2d840634fc5f2328
+    last_write_checksum: sha1:e260d38808d92ecf323669e964e98dfe24556cc3
   src/noresponse/models/shared/account.py:
     last_write_checksum: sha1:776f3ab4597212e0151452619ccf32c619b320da
   src/noresponse/models/shared/accountbinding.py:
@@ -1576,6 +1578,8 @@ trackedFiles:
     last_write_checksum: sha1:3d3e0d4a7070d7d02b41d5a51ef07ac66ade8ce6
   src/noresponse/models/shared/consistencyvalue.py:
     last_write_checksum: sha1:74ddde7d0c303c2dfc9fa240766d8d236a80cb8b
+  src/noresponse/models/shared/consolelookups.py:
+    last_write_checksum: sha1:6730be8df4a8a69246def432ab7920bc488ad740
   src/noresponse/models/shared/cost.py:
     last_write_checksum: sha1:31bd749401d397c5fc32bd620b19d542f014d967
   src/noresponse/models/shared/country.py:
@@ -1983,7 +1987,7 @@ trackedFiles:
   src/noresponse/models/shared/transport.py:
     last_write_checksum: sha1:34f89da47042749db18d2a1691909b16d0892b14
   src/noresponse/models/shared/usage.py:
-    last_write_checksum: sha1:b18170ec12c6cb521ea209d1631dfd041bb0ec70
+    last_write_checksum: sha1:42901aeed71ce1eb8cb967562c827a7826a439d2
   src/noresponse/models/shared/usagecount.py:
     last_write_checksum: sha1:9858c69fefe89ec1d2ce9fc7bf96dca5b760d59b
   src/noresponse/models/shared/usagecountdepth.py:
@@ -2061,7 +2065,7 @@ trackedFiles:
   src/noresponse/types/basemodel.py:
     last_write_checksum: sha1:23cb76003d146dbd3770da223b40b0a7b0d3c0fa
   src/noresponse/usage.py:
-    last_write_checksum: sha1:6b43f44c17ef3daa971f76933c9c40f80c7cbe71
+    last_write_checksum: sha1:8d9c1d21de556b05cf6f9989450b46510ebf3faf
   src/noresponse/utils/__init__.py:
     last_write_checksum: sha1:1afbe171d67dc37692b11a13989a988680d343af
   src/noresponse/utils/annotations.py:
@@ -3318,7 +3322,7 @@ examples:
           workspace_id: "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
       responses:
         "200":
-          application/json: {"workspace_id": "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "from": "2026-10-22", "to": "2026-10-23", "items": [{"environment": "live", "day": "2026-10-22", "metric": "assessments", "flow": "login", "depth": "quick", "count": 412}, {"environment": "live", "day": "2026-10-22", "metric": "assessments", "flow": "account_creation", "depth": "full", "count": 96}, {"environment": "live", "day": "2026-10-22", "metric": "webhook_deliveries", "count": 508}, {"environment": "live", "day": "2026-10-23", "metric": "assessments", "flow": "account_creation", "depth": "full", "count": 101}, {"environment": "live", "day": "2026-10-23", "metric": "key_usage_events", "count": 2330}, {"environment": "test", "day": "2026-10-23", "metric": "assessments", "flow": "purchase", "depth": "full", "count": 7}]}
+          application/json: {"workspace_id": "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "from": "2026-10-22", "to": "2026-10-23", "items": [{"environment": "live", "day": "2026-10-22", "metric": "assessments", "flow": "login", "depth": "quick", "count": 412}, {"environment": "live", "day": "2026-10-22", "metric": "assessments", "flow": "account_creation", "depth": "full", "count": 96}, {"environment": "live", "day": "2026-10-22", "metric": "webhook_deliveries", "count": 508}, {"environment": "live", "day": "2026-10-23", "metric": "assessments", "flow": "account_creation", "depth": "full", "count": 101}, {"environment": "live", "day": "2026-10-23", "metric": "key_usage_events", "count": 2330}, {"environment": "test", "day": "2026-10-23", "metric": "assessments", "flow": "purchase", "depth": "full", "count": 7}], "console_lookups": {"used": 12, "limit": 50, "resets_at": "2026-10-24T00:00:00.000Z"}}
   createInvite:
     open:
       parameters:

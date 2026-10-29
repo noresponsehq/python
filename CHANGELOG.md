@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.1.0
+
+* `sdk.usage.get()`:  `response.console_lookups` **Added**
+
 ## 9.0.0
 
 * `sdk.accounts.list_outcomes()`: 
