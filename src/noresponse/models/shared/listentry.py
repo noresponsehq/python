@@ -28,6 +28,8 @@ class ListEntryTypedDict(TypedDict):
     r"""The external user id of the member who added the entry through the console, or the prefix (nrk_<environment>_<key id>) of the management key that added it."""
     note: NotRequired[str]
     r"""Why the entry exists, for the people who manage the list. It is shown with the entry and decides nothing."""
+    expires_at: NotRequired[str]
+    r"""Optional expiry. An expired entry stops matching immediately; bounded maintenance removes it and propagates account risk changes."""
 
 
 class ListEntry(BaseModel):
@@ -59,9 +61,12 @@ class ListEntry(BaseModel):
     note: Optional[str] = None
     r"""Why the entry exists, for the people who manage the list. It is shown with the entry and decides nothing."""
 
+    expires_at: Optional[str] = None
+    r"""Optional expiry. An expired entry stops matching immediately; bounded maintenance removes it and propagates account risk changes."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["note"])
+        optional_fields = set(["note", "expires_at"])
         serialized = handler(self)
         m = {}
 

@@ -11,7 +11,7 @@ class WebhookReplayTypedDict(TypedDict):
     event_id: str
     r"""The replayed event's id. The receiver sees the same id and body as the first time, with a new NR-Webhook-Timestamp and signature."""
     event_type: str
-    r"""The event's type, as its body's type: assessment.updated, endpoint.verification, account.deleted, workspace.deleted, webhook_endpoint.disabled, account.risk_changed, or a type added later."""
+    r"""The event's type, as its body's type: assessment.updated, endpoint.verification, account.deleted, workspace.deleted, webhook_endpoint.disabled, account.risk_changed, audit.event, or a type added later."""
 
 
 class WebhookReplay(BaseModel):
@@ -24,4 +24,4 @@ class WebhookReplay(BaseModel):
     r"""The replayed event's id. The receiver sees the same id and body as the first time, with a new NR-Webhook-Timestamp and signature."""
 
     event_type: str
-    r"""The event's type, as its body's type: assessment.updated, endpoint.verification, account.deleted, workspace.deleted, webhook_endpoint.disabled, account.risk_changed, or a type added later."""
+    r"""The event's type, as its body's type: assessment.updated, endpoint.verification, account.deleted, workspace.deleted, webhook_endpoint.disabled, account.risk_changed, audit.event, or a type added later."""

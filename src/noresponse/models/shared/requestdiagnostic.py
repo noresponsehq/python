@@ -22,6 +22,8 @@ class RequestDiagnosticTypedDict(TypedDict):
     error_code: NotRequired[str]
     decision: NotRequired[DecisionReceiptTypedDict]
     r"""The decision prepared for one HTTP attempt. Its account field preserves the account decision returned for that attempt, even after subsequent changes."""
+    api_key_id: NotRequired[str]
+    r"""Public authenticated API key identifier. Absent for member requests and older unattributed diagnostics."""
 
 
 class RequestDiagnostic(BaseModel):
@@ -52,9 +54,12 @@ class RequestDiagnostic(BaseModel):
     decision: Optional[DecisionReceipt] = None
     r"""The decision prepared for one HTTP attempt. Its account field preserves the account decision returned for that attempt, even after subsequent changes."""
 
+    api_key_id: Optional[str] = None
+    r"""Public authenticated API key identifier. Absent for member requests and older unattributed diagnostics."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["error_code", "decision"])
+        optional_fields = set(["error_code", "decision", "api_key_id"])
         serialized = handler(self)
         m = {}
 

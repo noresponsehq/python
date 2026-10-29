@@ -3,11 +3,11 @@ from noresponse.types import UnrecognizedStr
 from typing import Literal, Union
 
 
-DefaultDepth = Union[
+UsageCountDepth = Union[
     Literal[
         "quick",
         "full",
     ],
     UnrecognizedStr,
 ]
-r"""The depth a request for this flow that names none is served at. Defaults: full for account_creation and purchase, quick for login."""
+r"""assessments only."""

@@ -1,5 +1,6 @@
 from __future__ import annotations
 from .keyenvironment import KeyEnvironment
+from .keykind import KeyKind
 from .keystatus import KeyStatus
 from noresponse.types import BaseModel, UNSET_SENTINEL, UnrecognizedStr
 from pydantic import model_serializer
@@ -16,6 +17,16 @@ KeyScope = Union[
         "detailed",
         "integrations",
         "management",
+        "audit",
+        "usage",
+        "investigate",
+        "evidence",
+        "exports",
+        "audit_manage",
+        "settings",
+        "policy_publish",
+        "members",
+        "members_manage",
     ],
     UnrecognizedStr,
 ]
@@ -40,12 +51,23 @@ class KeyTypedDict(TypedDict):
     created_by: NotRequired[str]
     r"""The external user id of the member who created the key through the console, or the prefix (nrk_<environment>_<key id>) of the management key that created it. Absent for a key NoResponse issued or a rotation made."""
     expires_at: NotRequired[str]
-    r"""When a rotated key stops authenticating (POST /v1/keys/rotate). Absent for a key with no end."""
+    r"""The earlier of the explicit lifetime and any rotation overlap. Rotation preserves the original lifetime."""
     revoked_at: NotRequired[str]
     revoked_by: NotRequired[str]
     r"""The external user id of the member who revoked the key through the console, or the prefix of the management key that revoked it. Absent when the key is not revoked or NoResponse revoked it."""
     key: NotRequired[str]
     r"""The credential, nrk_<environment>_<key id>_<secret>. Present only in the 201 answer that created the key."""
+    name: NotRequired[str]
+    r"""The optional display name supplied for this API key. Preserved on rotation."""
+    purpose: NotRequired[str]
+    r"""Optional operational purpose, at most 200 printable characters without leading or trailing whitespace. Do not put secrets or personal data here. Preserved on rotation and included in the creation request fingerprint; omitted for older credentials."""
+    kind: NotRequired[KeyKind]
+    owner_user_id: NotRequired[str]
+    r"""The issuing member's external identity for a personal key. Personal ownership is fixed and the key is revoked when that member loses authority. Service keys belong to the workspace and omit this field."""
+    rotated_to: NotRequired[str]
+    r"""Replacement public key identifier, or legacy when the successor predates recorded lineage. This field excludes the secret."""
+    last_used_at: NotRequired[str]
+    r"""Latest recorded authenticated request observation, updated at most once per minute. Capture is best effort after the response and includes authenticated requests refused by authorization or rate limits. Absence means unknown and does not prove the key was unused. It is independent of diagnostic retention and resets on the replacement key after rotation. This field retains no raw IP or user-agent."""
 
 
 class Key(BaseModel):
@@ -75,7 +97,7 @@ class Key(BaseModel):
     r"""The external user id of the member who created the key through the console, or the prefix (nrk_<environment>_<key id>) of the management key that created it. Absent for a key NoResponse issued or a rotation made."""
 
     expires_at: Optional[str] = None
-    r"""When a rotated key stops authenticating (POST /v1/keys/rotate). Absent for a key with no end."""
+    r"""The earlier of the explicit lifetime and any rotation overlap. Rotation preserves the original lifetime."""
 
     revoked_at: Optional[str] = None
 
@@ -85,10 +107,39 @@ class Key(BaseModel):
     key: Optional[str] = None
     r"""The credential, nrk_<environment>_<key id>_<secret>. Present only in the 201 answer that created the key."""
 
+    name: Optional[str] = None
+    r"""The optional display name supplied for this API key. Preserved on rotation."""
+
+    purpose: Optional[str] = None
+    r"""Optional operational purpose, at most 200 printable characters without leading or trailing whitespace. Do not put secrets or personal data here. Preserved on rotation and included in the creation request fingerprint; omitted for older credentials."""
+
+    kind: Optional[KeyKind] = None
+
+    owner_user_id: Optional[str] = None
+    r"""The issuing member's external identity for a personal key. Personal ownership is fixed and the key is revoked when that member loses authority. Service keys belong to the workspace and omit this field."""
+
+    rotated_to: Optional[str] = None
+    r"""Replacement public key identifier, or legacy when the successor predates recorded lineage. This field excludes the secret."""
+
+    last_used_at: Optional[str] = None
+    r"""Latest recorded authenticated request observation, updated at most once per minute. Capture is best effort after the response and includes authenticated requests refused by authorization or rate limits. Absence means unknown and does not prove the key was unused. It is independent of diagnostic retention and resets on the replacement key after rotation. This field retains no raw IP or user-agent."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["created_by", "expires_at", "revoked_at", "revoked_by", "key"]
+            [
+                "created_by",
+                "expires_at",
+                "revoked_at",
+                "revoked_by",
+                "key",
+                "name",
+                "purpose",
+                "kind",
+                "owner_user_id",
+                "rotated_to",
+                "last_used_at",
+            ]
         )
         serialized = handler(self)
         m = {}

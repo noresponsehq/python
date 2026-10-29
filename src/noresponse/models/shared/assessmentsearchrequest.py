@@ -1,7 +1,12 @@
 from __future__ import annotations
 from .answerrevision import AnswerRevision
+from .band import Band
 from .decision import Decision
 from .flow import Flow
+from .impact import Impact
+from .lane import Lane
+from .listmatch import ListMatch
+from .reasoncode import ReasonCode
 from .recommendation import Recommendation
 from .responsemode import ResponseMode
 from .status import Status
@@ -34,6 +39,21 @@ class AssessmentSearchRequestTypedDict(TypedDict):
     r"""An assessment's own decision: block when its stored risk.block is true, otherwise its recommendation. It is not the account's decision or held-admission state."""
     revision: NotRequired[AnswerRevision]
     r"""Which answer of each assessment the filters describe: latest, the latest stored revision, or first, the first answer, as served when the assessment was first answered (POST /v1/assessments/aggregate counts first answers). A cell of an aggregate drills down to POST /v1/assessments/search with the same filters, revision first and the cell's bucket as from and to."""
+    band: NotRequired[Band]
+    reason: NotRequired[ReasonCode]
+    r"""A stable reason code. New codes may appear; ignore any you do not know."""
+    impact: NotRequired[Impact]
+    r"""The selected reason's served impact band. Requires reason."""
+    lane: NotRequired[Lane]
+    r"""An evidence lane: accounts (account presence for email and username), phone, breach, domain (the email domain's registration) and ip."""
+    country: NotRequired[str]
+    asn: NotRequired[int]
+    score_min: NotRequired[int]
+    r"""Inclusive lower score bound. Pending answers without a score do not match."""
+    score_max: NotRequired[int]
+    r"""Inclusive upper score bound, at least score_min when both are supplied."""
+    list_match: NotRequired[ListMatch]
+    r"""The list action captured at the first answer. Requires revision first. Older answers without captured list state do not match, including none."""
 
 
 class AssessmentSearchRequest(BaseModel):
@@ -69,6 +89,30 @@ class AssessmentSearchRequest(BaseModel):
     revision: Optional[AnswerRevision] = None
     r"""Which answer of each assessment the filters describe: latest, the latest stored revision, or first, the first answer, as served when the assessment was first answered (POST /v1/assessments/aggregate counts first answers). A cell of an aggregate drills down to POST /v1/assessments/search with the same filters, revision first and the cell's bucket as from and to."""
 
+    band: Optional[Band] = None
+
+    reason: Optional[ReasonCode] = None
+    r"""A stable reason code. New codes may appear; ignore any you do not know."""
+
+    impact: Optional[Impact] = None
+    r"""The selected reason's served impact band. Requires reason."""
+
+    lane: Optional[Lane] = None
+    r"""An evidence lane: accounts (account presence for email and username), phone, breach, domain (the email domain's registration) and ip."""
+
+    country: Optional[str] = None
+
+    asn: Optional[int] = None
+
+    score_min: Optional[int] = None
+    r"""Inclusive lower score bound. Pending answers without a score do not match."""
+
+    score_max: Optional[int] = None
+    r"""Inclusive upper score bound, at least score_min when both are supplied."""
+
+    list_match: Optional[ListMatch] = None
+    r"""The list action captured at the first answer. Requires revision first. Older answers without captured list state do not match, including none."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -82,6 +126,15 @@ class AssessmentSearchRequest(BaseModel):
                 "response_mode",
                 "decision",
                 "revision",
+                "band",
+                "reason",
+                "impact",
+                "lane",
+                "country",
+                "asn",
+                "score_min",
+                "score_max",
+                "list_match",
             ]
         )
         serialized = handler(self)

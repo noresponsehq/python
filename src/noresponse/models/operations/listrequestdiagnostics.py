@@ -6,7 +6,7 @@ from noresponse.types import BaseModel, UNSET_SENTINEL
 from noresponse.utils import FieldMetadata, QueryParamMetadata
 import pydantic
 from pydantic import model_serializer
-from typing import Dict, List, Optional
+from typing import Awaitable, Callable, Dict, List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -25,6 +25,8 @@ class ListRequestDiagnosticsRequestTypedDict(TypedDict):
     r"""Optional filter or paging parameter."""
     cursor: NotRequired[str]
     r"""Optional filter or paging parameter."""
+    api_key_id: NotRequired[str]
+    r"""Filter by the public authenticated API key identifier; older unattributed rows do not match."""
 
 
 class ListRequestDiagnosticsRequest(BaseModel):
@@ -70,9 +72,17 @@ class ListRequestDiagnosticsRequest(BaseModel):
     ] = None
     r"""Optional filter or paging parameter."""
 
+    api_key_id: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Filter by the public authenticated API key identifier; older unattributed rows do not match."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["request_id", "route", "status", "limit", "cursor"])
+        optional_fields = set(
+            ["request_id", "route", "status", "limit", "cursor", "api_key_id"]
+        )
         serialized = handler(self)
         m = {}
 
@@ -93,6 +103,11 @@ class ListRequestDiagnosticsResponseTypedDict(TypedDict):
 
 
 class ListRequestDiagnosticsResponse(BaseModel):
+    next: Union[
+        Callable[[], Optional[ListRequestDiagnosticsResponse]],
+        Callable[[], Awaitable[Optional[ListRequestDiagnosticsResponse]]],
+    ]
+
     headers: Dict[str, List[str]]
 
     result: shared_requestdiagnosticpage.RequestDiagnosticPage

@@ -1,7 +1,7 @@
 from __future__ import annotations
 from .admission import Admission
-from .defaultdepth import DefaultDepth
 from .onexpiry import OnExpiry
+from .usagecountdepth import UsageCountDepth
 from noresponse.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
 from typing import Optional
@@ -13,8 +13,8 @@ class FlowSettingsTypedDict(TypedDict):
 
     step_up: int
     review: int
-    default_depth: DefaultDepth
-    r"""The depth a request for this flow that names none is served at. Defaults: full for account_creation and purchase, quick for login."""
+    default_depth: UsageCountDepth
+    r"""assessments only."""
     inherits_account_creation: bool
     r"""true while this flow has no thresholds of its own and uses account_creation's, the default for login and purchase. Always false for signup."""
     admission: Admission
@@ -34,8 +34,8 @@ class FlowSettings(BaseModel):
 
     review: int
 
-    default_depth: DefaultDepth
-    r"""The depth a request for this flow that names none is served at. Defaults: full for account_creation and purchase, quick for login."""
+    default_depth: UsageCountDepth
+    r"""assessments only."""
 
     inherits_account_creation: bool
     r"""true while this flow has no thresholds of its own and uses account_creation's, the default for login and purchase. Always false for signup."""

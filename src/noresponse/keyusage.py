@@ -8,6 +8,8 @@ from typing import Any, Iterable, List, Mapping, Optional, Union, cast
 
 
 class KeyUsage(BaseSDK):
+    r"""Usage of keys issued to your accounts."""
+
     @property
     def with_raw_response(self):
         return KeyUsageWithRawResponse(self)

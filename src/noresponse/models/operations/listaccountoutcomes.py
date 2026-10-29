@@ -3,7 +3,7 @@ from noresponse.models.shared import accountoutcomepage as shared_accountoutcome
 from noresponse.types import BaseModel, UNSET_SENTINEL
 from noresponse.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
 from pydantic import model_serializer
-from typing import Dict, List, Optional
+from typing import Awaitable, Callable, Dict, List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -57,6 +57,11 @@ class ListAccountOutcomesResponseTypedDict(TypedDict):
 
 
 class ListAccountOutcomesResponse(BaseModel):
+    next: Union[
+        Callable[[], Optional[ListAccountOutcomesResponse]],
+        Callable[[], Awaitable[Optional[ListAccountOutcomesResponse]]],
+    ]
+
     headers: Dict[str, List[str]]
 
     result: shared_accountoutcomepage.AccountOutcomePage

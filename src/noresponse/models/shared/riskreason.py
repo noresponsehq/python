@@ -16,6 +16,7 @@ class RiskReasonTypedDict(TypedDict):
     r"""A stable reason code. New codes may appear; ignore any you do not know."""
     direction: Direction
     impact: Impact
+    r"""The selected reason's served impact band. Requires reason."""
     identifier: NotRequired[ReasonIdentifier]
     r"""The submitted identifier or client context field a reason concerns; absent when it concerns the whole assessment. Client context is a claimed hint, not a device fingerprint."""
     list_entry_id: NotRequired[str]
@@ -31,6 +32,7 @@ class RiskReason(BaseModel):
     direction: Direction
 
     impact: Impact
+    r"""The selected reason's served impact band. Requires reason."""
 
     identifier: Optional[ReasonIdentifier] = None
     r"""The submitted identifier or client context field a reason concerns; absent when it concerns the whole assessment. Client context is a claimed hint, not a device fingerprint."""

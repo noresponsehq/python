@@ -1,0 +1,13 @@
+# AuditSettings
+
+Read audit retention and available history.
+
+
+## Fields
+
+| Field                                                                              | Type                                                                               | Required                                                                           | Description                                                                        | Example                                                                            |
+| ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| `environment`                                                                      | [shared.AuditSettingsEnvironment](../../models/shared/auditsettingsenvironment.md) | :heavy_check_mark:                                                                 | N/A                                                                                |                                                                                    |
+| `retention_days`                                                                   | *int*                                                                              | :heavy_check_mark:                                                                 | N/A                                                                                |                                                                                    |
+| `oldest_available_at`                                                              | *Optional[str]*                                                                    | :heavy_minus_sign:                                                                 | N/A                                                                                | 2026-01-01T00:00:00Z                                                               |
+| `capture`                                                                          | *Literal["available_events_only"]*                                                 | :heavy_check_mark:                                                                 | N/A                                                                                |                                                                                    |

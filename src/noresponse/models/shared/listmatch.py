@@ -1,13 +1,10 @@
 from __future__ import annotations
-from noresponse.types import UnrecognizedStr
-from typing import Literal, Union
+from typing import Literal
 
 
-ListMatch = Union[
-    Literal[
-        "block",
-        "allow",
-    ],
-    UnrecognizedStr,
+ListMatch = Literal[
+    "allow",
+    "block",
+    "none",
 ]
-r"""The action of the list entry that decided the account."""
+r"""The list action captured at the first answer. Requires revision first. Older answers without captured list state do not match, including none."""

@@ -8,17 +8,20 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class SettingsRequestTypedDict(TypedDict):
-    r"""PATCH /v1/workspaces/{workspace_id}/settings/{environment} body. Changes only what it names, in one transaction; a policy change is one new policy_version. Needs the admin or owner role, or an API key with the management scope for its own environment."""
+    r"""Changes only named settings, atomically. Every successful write advances policy_version and retains an immutable settings snapshot. expected_policy_version optionally guards against stale edits; restore always requires it."""
 
     retention_days: NotRequired[int]
     refused_sources: NotRequired[List[SourceID]]
     r"""Replaces the refused sources; [] refuses none. A change applies to new assessments within a minute."""
     flows: NotRequired[SettingsRequestFlowsTypedDict]
     r"""Use account_creation or its deprecated alias signup, not both."""
+    expected_policy_version: NotRequired[int]
+    r"""Compare-and-set guard. A stale version returns 409 policy_version_conflict before any change; every settings write including retention advances the version."""
+    change_reason: NotRequired[str]
 
 
 class SettingsRequest(BaseModel):
-    r"""PATCH /v1/workspaces/{workspace_id}/settings/{environment} body. Changes only what it names, in one transaction; a policy change is one new policy_version. Needs the admin or owner role, or an API key with the management scope for its own environment."""
+    r"""Changes only named settings, atomically. Every successful write advances policy_version and retains an immutable settings snapshot. expected_policy_version optionally guards against stale edits; restore always requires it."""
 
     retention_days: Optional[int] = None
 
@@ -28,9 +31,22 @@ class SettingsRequest(BaseModel):
     flows: Optional[SettingsRequestFlows] = None
     r"""Use account_creation or its deprecated alias signup, not both."""
 
+    expected_policy_version: Optional[int] = None
+    r"""Compare-and-set guard. A stale version returns 409 policy_version_conflict before any change; every settings write including retention advances the version."""
+
+    change_reason: Optional[str] = None
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["retention_days", "refused_sources", "flows"])
+        optional_fields = set(
+            [
+                "retention_days",
+                "refused_sources",
+                "flows",
+                "expected_policy_version",
+                "change_reason",
+            ]
+        )
         serialized = handler(self)
         m = {}
 

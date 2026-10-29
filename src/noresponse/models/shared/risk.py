@@ -20,7 +20,6 @@ class RiskTypedDict(TypedDict):
 
     score: int
     band: Band
-    r"""low 0-29, medium 30-59, high 60-84, critical 85-100."""
     recommendation: Recommendation
     r"""The recommended action: allow, step_up or review. Your application applies it."""
     confidence: RiskConfidence
@@ -49,7 +48,6 @@ class Risk(BaseModel):
     score: int
 
     band: Band
-    r"""low 0-29, medium 30-59, high 60-84, critical 85-100."""
 
     recommendation: Recommendation
     r"""The recommended action: allow, step_up or review. Your application applies it."""

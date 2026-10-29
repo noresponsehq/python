@@ -2627,6 +2627,16 @@ class Assessments(BaseSDK):
         recommendation: Optional[models.shared.Recommendation] = None,
         decision: Optional[models.shared.Decision] = None,
         revision: Optional[models.shared.AnswerRevision] = None,
+        population: Optional[models.shared.Population] = None,
+        band: Optional[models.shared.Band] = None,
+        reason: Optional[models.shared.ReasonCode] = None,
+        impact: Optional[models.shared.Impact] = None,
+        lane: Optional[models.shared.Lane] = None,
+        country: Optional[str] = None,
+        asn: Optional[int] = None,
+        score_min: Optional[int] = None,
+        score_max: Optional[int] = None,
+        list_match: Optional[models.shared.ListMatch] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -2639,7 +2649,7 @@ class Assessments(BaseSDK):
         :param from_: The first bucket's start.
         :param to: The end, excluded: the start of the bucket after the last.
         :param bucket: The period each count covers, in UTC; a week starts on Monday.
-        :param group_by: At most two dimensions to count by, of which at most one is reason, lane, country or asn. An assessment counts once in each of its reasons and incomplete lanes, so those groups can add up to more than the bucket's count.
+        :param group_by: At most two dimensions to count by, of which at most one is reason, lane, country or asn. An assessment counts once in each of its reasons and incomplete lanes, so those groups can add up to more than the bucket's count. With population retained_first_answers, both dimensions can be facets; counts cover retained first answers only.
         :param metrics: count: each bucket's count and groups. score_histogram: first answers by flow and 5-point score bucket. score_outcomes: the histogram's first answers that have a reported outcome, by flow, 5-point score bucket and the latest outcome reported for the assessment (POST /v1/assessments/{assessment_id}/outcomes); the rest of a bin has none reported. late_flips: changes of an assessment's account decision for its flow after its first answer, by from, to and delay.
         :param limit: The most groups answered: the largest over the whole range, then by value. groups_truncated says when there were more.
         :param flow: The event an assessment is made for: account_creation (a user creates an account), login (a user returns to an existing account) or purchase (a payment or a credit grant). The account's risk is reported with the decision for this flow.
@@ -2647,6 +2657,16 @@ class Assessments(BaseSDK):
         :param recommendation: The recommended action: allow, step_up or review. Your application applies it.
         :param decision: An assessment's own decision: block when its stored risk.block is true, otherwise its recommendation. It is not the account's decision or held-admission state.
         :param revision: Which answer of each assessment the filters describe: latest, the latest stored revision, or first, the first answer, as served when the assessment was first answered (POST /v1/assessments/aggregate counts first answers). A cell of an aggregate drills down to POST /v1/assessments/search with the same filters, revision first and the cell's bucket as from and to.
+        :param population: first_answers uses anonymous counters that can include erased detail. retained_first_answers computes exact intersections over retained first answers within 31 days. Requests exceeding the 100000-record work budget are refused.
+        :param band:
+        :param reason: A stable reason code. New codes may appear; ignore any you do not know.
+        :param impact: The selected reason's served impact band. Requires reason.
+        :param lane: An evidence lane: accounts (account presence for email and username), phone, breach, domain (the email domain's registration) and ip.
+        :param country:
+        :param asn:
+        :param score_min: Inclusive lower score bound. Pending answers without a score do not match.
+        :param score_max: Inclusive upper score bound, at least score_min when both are supplied.
+        :param list_match: The list action captured at the first answer. Requires revision first. Older answers without captured list state do not match, including none.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -2678,6 +2698,16 @@ class Assessments(BaseSDK):
             recommendation=recommendation,
             decision=decision,
             revision=revision,
+            population=population,
+            band=band,
+            reason=reason,
+            impact=impact,
+            lane=lane,
+            country=country,
+            asn=asn,
+            score_min=score_min,
+            score_max=score_max,
+            list_match=list_match,
         )
 
         _noresponse_response_mode, http_headers = (
@@ -2840,6 +2870,16 @@ class Assessments(BaseSDK):
         recommendation: Optional[models.shared.Recommendation] = None,
         decision: Optional[models.shared.Decision] = None,
         revision: Optional[models.shared.AnswerRevision] = None,
+        population: Optional[models.shared.Population] = None,
+        band: Optional[models.shared.Band] = None,
+        reason: Optional[models.shared.ReasonCode] = None,
+        impact: Optional[models.shared.Impact] = None,
+        lane: Optional[models.shared.Lane] = None,
+        country: Optional[str] = None,
+        asn: Optional[int] = None,
+        score_min: Optional[int] = None,
+        score_max: Optional[int] = None,
+        list_match: Optional[models.shared.ListMatch] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -2852,7 +2892,7 @@ class Assessments(BaseSDK):
         :param from_: The first bucket's start.
         :param to: The end, excluded: the start of the bucket after the last.
         :param bucket: The period each count covers, in UTC; a week starts on Monday.
-        :param group_by: At most two dimensions to count by, of which at most one is reason, lane, country or asn. An assessment counts once in each of its reasons and incomplete lanes, so those groups can add up to more than the bucket's count.
+        :param group_by: At most two dimensions to count by, of which at most one is reason, lane, country or asn. An assessment counts once in each of its reasons and incomplete lanes, so those groups can add up to more than the bucket's count. With population retained_first_answers, both dimensions can be facets; counts cover retained first answers only.
         :param metrics: count: each bucket's count and groups. score_histogram: first answers by flow and 5-point score bucket. score_outcomes: the histogram's first answers that have a reported outcome, by flow, 5-point score bucket and the latest outcome reported for the assessment (POST /v1/assessments/{assessment_id}/outcomes); the rest of a bin has none reported. late_flips: changes of an assessment's account decision for its flow after its first answer, by from, to and delay.
         :param limit: The most groups answered: the largest over the whole range, then by value. groups_truncated says when there were more.
         :param flow: The event an assessment is made for: account_creation (a user creates an account), login (a user returns to an existing account) or purchase (a payment or a credit grant). The account's risk is reported with the decision for this flow.
@@ -2860,6 +2900,16 @@ class Assessments(BaseSDK):
         :param recommendation: The recommended action: allow, step_up or review. Your application applies it.
         :param decision: An assessment's own decision: block when its stored risk.block is true, otherwise its recommendation. It is not the account's decision or held-admission state.
         :param revision: Which answer of each assessment the filters describe: latest, the latest stored revision, or first, the first answer, as served when the assessment was first answered (POST /v1/assessments/aggregate counts first answers). A cell of an aggregate drills down to POST /v1/assessments/search with the same filters, revision first and the cell's bucket as from and to.
+        :param population: first_answers uses anonymous counters that can include erased detail. retained_first_answers computes exact intersections over retained first answers within 31 days. Requests exceeding the 100000-record work budget are refused.
+        :param band:
+        :param reason: A stable reason code. New codes may appear; ignore any you do not know.
+        :param impact: The selected reason's served impact band. Requires reason.
+        :param lane: An evidence lane: accounts (account presence for email and username), phone, breach, domain (the email domain's registration) and ip.
+        :param country:
+        :param asn:
+        :param score_min: Inclusive lower score bound. Pending answers without a score do not match.
+        :param score_max: Inclusive upper score bound, at least score_min when both are supplied.
+        :param list_match: The list action captured at the first answer. Requires revision first. Older answers without captured list state do not match, including none.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -2891,6 +2941,16 @@ class Assessments(BaseSDK):
             recommendation=recommendation,
             decision=decision,
             revision=revision,
+            population=population,
+            band=band,
+            reason=reason,
+            impact=impact,
+            lane=lane,
+            country=country,
+            asn=asn,
+            score_min=score_min,
+            score_max=score_max,
+            list_match=list_match,
         )
 
         _noresponse_response_mode, http_headers = (
@@ -3054,6 +3114,15 @@ class Assessments(BaseSDK):
         response_mode: Optional[models.shared.ResponseMode] = None,
         decision: Optional[models.shared.Decision] = None,
         revision: Optional[models.shared.AnswerRevision] = None,
+        band: Optional[models.shared.Band] = None,
+        reason: Optional[models.shared.ReasonCode] = None,
+        impact: Optional[models.shared.Impact] = None,
+        lane: Optional[models.shared.Lane] = None,
+        country: Optional[str] = None,
+        asn: Optional[int] = None,
+        score_min: Optional[int] = None,
+        score_max: Optional[int] = None,
+        list_match: Optional[models.shared.ListMatch] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -3088,6 +3157,15 @@ class Assessments(BaseSDK):
             response_mode=response_mode,
             decision=decision,
             revision=revision,
+            band=band,
+            reason=reason,
+            impact=impact,
+            lane=lane,
+            country=country,
+            asn=asn,
+            score_min=score_min,
+            score_max=score_max,
+            list_match=list_match,
         )
 
         _noresponse_response_mode, http_headers = response_helpers.consume_response_mode(http_headers)
@@ -3205,6 +3283,15 @@ class Assessments(BaseSDK):
         :param response_mode: standard returns the consolidated risk response; detailed adds merged provider-neutral facts when the key has detailed scope. There is no raw mode.
         :param decision: An assessment's own decision: block when its stored risk.block is true, otherwise its recommendation. It is not the account's decision or held-admission state.
         :param revision: Which answer of each assessment the filters describe: latest, the latest stored revision, or first, the first answer, as served when the assessment was first answered (POST /v1/assessments/aggregate counts first answers). A cell of an aggregate drills down to POST /v1/assessments/search with the same filters, revision first and the cell's bucket as from and to.
+        :param band:
+        :param reason: A stable reason code. New codes may appear; ignore any you do not know.
+        :param impact: The selected reason's served impact band. Requires reason.
+        :param lane: An evidence lane: accounts (account presence for email and username), phone, breach, domain (the email domain's registration) and ip.
+        :param country:
+        :param asn:
+        :param score_min: Inclusive lower score bound. Pending answers without a score do not match.
+        :param score_max: Inclusive upper score bound, at least score_min when both are supplied.
+        :param list_match: The list action captured at the first answer. Requires revision first. Older answers without captured list state do not match, including none.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3232,6 +3319,15 @@ class Assessments(BaseSDK):
             response_mode=response_mode,
             decision=decision,
             revision=revision,
+            band=band,
+            reason=reason,
+            impact=impact,
+            lane=lane,
+            country=country,
+            asn=asn,
+            score_min=score_min,
+            score_max=score_max,
+            list_match=list_match,
         )
 
         _noresponse_response_mode, http_headers = (
@@ -3392,6 +3488,15 @@ class Assessments(BaseSDK):
         response_mode: Optional[models.shared.ResponseMode] = None,
         decision: Optional[models.shared.Decision] = None,
         revision: Optional[models.shared.AnswerRevision] = None,
+        band: Optional[models.shared.Band] = None,
+        reason: Optional[models.shared.ReasonCode] = None,
+        impact: Optional[models.shared.Impact] = None,
+        lane: Optional[models.shared.Lane] = None,
+        country: Optional[str] = None,
+        asn: Optional[int] = None,
+        score_min: Optional[int] = None,
+        score_max: Optional[int] = None,
+        list_match: Optional[models.shared.ListMatch] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -3426,6 +3531,15 @@ class Assessments(BaseSDK):
             response_mode=response_mode,
             decision=decision,
             revision=revision,
+            band=band,
+            reason=reason,
+            impact=impact,
+            lane=lane,
+            country=country,
+            asn=asn,
+            score_min=score_min,
+            score_max=score_max,
+            list_match=list_match,
         )
 
         _noresponse_response_mode, http_headers = response_helpers.consume_response_mode(http_headers)
@@ -3543,6 +3657,15 @@ class Assessments(BaseSDK):
         :param response_mode: standard returns the consolidated risk response; detailed adds merged provider-neutral facts when the key has detailed scope. There is no raw mode.
         :param decision: An assessment's own decision: block when its stored risk.block is true, otherwise its recommendation. It is not the account's decision or held-admission state.
         :param revision: Which answer of each assessment the filters describe: latest, the latest stored revision, or first, the first answer, as served when the assessment was first answered (POST /v1/assessments/aggregate counts first answers). A cell of an aggregate drills down to POST /v1/assessments/search with the same filters, revision first and the cell's bucket as from and to.
+        :param band:
+        :param reason: A stable reason code. New codes may appear; ignore any you do not know.
+        :param impact: The selected reason's served impact band. Requires reason.
+        :param lane: An evidence lane: accounts (account presence for email and username), phone, breach, domain (the email domain's registration) and ip.
+        :param country:
+        :param asn:
+        :param score_min: Inclusive lower score bound. Pending answers without a score do not match.
+        :param score_max: Inclusive upper score bound, at least score_min when both are supplied.
+        :param list_match: The list action captured at the first answer. Requires revision first. Older answers without captured list state do not match, including none.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3570,6 +3693,15 @@ class Assessments(BaseSDK):
             response_mode=response_mode,
             decision=decision,
             revision=revision,
+            band=band,
+            reason=reason,
+            impact=impact,
+            lane=lane,
+            country=country,
+            asn=asn,
+            score_min=score_min,
+            score_max=score_max,
+            list_match=list_match,
         )
 
         _noresponse_response_mode, http_headers = (

@@ -17,3 +17,5 @@ value: RateLimitErrorCode = "rate_limited"
 This is an open enum. Unrecognized values will not fail type checks.
 
 - `"rate_limited"`
+- `"assessment_budget_exhausted"`
+- `"export_limit_reached"`

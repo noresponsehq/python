@@ -12,3 +12,4 @@ Impact = Union[
     ],
     UnrecognizedStr,
 ]
+r"""The selected reason's served impact band. Requires reason."""

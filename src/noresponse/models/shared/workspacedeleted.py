@@ -1,5 +1,5 @@
 from __future__ import annotations
-from .environment import Environment
+from .auditsettingsenvironment import AuditSettingsEnvironment
 from noresponse.types import BaseModel
 from typing_extensions import TypedDict
 
@@ -9,8 +9,7 @@ class WorkspaceDeletedTypedDict(TypedDict):
 
     workspace_id: str
     r"""The workspace id, which is also its live environment's workspace id; the test environment's is the same id with :test appended. A workspace created through the API is tnt_ and a 26-character ULID."""
-    environment: Environment
-    r"""The environment whose endpoints receive this event: live, or test for the workspace's test environment."""
+    environment: AuditSettingsEnvironment
     deleted_at: str
     r"""When the deletion took effect, equal to deleted_at in the DELETE answer."""
 
@@ -21,8 +20,7 @@ class WorkspaceDeleted(BaseModel):
     workspace_id: str
     r"""The workspace id, which is also its live environment's workspace id; the test environment's is the same id with :test appended. A workspace created through the API is tnt_ and a 26-character ULID."""
 
-    environment: Environment
-    r"""The environment whose endpoints receive this event: live, or test for the workspace's test environment."""
+    environment: AuditSettingsEnvironment
 
     deleted_at: str
     r"""When the deletion took effect, equal to deleted_at in the DELETE answer."""

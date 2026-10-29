@@ -15,12 +15,21 @@ import weakref
 if TYPE_CHECKING:
     from noresponse.accounts import Accounts
     from noresponse.assessments import Assessments
+    from noresponse.audit import Audit
+    from noresponse.erasures import Erasures
+    from noresponse.evaluations import Evaluations
+    from noresponse.exports import Exports
     from noresponse.integrations import Integrations
+    from noresponse.invites import Invites
     from noresponse.keys import Keys
     from noresponse.keyusage import KeyUsage
     from noresponse.lists import Lists
+    from noresponse.members import Members
+    from noresponse.operations import Operations
     from noresponse.requests import Requests
+    from noresponse.reviews import Reviews
     from noresponse.settings import Settings
+    from noresponse.usage import Usage
     from noresponse.webhookendpoints import WebhookEndpoints
 
 
@@ -43,15 +52,37 @@ class NoResponse(BaseSDK):
     accounts: "Accounts"
     r"""Your accounts, each with one current risk, and their assessment history."""
     key_usage: "KeyUsage"
+    r"""Usage of keys issued to your accounts."""
     keys: "Keys"
     r"""Your own API keys."""
     integrations: "Integrations"
     r"""Hosted endpoints that answer your sign-up and sign-in hooks."""
     webhook_endpoints: "WebhookEndpoints"
     r"""Your webhook endpoints: register, list, rotate signing keys, send test events and delete."""
+    members: "Members"
+    r"""Scoped workspace membership automation."""
+    audit: "Audit"
+    r"""Durable audit history, retention and delivery."""
+    usage: "Usage"
+    r"""Recorded usage for your environment."""
+    invites: "Invites"
+    r"""Workspace-bound invitation lifecycle."""
     settings: "Settings"
+    r"""Environment policy, history and previews."""
     requests: "Requests"
+    r"""Retained request diagnostics and operational summaries."""
     lists: "Lists"
+    r"""List entries, previews and durable changes."""
+    reviews: "Reviews"
+    r"""Collaborative review cases, comments and linked subjects."""
+    erasures: "Erasures"
+    r"""Durable deletion receipts."""
+    exports: "Exports"
+    r"""Bounded customer export jobs and encrypted artifacts."""
+    evaluations: "Evaluations"
+    r"""Frozen policy evaluation evidence and reviewed publication."""
+    operations: "Operations"
+    r"""Retained outcomes, enforcement reports and review populations."""
     _sub_sdk_map = {
         "assessments": ("noresponse.assessments", "Assessments"),
         "accounts": ("noresponse.accounts", "Accounts"),
@@ -59,9 +90,18 @@ class NoResponse(BaseSDK):
         "keys": ("noresponse.keys", "Keys"),
         "integrations": ("noresponse.integrations", "Integrations"),
         "webhook_endpoints": ("noresponse.webhookendpoints", "WebhookEndpoints"),
+        "members": ("noresponse.members", "Members"),
+        "audit": ("noresponse.audit", "Audit"),
+        "usage": ("noresponse.usage", "Usage"),
+        "invites": ("noresponse.invites", "Invites"),
         "settings": ("noresponse.settings", "Settings"),
         "requests": ("noresponse.requests", "Requests"),
         "lists": ("noresponse.lists", "Lists"),
+        "reviews": ("noresponse.reviews", "Reviews"),
+        "erasures": ("noresponse.erasures", "Erasures"),
+        "exports": ("noresponse.exports", "Exports"),
+        "evaluations": ("noresponse.evaluations", "Evaluations"),
+        "operations": ("noresponse.operations", "Operations"),
     }
 
     def __init__(
@@ -248,6 +288,22 @@ class NoResponseWithRawResponse:
         return self._sdk.webhook_endpoints.with_raw_response
 
     @property
+    def members(self):
+        return self._sdk.members.with_raw_response
+
+    @property
+    def audit(self):
+        return self._sdk.audit.with_raw_response
+
+    @property
+    def usage(self):
+        return self._sdk.usage.with_raw_response
+
+    @property
+    def invites(self):
+        return self._sdk.invites.with_raw_response
+
+    @property
     def settings(self):
         return self._sdk.settings.with_raw_response
 
@@ -258,6 +314,26 @@ class NoResponseWithRawResponse:
     @property
     def lists(self):
         return self._sdk.lists.with_raw_response
+
+    @property
+    def reviews(self):
+        return self._sdk.reviews.with_raw_response
+
+    @property
+    def erasures(self):
+        return self._sdk.erasures.with_raw_response
+
+    @property
+    def exports(self):
+        return self._sdk.exports.with_raw_response
+
+    @property
+    def evaluations(self):
+        return self._sdk.evaluations.with_raw_response
+
+    @property
+    def operations(self):
+        return self._sdk.operations.with_raw_response
 
 
 class NoResponseWithStreamingResponse:
@@ -289,6 +365,22 @@ class NoResponseWithStreamingResponse:
         return self._sdk.webhook_endpoints.with_streaming_response
 
     @property
+    def members(self):
+        return self._sdk.members.with_streaming_response
+
+    @property
+    def audit(self):
+        return self._sdk.audit.with_streaming_response
+
+    @property
+    def usage(self):
+        return self._sdk.usage.with_streaming_response
+
+    @property
+    def invites(self):
+        return self._sdk.invites.with_streaming_response
+
+    @property
     def settings(self):
         return self._sdk.settings.with_streaming_response
 
@@ -299,3 +391,23 @@ class NoResponseWithStreamingResponse:
     @property
     def lists(self):
         return self._sdk.lists.with_streaming_response
+
+    @property
+    def reviews(self):
+        return self._sdk.reviews.with_streaming_response
+
+    @property
+    def erasures(self):
+        return self._sdk.erasures.with_streaming_response
+
+    @property
+    def exports(self):
+        return self._sdk.exports.with_streaming_response
+
+    @property
+    def evaluations(self):
+        return self._sdk.evaluations.with_streaming_response
+
+    @property
+    def operations(self):
+        return self._sdk.operations.with_streaming_response

@@ -1,5 +1,139 @@
 # Changelog
 
+## 9.0.0
+
+* `sdk.accounts.list_outcomes()`: 
+  *  `response.items[].actor` **Changed** (Breaking ⚠️)
+  *  `error.code` **Changed**
+* `sdk.accounts.record_outcome()`: 
+  *  `response.actor` **Changed** (Breaking ⚠️)
+  *  `error.code` **Changed**
+* `sdk.accounts.export()`: 
+  *  `response` **Changed** (Breaking ⚠️)
+  *  `error.code` **Changed**
+* `sdk.keys.create()`: 
+  *  `request` **Changed**
+  *  `response` **Changed** (Breaking ⚠️)
+  *  `error.code` **Changed**
+* `sdk.accounts.list_enforcements()`: **Added**
+* `sdk.accounts.list_decisions()`: **Added**
+* `sdk.webhook_endpoints.aggregate()`: **Added**
+* `sdk.members.list()`: **Added**
+* `sdk.members.remove()`: **Added**
+* `sdk.members.update()`: **Added**
+* `sdk.audit.list()`: **Added**
+* `sdk.audit.get_retention()`: **Added**
+* `sdk.audit.update_retention()`: **Added**
+* `sdk.audit.list_streams()`: **Added**
+* `sdk.audit.configure_stream()`: **Added**
+* `sdk.audit.remove_stream()`: **Added**
+* `sdk.audit.replay_stream()`: **Added**
+* `sdk.usage.get()`: **Added**
+* `sdk.invites.list()`: **Added**
+* `sdk.invites.create()`: **Added**
+* `sdk.invites.revoke()`: **Added**
+* `sdk.invites.resend()`: **Added**
+* `sdk.settings.list_history()`: **Added**
+* `sdk.settings.restore()`: **Added**
+* `sdk.settings.preview()`: **Added**
+* `sdk.requests.aggregate()`: **Added**
+* `sdk.lists.preview()`: **Added**
+* `sdk.lists.change()`: **Added**
+* `sdk.lists.get_change()`: **Added**
+* `sdk.reviews.list()`: **Added**
+* `sdk.reviews.create()`: **Added**
+* `sdk.reviews.get()`: **Added**
+* `sdk.reviews.update()`: **Added**
+* `sdk.reviews.resolve()`: **Added**
+* `sdk.reviews.list_comments()`: **Added**
+* `sdk.reviews.comment()`: **Added**
+* `sdk.reviews.list_resolutions()`: **Added**
+* `sdk.reviews.list_views()`: **Added**
+* `sdk.reviews.create_view()`: **Added**
+* `sdk.reviews.delete_view()`: **Added**
+* `sdk.reviews.update_view()`: **Added**
+* `sdk.reviews.export()`: **Added**
+* `sdk.reviews.list_subjects()`: **Added**
+* `sdk.reviews.add_subject()`: **Added**
+* `sdk.reviews.delete_subject()`: **Added**
+* `sdk.erasures.get()`: **Added**
+* `sdk.exports.list()`: **Added**
+* `sdk.exports.create()`: **Added**
+* `sdk.exports.get()`: **Added**
+* `sdk.exports.cancel()`: **Added**
+* `sdk.exports.retry()`: **Added**
+* `sdk.exports.download_chunk()`: **Added**
+* `sdk.evaluations.list()`: **Added**
+* `sdk.evaluations.create()`: **Added**
+* `sdk.evaluations.get()`: **Added**
+* `sdk.evaluations.get_result()`: **Added**
+* `sdk.evaluations.cancel()`: **Added**
+* `sdk.evaluations.publish()`: **Added**
+* `sdk.operations.summarize()`: **Added**
+* `sdk.assessments.create()`:  `error.code` **Changed**
+* `sdk.assessments.get()`:  `error.code` **Changed**
+* `sdk.assessments.delete()`: 
+  *  `response.erasure_id` **Added**
+  *  `error.code` **Changed**
+* `sdk.assessments.record_outcome()`:  `error.code` **Changed**
+* `sdk.assessments.query()`:  `error.code` **Changed**
+* `sdk.assessments.aggregate()`: 
+  *  `request` **Changed**
+  *  `response` **Changed**
+  *  `error.code` **Changed**
+* `sdk.assessments.search()`: 
+  *  `request` **Changed**
+  *  `error.code` **Changed**
+* `sdk.assessments.retrieve_version()`:  `error.code` **Changed**
+* `sdk.assessments.bind_account()`:  `error.code` **Changed**
+* `sdk.accounts.list_changed()`:  `error.code` **Changed**
+* `sdk.accounts.get()`:  `error.code` **Changed**
+* `sdk.accounts.delete()`: 
+  *  `response.erasure_id` **Added**
+  *  `error.code` **Changed**
+* `sdk.accounts.list_assessments()`:  `error.code` **Changed**
+* `sdk.accounts.record_enforcement()`:  `error.code` **Changed**
+* `sdk.accounts.retrieve_decision()`:  `error.code` **Changed**
+* `sdk.accounts.list_credentials()`:  `error.code` **Changed**
+* `sdk.accounts.associate_credential()`:  `error.code` **Changed**
+* `sdk.accounts.retire_credential()`:  `error.code` **Changed**
+* `sdk.key_usage.record()`:  `error.code` **Changed**
+* `sdk.keys.rotate()`:  `error.code` **Changed**
+* `sdk.keys.list()`: 
+  *  `response.items[]` **Changed**
+  *  `error.code` **Changed**
+* `sdk.keys.revoke()`: 
+  *  `response` **Changed**
+  *  `error.code` **Changed**
+* `sdk.integrations.list()`:  `error.code` **Changed**
+* `sdk.integrations.create()`:  `error.code` **Changed**
+* `sdk.integrations.delete()`:  `error.code` **Changed**
+* `sdk.integrations.rotate()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.list()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.create()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.delete()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.rotate_signing_key()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.send_test_event()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.list_deliveries()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.replay_delivery()`:  `error.code` **Changed**
+* `sdk.settings.get()`:  `error.code` **Changed**
+* `sdk.settings.update()`: 
+  *  `request` **Changed**
+  *  `error.code` **Changed**
+* `sdk.requests.list()`: 
+  *  `request.api_key_id` **Added**
+  *  `response.items[].api_key_id` **Added**
+  *  `error.code` **Changed**
+* `sdk.lists.list()`: 
+  *  `request` **Changed**
+  *  `response` **Changed**
+  *  `error.code` **Changed**
+* `sdk.lists.create()`: 
+  *  `request.expires_at` **Added**
+  *  `response.expires_at` **Added**
+  *  `error.code` **Changed**
+* `sdk.lists.delete()`:  `error.code` **Changed**
+
 ## 8.4.1
 
 No changes detected.

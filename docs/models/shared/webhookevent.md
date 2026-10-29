@@ -41,3 +41,9 @@ value: shared.WebhookEndpointDisabledEvent = /* values here */
 value: shared.AccountRiskChangedEvent = /* values here */
 ```
 
+### `shared.AuditEventEvent`
+
+```python
+value: shared.AuditEventEvent = /* values here */
+```
+

@@ -3,12 +3,13 @@ from .assessmentdeletionaccount import (
     AssessmentDeletionAccount,
     AssessmentDeletionAccountTypedDict,
 )
-from noresponse.types import BaseModel
+from noresponse.types import BaseModel, UNSET_SENTINEL
 from noresponse.utils import validate_const
 import pydantic
+from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import Literal
-from typing_extensions import Annotated, TypedDict
+from typing import Literal, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class AssessmentDeletionTypedDict(TypedDict):
@@ -22,6 +23,8 @@ class AssessmentDeletionTypedDict(TypedDict):
     schema_version: Literal["1"]
     r"""Version of the body shape."""
     deleted: Literal[True]
+    erasure_id: NotRequired[str]
+    r"""Receipt for GET /v1/erasures/{erasure_id}, when durable storage issued one."""
 
 
 class AssessmentDeletion(BaseModel):
@@ -45,6 +48,25 @@ class AssessmentDeletion(BaseModel):
         Annotated[Literal[True], AfterValidator(validate_const(True))],
         pydantic.Field(alias="deleted"),
     ] = True
+
+    erasure_id: Optional[str] = None
+    r"""Receipt for GET /v1/erasures/{erasure_id}, when durable storage issued one."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["erasure_id"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
 
 
 try:

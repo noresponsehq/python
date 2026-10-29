@@ -18,7 +18,7 @@ class SettingsTypedDict(TypedDict):
     retention_days: int
     r"""Days an assessment is kept after it is created, 1 to 365 (default 365). Shortening hides older assessments at once."""
     policy_version: int
-    r"""How many times this environment's policy has changed; 0 while the defaults apply. A served risk.policy_version ends in +t<policy_version> once it is above 0."""
+    r"""The monotonic settings configuration epoch, including retention changes. Zero while defaults apply. Historical assessments keep their frozen policy version; the active version reaches new assessments within a minute."""
     flows: SettingsFlowsTypedDict
     refused_sources: List[SourceID]
     r"""The sources this environment refuses, sorted; empty, the default, refuses none. An assessment leaves a refused source out: its coverage is missing (an identifier with no other source lists coverage-unavailable as unavailable) rather than not_found, and a stored result of a refused source is not reused."""
@@ -41,7 +41,7 @@ class Settings(BaseModel):
     r"""Days an assessment is kept after it is created, 1 to 365 (default 365). Shortening hides older assessments at once."""
 
     policy_version: int
-    r"""How many times this environment's policy has changed; 0 while the defaults apply. A served risk.policy_version ends in +t<policy_version> once it is above 0."""
+    r"""The monotonic settings configuration epoch, including retention changes. Zero while defaults apply. Historical assessments keep their frozen policy version; the active version reaches new assessments within a minute."""
 
     flows: SettingsFlows
 

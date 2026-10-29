@@ -347,17 +347,27 @@ class Keys(BaseSDK):
         *,
         environment: models.shared.KeyEnvironment,
         scopes: Iterable[models.shared.KeyRequestScope],
+        name: Optional[str] = None,
+        purpose: Optional[str] = None,
+        kind: Optional[models.shared.KeyKind] = None,
+        expires_at: Optional[str] = None,
+        request_id: Optional[str] = None,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.operations.CreateKeyResponse:
         r"""Create an API key.
 
-        Creates an API key in the environment of the key that signs the request, with scopes that key holds itself, and returns its secret once in key. Requires the management scope; the new key may hold it too. A scope the signing key lacks answers 403 workspace_forbidden, and the other environment 404 not_found. An environment holds at most 100 keys that authenticate (409 key_limit_reached). created_by is the signing key's prefix. Not idempotent: a retry after a lost answer creates a second key, which you can list and revoke.
+        Create an API key in the signing key environment with authority no greater than the issuer holds. Requires management. Optional name, purpose, kind and expiry describe its lifecycle. Send request_id for safe issuance retries: the first successful response returns the secret once; a repeat returns existing metadata without the secret, and changed parameters conflict. Without request_id a retry can create another key. A service credential is independent of its issuer; personal credentials require an authenticated member and retire when that member loses authority.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment the key belongs to. A live key assesses with live sources; a test key answers from the deterministic simulator.
         :param scopes: The key's scopes, each at most once.
+        :param name: Optional display name for this API key, at most 100 printable characters. Preserved on rotation.
+        :param purpose: Optional operational purpose, at most 200 printable characters without leading or trailing whitespace. Do not put secrets or personal data here. Preserved on rotation and included in the creation request fingerprint; omitted for older credentials.
+        :param kind:
+        :param expires_at: Between one minute and 365 days from now.
+        :param request_id: Caller-chosen identifier for one creation attempt, scoped to the issuing actor and environment. Use 1 to 256 printable ASCII characters without spaces. A retry with the same parameters returns the original key metadata with status 200 and no secret; changed parameters return 409.
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         :param http_headers: Additional headers to set or replace on requests.
@@ -377,6 +387,11 @@ class Keys(BaseSDK):
             body=models.shared.KeyRequest(
                 environment=environment,
                 scopes=utils.unmarshal(scopes, List[models.shared.KeyRequestScope]),
+                name=name,
+                purpose=purpose,
+                kind=kind,
+                expires_at=expires_at,
+                request_id=request_id,
             ),
         )
 
@@ -405,7 +420,7 @@ class Keys(BaseSDK):
 
         def _noresponse_parse_response(http_res):
             response_data: Any = None
-            if utils.match_response(http_res, "201", "application/json"):
+            if utils.match_response(http_res, ["200", "201"], "application/json"):
                 return models.operations.CreateKeyResponse(
                     result=unmarshal_json_response(models.shared.Key, http_res),
                     headers=utils.get_response_headers(http_res.headers),
@@ -515,17 +530,27 @@ class Keys(BaseSDK):
         *,
         environment: models.shared.KeyEnvironment,
         scopes: Iterable[models.shared.KeyRequestScope],
+        name: Optional[str] = None,
+        purpose: Optional[str] = None,
+        kind: Optional[models.shared.KeyKind] = None,
+        expires_at: Optional[str] = None,
+        request_id: Optional[str] = None,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.operations.CreateKeyResponse:
         r"""Create an API key.
 
-        Creates an API key in the environment of the key that signs the request, with scopes that key holds itself, and returns its secret once in key. Requires the management scope; the new key may hold it too. A scope the signing key lacks answers 403 workspace_forbidden, and the other environment 404 not_found. An environment holds at most 100 keys that authenticate (409 key_limit_reached). created_by is the signing key's prefix. Not idempotent: a retry after a lost answer creates a second key, which you can list and revoke.
+        Create an API key in the signing key environment with authority no greater than the issuer holds. Requires management. Optional name, purpose, kind and expiry describe its lifecycle. Send request_id for safe issuance retries: the first successful response returns the secret once; a repeat returns existing metadata without the secret, and changed parameters conflict. Without request_id a retry can create another key. A service credential is independent of its issuer; personal credentials require an authenticated member and retire when that member loses authority.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment the key belongs to. A live key assesses with live sources; a test key answers from the deterministic simulator.
         :param scopes: The key's scopes, each at most once.
+        :param name: Optional display name for this API key, at most 100 printable characters. Preserved on rotation.
+        :param purpose: Optional operational purpose, at most 200 printable characters without leading or trailing whitespace. Do not put secrets or personal data here. Preserved on rotation and included in the creation request fingerprint; omitted for older credentials.
+        :param kind:
+        :param expires_at: Between one minute and 365 days from now.
+        :param request_id: Caller-chosen identifier for one creation attempt, scoped to the issuing actor and environment. Use 1 to 256 printable ASCII characters without spaces. A retry with the same parameters returns the original key metadata with status 200 and no secret; changed parameters return 409.
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         :param http_headers: Additional headers to set or replace on requests.
@@ -545,6 +570,11 @@ class Keys(BaseSDK):
             body=models.shared.KeyRequest(
                 environment=environment,
                 scopes=utils.unmarshal(scopes, List[models.shared.KeyRequestScope]),
+                name=name,
+                purpose=purpose,
+                kind=kind,
+                expires_at=expires_at,
+                request_id=request_id,
             ),
         )
 
@@ -573,7 +603,7 @@ class Keys(BaseSDK):
 
         async def _noresponse_parse_response(http_res):
             response_data: Any = None
-            if utils.match_response(http_res, "201", "application/json"):
+            if utils.match_response(http_res, ["200", "201"], "application/json"):
                 return models.operations.CreateKeyResponse(
                     result=unmarshal_json_response(models.shared.Key, http_res),
                     headers=utils.get_response_headers(http_res.headers),

@@ -29,6 +29,7 @@ Exclusion = Union[
         "cross_customer_data",
         "legacy_outcome_notes",
         "uncaptured_historical_decisions",
+        "investigator_reviews_require_review_export",
     ],
     UnrecognizedStr,
 ]

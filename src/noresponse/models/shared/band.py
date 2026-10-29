@@ -12,4 +12,3 @@ Band = Union[
     ],
     UnrecognizedStr,
 ]
-r"""low 0-29, medium 30-59, high 60-84, critical 85-100."""

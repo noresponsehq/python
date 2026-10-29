@@ -20,3 +20,4 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"cross_customer_data"`
 - `"legacy_outcome_notes"`
 - `"uncaptured_historical_decisions"`
+- `"investigator_reviews_require_review_export"`

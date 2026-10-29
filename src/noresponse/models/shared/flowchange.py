@@ -1,7 +1,7 @@
 from __future__ import annotations
 from .admission import Admission
-from .defaultdepth import DefaultDepth
 from .onexpiry import OnExpiry
+from .usagecountdepth import UsageCountDepth
 from noresponse.types import (
     BaseModel,
     Nullable,
@@ -22,8 +22,8 @@ class FlowChangeTypedDict(TypedDict):
     review: NotRequired[int]
     block: NotRequired[Nullable[int]]
     r"""The score from which the decision is block; null turns blocking off."""
-    default_depth: NotRequired[DefaultDepth]
-    r"""The depth a request for this flow that names none is served at. Defaults: full for account_creation and purchase, quick for login."""
+    default_depth: NotRequired[UsageCountDepth]
+    r"""assessments only."""
     inherits_account_creation: NotRequired[bool]
     r"""Login or purchase only: drop the flow's own thresholds so it uses account_creation's again. Not combined with step_up, review or block. Send true; false is refused."""
     inherits_signup: NotRequired[bool]
@@ -46,8 +46,8 @@ class FlowChange(BaseModel):
     block: OptionalNullable[int] = UNSET
     r"""The score from which the decision is block; null turns blocking off."""
 
-    default_depth: Optional[DefaultDepth] = None
-    r"""The depth a request for this flow that names none is served at. Defaults: full for account_creation and purchase, quick for login."""
+    default_depth: Optional[UsageCountDepth] = None
+    r"""assessments only."""
 
     inherits_account_creation: Optional[bool] = None
     r"""Login or purchase only: drop the flow's own thresholds so it uses account_creation's again. Not combined with step_up, review or block. Send true; false is refused."""

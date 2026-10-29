@@ -3,7 +3,7 @@ from noresponse.models.shared import credentialpage as shared_credentialpage
 from noresponse.types import BaseModel, UNSET_SENTINEL
 from noresponse.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
 from pydantic import model_serializer
-from typing import Dict, List, Optional
+from typing import Awaitable, Callable, Dict, List, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -57,6 +57,11 @@ class ListAccountCredentialsResponseTypedDict(TypedDict):
 
 
 class ListAccountCredentialsResponse(BaseModel):
+    next: Union[
+        Callable[[], Optional[ListAccountCredentialsResponse]],
+        Callable[[], Awaitable[Optional[ListAccountCredentialsResponse]]],
+    ]
+
     headers: Dict[str, List[str]]
 
     result: shared_credentialpage.CredentialPage

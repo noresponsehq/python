@@ -30,3 +30,13 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"list_entry_exists"`
 - `"list_limit_reached"`
 - `"list_entry_too_broad"`
+- `"policy_version_conflict"`
+- `"review_version_conflict"`
+- `"review_exists"`
+- `"review_limit_reached"`
+- `"export_conflict"`
+- `"evaluation_conflict"`
+- `"evaluation_no_proposal"`
+- `"evaluation_limit_reached"`
+- `"already_member"`
+- `"member_limit_reached"`

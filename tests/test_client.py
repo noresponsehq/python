@@ -508,6 +508,36 @@ def test_keys_and_settings_manage_the_signing_keys_environment():
     assert all("nr-acting-user" not in r.headers for r in seen)
 
 
+@pytest.mark.parametrize("asynchronous", [False, True])
+def test_key_lifecycle_metadata_and_secret_once_replay(asynchronous):
+    created = {**fixture("valid/key-created-by-management-key.json"),
+               "name": "Production worker", "purpose": "Assess account creation", "kind": "service"}
+    replay = {**created, "last_used_at": "2026-01-02T03:04:05Z"}
+    replay.pop("key")
+    sdk, seen = make([answer(created, 201), answer(replay, 200)])
+    options = {"environment": "live", "scopes": ["assess", "management"],
+               "name": created["name"], "purpose": created["purpose"], "kind": "service",
+               "expires_at": "2026-12-31T00:00:00Z", "request_id": "issue-production-worker"}
+
+    async def scenario():
+        async with sdk:
+            return (await sdk.keys.create_async(created["workspace_id"], **options),
+                    await sdk.keys.create_async(created["workspace_id"], **options))
+
+    if asynchronous:
+        first, repeated = asyncio.run(scenario())
+    else:
+        with sdk:
+            first = sdk.keys.create(created["workspace_id"], **options)
+            repeated = sdk.keys.create(created["workspace_id"], **options)
+    assert first.key == created["key"] and repeated.key is None
+    assert first.id == repeated.id and first.purpose == repeated.purpose == options["purpose"]
+    assert first.last_used_at is None and repeated.last_used_at == replay["last_used_at"]
+    assert len(seen) == 2
+    assert all(json.loads(request.content) == options for request in seen)
+    assert all("nr-acting-user" not in request.headers for request in seen)
+
+
 def test_webhook_endpoints_register_list_rotate_test_and_delete_without_retrying_writes():
     created = fixture("valid/webhook-endpoint-created.json")
     listed = fixture("valid/webhook-endpoint-list.json")

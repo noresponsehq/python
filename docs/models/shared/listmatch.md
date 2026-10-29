@@ -1,20 +1,17 @@
 # ListMatch
 
-The action of the list entry that decided the account.
+The list action captured at the first answer. Requires revision first. Older answers without captured list state do not match, including none.
 
 ## Example Usage
 
 ```python
 from noresponse.models.shared import ListMatch
-
-# Open enum: unrecognized values are captured as UnrecognizedStr
-value: ListMatch = "block"
+value: ListMatch = "allow"
 ```
 
 
 ## Values
 
-This is an open enum. Unrecognized values will not fail type checks.
-
-- `"block"`
 - `"allow"`
+- `"block"`
+- `"none"`

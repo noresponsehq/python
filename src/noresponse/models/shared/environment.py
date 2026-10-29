@@ -1,9 +1,13 @@
 from __future__ import annotations
-from typing import Literal
+from noresponse.types import UnrecognizedStr
+from typing import Literal, Union
 
 
-Environment = Literal[
-    "live",
-    "test",
+Environment = Union[
+    Literal[
+        "live",
+        "test",
+        "workspace",
+    ],
+    UnrecognizedStr,
 ]
-r"""The environment whose endpoints receive this event: live, or test for the workspace's test environment."""

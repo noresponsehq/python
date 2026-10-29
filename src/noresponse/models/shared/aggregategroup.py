@@ -1,10 +1,10 @@
 from __future__ import annotations
+from .aggregategrouplistmatch import AggregateGroupListMatch
 from .band import Band
 from .decision import Decision
 from .flow import Flow
 from .impact import Impact
 from .lane import Lane
-from .listmatch import ListMatch
 from .reasoncode import ReasonCode
 from .recommendation import Recommendation
 from noresponse.types import BaseModel, UNSET_SENTINEL
@@ -24,12 +24,12 @@ class AggregateGroupTypedDict(TypedDict):
     recommendation: NotRequired[Recommendation]
     r"""The recommended action: allow, step_up or review. Your application applies it."""
     band: NotRequired[Band]
-    r"""low 0-29, medium 30-59, high 60-84, critical 85-100."""
-    list_match: NotRequired[ListMatch]
-    r"""The action of the list entry that decided the account."""
+    list_match: NotRequired[AggregateGroupListMatch]
+    r"""The list action captured with the first answer. none means no matching entry was found. For retained_first_answers an absent field means the older assessment did not capture list state; this remains a separate group."""
     reason: NotRequired[ReasonCode]
     r"""A stable reason code. New codes may appear; ignore any you do not know."""
     impact: NotRequired[Impact]
+    r"""The selected reason's served impact band. Requires reason."""
     lane: NotRequired[Lane]
     r"""An evidence lane: accounts (account presence for email and username), phone, breach, domain (the email domain's registration) and ip."""
     country: NotRequired[str]
@@ -51,15 +51,15 @@ class AggregateGroup(BaseModel):
     r"""The recommended action: allow, step_up or review. Your application applies it."""
 
     band: Optional[Band] = None
-    r"""low 0-29, medium 30-59, high 60-84, critical 85-100."""
 
-    list_match: Optional[ListMatch] = None
-    r"""The action of the list entry that decided the account."""
+    list_match: Optional[AggregateGroupListMatch] = None
+    r"""The list action captured with the first answer. none means no matching entry was found. For retained_first_answers an absent field means the older assessment did not capture list state; this remains a separate group."""
 
     reason: Optional[ReasonCode] = None
     r"""A stable reason code. New codes may appear; ignore any you do not know."""
 
     impact: Optional[Impact] = None
+    r"""The selected reason's served impact band. Requires reason."""
 
     lane: Optional[Lane] = None
     r"""An evidence lane: accounts (account presence for email and username), phone, breach, domain (the email domain's registration) and ip."""

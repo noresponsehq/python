@@ -11,6 +11,7 @@ if TYPE_CHECKING:
         AccountBindingRequestTypedDict,
     )
     from .accountdecision import AccountDecision
+    from .accountdecisionlist import AccountDecisionList, AccountDecisionListTypedDict
     from .accountdecisionsbyflow import (
         AccountDecisionsByFlow,
         AccountDecisionsByFlowTypedDict,
@@ -22,10 +23,15 @@ if TYPE_CHECKING:
     from .accountdeleted import AccountDeleted, AccountDeletedTypedDict
     from .accountdeletedevent import AccountDeletedEvent, AccountDeletedEventTypedDict
     from .accountdeletion import AccountDeletion, AccountDeletionTypedDict
+    from .accountenforcementlist import (
+        AccountEnforcementList,
+        AccountEnforcementListTypedDict,
+    )
     from .accountexport import AccountExport, AccountExportTypedDict, Exclusion
     from .accountlist import AccountList, AccountListTypedDict
     from .accountoutcome import AccountOutcome, AccountOutcomeTypedDict
     from .accountoutcomeactor import AccountOutcomeActor, AccountOutcomeActorTypedDict
+    from .accountoutcomeactortype import AccountOutcomeActorType
     from .accountoutcomepage import AccountOutcomePage, AccountOutcomePageTypedDict
     from .accountoutcomerequest import (
         AccountOutcomeRequest,
@@ -38,10 +44,12 @@ if TYPE_CHECKING:
         AccountRiskChangedEventTypedDict,
     )
     from .accountriskreason import AccountRiskReason, AccountRiskReasonTypedDict
+    from .action import Action
     from .admission import Admission
     from .aggregatebucket import AggregateBucket, AggregateBucketTypedDict
     from .aggregatedimension import AggregateDimension
     from .aggregategroup import AggregateGroup, AggregateGroupTypedDict
+    from .aggregategrouplistmatch import AggregateGroupListMatch
     from .aggregatelateflip import AggregateLateFlip, AggregateLateFlipTypedDict
     from .aggregatescorecount import AggregateScoreCount, AggregateScoreCountTypedDict
     from .aggregatescoreoutcome import (
@@ -55,6 +63,10 @@ if TYPE_CHECKING:
         AssessmentAggregate,
         AssessmentAggregateMetric,
         AssessmentAggregateTypedDict,
+    )
+    from .assessmentaggregatecoverage import (
+        AssessmentAggregateCoverage,
+        AssessmentAggregateCoverageTypedDict,
     )
     from .assessmentaggregaterequest import (
         AssessmentAggregateRequest,
@@ -119,6 +131,30 @@ if TYPE_CHECKING:
     )
     from .assurancelevel import AssuranceLevel
     from .attributeagreement import AttributeAgreement, AttributeAgreementTypedDict
+    from .auditevent import (
+        Actor,
+        ActorTypedDict,
+        AuditEvent,
+        AuditEventTypedDict,
+        UnknownActor,
+    )
+    from .auditeventevent import AuditEventEvent, AuditEventEventTypedDict
+    from .auditeventlist import AuditEventList, AuditEventListTypedDict
+    from .auditeventtarget import AuditEventTarget, AuditEventTargetTypedDict
+    from .auditeventtargettype import AuditEventTargetType
+    from .auditsettings import AuditSettings, AuditSettingsTypedDict
+    from .auditsettingsenvironment import AuditSettingsEnvironment
+    from .auditsettingsrequest import (
+        AuditSettingsRequest,
+        AuditSettingsRequestTypedDict,
+    )
+    from .auditstream import AuditStream, AuditStreamTypedDict
+    from .auditstreamlist import AuditStreamList, AuditStreamListTypedDict
+    from .auditstreamreplayrequest import (
+        AuditStreamReplayRequest,
+        AuditStreamReplayRequestTypedDict,
+    )
+    from .auditstreamrequest import AuditStreamRequest, AuditStreamRequestTypedDict
     from .authcontext import AuthContext, AuthContextTypedDict
     from .authcontextmfa import AuthContextMfa, AuthContextMfaTypedDict
     from .authenticationerrorcode import AuthenticationErrorCode
@@ -130,11 +166,14 @@ if TYPE_CHECKING:
     from .breachselector import BreachSelector
     from .breachsummary import BreachSummary, BreachSummaryTypedDict
     from .bucket import Bucket
+    from .conclusion import Conclusion
     from .confidence import Confidence
     from .conflicterrorcode import ConflictErrorCode
     from .consistency import Consistency, ConsistencyTypedDict
     from .consistencyvalue import ConsistencyValue
+    from .cost import Cost, CostTypedDict
     from .country import Country
+    from .coverage import Coverage, CoverageTypedDict
     from .credentialassociation import (
         CredentialAssociation,
         CredentialAssociationTypedDict,
@@ -149,9 +188,26 @@ if TYPE_CHECKING:
     )
     from .credentialpage import CredentialPage, CredentialPageTypedDict
     from .credentialrequest import CredentialRequest, CredentialRequestTypedDict
+    from .customerexport import CustomerExport, CustomerExportTypedDict
+    from .customerexportactionrequest import (
+        CustomerExportActionRequest,
+        CustomerExportActionRequestTypedDict,
+    )
+    from .customerexportchunk import CustomerExportChunk, CustomerExportChunkTypedDict
+    from .customerexportlist import CustomerExportList, CustomerExportListTypedDict
+    from .customerexportrequest import (
+        CustomerExportRequest,
+        CustomerExportRequestTypedDict,
+    )
+    from .customerexportrequestfilter import (
+        CustomerExportRequestFilter,
+        CustomerExportRequestFilterTypedDict,
+    )
+    from .customerexportrequestfilteroutcome import CustomerExportRequestFilterOutcome
+    from .customerexportrequestkind import CustomerExportRequestKind
+    from .customerexportstatus import CustomerExportStatus
     from .decision import Decision
     from .decisionreceipt import DecisionReceipt, DecisionReceiptTypedDict
-    from .defaultdepth import DefaultDepth
     from .delay import Delay
     from .depth import Depth
     from .direction import Direction
@@ -167,15 +223,26 @@ if TYPE_CHECKING:
     from .enforcementaction import EnforcementAction
     from .enforcementprovider import EnforcementProvider
     from .enforcementrequest import EnforcementRequest, EnforcementRequestTypedDict
+    from .enforcements import Enforcements, EnforcementsTypedDict
     from .enforcementstate import EnforcementState
     from .enforcementstatus import EnforcementStatus
     from .environment import Environment
+    from .erasurereceipt import ErasureReceipt, ErasureReceiptTypedDict
+    from .erasurereceiptkind import ErasureReceiptKind
+    from .erasurereceipttarget import (
+        ErasureReceiptTarget,
+        ErasureReceiptTargetTypedDict,
+    )
+    from .erasurereceipttargetname import ErasureReceiptTargetName
+    from .erasurereceipttargetstatus import ErasureReceiptTargetStatus
+    from .export import Export, ExportTypedDict
     from .exportassessmentoutcome import (
         ExportAssessmentOutcome,
         ExportAssessmentOutcomeTypedDict,
     )
     from .failure import Failure
     from .failurereason import FailureReason
+    from .filter_ import Filter, FilterTypedDict
     from .flow import Flow
     from .flowchange import FlowChange, FlowChangeTypedDict
     from .flowsettings import FlowSettings, FlowSettingsTypedDict
@@ -184,6 +251,7 @@ if TYPE_CHECKING:
     from .footprintfamily import FootprintFamily
     from .footprinttimeline import FootprintTimeline, FootprintTimelineTypedDict
     from .freshness import Freshness
+    from .from_ import From
     from .hookpoint import HookPoint
     from .identifier import Identifier
     from .identifierkind import IdentifierKind
@@ -199,10 +267,21 @@ if TYPE_CHECKING:
         IntegrationRotationRequest,
         IntegrationRotationRequestTypedDict,
     )
+    from .invite import Invite, InviteDeniedAction, InviteEnvironment, InviteTypedDict
+    from .invitelist import InviteList, InviteListTypedDict
+    from .inviterequest import (
+        InviteRequest,
+        InviteRequestDeniedAction,
+        InviteRequestEnvironment,
+        InviteRequestTypedDict,
+    )
+    from .inviteresendrequest import InviteResendRequest, InviteResendRequestTypedDict
     from .ipsummary import IPSummary, IPSummaryTypedDict
     from .ipsummarytype import IPSummaryType
     from .key import Key, KeyScope, KeyTypedDict
+    from .keyactor import KeyActor, KeyActorTypedDict
     from .keyenvironment import KeyEnvironment
+    from .keykind import KeyKind
     from .keylist import KeyList, KeyListTypedDict
     from .keyrequest import KeyRequest, KeyRequestScope, KeyRequestTypedDict
     from .keyrotation import KeyRotation, KeyRotationScope, KeyRotationTypedDict
@@ -216,15 +295,55 @@ if TYPE_CHECKING:
     from .keyusageevent import KeyUsageEvent, KeyUsageEventTypedDict
     from .lane import Lane
     from .linetype import LineType
+    from .listbulkrequest import ListBulkRequest, ListBulkRequestTypedDict
+    from .listchange import ListChange, ListChangeTypedDict
+    from .listchangestate import ListChangeState
     from .listentry import ListEntry, ListEntryTypedDict
     from .listentryaction import ListEntryAction
     from .listentrykind import ListEntryKind
     from .listentrylist import ListEntryList, ListEntryListTypedDict
     from .listentryrequest import ListEntryRequest, ListEntryRequestTypedDict
+    from .listimpact import ListImpact, ListImpactTypedDict
+    from .listimpactkind import ListImpactKind
+    from .listimpacttransition import (
+        ListImpactTransition,
+        ListImpactTransitionTypedDict,
+    )
+    from .listimpacttransitionfrom import ListImpactTransitionFrom
     from .listmatch import ListMatch
+    from .listpreviewrequest import ListPreviewRequest, ListPreviewRequestTypedDict
+    from .member import Member, MemberDeniedAction, MemberEnvironment, MemberTypedDict
+    from .memberlist import MemberList, MemberListTypedDict
+    from .memberstatus import MemberStatus
+    from .memberupdaterequest import (
+        MemberUpdateRequest,
+        MemberUpdateRequestDeniedAction,
+        MemberUpdateRequestEnvironment,
+        MemberUpdateRequestTypedDict,
+    )
+    from .metric import Metric
     from .notfounderrorcode import NotFoundErrorCode
     from .onexpiry import OnExpiry
+    from .operationalaggregate import (
+        OperationalAggregate,
+        OperationalAggregateTypedDict,
+    )
+    from .operationalaggregatebucket import (
+        OperationalAggregateBucket,
+        OperationalAggregateBucketTypedDict,
+    )
+    from .operationalaggregatequeue import (
+        OperationalAggregateQueue,
+        OperationalAggregateQueueTypedDict,
+    )
+    from .operationalaggregatetotals import (
+        OperationalAggregateTotals,
+        OperationalAggregateTotalsTypedDict,
+    )
     from .outcome import Outcome
+    from .outcomes import Outcomes, OutcomesTypedDict
+    from .outcomesbyoutcome import OutcomesByOutcome, OutcomesByOutcomeTypedDict
+    from .ownertype import OwnerType
     from .permissiondeniederrorcode import PermissionDeniedErrorCode
     from .phoneenrichment import PhoneEnrichment, PhoneEnrichmentTypedDict
     from .phoneenrichmentfields import (
@@ -260,17 +379,130 @@ if TYPE_CHECKING:
         WebsiteUnionTypedDict,
     )
     from .platform import Platform
+    from .policyevaluation import PolicyEvaluation, PolicyEvaluationTypedDict
+    from .policyevaluationcancelrequest import (
+        PolicyEvaluationCancelRequest,
+        PolicyEvaluationCancelRequestTypedDict,
+    )
+    from .policyevaluationlist import (
+        PolicyEvaluationList,
+        PolicyEvaluationListTypedDict,
+    )
+    from .policyevaluationpublishrequest import (
+        PolicyEvaluationPublishRequest,
+        PolicyEvaluationPublishRequestTypedDict,
+    )
+    from .policyevaluationrequest import (
+        PolicyEvaluationRequest,
+        PolicyEvaluationRequestTypedDict,
+    )
+    from .policyevaluationrequestcosts import (
+        PolicyEvaluationRequestCosts,
+        PolicyEvaluationRequestCostsTypedDict,
+    )
+    from .policyevaluationrequestlimits import (
+        PolicyEvaluationRequestLimits,
+        PolicyEvaluationRequestLimitsTypedDict,
+    )
+    from .policyevaluationresult import (
+        PolicyEvaluationResult,
+        PolicyEvaluationResultTypedDict,
+    )
+    from .policyevaluationstatus import PolicyEvaluationStatus
+    from .policyhistory import PolicyHistory, PolicyHistoryTypedDict
+    from .policyhistoryitem import PolicyHistoryItem, PolicyHistoryItemTypedDict
+    from .policypreview import PolicyPreview, PolicyPreviewTypedDict
+    from .policypreviewcoverage import (
+        PolicyPreviewCoverage,
+        PolicyPreviewCoverageTypedDict,
+    )
+    from .policypreviewrequest import (
+        PolicyPreviewRequest,
+        PolicyPreviewRequestTypedDict,
+    )
+    from .policypreviewrequestflows import (
+        PolicyPreviewRequestFlows,
+        PolicyPreviewRequestFlowsTypedDict,
+    )
+    from .policypreviewrequestflowsaccountcreation import (
+        PolicyPreviewRequestFlowsAccountCreation,
+        PolicyPreviewRequestFlowsAccountCreationTypedDict,
+    )
+    from .policypreviewrequestflowslogin import (
+        PolicyPreviewRequestFlowsLogin,
+        PolicyPreviewRequestFlowsLoginTypedDict,
+    )
+    from .policypreviewrequestflowspurchase import (
+        PolicyPreviewRequestFlowsPurchase,
+        PolicyPreviewRequestFlowsPurchaseTypedDict,
+    )
+    from .policypreviewtransition import (
+        PolicyPreviewTransition,
+        PolicyPreviewTransitionTypedDict,
+    )
+    from .policyrestorerequest import (
+        PolicyRestoreRequest,
+        PolicyRestoreRequestTypedDict,
+    )
+    from .population import Population
+    from .priority import Priority
     from .probleminvalidparam import ProblemInvalidParam, ProblemInvalidParamTypedDict
+    from .publication import Publication, PublicationTypedDict
     from .ratelimiterrorcode import RateLimitErrorCode
     from .reasoncode import ReasonCode
     from .reasonidentifier import ReasonIdentifier
     from .recommendation import Recommendation
+    from .report import Report, ReportScope, ReportScopeTypedDict, ReportTypedDict
+    from .requestaggregaterequest import (
+        RequestAggregateRequest,
+        RequestAggregateRequestTypedDict,
+    )
+    from .requestaggregaterequestbucket import RequestAggregateRequestBucket
     from .requestdiagnostic import RequestDiagnostic, RequestDiagnosticTypedDict
     from .requestdiagnosticpage import (
         RequestDiagnosticPage,
         RequestDiagnosticPageTypedDict,
     )
+    from .resolution import Resolution, ResolutionTypedDict
     from .responsemode import ResponseMode
+    from .resultstatus import ResultStatus
+    from .review import Review, ReviewTypedDict
+    from .reviewcomment import ReviewComment, ReviewCommentTypedDict
+    from .reviewcommentlist import ReviewCommentList, ReviewCommentListTypedDict
+    from .reviewcommentrequest import (
+        ReviewCommentRequest,
+        ReviewCommentRequestTypedDict,
+    )
+    from .reviewcreaterequest import ReviewCreateRequest, ReviewCreateRequestTypedDict
+    from .reviewlist import ReviewList, ReviewListTypedDict
+    from .reviewresolutionlist import (
+        ReviewResolutionList,
+        ReviewResolutionListTypedDict,
+    )
+    from .reviewresolverequest import (
+        ReviewResolveRequest,
+        ReviewResolveRequestTypedDict,
+    )
+    from .reviews import Reviews, ReviewsTypedDict
+    from .reviewsconclusions import ReviewsConclusions, ReviewsConclusionsTypedDict
+    from .reviewstatus import ReviewStatus
+    from .reviewsubject import ReviewSubject, ReviewSubjectTypedDict
+    from .reviewsubjectchange import ReviewSubjectChange, ReviewSubjectChangeTypedDict
+    from .reviewsubjectkind import ReviewSubjectKind
+    from .reviewsubjectlist import ReviewSubjectList, ReviewSubjectListTypedDict
+    from .reviewsubjectrequest import (
+        ReviewSubjectRequest,
+        ReviewSubjectRequestTypedDict,
+    )
+    from .reviewupdaterequest import ReviewUpdateRequest, ReviewUpdateRequestTypedDict
+    from .reviewupdaterequeststatus import ReviewUpdateRequestStatus
+    from .reviewview import ReviewView, ReviewViewTypedDict
+    from .reviewviewdeleterequest import (
+        ReviewViewDeleteRequest,
+        ReviewViewDeleteRequestTypedDict,
+    )
+    from .reviewviewlist import ReviewViewList, ReviewViewListTypedDict
+    from .reviewviewrequest import ReviewViewRequest, ReviewViewRequestTypedDict
     from .risk import Risk, RiskTypedDict
     from .riskconfidence import RiskConfidence
     from .riskcoverage import RiskCoverage, RiskCoverageTypedDict
@@ -290,6 +522,7 @@ if TYPE_CHECKING:
     from .risksummaryemail import RiskSummaryEmail, RiskSummaryEmailTypedDict
     from .risksummaryphone import RiskSummaryPhone, RiskSummaryPhoneTypedDict
     from .risksummaryusername import RiskSummaryUsername, RiskSummaryUsernameTypedDict
+    from .role import Role
     from .security import Security, SecurityTypedDict
     from .sentidentifiers import SentIdentifiers, SentIdentifiersTypedDict
     from .settings import Settings, SettingsTypedDict
@@ -303,9 +536,20 @@ if TYPE_CHECKING:
     from .signaloutcome import SignalOutcome
     from .signingkey import SigningKey, SigningKeyTypedDict
     from .signingsecret import SigningSecret, SigningSecretTypedDict
+    from .source import Source
     from .sourceid import SourceID
     from .status import Status
+    from .thresholds import Thresholds, ThresholdsTypedDict
     from .transport import Transport
+    from .usage import Usage, UsageTypedDict
+    from .usagecount import UsageCount, UsageCountTypedDict
+    from .usagecountdepth import UsageCountDepth
+    from .usagecountflow import UsageCountFlow
+    from .useractor import UserActor, UserActorTypedDict
+    from .webhookaggregaterequest import (
+        WebhookAggregateRequest,
+        WebhookAggregateRequestTypedDict,
+    )
     from .webhookdeliveryattempt import (
         WebhookDeliveryAttempt,
         WebhookDeliveryAttemptTypedDict,
@@ -354,6 +598,14 @@ if TYPE_CHECKING:
         WorkspaceDeletedEvent,
         WorkspaceDeletedEventTypedDict,
     )
+    from .workspaceoperationssummary import (
+        WorkspaceOperationsSummary,
+        WorkspaceOperationsSummaryTypedDict,
+    )
+    from .workspaceoperationssummaryrequest import (
+        WorkspaceOperationsSummaryRequest,
+        WorkspaceOperationsSummaryRequestTypedDict,
+    )
 
 __all__ = [
     "Account",
@@ -364,6 +616,8 @@ __all__ = [
     "AccountBindingRequestTypedDict",
     "AccountBindingTypedDict",
     "AccountDecision",
+    "AccountDecisionList",
+    "AccountDecisionListTypedDict",
     "AccountDecisionSnapshot",
     "AccountDecisionSnapshotTypedDict",
     "AccountDecisionsByFlow",
@@ -374,12 +628,15 @@ __all__ = [
     "AccountDeletedTypedDict",
     "AccountDeletion",
     "AccountDeletionTypedDict",
+    "AccountEnforcementList",
+    "AccountEnforcementListTypedDict",
     "AccountExport",
     "AccountExportTypedDict",
     "AccountList",
     "AccountListTypedDict",
     "AccountOutcome",
     "AccountOutcomeActor",
+    "AccountOutcomeActorType",
     "AccountOutcomeActorTypedDict",
     "AccountOutcomePage",
     "AccountOutcomePageTypedDict",
@@ -395,11 +652,15 @@ __all__ = [
     "AccountRiskReasonTypedDict",
     "AccountRiskTypedDict",
     "AccountTypedDict",
+    "Action",
+    "Actor",
+    "ActorTypedDict",
     "Admission",
     "AggregateBucket",
     "AggregateBucketTypedDict",
     "AggregateDimension",
     "AggregateGroup",
+    "AggregateGroupListMatch",
     "AggregateGroupTypedDict",
     "AggregateLateFlip",
     "AggregateLateFlipTypedDict",
@@ -415,6 +676,8 @@ __all__ = [
     "AnswerRevision",
     "Assessment",
     "AssessmentAggregate",
+    "AssessmentAggregateCoverage",
+    "AssessmentAggregateCoverageTypedDict",
     "AssessmentAggregateMetric",
     "AssessmentAggregateRequest",
     "AssessmentAggregateRequestMetric",
@@ -464,6 +727,28 @@ __all__ = [
     "AssuranceLevel",
     "AttributeAgreement",
     "AttributeAgreementTypedDict",
+    "AuditEvent",
+    "AuditEventEvent",
+    "AuditEventEventTypedDict",
+    "AuditEventList",
+    "AuditEventListTypedDict",
+    "AuditEventTarget",
+    "AuditEventTargetType",
+    "AuditEventTargetTypedDict",
+    "AuditEventTypedDict",
+    "AuditSettings",
+    "AuditSettingsEnvironment",
+    "AuditSettingsRequest",
+    "AuditSettingsRequestTypedDict",
+    "AuditSettingsTypedDict",
+    "AuditStream",
+    "AuditStreamList",
+    "AuditStreamListTypedDict",
+    "AuditStreamReplayRequest",
+    "AuditStreamReplayRequestTypedDict",
+    "AuditStreamRequest",
+    "AuditStreamRequestTypedDict",
+    "AuditStreamTypedDict",
     "AuthContext",
     "AuthContextMfa",
     "AuthContextMfaTypedDict",
@@ -479,12 +764,17 @@ __all__ = [
     "BreachSummaryTypedDict",
     "BreachTypedDict",
     "Bucket",
+    "Conclusion",
     "Confidence",
     "ConflictErrorCode",
     "Consistency",
     "ConsistencyTypedDict",
     "ConsistencyValue",
+    "Cost",
+    "CostTypedDict",
     "Country",
+    "Coverage",
+    "CoverageTypedDict",
     "CredentialAssociation",
     "CredentialAssociationActor",
     "CredentialAssociationActorTypedDict",
@@ -495,10 +785,24 @@ __all__ = [
     "CredentialPageTypedDict",
     "CredentialRequest",
     "CredentialRequestTypedDict",
+    "CustomerExport",
+    "CustomerExportActionRequest",
+    "CustomerExportActionRequestTypedDict",
+    "CustomerExportChunk",
+    "CustomerExportChunkTypedDict",
+    "CustomerExportList",
+    "CustomerExportListTypedDict",
+    "CustomerExportRequest",
+    "CustomerExportRequestFilter",
+    "CustomerExportRequestFilterOutcome",
+    "CustomerExportRequestFilterTypedDict",
+    "CustomerExportRequestKind",
+    "CustomerExportRequestTypedDict",
+    "CustomerExportStatus",
+    "CustomerExportTypedDict",
     "Decision",
     "DecisionReceipt",
     "DecisionReceiptTypedDict",
-    "DefaultDepth",
     "Delay",
     "Depth",
     "Direction",
@@ -518,12 +822,25 @@ __all__ = [
     "EnforcementState",
     "EnforcementStatus",
     "EnforcementTypedDict",
+    "Enforcements",
+    "EnforcementsTypedDict",
     "Environment",
+    "ErasureReceipt",
+    "ErasureReceiptKind",
+    "ErasureReceiptTarget",
+    "ErasureReceiptTargetName",
+    "ErasureReceiptTargetStatus",
+    "ErasureReceiptTargetTypedDict",
+    "ErasureReceiptTypedDict",
     "Exclusion",
+    "Export",
     "ExportAssessmentOutcome",
     "ExportAssessmentOutcomeTypedDict",
+    "ExportTypedDict",
     "Failure",
     "FailureReason",
+    "Filter",
+    "FilterTypedDict",
     "Flow",
     "FlowChange",
     "FlowChangeTypedDict",
@@ -537,6 +854,7 @@ __all__ = [
     "FootprintTimelineTypedDict",
     "FootprintTypedDict",
     "Freshness",
+    "From",
     "HookPoint",
     "IPSummary",
     "IPSummaryType",
@@ -557,8 +875,23 @@ __all__ = [
     "IntegrationRotationRequest",
     "IntegrationRotationRequestTypedDict",
     "IntegrationTypedDict",
+    "Invite",
+    "InviteDeniedAction",
+    "InviteEnvironment",
+    "InviteList",
+    "InviteListTypedDict",
+    "InviteRequest",
+    "InviteRequestDeniedAction",
+    "InviteRequestEnvironment",
+    "InviteRequestTypedDict",
+    "InviteResendRequest",
+    "InviteResendRequestTypedDict",
+    "InviteTypedDict",
     "Key",
+    "KeyActor",
+    "KeyActorTypedDict",
     "KeyEnvironment",
+    "KeyKind",
     "KeyList",
     "KeyListTypedDict",
     "KeyRequest",
@@ -580,6 +913,11 @@ __all__ = [
     "KeyUsageEventTypedDict",
     "Lane",
     "LineType",
+    "ListBulkRequest",
+    "ListBulkRequestTypedDict",
+    "ListChange",
+    "ListChangeState",
+    "ListChangeTypedDict",
     "ListEntry",
     "ListEntryAction",
     "ListEntryKind",
@@ -588,35 +926,162 @@ __all__ = [
     "ListEntryRequest",
     "ListEntryRequestTypedDict",
     "ListEntryTypedDict",
+    "ListImpact",
+    "ListImpactKind",
+    "ListImpactTransition",
+    "ListImpactTransitionFrom",
+    "ListImpactTransitionTypedDict",
+    "ListImpactTypedDict",
     "ListMatch",
+    "ListPreviewRequest",
+    "ListPreviewRequestTypedDict",
     "Location",
     "LocationTypedDict",
     "LocationUnion",
     "LocationUnionTypedDict",
+    "Member",
+    "MemberDeniedAction",
+    "MemberEnvironment",
+    "MemberList",
+    "MemberListTypedDict",
+    "MemberStatus",
+    "MemberTypedDict",
+    "MemberUpdateRequest",
+    "MemberUpdateRequestDeniedAction",
+    "MemberUpdateRequestEnvironment",
+    "MemberUpdateRequestTypedDict",
+    "Metric",
     "NameCandidate",
     "NameCandidateTypedDict",
     "NameCandidateUnion",
     "NameCandidateUnionTypedDict",
     "NotFoundErrorCode",
     "OnExpiry",
+    "OperationalAggregate",
+    "OperationalAggregateBucket",
+    "OperationalAggregateBucketTypedDict",
+    "OperationalAggregateQueue",
+    "OperationalAggregateQueueTypedDict",
+    "OperationalAggregateTotals",
+    "OperationalAggregateTotalsTypedDict",
+    "OperationalAggregateTypedDict",
     "Outcome",
+    "Outcomes",
+    "OutcomesByOutcome",
+    "OutcomesByOutcomeTypedDict",
+    "OutcomesTypedDict",
+    "OwnerType",
     "PermissionDeniedErrorCode",
     "PhoneEnrichment",
     "PhoneEnrichmentFields",
     "PhoneEnrichmentFieldsTypedDict",
     "PhoneEnrichmentTypedDict",
     "Platform",
+    "PolicyEvaluation",
+    "PolicyEvaluationCancelRequest",
+    "PolicyEvaluationCancelRequestTypedDict",
+    "PolicyEvaluationList",
+    "PolicyEvaluationListTypedDict",
+    "PolicyEvaluationPublishRequest",
+    "PolicyEvaluationPublishRequestTypedDict",
+    "PolicyEvaluationRequest",
+    "PolicyEvaluationRequestCosts",
+    "PolicyEvaluationRequestCostsTypedDict",
+    "PolicyEvaluationRequestLimits",
+    "PolicyEvaluationRequestLimitsTypedDict",
+    "PolicyEvaluationRequestTypedDict",
+    "PolicyEvaluationResult",
+    "PolicyEvaluationResultTypedDict",
+    "PolicyEvaluationStatus",
+    "PolicyEvaluationTypedDict",
+    "PolicyHistory",
+    "PolicyHistoryItem",
+    "PolicyHistoryItemTypedDict",
+    "PolicyHistoryTypedDict",
+    "PolicyPreview",
+    "PolicyPreviewCoverage",
+    "PolicyPreviewCoverageTypedDict",
+    "PolicyPreviewRequest",
+    "PolicyPreviewRequestFlows",
+    "PolicyPreviewRequestFlowsAccountCreation",
+    "PolicyPreviewRequestFlowsAccountCreationTypedDict",
+    "PolicyPreviewRequestFlowsLogin",
+    "PolicyPreviewRequestFlowsLoginTypedDict",
+    "PolicyPreviewRequestFlowsPurchase",
+    "PolicyPreviewRequestFlowsPurchaseTypedDict",
+    "PolicyPreviewRequestFlowsTypedDict",
+    "PolicyPreviewRequestTypedDict",
+    "PolicyPreviewTransition",
+    "PolicyPreviewTransitionTypedDict",
+    "PolicyPreviewTypedDict",
+    "PolicyRestoreRequest",
+    "PolicyRestoreRequestTypedDict",
+    "Population",
+    "Priority",
     "ProblemInvalidParam",
     "ProblemInvalidParamTypedDict",
+    "Publication",
+    "PublicationTypedDict",
     "RateLimitErrorCode",
     "ReasonCode",
     "ReasonIdentifier",
     "Recommendation",
+    "Report",
+    "ReportScope",
+    "ReportScopeTypedDict",
+    "ReportTypedDict",
+    "RequestAggregateRequest",
+    "RequestAggregateRequestBucket",
+    "RequestAggregateRequestTypedDict",
     "RequestDiagnostic",
     "RequestDiagnosticPage",
     "RequestDiagnosticPageTypedDict",
     "RequestDiagnosticTypedDict",
+    "Resolution",
+    "ResolutionTypedDict",
     "ResponseMode",
+    "ResultStatus",
+    "Review",
+    "ReviewComment",
+    "ReviewCommentList",
+    "ReviewCommentListTypedDict",
+    "ReviewCommentRequest",
+    "ReviewCommentRequestTypedDict",
+    "ReviewCommentTypedDict",
+    "ReviewCreateRequest",
+    "ReviewCreateRequestTypedDict",
+    "ReviewList",
+    "ReviewListTypedDict",
+    "ReviewResolutionList",
+    "ReviewResolutionListTypedDict",
+    "ReviewResolveRequest",
+    "ReviewResolveRequestTypedDict",
+    "ReviewStatus",
+    "ReviewSubject",
+    "ReviewSubjectChange",
+    "ReviewSubjectChangeTypedDict",
+    "ReviewSubjectKind",
+    "ReviewSubjectList",
+    "ReviewSubjectListTypedDict",
+    "ReviewSubjectRequest",
+    "ReviewSubjectRequestTypedDict",
+    "ReviewSubjectTypedDict",
+    "ReviewTypedDict",
+    "ReviewUpdateRequest",
+    "ReviewUpdateRequestStatus",
+    "ReviewUpdateRequestTypedDict",
+    "ReviewView",
+    "ReviewViewDeleteRequest",
+    "ReviewViewDeleteRequestTypedDict",
+    "ReviewViewList",
+    "ReviewViewListTypedDict",
+    "ReviewViewRequest",
+    "ReviewViewRequestTypedDict",
+    "ReviewViewTypedDict",
+    "Reviews",
+    "ReviewsConclusions",
+    "ReviewsConclusionsTypedDict",
+    "ReviewsTypedDict",
     "Risk",
     "RiskConfidence",
     "RiskCoverage",
@@ -641,6 +1106,7 @@ __all__ = [
     "RiskSummaryUsername",
     "RiskSummaryUsernameTypedDict",
     "RiskTypedDict",
+    "Role",
     "Security",
     "SecurityTypedDict",
     "SentIdentifiers",
@@ -664,13 +1130,27 @@ __all__ = [
     "SocialProfileTypedDict",
     "SocialProfileUnion",
     "SocialProfileUnionTypedDict",
+    "Source",
     "SourceID",
     "Status",
+    "Thresholds",
+    "ThresholdsTypedDict",
     "Timezone",
     "TimezoneTypedDict",
     "TimezoneUnion",
     "TimezoneUnionTypedDict",
     "Transport",
+    "UnknownActor",
+    "Usage",
+    "UsageCount",
+    "UsageCountDepth",
+    "UsageCountFlow",
+    "UsageCountTypedDict",
+    "UsageTypedDict",
+    "UserActor",
+    "UserActorTypedDict",
+    "WebhookAggregateRequest",
+    "WebhookAggregateRequestTypedDict",
     "WebhookDeliveryAttempt",
     "WebhookDeliveryAttemptStatus",
     "WebhookDeliveryAttemptTypedDict",
@@ -714,6 +1194,10 @@ __all__ = [
     "WorkspaceDeletedEvent",
     "WorkspaceDeletedEventTypedDict",
     "WorkspaceDeletedTypedDict",
+    "WorkspaceOperationsSummary",
+    "WorkspaceOperationsSummaryRequest",
+    "WorkspaceOperationsSummaryRequestTypedDict",
+    "WorkspaceOperationsSummaryTypedDict",
 ]
 
 _dynamic_imports: dict[str, str] = {
@@ -726,6 +1210,8 @@ _dynamic_imports: dict[str, str] = {
     "AccountBindingRequest": ".accountbindingrequest",
     "AccountBindingRequestTypedDict": ".accountbindingrequest",
     "AccountDecision": ".accountdecision",
+    "AccountDecisionList": ".accountdecisionlist",
+    "AccountDecisionListTypedDict": ".accountdecisionlist",
     "AccountDecisionsByFlow": ".accountdecisionsbyflow",
     "AccountDecisionsByFlowTypedDict": ".accountdecisionsbyflow",
     "AccountDecisionSnapshot": ".accountdecisionsnapshot",
@@ -736,6 +1222,8 @@ _dynamic_imports: dict[str, str] = {
     "AccountDeletedEventTypedDict": ".accountdeletedevent",
     "AccountDeletion": ".accountdeletion",
     "AccountDeletionTypedDict": ".accountdeletion",
+    "AccountEnforcementList": ".accountenforcementlist",
+    "AccountEnforcementListTypedDict": ".accountenforcementlist",
     "AccountExport": ".accountexport",
     "AccountExportTypedDict": ".accountexport",
     "Exclusion": ".accountexport",
@@ -745,6 +1233,7 @@ _dynamic_imports: dict[str, str] = {
     "AccountOutcomeTypedDict": ".accountoutcome",
     "AccountOutcomeActor": ".accountoutcomeactor",
     "AccountOutcomeActorTypedDict": ".accountoutcomeactor",
+    "AccountOutcomeActorType": ".accountoutcomeactortype",
     "AccountOutcomePage": ".accountoutcomepage",
     "AccountOutcomePageTypedDict": ".accountoutcomepage",
     "AccountOutcomeRequest": ".accountoutcomerequest",
@@ -757,12 +1246,14 @@ _dynamic_imports: dict[str, str] = {
     "AccountRiskChangedEventTypedDict": ".accountriskchangedevent",
     "AccountRiskReason": ".accountriskreason",
     "AccountRiskReasonTypedDict": ".accountriskreason",
+    "Action": ".action",
     "Admission": ".admission",
     "AggregateBucket": ".aggregatebucket",
     "AggregateBucketTypedDict": ".aggregatebucket",
     "AggregateDimension": ".aggregatedimension",
     "AggregateGroup": ".aggregategroup",
     "AggregateGroupTypedDict": ".aggregategroup",
+    "AggregateGroupListMatch": ".aggregategrouplistmatch",
     "AggregateLateFlip": ".aggregatelateflip",
     "AggregateLateFlipTypedDict": ".aggregatelateflip",
     "AggregateScoreCount": ".aggregatescorecount",
@@ -776,6 +1267,8 @@ _dynamic_imports: dict[str, str] = {
     "AssessmentAggregate": ".assessmentaggregate",
     "AssessmentAggregateMetric": ".assessmentaggregate",
     "AssessmentAggregateTypedDict": ".assessmentaggregate",
+    "AssessmentAggregateCoverage": ".assessmentaggregatecoverage",
+    "AssessmentAggregateCoverageTypedDict": ".assessmentaggregatecoverage",
     "AssessmentAggregateRequest": ".assessmentaggregaterequest",
     "AssessmentAggregateRequestMetric": ".assessmentaggregaterequest",
     "AssessmentAggregateRequestTypedDict": ".assessmentaggregaterequest",
@@ -822,6 +1315,31 @@ _dynamic_imports: dict[str, str] = {
     "AssuranceLevel": ".assurancelevel",
     "AttributeAgreement": ".attributeagreement",
     "AttributeAgreementTypedDict": ".attributeagreement",
+    "Actor": ".auditevent",
+    "ActorTypedDict": ".auditevent",
+    "AuditEvent": ".auditevent",
+    "AuditEventTypedDict": ".auditevent",
+    "UnknownActor": ".auditevent",
+    "AuditEventEvent": ".auditeventevent",
+    "AuditEventEventTypedDict": ".auditeventevent",
+    "AuditEventList": ".auditeventlist",
+    "AuditEventListTypedDict": ".auditeventlist",
+    "AuditEventTarget": ".auditeventtarget",
+    "AuditEventTargetTypedDict": ".auditeventtarget",
+    "AuditEventTargetType": ".auditeventtargettype",
+    "AuditSettings": ".auditsettings",
+    "AuditSettingsTypedDict": ".auditsettings",
+    "AuditSettingsEnvironment": ".auditsettingsenvironment",
+    "AuditSettingsRequest": ".auditsettingsrequest",
+    "AuditSettingsRequestTypedDict": ".auditsettingsrequest",
+    "AuditStream": ".auditstream",
+    "AuditStreamTypedDict": ".auditstream",
+    "AuditStreamList": ".auditstreamlist",
+    "AuditStreamListTypedDict": ".auditstreamlist",
+    "AuditStreamReplayRequest": ".auditstreamreplayrequest",
+    "AuditStreamReplayRequestTypedDict": ".auditstreamreplayrequest",
+    "AuditStreamRequest": ".auditstreamrequest",
+    "AuditStreamRequestTypedDict": ".auditstreamrequest",
     "AuthContext": ".authcontext",
     "AuthContextTypedDict": ".authcontext",
     "AuthContextMfa": ".authcontextmfa",
@@ -837,12 +1355,17 @@ _dynamic_imports: dict[str, str] = {
     "BreachSummary": ".breachsummary",
     "BreachSummaryTypedDict": ".breachsummary",
     "Bucket": ".bucket",
+    "Conclusion": ".conclusion",
     "Confidence": ".confidence",
     "ConflictErrorCode": ".conflicterrorcode",
     "Consistency": ".consistency",
     "ConsistencyTypedDict": ".consistency",
     "ConsistencyValue": ".consistencyvalue",
+    "Cost": ".cost",
+    "CostTypedDict": ".cost",
     "Country": ".country",
+    "Coverage": ".coverage",
+    "CoverageTypedDict": ".coverage",
     "CredentialAssociation": ".credentialassociation",
     "CredentialAssociationTypedDict": ".credentialassociation",
     "CredentialAssociationActor": ".credentialassociationactor",
@@ -853,10 +1376,24 @@ _dynamic_imports: dict[str, str] = {
     "CredentialPageTypedDict": ".credentialpage",
     "CredentialRequest": ".credentialrequest",
     "CredentialRequestTypedDict": ".credentialrequest",
+    "CustomerExport": ".customerexport",
+    "CustomerExportTypedDict": ".customerexport",
+    "CustomerExportActionRequest": ".customerexportactionrequest",
+    "CustomerExportActionRequestTypedDict": ".customerexportactionrequest",
+    "CustomerExportChunk": ".customerexportchunk",
+    "CustomerExportChunkTypedDict": ".customerexportchunk",
+    "CustomerExportList": ".customerexportlist",
+    "CustomerExportListTypedDict": ".customerexportlist",
+    "CustomerExportRequest": ".customerexportrequest",
+    "CustomerExportRequestTypedDict": ".customerexportrequest",
+    "CustomerExportRequestFilter": ".customerexportrequestfilter",
+    "CustomerExportRequestFilterTypedDict": ".customerexportrequestfilter",
+    "CustomerExportRequestFilterOutcome": ".customerexportrequestfilteroutcome",
+    "CustomerExportRequestKind": ".customerexportrequestkind",
+    "CustomerExportStatus": ".customerexportstatus",
     "Decision": ".decision",
     "DecisionReceipt": ".decisionreceipt",
     "DecisionReceiptTypedDict": ".decisionreceipt",
-    "DefaultDepth": ".defaultdepth",
     "Delay": ".delay",
     "Depth": ".depth",
     "Direction": ".direction",
@@ -870,13 +1407,26 @@ _dynamic_imports: dict[str, str] = {
     "EnforcementProvider": ".enforcementprovider",
     "EnforcementRequest": ".enforcementrequest",
     "EnforcementRequestTypedDict": ".enforcementrequest",
+    "Enforcements": ".enforcements",
+    "EnforcementsTypedDict": ".enforcements",
     "EnforcementState": ".enforcementstate",
     "EnforcementStatus": ".enforcementstatus",
     "Environment": ".environment",
+    "ErasureReceipt": ".erasurereceipt",
+    "ErasureReceiptTypedDict": ".erasurereceipt",
+    "ErasureReceiptKind": ".erasurereceiptkind",
+    "ErasureReceiptTarget": ".erasurereceipttarget",
+    "ErasureReceiptTargetTypedDict": ".erasurereceipttarget",
+    "ErasureReceiptTargetName": ".erasurereceipttargetname",
+    "ErasureReceiptTargetStatus": ".erasurereceipttargetstatus",
+    "Export": ".export",
+    "ExportTypedDict": ".export",
     "ExportAssessmentOutcome": ".exportassessmentoutcome",
     "ExportAssessmentOutcomeTypedDict": ".exportassessmentoutcome",
     "Failure": ".failure",
     "FailureReason": ".failurereason",
+    "Filter": ".filter_",
+    "FilterTypedDict": ".filter_",
     "Flow": ".flow",
     "FlowChange": ".flowchange",
     "FlowChangeTypedDict": ".flowchange",
@@ -890,6 +1440,7 @@ _dynamic_imports: dict[str, str] = {
     "FootprintTimeline": ".footprinttimeline",
     "FootprintTimelineTypedDict": ".footprinttimeline",
     "Freshness": ".freshness",
+    "From": ".from_",
     "HookPoint": ".hookpoint",
     "Identifier": ".identifier",
     "IdentifierKind": ".identifierkind",
@@ -907,13 +1458,28 @@ _dynamic_imports: dict[str, str] = {
     "IntegrationRequestTypedDict": ".integrationrequest",
     "IntegrationRotationRequest": ".integrationrotationrequest",
     "IntegrationRotationRequestTypedDict": ".integrationrotationrequest",
+    "Invite": ".invite",
+    "InviteDeniedAction": ".invite",
+    "InviteEnvironment": ".invite",
+    "InviteTypedDict": ".invite",
+    "InviteList": ".invitelist",
+    "InviteListTypedDict": ".invitelist",
+    "InviteRequest": ".inviterequest",
+    "InviteRequestDeniedAction": ".inviterequest",
+    "InviteRequestEnvironment": ".inviterequest",
+    "InviteRequestTypedDict": ".inviterequest",
+    "InviteResendRequest": ".inviteresendrequest",
+    "InviteResendRequestTypedDict": ".inviteresendrequest",
     "IPSummary": ".ipsummary",
     "IPSummaryTypedDict": ".ipsummary",
     "IPSummaryType": ".ipsummarytype",
     "Key": ".key",
     "KeyScope": ".key",
     "KeyTypedDict": ".key",
+    "KeyActor": ".keyactor",
+    "KeyActorTypedDict": ".keyactor",
     "KeyEnvironment": ".keyenvironment",
+    "KeyKind": ".keykind",
     "KeyList": ".keylist",
     "KeyListTypedDict": ".keylist",
     "KeyRequest": ".keyrequest",
@@ -933,6 +1499,11 @@ _dynamic_imports: dict[str, str] = {
     "KeyUsageEventTypedDict": ".keyusageevent",
     "Lane": ".lane",
     "LineType": ".linetype",
+    "ListBulkRequest": ".listbulkrequest",
+    "ListBulkRequestTypedDict": ".listbulkrequest",
+    "ListChange": ".listchange",
+    "ListChangeTypedDict": ".listchange",
+    "ListChangeState": ".listchangestate",
     "ListEntry": ".listentry",
     "ListEntryTypedDict": ".listentry",
     "ListEntryAction": ".listentryaction",
@@ -941,10 +1512,43 @@ _dynamic_imports: dict[str, str] = {
     "ListEntryListTypedDict": ".listentrylist",
     "ListEntryRequest": ".listentryrequest",
     "ListEntryRequestTypedDict": ".listentryrequest",
+    "ListImpact": ".listimpact",
+    "ListImpactTypedDict": ".listimpact",
+    "ListImpactKind": ".listimpactkind",
+    "ListImpactTransition": ".listimpacttransition",
+    "ListImpactTransitionTypedDict": ".listimpacttransition",
+    "ListImpactTransitionFrom": ".listimpacttransitionfrom",
     "ListMatch": ".listmatch",
+    "ListPreviewRequest": ".listpreviewrequest",
+    "ListPreviewRequestTypedDict": ".listpreviewrequest",
+    "Member": ".member",
+    "MemberDeniedAction": ".member",
+    "MemberEnvironment": ".member",
+    "MemberTypedDict": ".member",
+    "MemberList": ".memberlist",
+    "MemberListTypedDict": ".memberlist",
+    "MemberStatus": ".memberstatus",
+    "MemberUpdateRequest": ".memberupdaterequest",
+    "MemberUpdateRequestDeniedAction": ".memberupdaterequest",
+    "MemberUpdateRequestEnvironment": ".memberupdaterequest",
+    "MemberUpdateRequestTypedDict": ".memberupdaterequest",
+    "Metric": ".metric",
     "NotFoundErrorCode": ".notfounderrorcode",
     "OnExpiry": ".onexpiry",
+    "OperationalAggregate": ".operationalaggregate",
+    "OperationalAggregateTypedDict": ".operationalaggregate",
+    "OperationalAggregateBucket": ".operationalaggregatebucket",
+    "OperationalAggregateBucketTypedDict": ".operationalaggregatebucket",
+    "OperationalAggregateQueue": ".operationalaggregatequeue",
+    "OperationalAggregateQueueTypedDict": ".operationalaggregatequeue",
+    "OperationalAggregateTotals": ".operationalaggregatetotals",
+    "OperationalAggregateTotalsTypedDict": ".operationalaggregatetotals",
     "Outcome": ".outcome",
+    "Outcomes": ".outcomes",
+    "OutcomesTypedDict": ".outcomes",
+    "OutcomesByOutcome": ".outcomesbyoutcome",
+    "OutcomesByOutcomeTypedDict": ".outcomesbyoutcome",
+    "OwnerType": ".ownertype",
     "PermissionDeniedErrorCode": ".permissiondeniederrorcode",
     "PhoneEnrichment": ".phoneenrichment",
     "PhoneEnrichmentTypedDict": ".phoneenrichment",
@@ -979,17 +1583,111 @@ _dynamic_imports: dict[str, str] = {
     "WebsiteUnion": ".phoneenrichmentfields",
     "WebsiteUnionTypedDict": ".phoneenrichmentfields",
     "Platform": ".platform",
+    "PolicyEvaluation": ".policyevaluation",
+    "PolicyEvaluationTypedDict": ".policyevaluation",
+    "PolicyEvaluationCancelRequest": ".policyevaluationcancelrequest",
+    "PolicyEvaluationCancelRequestTypedDict": ".policyevaluationcancelrequest",
+    "PolicyEvaluationList": ".policyevaluationlist",
+    "PolicyEvaluationListTypedDict": ".policyevaluationlist",
+    "PolicyEvaluationPublishRequest": ".policyevaluationpublishrequest",
+    "PolicyEvaluationPublishRequestTypedDict": ".policyevaluationpublishrequest",
+    "PolicyEvaluationRequest": ".policyevaluationrequest",
+    "PolicyEvaluationRequestTypedDict": ".policyevaluationrequest",
+    "PolicyEvaluationRequestCosts": ".policyevaluationrequestcosts",
+    "PolicyEvaluationRequestCostsTypedDict": ".policyevaluationrequestcosts",
+    "PolicyEvaluationRequestLimits": ".policyevaluationrequestlimits",
+    "PolicyEvaluationRequestLimitsTypedDict": ".policyevaluationrequestlimits",
+    "PolicyEvaluationResult": ".policyevaluationresult",
+    "PolicyEvaluationResultTypedDict": ".policyevaluationresult",
+    "PolicyEvaluationStatus": ".policyevaluationstatus",
+    "PolicyHistory": ".policyhistory",
+    "PolicyHistoryTypedDict": ".policyhistory",
+    "PolicyHistoryItem": ".policyhistoryitem",
+    "PolicyHistoryItemTypedDict": ".policyhistoryitem",
+    "PolicyPreview": ".policypreview",
+    "PolicyPreviewTypedDict": ".policypreview",
+    "PolicyPreviewCoverage": ".policypreviewcoverage",
+    "PolicyPreviewCoverageTypedDict": ".policypreviewcoverage",
+    "PolicyPreviewRequest": ".policypreviewrequest",
+    "PolicyPreviewRequestTypedDict": ".policypreviewrequest",
+    "PolicyPreviewRequestFlows": ".policypreviewrequestflows",
+    "PolicyPreviewRequestFlowsTypedDict": ".policypreviewrequestflows",
+    "PolicyPreviewRequestFlowsAccountCreation": ".policypreviewrequestflowsaccountcreation",
+    "PolicyPreviewRequestFlowsAccountCreationTypedDict": ".policypreviewrequestflowsaccountcreation",
+    "PolicyPreviewRequestFlowsLogin": ".policypreviewrequestflowslogin",
+    "PolicyPreviewRequestFlowsLoginTypedDict": ".policypreviewrequestflowslogin",
+    "PolicyPreviewRequestFlowsPurchase": ".policypreviewrequestflowspurchase",
+    "PolicyPreviewRequestFlowsPurchaseTypedDict": ".policypreviewrequestflowspurchase",
+    "PolicyPreviewTransition": ".policypreviewtransition",
+    "PolicyPreviewTransitionTypedDict": ".policypreviewtransition",
+    "PolicyRestoreRequest": ".policyrestorerequest",
+    "PolicyRestoreRequestTypedDict": ".policyrestorerequest",
+    "Population": ".population",
+    "Priority": ".priority",
     "ProblemInvalidParam": ".probleminvalidparam",
     "ProblemInvalidParamTypedDict": ".probleminvalidparam",
+    "Publication": ".publication",
+    "PublicationTypedDict": ".publication",
     "RateLimitErrorCode": ".ratelimiterrorcode",
     "ReasonCode": ".reasoncode",
     "ReasonIdentifier": ".reasonidentifier",
     "Recommendation": ".recommendation",
+    "Report": ".report",
+    "ReportScope": ".report",
+    "ReportScopeTypedDict": ".report",
+    "ReportTypedDict": ".report",
+    "RequestAggregateRequest": ".requestaggregaterequest",
+    "RequestAggregateRequestTypedDict": ".requestaggregaterequest",
+    "RequestAggregateRequestBucket": ".requestaggregaterequestbucket",
     "RequestDiagnostic": ".requestdiagnostic",
     "RequestDiagnosticTypedDict": ".requestdiagnostic",
     "RequestDiagnosticPage": ".requestdiagnosticpage",
     "RequestDiagnosticPageTypedDict": ".requestdiagnosticpage",
+    "Resolution": ".resolution",
+    "ResolutionTypedDict": ".resolution",
     "ResponseMode": ".responsemode",
+    "ResultStatus": ".resultstatus",
+    "Review": ".review",
+    "ReviewTypedDict": ".review",
+    "ReviewComment": ".reviewcomment",
+    "ReviewCommentTypedDict": ".reviewcomment",
+    "ReviewCommentList": ".reviewcommentlist",
+    "ReviewCommentListTypedDict": ".reviewcommentlist",
+    "ReviewCommentRequest": ".reviewcommentrequest",
+    "ReviewCommentRequestTypedDict": ".reviewcommentrequest",
+    "ReviewCreateRequest": ".reviewcreaterequest",
+    "ReviewCreateRequestTypedDict": ".reviewcreaterequest",
+    "ReviewList": ".reviewlist",
+    "ReviewListTypedDict": ".reviewlist",
+    "ReviewResolutionList": ".reviewresolutionlist",
+    "ReviewResolutionListTypedDict": ".reviewresolutionlist",
+    "ReviewResolveRequest": ".reviewresolverequest",
+    "ReviewResolveRequestTypedDict": ".reviewresolverequest",
+    "Reviews": ".reviews",
+    "ReviewsTypedDict": ".reviews",
+    "ReviewsConclusions": ".reviewsconclusions",
+    "ReviewsConclusionsTypedDict": ".reviewsconclusions",
+    "ReviewStatus": ".reviewstatus",
+    "ReviewSubject": ".reviewsubject",
+    "ReviewSubjectTypedDict": ".reviewsubject",
+    "ReviewSubjectChange": ".reviewsubjectchange",
+    "ReviewSubjectChangeTypedDict": ".reviewsubjectchange",
+    "ReviewSubjectKind": ".reviewsubjectkind",
+    "ReviewSubjectList": ".reviewsubjectlist",
+    "ReviewSubjectListTypedDict": ".reviewsubjectlist",
+    "ReviewSubjectRequest": ".reviewsubjectrequest",
+    "ReviewSubjectRequestTypedDict": ".reviewsubjectrequest",
+    "ReviewUpdateRequest": ".reviewupdaterequest",
+    "ReviewUpdateRequestTypedDict": ".reviewupdaterequest",
+    "ReviewUpdateRequestStatus": ".reviewupdaterequeststatus",
+    "ReviewView": ".reviewview",
+    "ReviewViewTypedDict": ".reviewview",
+    "ReviewViewDeleteRequest": ".reviewviewdeleterequest",
+    "ReviewViewDeleteRequestTypedDict": ".reviewviewdeleterequest",
+    "ReviewViewList": ".reviewviewlist",
+    "ReviewViewListTypedDict": ".reviewviewlist",
+    "ReviewViewRequest": ".reviewviewrequest",
+    "ReviewViewRequestTypedDict": ".reviewviewrequest",
     "Risk": ".risk",
     "RiskTypedDict": ".risk",
     "RiskConfidence": ".riskconfidence",
@@ -1014,6 +1712,7 @@ _dynamic_imports: dict[str, str] = {
     "RiskSummaryPhoneTypedDict": ".risksummaryphone",
     "RiskSummaryUsername": ".risksummaryusername",
     "RiskSummaryUsernameTypedDict": ".risksummaryusername",
+    "Role": ".role",
     "Security": ".security",
     "SecurityTypedDict": ".security",
     "SentIdentifiers": ".sentidentifiers",
@@ -1033,9 +1732,22 @@ _dynamic_imports: dict[str, str] = {
     "SigningKeyTypedDict": ".signingkey",
     "SigningSecret": ".signingsecret",
     "SigningSecretTypedDict": ".signingsecret",
+    "Source": ".source",
     "SourceID": ".sourceid",
     "Status": ".status",
+    "Thresholds": ".thresholds",
+    "ThresholdsTypedDict": ".thresholds",
     "Transport": ".transport",
+    "Usage": ".usage",
+    "UsageTypedDict": ".usage",
+    "UsageCount": ".usagecount",
+    "UsageCountTypedDict": ".usagecount",
+    "UsageCountDepth": ".usagecountdepth",
+    "UsageCountFlow": ".usagecountflow",
+    "UserActor": ".useractor",
+    "UserActorTypedDict": ".useractor",
+    "WebhookAggregateRequest": ".webhookaggregaterequest",
+    "WebhookAggregateRequestTypedDict": ".webhookaggregaterequest",
     "WebhookDeliveryAttempt": ".webhookdeliveryattempt",
     "WebhookDeliveryAttemptTypedDict": ".webhookdeliveryattempt",
     "WebhookDeliveryAttemptStatus": ".webhookdeliveryattemptstatus",
@@ -1075,6 +1787,10 @@ _dynamic_imports: dict[str, str] = {
     "WorkspaceDeletedTypedDict": ".workspacedeleted",
     "WorkspaceDeletedEvent": ".workspacedeletedevent",
     "WorkspaceDeletedEventTypedDict": ".workspacedeletedevent",
+    "WorkspaceOperationsSummary": ".workspaceoperationssummary",
+    "WorkspaceOperationsSummaryTypedDict": ".workspaceoperationssummary",
+    "WorkspaceOperationsSummaryRequest": ".workspaceoperationssummaryrequest",
+    "WorkspaceOperationsSummaryRequestTypedDict": ".workspaceoperationssummaryrequest",
 }
 
 
