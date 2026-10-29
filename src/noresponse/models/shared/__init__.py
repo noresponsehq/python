@@ -30,6 +30,7 @@ if TYPE_CHECKING:
     from .accountdirectorypageitem import (
         AccountDirectoryPageItem,
         AccountDirectoryPageItemTypedDict,
+        WaitingFor,
     )
     from .accountdirectorysearchrequest import (
         AccountDirectorySearchRequest,
@@ -1176,6 +1177,7 @@ __all__ = [
     "UsageTypedDict",
     "UserActor",
     "UserActorTypedDict",
+    "WaitingFor",
     "WebhookAggregateRequest",
     "WebhookAggregateRequestTypedDict",
     "WebhookDeliveryAttempt",
@@ -1253,6 +1255,7 @@ _dynamic_imports: dict[str, str] = {
     "AccountDirectoryPageTypedDict": ".accountdirectorypage",
     "AccountDirectoryPageItem": ".accountdirectorypageitem",
     "AccountDirectoryPageItemTypedDict": ".accountdirectorypageitem",
+    "WaitingFor": ".accountdirectorypageitem",
     "AccountDirectorySearchRequest": ".accountdirectorysearchrequest",
     "AccountDirectorySearchRequestTypedDict": ".accountdirectorysearchrequest",
     "AccountEnforcementList": ".accountenforcementlist",

@@ -1,5 +1,19 @@
 # Changelog
 
+## 9.4.3
+
+* `sdk.accounts.search()`: 
+  *  `request.needs_action` **Added**
+  *  `response.items[].waiting_for` **Added**
+* `sdk.reviews.list()`:  `request.account_id` **Added**
+* `sdk.reviews.list_views()`:  `response.items[].filter.account_id` **Added**
+* `sdk.reviews.create_view()`: 
+  *  `request.filter.account_id` **Added**
+  *  `response.filter.account_id` **Added**
+* `sdk.reviews.update_view()`: 
+  *  `request.filter.account_id` **Added**
+  *  `response.filter.account_id` **Added**
+
 ## 9.4.2
 
 * `sdk.assessments.create()`:  `response.account.risk.reasons[].code.enum(no_email_matches)` **Added**

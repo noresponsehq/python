@@ -5411,6 +5411,7 @@ class Accounts(BaseSDK):
     def search(
         self,
         *,
+        needs_action: Optional[bool] = False,
         account_id: Optional[str] = None,
         email: Optional[str] = None,
         limit: Optional[int] = 25,
@@ -5422,8 +5423,9 @@ class Accounts(BaseSDK):
     ) -> models.operations.SearchAccountsResponse:
         r"""Search distinct accounts by email or account ID
 
-        Search distinct accounts observed in retained assessments in this environment. Match an exact account_id or canonical email; an email matches any retained assessment belonging to the account. The response contains one row per account with its newest retained assessment, current decision when available, per-account assessment count, and total distinct-account count. Send next_cursor with unchanged filters to continue. Totals are exact below 10000 and capped at 10000. Results are live across pages. Requires history access and identifier access for email. Read-only and safe to retry.
+        Search distinct accounts observed in retained assessments in this environment. Match an exact account_id or canonical email; an email matches any retained assessment belonging to the account. Set needs_action to select accounts with an open or in-progress retained review, or a current review/block decision without an effective retained outcome. This filter applies before pagination and counting, adds waiting_for reasons to each row and requires management scope as well as history or investigate access. The response contains one row per account with its newest retained assessment, current decision when available, per-account assessment count, and total distinct-account count. Send next_cursor with unchanged filters to continue. Totals are exact below 10000 and capped at 10000. Results are live across pages. Requires history access and identifier access for email. Read-only and safe to retry.
 
+        :param needs_action: Select accounts with a retained open or in-progress review, or a current review/block account decision with no retained effective account outcome. The server applies this filter before counting and pagination. Requires reviews.read as well as history.read for console members; API keys additionally require management.
         :param account_id: Your own opaque identifier for the account being checked, scoped to your workspace. Use an id you mint, with no direct identifier (email, phone, name or national id) in it. '|' is accepted so an Auth0 user id such as 'auth0|64abc' passes unchanged; '@', '+', '
         base_url = None
         url_variables = None
@@ -5436,6 +5438,7 @@ class Accounts(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.shared.AccountDirectorySearchRequest(
+            needs_action=needs_action,
             account_id=account_id,
             email=email,
             limit=limit,
@@ -5568,6 +5571,7 @@ class Accounts(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.shared.AccountDirectorySearchRequest(
+            needs_action=needs_action,
             account_id=account_id,
             email=email,
             limit=limit,
@@ -5725,6 +5729,7 @@ class Accounts(BaseSDK):
     async def search_async(
         self,
         *,
+        needs_action: Optional[bool] = False,
         account_id: Optional[str] = None,
         email: Optional[str] = None,
         limit: Optional[int] = 25,
@@ -5736,8 +5741,9 @@ class Accounts(BaseSDK):
     ) -> models.operations.SearchAccountsResponse:
         r"""Search distinct accounts by email or account ID
 
-        Search distinct accounts observed in retained assessments in this environment. Match an exact account_id or canonical email; an email matches any retained assessment belonging to the account. The response contains one row per account with its newest retained assessment, current decision when available, per-account assessment count, and total distinct-account count. Send next_cursor with unchanged filters to continue. Totals are exact below 10000 and capped at 10000. Results are live across pages. Requires history access and identifier access for email. Read-only and safe to retry.
+        Search distinct accounts observed in retained assessments in this environment. Match an exact account_id or canonical email; an email matches any retained assessment belonging to the account. Set needs_action to select accounts with an open or in-progress retained review, or a current review/block decision without an effective retained outcome. This filter applies before pagination and counting, adds waiting_for reasons to each row and requires management scope as well as history or investigate access. The response contains one row per account with its newest retained assessment, current decision when available, per-account assessment count, and total distinct-account count. Send next_cursor with unchanged filters to continue. Totals are exact below 10000 and capped at 10000. Results are live across pages. Requires history access and identifier access for email. Read-only and safe to retry.
 
+        :param needs_action: Select accounts with a retained open or in-progress review, or a current review/block account decision with no retained effective account outcome. The server applies this filter before counting and pagination. Requires reviews.read as well as history.read for console members; API keys additionally require management.
         :param account_id: Your own opaque identifier for the account being checked, scoped to your workspace. Use an id you mint, with no direct identifier (email, phone, name or national id) in it. '|' is accepted so an Auth0 user id such as 'auth0|64abc' passes unchanged; '@', '+', '
         base_url = None
         url_variables = None
@@ -5750,6 +5756,7 @@ class Accounts(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.shared.AccountDirectorySearchRequest(
+            needs_action=needs_action,
             account_id=account_id,
             email=email,
             limit=limit,
@@ -5882,6 +5889,7 @@ class Accounts(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.shared.AccountDirectorySearchRequest(
+            needs_action=needs_action,
             account_id=account_id,
             email=email,
             limit=limit,

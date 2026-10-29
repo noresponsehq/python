@@ -1,10 +1,19 @@
 from __future__ import annotations
 from .account import Account, AccountTypedDict
 from .assessmentrevision import AssessmentRevision, AssessmentRevisionTypedDict
-from noresponse.types import BaseModel, UNSET_SENTINEL
+from noresponse.types import BaseModel, UNSET_SENTINEL, UnrecognizedStr
 from pydantic import model_serializer
-from typing import Optional
+from typing import List, Literal, Optional, Union
 from typing_extensions import NotRequired, TypedDict
+
+
+WaitingFor = Union[
+    Literal[
+        "outcome",
+        "review",
+    ],
+    UnrecognizedStr,
+]
 
 
 class AccountDirectoryPageItemTypedDict(TypedDict):
@@ -14,6 +23,8 @@ class AccountDirectoryPageItemTypedDict(TypedDict):
     r"""Retrieve a retained assessment version with its original decision, policy, flow and depth. This response excludes the current account decision. Current retention and response-mode permissions still apply."""
     assessments: int
     r"""Count of admitted retained assessments belonging to this account, not just the returned page."""
+    waiting_for: NotRequired[List[WaitingFor]]
+    r"""Present for needs_action searches. outcome means a current review/block decision lacks a retained effective outcome; review means a retained open or in-progress review. Both can apply."""
     current: NotRequired[AccountTypedDict]
     r"""Body of the 200 answer to GET /v1/accounts/{account_id}: the one current risk of one of the calling workspace's accounts. It is the risk of the account's latest assessment that has a decision (status complete or partial), by created_at and then assessment_id, scored exactly as GET /v1/assessments/{assessment_id} scores that assessment, plus the account's own reason shared_api_key when a key issued to the account was used from many IP addresses or countries (POST /v1/key_usage/batches). Its assessments are the account's history (GET /v1/accounts/{account_id}/assessments)."""
 
@@ -28,12 +39,15 @@ class AccountDirectoryPageItem(BaseModel):
     assessments: int
     r"""Count of admitted retained assessments belonging to this account, not just the returned page."""
 
+    waiting_for: Optional[List[WaitingFor]] = None
+    r"""Present for needs_action searches. outcome means a current review/block decision lacks a retained effective outcome; review means a retained open or in-progress review. Both can apply."""
+
     current: Optional[Account] = None
     r"""Body of the 200 answer to GET /v1/accounts/{account_id}: the one current risk of one of the calling workspace's accounts. It is the risk of the account's latest assessment that has a decision (status complete or partial), by created_at and then assessment_id, scored exactly as GET /v1/assessments/{assessment_id} scores that assessment, plus the account's own reason shared_api_key when a key issued to the account was used from many IP addresses or countries (POST /v1/key_usage/batches). Its assessments are the account's history (GET /v1/accounts/{account_id}/assessments)."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["current"])
+        optional_fields = set(["waiting_for", "current"])
         serialized = handler(self)
         m = {}
 

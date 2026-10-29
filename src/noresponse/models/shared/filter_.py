@@ -8,6 +8,8 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class FilterTypedDict(TypedDict):
+    account_id: NotRequired[str]
+    r"""Only reviews of this exact account in the authenticated workspace and environment. Applied before pagination."""
     status: NotRequired[ReviewStatus]
     priority: NotRequired[Priority]
     assignee: NotRequired[str]
@@ -16,6 +18,9 @@ class FilterTypedDict(TypedDict):
 
 
 class Filter(BaseModel):
+    account_id: Optional[str] = None
+    r"""Only reviews of this exact account in the authenticated workspace and environment. Applied before pagination."""
+
     status: Optional[ReviewStatus] = None
 
     priority: Optional[Priority] = None
@@ -29,7 +34,14 @@ class Filter(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["status", "priority", "assignee", "unassigned", "assignee_principal_id"]
+            [
+                "account_id",
+                "status",
+                "priority",
+                "assignee",
+                "unassigned",
+                "assignee_principal_id",
+            ]
         )
         serialized = handler(self)
         m = {}

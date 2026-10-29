@@ -31,6 +31,7 @@ class Reviews(BaseSDK):
         assignee: Optional[str] = None,
         unassigned: Optional[bool] = None,
         assignee_principal_id: Optional[str] = None,
+        account_id: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -38,7 +39,7 @@ class Reviews(BaseSDK):
     ) -> Optional[models.operations.ListReviewsResponse]:
         r"""List retained account reviews.
 
-        List retained investigation reviews using filters and an authenticated cursor.
+        List retained investigation reviews using filters and an authenticated cursor. Optional account_id selects one exact account in this environment before pagination. All filters are bound into the cursor.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
@@ -49,6 +50,7 @@ class Reviews(BaseSDK):
         :param assignee:
         :param unassigned:
         :param assignee_principal_id: Filter by immutable member ID. Mutually exclusive with assignee and unassigned=true.
+        :param account_id: Only reviews of this exact account in the authenticated workspace and environment. Applied before pagination and bound into the cursor.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -74,6 +76,7 @@ class Reviews(BaseSDK):
             assignee=assignee,
             unassigned=unassigned,
             assignee_principal_id=assignee_principal_id,
+            account_id=account_id,
         )
 
         _noresponse_response_mode, http_headers = (
@@ -133,6 +136,7 @@ class Reviews(BaseSDK):
                     assignee=assignee,
                     unassigned=unassigned,
                     assignee_principal_id=assignee_principal_id,
+                    account_id=account_id,
                     retries=retries,
                     server_url=server_url,
                     timeout_ms=timeout_ms,
@@ -258,6 +262,7 @@ class Reviews(BaseSDK):
         assignee: Optional[str] = None,
         unassigned: Optional[bool] = None,
         assignee_principal_id: Optional[str] = None,
+        account_id: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -265,7 +270,7 @@ class Reviews(BaseSDK):
     ) -> Optional[models.operations.ListReviewsResponse]:
         r"""List retained account reviews.
 
-        List retained investigation reviews using filters and an authenticated cursor.
+        List retained investigation reviews using filters and an authenticated cursor. Optional account_id selects one exact account in this environment before pagination. All filters are bound into the cursor.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
@@ -276,6 +281,7 @@ class Reviews(BaseSDK):
         :param assignee:
         :param unassigned:
         :param assignee_principal_id: Filter by immutable member ID. Mutually exclusive with assignee and unassigned=true.
+        :param account_id: Only reviews of this exact account in the authenticated workspace and environment. Applied before pagination and bound into the cursor.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -301,6 +307,7 @@ class Reviews(BaseSDK):
             assignee=assignee,
             unassigned=unassigned,
             assignee_principal_id=assignee_principal_id,
+            account_id=account_id,
         )
 
         _noresponse_response_mode, http_headers = (
@@ -365,6 +372,7 @@ class Reviews(BaseSDK):
                     assignee=assignee,
                     unassigned=unassigned,
                     assignee_principal_id=assignee_principal_id,
+                    account_id=account_id,
                     retries=retries,
                     server_url=server_url,
                     timeout_ms=timeout_ms,
