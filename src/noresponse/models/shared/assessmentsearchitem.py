@@ -3,6 +3,7 @@ from .assessmentdetail import AssessmentDetail, AssessmentDetailTypedDict
 from .decision import Decision
 from .depth import Depth
 from .flow import Flow
+from .identifiermatch import IdentifierMatch, IdentifierMatchTypedDict
 from .status import Status
 from noresponse.types import BaseModel, UNSET_SENTINEL
 from noresponse.utils import validate_const
@@ -30,6 +31,8 @@ class AssessmentSearchItemTypedDict(TypedDict):
     r"""Version of the body shape."""
     first_decision: NotRequired[Decision]
     r"""An assessment's own decision: block when its stored risk.block is true, otherwise its recommendation. It is not the account's decision or held-admission state."""
+    matched_identifier: NotRequired[IdentifierMatchTypedDict]
+    r"""Why this result matched a typed identifier search. value is the original value submitted in assessment_id. Provenance records a customer submission, not a source discovery or verified ownership. Equality is deterministic and has no inferred confidence score. An account result names its newest retained matching assessment, which can differ from latest."""
 
 
 class AssessmentSearchItem(BaseModel):
@@ -59,9 +62,12 @@ class AssessmentSearchItem(BaseModel):
     first_decision: Optional[Decision] = None
     r"""An assessment's own decision: block when its stored risk.block is true, otherwise its recommendation. It is not the account's decision or held-admission state."""
 
+    matched_identifier: Optional[IdentifierMatch] = None
+    r"""Why this result matched a typed identifier search. value is the original value submitted in assessment_id. Provenance records a customer submission, not a source discovery or verified ownership. Equality is deterministic and has no inferred confidence score. An account result names its newest retained matching assessment, which can differ from latest."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["first_decision"])
+        optional_fields = set(["first_decision", "matched_identifier"])
         serialized = handler(self)
         m = {}
 

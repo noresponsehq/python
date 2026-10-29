@@ -144,3 +144,41 @@ def test_new_async_methods_keep_public_timeout_translation():
                 await sdk.requests.list_async(from_=FROM, to=TO)
 
     asyncio.run(run())
+
+
+@pytest.mark.parametrize("asynchronous", [False, True])
+def test_identifier_searches_preserve_typed_inputs_and_match_evidence(asynchronous):
+    from noresponse import IdentifierSearch, IdentifierMatch, AccountDirectoryPage
+
+    identifier = IdentifierSearch(kind="username", value="janedoe", match="canonical", namespace="customer")
+    matched = {"kind": "username", "value": "JaneDoe", "match_basis": "canonical", "namespace": "customer", "provenance": "submitted", "assessment_id": ASSESSMENT}
+    account_page = {"schema_version": "1", "items": [{"account_id": ACCOUNT, "latest": EXAMPLES["revision"], "assessments": 2, "matched_identifier": matched}], "total": 1, "total_capped": False}
+    assessment_page = {"schema_version": "1", "retention_days": 365, "items": [{**EXAMPLES["revision"], "matched_identifier": matched}], "total": 1, "total_capped": False}
+    client, seen = make([answer(account_page, 200), answer(assessment_page, 200)])
+
+    async def run():
+        async with client:
+            return (await client.accounts.search_async(identifier=identifier, limit=1),
+                    await client.assessments.search_async(from_=FROM, to=TO, identifier=identifier, limit=1))
+
+    if asynchronous:
+        account_response, assessments = asyncio.run(run())
+    else:
+        with client:
+            account_response = client.accounts.search(identifier=identifier, limit=1)
+            assessments = client.assessments.search(from_=FROM, to=TO, identifier=identifier, limit=1)
+    # Account search was already shipped as the generated operation envelope.
+    # Keep .result and headers available to existing sync/async callers.
+    assert account_response.headers["x-request-id"] == ["a" * 32]
+    accounts = account_response.result
+    assert isinstance(accounts, AccountDirectoryPage)
+    for request, page in zip(seen, (accounts, assessments)):
+        assert json.loads(request.content)["identifier"] == {"kind": "username", "value": "janedoe", "match": "canonical", "namespace": "customer"}
+        match = page.items[0].matched_identifier
+        assert isinstance(match, IdentifierMatch)
+        assert match.value == "JaneDoe" and match.match_basis == "canonical"
+        assert match.provenance == "submitted" and match.namespace == "customer"
+        assert match.assessment_id == ASSESSMENT
+    assert assessments.meta.request_id == "a" * 32
+    assert accounts.items[0].current is None
+    assert [request.url.path for request in seen] == ["/v1/accounts/search", "/v1/assessments/search"]

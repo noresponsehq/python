@@ -273,6 +273,9 @@ if TYPE_CHECKING:
     from .hookpoint import HookPoint
     from .identifier import Identifier
     from .identifierkind import IdentifierKind
+    from .identifiermatch import IdentifierMatch, IdentifierMatchTypedDict
+    from .identifiersearch import IdentifierSearch, IdentifierSearchTypedDict
+    from .identifiersearchkind import IdentifierSearchKind
     from .impact import Impact
     from .incompletereason import IncompleteReason
     from .incompletesource import IncompleteSource, IncompleteSourceTypedDict
@@ -330,6 +333,7 @@ if TYPE_CHECKING:
     from .listimpacttransitionfrom import ListImpactTransitionFrom
     from .listmatch import ListMatch
     from .listpreviewrequest import ListPreviewRequest, ListPreviewRequestTypedDict
+    from .match import Match
     from .member import Member, MemberDeniedAction, MemberEnvironment, MemberTypedDict
     from .memberlist import MemberList, MemberListTypedDict
     from .memberstatus import MemberStatus
@@ -340,6 +344,7 @@ if TYPE_CHECKING:
         MemberUpdateRequestTypedDict,
     )
     from .metric import Metric
+    from .namespace import Namespace
     from .notfounderrorcode import NotFoundErrorCode
     from .onexpiry import OnExpiry
     from .operationalaggregate import (
@@ -465,6 +470,7 @@ if TYPE_CHECKING:
     from .population import Population
     from .priority import Priority
     from .probleminvalidparam import ProblemInvalidParam, ProblemInvalidParamTypedDict
+    from .provenance import Provenance
     from .publication import Publication, PublicationTypedDict
     from .ratelimiterrorcode import RateLimitErrorCode
     from .reasoncode import ReasonCode
@@ -889,6 +895,11 @@ __all__ = [
     "IPSummaryTypedDict",
     "Identifier",
     "IdentifierKind",
+    "IdentifierMatch",
+    "IdentifierMatchTypedDict",
+    "IdentifierSearch",
+    "IdentifierSearchKind",
+    "IdentifierSearchTypedDict",
     "Impact",
     "IncompleteReason",
     "IncompleteSource",
@@ -967,6 +978,7 @@ __all__ = [
     "LocationTypedDict",
     "LocationUnion",
     "LocationUnionTypedDict",
+    "Match",
     "Member",
     "MemberDeniedAction",
     "MemberEnvironment",
@@ -983,6 +995,7 @@ __all__ = [
     "NameCandidateTypedDict",
     "NameCandidateUnion",
     "NameCandidateUnionTypedDict",
+    "Namespace",
     "NotFoundErrorCode",
     "OnExpiry",
     "OperationalAggregate",
@@ -1048,6 +1061,7 @@ __all__ = [
     "Priority",
     "ProblemInvalidParam",
     "ProblemInvalidParamTypedDict",
+    "Provenance",
     "Publication",
     "PublicationTypedDict",
     "RateLimitErrorCode",
@@ -1484,6 +1498,11 @@ _dynamic_imports: dict[str, str] = {
     "HookPoint": ".hookpoint",
     "Identifier": ".identifier",
     "IdentifierKind": ".identifierkind",
+    "IdentifierMatch": ".identifiermatch",
+    "IdentifierMatchTypedDict": ".identifiermatch",
+    "IdentifierSearch": ".identifiersearch",
+    "IdentifierSearchTypedDict": ".identifiersearch",
+    "IdentifierSearchKind": ".identifiersearchkind",
     "Impact": ".impact",
     "IncompleteReason": ".incompletereason",
     "IncompleteSource": ".incompletesource",
@@ -1561,6 +1580,7 @@ _dynamic_imports: dict[str, str] = {
     "ListMatch": ".listmatch",
     "ListPreviewRequest": ".listpreviewrequest",
     "ListPreviewRequestTypedDict": ".listpreviewrequest",
+    "Match": ".match",
     "Member": ".member",
     "MemberDeniedAction": ".member",
     "MemberEnvironment": ".member",
@@ -1573,6 +1593,7 @@ _dynamic_imports: dict[str, str] = {
     "MemberUpdateRequestEnvironment": ".memberupdaterequest",
     "MemberUpdateRequestTypedDict": ".memberupdaterequest",
     "Metric": ".metric",
+    "Namespace": ".namespace",
     "NotFoundErrorCode": ".notfounderrorcode",
     "OnExpiry": ".onexpiry",
     "OperationalAggregate": ".operationalaggregate",
@@ -1666,6 +1687,7 @@ _dynamic_imports: dict[str, str] = {
     "Priority": ".priority",
     "ProblemInvalidParam": ".probleminvalidparam",
     "ProblemInvalidParamTypedDict": ".probleminvalidparam",
+    "Provenance": ".provenance",
     "Publication": ".publication",
     "PublicationTypedDict": ".publication",
     "RateLimitErrorCode": ".ratelimiterrorcode",

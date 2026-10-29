@@ -3131,6 +3131,11 @@ class Assessments(BaseSDK):
         score_max: Optional[int] = None,
         list_match: Optional[models.shared.ListMatch] = None,
         changed: Optional[bool] = None,
+        identifier: Optional[
+            Union[
+                models.shared.IdentifierSearch, models.shared.IdentifierSearchTypedDict
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -3138,7 +3143,7 @@ class Assessments(BaseSDK):
     ) -> models.operations.SearchAssessmentsResponse:
         r"""Search assessments across this environment
 
-        Search retained assessments created in [from,to), over at most 366 days. Filters use each assessment decision, rather than the current account decision. Results can change between pages. Keep the assessment version to retrieve the exact decision later. Each item's detail.identifiers holds the identifiers its assessment was sent, exactly as received, and first_decision holds the decision of its first answer. email finds every assessment of the accounts that sent a mailbox, matched as lists match it. changed keeps the assessments a later revision changed. total counts every match, exactly up to 10000. This read does not require an idempotency key.
+        Search retained assessments created in [from,to), at most 366 days. identifier directly matches that assessment's submitted email, phone or customer-namespace username using exact, canonical or explicitly selected email mailbox matching. matched_identifier explains the original value and match basis. Legacy email keeps its account-wide mailbox semantics and cannot be combined with identifier. Other filters combine using AND and describe assessment decisions, separate from current account decisions. Each item carries the original submitted identifiers and its first_decision when available. Newest-created order has an assessment-ID tie break. Results are live across pages; each page's total and items use one database snapshot. Totals are exact below 10000 and capped at 10000. Requires history or investigate authority and identifier-read permission for identifier/email filters; detailed mode also requires detailed permission. No Idempotency-Key.
 
         :param from_:
         :param to:
@@ -3176,6 +3181,7 @@ class Assessments(BaseSDK):
             score_max=score_max,
             list_match=list_match,
             changed=changed,
+            identifier=utils.get_pydantic_model(identifier, Optional[models.shared.IdentifierSearch]),
         )
 
         _noresponse_response_mode, http_headers = response_helpers.consume_response_mode(http_headers)
@@ -3304,6 +3310,7 @@ class Assessments(BaseSDK):
         :param score_max: Inclusive upper score bound, at least score_min when both are supplied.
         :param list_match: The list action captured at the first answer. Requires revision first. Older answers without captured list state do not match, including none.
         :param changed: true returns only assessments whose latest stored revision's decision differs from their first answer's decision (see decision); false only the others. An assessment whose first answer or latest revision has no decision yet is not changed. Cannot be combined with revision first.
+        :param identifier: One customer-submitted identifier. Defaults to exact comparison of the original submitted value. canonical uses the supported identifier normalisation without an ownership claim: email preserves local-part case, NFC-normalises it and lowercases the domain without removing dots or tags; phone uses international E.164 without extensions or an inferred region; username uses NFC and Unicode case folding within the customer namespace. mailbox is email-only and explicitly selects existing list rules: case-insensitive, remove +tag, and ignore local-part dots at gmail.com and googlemail.com; googlemail.com maps to gmail.com. Username requires namespace customer. Email and phone forbid namespace. Source-discovered identifiers and platform handles are not searched. Unsupported kinds, namespaces, modes and invalid values return 400. Search equality does not establish verified ownership or merge accounts.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3342,6 +3349,9 @@ class Assessments(BaseSDK):
             score_max=score_max,
             list_match=list_match,
             changed=changed,
+            identifier=utils.get_pydantic_model(
+                identifier, Optional[models.shared.IdentifierSearch]
+            ),
         )
 
         _noresponse_response_mode, http_headers = (
@@ -3513,6 +3523,11 @@ class Assessments(BaseSDK):
         score_max: Optional[int] = None,
         list_match: Optional[models.shared.ListMatch] = None,
         changed: Optional[bool] = None,
+        identifier: Optional[
+            Union[
+                models.shared.IdentifierSearch, models.shared.IdentifierSearchTypedDict
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -3520,7 +3535,7 @@ class Assessments(BaseSDK):
     ) -> models.operations.SearchAssessmentsResponse:
         r"""Search assessments across this environment
 
-        Search retained assessments created in [from,to), over at most 366 days. Filters use each assessment decision, rather than the current account decision. Results can change between pages. Keep the assessment version to retrieve the exact decision later. Each item's detail.identifiers holds the identifiers its assessment was sent, exactly as received, and first_decision holds the decision of its first answer. email finds every assessment of the accounts that sent a mailbox, matched as lists match it. changed keeps the assessments a later revision changed. total counts every match, exactly up to 10000. This read does not require an idempotency key.
+        Search retained assessments created in [from,to), at most 366 days. identifier directly matches that assessment's submitted email, phone or customer-namespace username using exact, canonical or explicitly selected email mailbox matching. matched_identifier explains the original value and match basis. Legacy email keeps its account-wide mailbox semantics and cannot be combined with identifier. Other filters combine using AND and describe assessment decisions, separate from current account decisions. Each item carries the original submitted identifiers and its first_decision when available. Newest-created order has an assessment-ID tie break. Results are live across pages; each page's total and items use one database snapshot. Totals are exact below 10000 and capped at 10000. Requires history or investigate authority and identifier-read permission for identifier/email filters; detailed mode also requires detailed permission. No Idempotency-Key.
 
         :param from_:
         :param to:
@@ -3558,6 +3573,7 @@ class Assessments(BaseSDK):
             score_max=score_max,
             list_match=list_match,
             changed=changed,
+            identifier=utils.get_pydantic_model(identifier, Optional[models.shared.IdentifierSearch]),
         )
 
         _noresponse_response_mode, http_headers = response_helpers.consume_response_mode(http_headers)
@@ -3686,6 +3702,7 @@ class Assessments(BaseSDK):
         :param score_max: Inclusive upper score bound, at least score_min when both are supplied.
         :param list_match: The list action captured at the first answer. Requires revision first. Older answers without captured list state do not match, including none.
         :param changed: true returns only assessments whose latest stored revision's decision differs from their first answer's decision (see decision); false only the others. An assessment whose first answer or latest revision has no decision yet is not changed. Cannot be combined with revision first.
+        :param identifier: One customer-submitted identifier. Defaults to exact comparison of the original submitted value. canonical uses the supported identifier normalisation without an ownership claim: email preserves local-part case, NFC-normalises it and lowercases the domain without removing dots or tags; phone uses international E.164 without extensions or an inferred region; username uses NFC and Unicode case folding within the customer namespace. mailbox is email-only and explicitly selects existing list rules: case-insensitive, remove +tag, and ignore local-part dots at gmail.com and googlemail.com; googlemail.com maps to gmail.com. Username requires namespace customer. Email and phone forbid namespace. Source-discovered identifiers and platform handles are not searched. Unsupported kinds, namespaces, modes and invalid values return 400. Search equality does not establish verified ownership or merge accounts.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3724,6 +3741,9 @@ class Assessments(BaseSDK):
             score_max=score_max,
             list_match=list_match,
             changed=changed,
+            identifier=utils.get_pydantic_model(
+                identifier, Optional[models.shared.IdentifierSearch]
+            ),
         )
 
         _noresponse_response_mode, http_headers = (

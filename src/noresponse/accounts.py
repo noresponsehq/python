@@ -5416,14 +5416,19 @@ class Accounts(BaseSDK):
         email: Optional[str] = None,
         limit: Optional[int] = 25,
         cursor: Optional[str] = None,
+        identifier: Optional[
+            Union[
+                models.shared.IdentifierSearch, models.shared.IdentifierSearchTypedDict
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.operations.SearchAccountsResponse:
-        r"""Search distinct accounts by email or account ID
+        r"""Search distinct accounts by submitted identifier or account ID
 
-        Search distinct accounts observed in retained assessments in this environment. Match an exact account_id or canonical email; an email matches any retained assessment belonging to the account. Set needs_action to select accounts with an open or in-progress retained review, or a current review/block decision without an effective retained outcome. This filter applies before pagination and counting, adds waiting_for reasons to each row and requires management scope as well as history or investigate access. The response contains one row per account with its newest retained assessment, current decision when available, per-account assessment count, and total distinct-account count. Send next_cursor with unchanged filters to continue. Totals are exact below 10000 and capped at 10000. Results are live across pages. Requires history access and identifier access for email. Read-only and safe to retry.
+        Search distinct accounts observed in retained assessments in this environment. identifier matches an exact, canonical or explicitly selected mailbox form of a submitted email, phone or customer-namespace username. It matches historical retained inputs and returns matched_identifier with the original value and matching assessment. Each row has its newest retained assessment, current account decision when available, retained assessment count, and total distinct-account count. identifier and legacy email are mutually exclusive; account_id and needs_action combine with either using AND. Set needs_action to select accounts with a retained open or in-progress review, or a current review/block account decision without an effective retained account outcome. This filter applies before counting and pagination and adds waiting_for reasons. Current decisions include account list overrides and shared-key scoring and preserve admission holds. Typed identifier search uses stable opaque account order; ordinary and legacy email searches retain newest-seen order. Results are live across pages; each page's items and total share a database snapshot, while current account risk is read separately. Cursors are expiring and bound to scope, operation and filters. Totals are exact below 10000 and capped at 10000. Requires history or investigate authority and identifier-read permission for identifier or email filtering. needs_action additionally requires management scope. Source-discovered associations are not searched and equality is not verified ownership.
 
         :param needs_action: Select accounts with a retained open or in-progress review, or a current review/block account decision with no retained effective account outcome. The server applies this filter before counting and pagination. Requires reviews.read as well as history.read for console members; API keys additionally require management.
         :param account_id: Your own opaque identifier for the account being checked, scoped to your workspace. Use an id you mint, with no direct identifier (email, phone, name or national id) in it. '|' is accepted so an Auth0 user id such as 'auth0|64abc' passes unchanged; '@', '+', '
@@ -5443,6 +5448,7 @@ class Accounts(BaseSDK):
             email=email,
             limit=limit,
             cursor=cursor,
+            identifier=utils.get_pydantic_model(identifier, Optional[models.shared.IdentifierSearch]),
         )
 
         _noresponse_response_mode, http_headers = response_helpers.consume_response_mode(http_headers)
@@ -5555,6 +5561,7 @@ class Accounts(BaseSDK):
         :param email: Assessments of every account that one of its retained admitted assessments sent this mailbox as identifiers.email, matched as lists match an email entry: case-insensitive, a +tag removed and, at gmail.com and googlemail.com, the dots of the local part ignored. Only assessments stored since email list matching began carry the mailbox. An address that is not a valid mailbox is refused with 400.
         :param limit:
         :param cursor: Opaque, expiring cursor bound to this environment, operation and every filter. Keep the filters unchanged.
+        :param identifier: One customer-submitted identifier. Defaults to exact comparison of the original submitted value. canonical uses the supported identifier normalisation without an ownership claim: email preserves local-part case, NFC-normalises it and lowercases the domain without removing dots or tags; phone uses international E.164 without extensions or an inferred region; username uses NFC and Unicode case folding within the customer namespace. mailbox is email-only and explicitly selects existing list rules: case-insensitive, remove +tag, and ignore local-part dots at gmail.com and googlemail.com; googlemail.com maps to gmail.com. Username requires namespace customer. Email and phone forbid namespace. Source-discovered identifiers and platform handles are not searched. Unsupported kinds, namespaces, modes and invalid values return 400. Search equality does not establish verified ownership or merge accounts.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -5576,6 +5583,9 @@ class Accounts(BaseSDK):
             email=email,
             limit=limit,
             cursor=cursor,
+            identifier=utils.get_pydantic_model(
+                identifier, Optional[models.shared.IdentifierSearch]
+            ),
         )
 
         _noresponse_response_mode, http_headers = (
@@ -5734,14 +5744,19 @@ class Accounts(BaseSDK):
         email: Optional[str] = None,
         limit: Optional[int] = 25,
         cursor: Optional[str] = None,
+        identifier: Optional[
+            Union[
+                models.shared.IdentifierSearch, models.shared.IdentifierSearchTypedDict
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.operations.SearchAccountsResponse:
-        r"""Search distinct accounts by email or account ID
+        r"""Search distinct accounts by submitted identifier or account ID
 
-        Search distinct accounts observed in retained assessments in this environment. Match an exact account_id or canonical email; an email matches any retained assessment belonging to the account. Set needs_action to select accounts with an open or in-progress retained review, or a current review/block decision without an effective retained outcome. This filter applies before pagination and counting, adds waiting_for reasons to each row and requires management scope as well as history or investigate access. The response contains one row per account with its newest retained assessment, current decision when available, per-account assessment count, and total distinct-account count. Send next_cursor with unchanged filters to continue. Totals are exact below 10000 and capped at 10000. Results are live across pages. Requires history access and identifier access for email. Read-only and safe to retry.
+        Search distinct accounts observed in retained assessments in this environment. identifier matches an exact, canonical or explicitly selected mailbox form of a submitted email, phone or customer-namespace username. It matches historical retained inputs and returns matched_identifier with the original value and matching assessment. Each row has its newest retained assessment, current account decision when available, retained assessment count, and total distinct-account count. identifier and legacy email are mutually exclusive; account_id and needs_action combine with either using AND. Set needs_action to select accounts with a retained open or in-progress review, or a current review/block account decision without an effective retained account outcome. This filter applies before counting and pagination and adds waiting_for reasons. Current decisions include account list overrides and shared-key scoring and preserve admission holds. Typed identifier search uses stable opaque account order; ordinary and legacy email searches retain newest-seen order. Results are live across pages; each page's items and total share a database snapshot, while current account risk is read separately. Cursors are expiring and bound to scope, operation and filters. Totals are exact below 10000 and capped at 10000. Requires history or investigate authority and identifier-read permission for identifier or email filtering. needs_action additionally requires management scope. Source-discovered associations are not searched and equality is not verified ownership.
 
         :param needs_action: Select accounts with a retained open or in-progress review, or a current review/block account decision with no retained effective account outcome. The server applies this filter before counting and pagination. Requires reviews.read as well as history.read for console members; API keys additionally require management.
         :param account_id: Your own opaque identifier for the account being checked, scoped to your workspace. Use an id you mint, with no direct identifier (email, phone, name or national id) in it. '|' is accepted so an Auth0 user id such as 'auth0|64abc' passes unchanged; '@', '+', '
@@ -5761,6 +5776,7 @@ class Accounts(BaseSDK):
             email=email,
             limit=limit,
             cursor=cursor,
+            identifier=utils.get_pydantic_model(identifier, Optional[models.shared.IdentifierSearch]),
         )
 
         _noresponse_response_mode, http_headers = response_helpers.consume_response_mode(http_headers)
@@ -5873,6 +5889,7 @@ class Accounts(BaseSDK):
         :param email: Assessments of every account that one of its retained admitted assessments sent this mailbox as identifiers.email, matched as lists match an email entry: case-insensitive, a +tag removed and, at gmail.com and googlemail.com, the dots of the local part ignored. Only assessments stored since email list matching began carry the mailbox. An address that is not a valid mailbox is refused with 400.
         :param limit:
         :param cursor: Opaque, expiring cursor bound to this environment, operation and every filter. Keep the filters unchanged.
+        :param identifier: One customer-submitted identifier. Defaults to exact comparison of the original submitted value. canonical uses the supported identifier normalisation without an ownership claim: email preserves local-part case, NFC-normalises it and lowercases the domain without removing dots or tags; phone uses international E.164 without extensions or an inferred region; username uses NFC and Unicode case folding within the customer namespace. mailbox is email-only and explicitly selects existing list rules: case-insensitive, remove +tag, and ignore local-part dots at gmail.com and googlemail.com; googlemail.com maps to gmail.com. Username requires namespace customer. Email and phone forbid namespace. Source-discovered identifiers and platform handles are not searched. Unsupported kinds, namespaces, modes and invalid values return 400. Search equality does not establish verified ownership or merge accounts.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -5894,6 +5911,9 @@ class Accounts(BaseSDK):
             email=email,
             limit=limit,
             cursor=cursor,
+            identifier=utils.get_pydantic_model(
+                identifier, Optional[models.shared.IdentifierSearch]
+            ),
         )
 
         _noresponse_response_mode, http_headers = (

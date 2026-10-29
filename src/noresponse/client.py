@@ -174,6 +174,7 @@ class Assessments(_Assessments):
         to: str,
         account_id: Optional[str] = None,
         email: Optional[str] = None,
+        identifier: Optional[Union[models.shared.IdentifierSearch, models.shared.IdentifierSearchTypedDict]] = None,
         flow: Optional[models.shared.Flow] = None,
         status: Optional[models.shared.Status] = None,
         recommendation: Optional[models.shared.Recommendation] = None,
@@ -203,6 +204,7 @@ class Assessments(_Assessments):
             to=to,
             account_id=account_id,
             email=email,
+            identifier=identifier,
             flow=flow,
             status=status,
             recommendation=recommendation,
@@ -235,6 +237,7 @@ class Assessments(_Assessments):
         to: str,
         account_id: Optional[str] = None,
         email: Optional[str] = None,
+        identifier: Optional[Union[models.shared.IdentifierSearch, models.shared.IdentifierSearchTypedDict]] = None,
         flow: Optional[models.shared.Flow] = None,
         status: Optional[models.shared.Status] = None,
         recommendation: Optional[models.shared.Recommendation] = None,
@@ -264,6 +267,7 @@ class Assessments(_Assessments):
             to=to,
             account_id=account_id,
             email=email,
+            identifier=identifier,
             flow=flow,
             status=status,
             recommendation=recommendation,
@@ -893,6 +897,8 @@ class Accounts(_Accounts):
     assessments are its history. Reads need history; reports and credential
     associations need assess; retiring an association needs delete.
     """
+
+
 
     def record_outcome(  # type: ignore[override]
         self,
