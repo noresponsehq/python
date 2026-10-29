@@ -29,7 +29,7 @@ class RiskTypedDict(TypedDict):
     reasons: List[RiskReasonTypedDict]
     r"""Every reason that fired: risk-raising reasons first, then neutral, then risk-lowering, each strongest impact band first and then by code. The policy's numeric weights are kept private, so a reason carries only its direction and impact band."""
     coverage: RiskCoverageTypedDict
-    r"""Sources counted by state, not named."""
+    r"""Counts of planned source-identifier pairs by evidence outcome, deduplicated across signals and incomplete entries. These counts do not measure identity agreement or prove that processing is still running. A lane that was not searched is not an answered source."""
     block: NotRequired[bool]
     r"""true when the workspace's block threshold is set and score reached it. A provider hook can deny the account creation on it; the provider decides and enforces. It does not change recommendation. It is false while blocking is off, the default, and a body from before the flag existed omits it: read absent as false."""
     block_threshold: NotRequired[int]
@@ -62,7 +62,7 @@ class Risk(BaseModel):
     r"""Every reason that fired: risk-raising reasons first, then neutral, then risk-lowering, each strongest impact band first and then by code. The policy's numeric weights are kept private, so a reason carries only its direction and impact band."""
 
     coverage: RiskCoverage
-    r"""Sources counted by state, not named."""
+    r"""Counts of planned source-identifier pairs by evidence outcome, deduplicated across signals and incomplete entries. These counts do not measure identity agreement or prove that processing is still running. A lane that was not searched is not an answered source."""
 
     block: Optional[bool] = None
     r"""true when the workspace's block threshold is set and score reached it. A provider hook can deny the account creation on it; the provider decides and enforces. It does not change recommendation. It is false while blocking is off, the default, and a body from before the flag existed omits it: read absent as false."""

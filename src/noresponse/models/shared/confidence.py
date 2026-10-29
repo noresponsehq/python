@@ -12,4 +12,4 @@ Confidence = Union[
     ],
     UnrecognizedStr,
 ]
-r"""Ordinal confidence in the recommendation under the current policy: low, medium, high or unavailable."""
+r"""Evidence coverage: how much of the planned source evidence gave a definite answer. This is not confidence that an identity is genuine, agreement between identifiers, a risk score or a probability. unavailable means no usable evidence answered; a terminal uncovered assessment can have this value and recommend review."""

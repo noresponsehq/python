@@ -20,6 +20,7 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"voip_number"`
 - `"disposable_email"`
 - `"new_email"`
+- `"no_email_matches"`
 - `"spam_reports"`
 - `"fraud_flag"`
 - `"identity_mismatch"`
