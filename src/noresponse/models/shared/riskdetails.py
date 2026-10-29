@@ -16,7 +16,7 @@ class RiskDetailsTypedDict(TypedDict):
     breaches: NotRequired[List[BreachTypedDict]]
     r"""The matching breach tables, newest first, at most 100."""
     breach_names: NotRequired[List[RiskDetailsBreachNameTypedDict]]
-    r"""Names found next to the identifiers in breach records, merged, with the number of distinct tables each was seen in."""
+    r"""Names found next to the identifiers in breach records, merged, with the number of distinct tables each was seen in and the sites of those tables."""
     events: NotRequired[List[RiskDetailsEventTypedDict]]
     r"""The identity's dated footprint events, newest first, at most 300: the year and month, what happened (created, last_active, breached), the site, its category, the kind of evidence and the identifier it belongs to. No breach value: dates are coarsened to the month."""
 
@@ -30,7 +30,7 @@ class RiskDetails(BaseModel):
     r"""The matching breach tables, newest first, at most 100."""
 
     breach_names: Optional[List[RiskDetailsBreachName]] = None
-    r"""Names found next to the identifiers in breach records, merged, with the number of distinct tables each was seen in."""
+    r"""Names found next to the identifiers in breach records, merged, with the number of distinct tables each was seen in and the sites of those tables."""
 
     events: Optional[List[RiskDetailsEvent]] = None
     r"""The identity's dated footprint events, newest first, at most 300: the year and month, what happened (created, last_active, breached), the site, its category, the kind of evidence and the identifier it belongs to. No breach value: dates are coarsened to the month."""
