@@ -1,5 +1,11 @@
 # Changelog
 
+## 9.3.0
+
+* `sdk.assessments.aggregate()`: 
+  *  `request.time_zone` **Added**
+  *  `response.time_zone` **Added**
+
 ## 9.2.0
 
 * `sdk.assessments.search()`: 

@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: 3b2dd35b282209036eb4e6313bdd1eed
+  docChecksum: 7d74d8c2c01e85c634dd964d9f06e5d1
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 9.2.0
-  configChecksum: ce87f807d1df45dfdedd5083d4065de2
+  releaseVersion: 9.3.0
+  configChecksum: ea504dde1d9a7e91091fd6cc5f70669e
 features:
   python:
     additionalDependencies: 1.1.0
@@ -477,7 +477,7 @@ trackedFiles:
   docs/models/shared/admission.md:
     last_write_checksum: sha1:e9971443b7de4fe9f452338356caee4c86c2cd66
   docs/models/shared/aggregatebucket.md:
-    last_write_checksum: sha1:8ff762153750e9294b4813273c86bd9f6da837d2
+    last_write_checksum: sha1:0eaf6f196d112eb22c1762ac328c0eb9b800bb9a
   docs/models/shared/aggregatedimension.md:
     last_write_checksum: sha1:10e220c61aa02120715152c4933610e372bbdc98
   docs/models/shared/aggregategroup.md:
@@ -501,13 +501,13 @@ trackedFiles:
   docs/models/shared/assessment.md:
     last_write_checksum: sha1:193daedef7f141dc6b27358170372f60054a5727
   docs/models/shared/assessmentaggregate.md:
-    last_write_checksum: sha1:6b1c3d2434cd9c4cc076efaa0aeeae7840366901
+    last_write_checksum: sha1:48f7b6ecf36fdf83176e01a6466cce6179fefeef
   docs/models/shared/assessmentaggregatecoverage.md:
     last_write_checksum: sha1:c5038c28b1c41b8342f46341705775f1ae9fdf29
   docs/models/shared/assessmentaggregatemetric.md:
     last_write_checksum: sha1:d0bdab36ed2ffe210af34cf3646a8c738886c1ba
   docs/models/shared/assessmentaggregaterequest.md:
-    last_write_checksum: sha1:f4165f994e7f3b9d786388bb3878cb82b881c971
+    last_write_checksum: sha1:330b8dd9593bafad20d44f386b5354f4d9aca056
   docs/models/shared/assessmentaggregaterequestmetric.md:
     last_write_checksum: sha1:0f56325e000e7f96a9d5db7a61d0eacb3343274d
   docs/models/shared/assessmentdeletion.md:
@@ -601,7 +601,7 @@ trackedFiles:
   docs/models/shared/breachsummary.md:
     last_write_checksum: sha1:ce8d2de00acb8cef78a4dd1d84278bde03c2edd2
   docs/models/shared/bucket.md:
-    last_write_checksum: sha1:59d245edfad36510006c01863613bc43cf699644
+    last_write_checksum: sha1:ad1079cf7f5f1f4c066b9df45c67ded1d5690a99
   docs/models/shared/conclusion.md:
     last_write_checksum: sha1:114c24f12d7b6ebf1347f9d59c9be2eecb195e34
   docs/models/shared/confidence.md:
@@ -1135,7 +1135,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:b00adf52bf1a4ddd1c683d4d478e73554a987043
   pyproject.toml:
-    last_write_checksum: sha1:6ba6c0d1f2ea4ec24728c94051e57d0c494fbded
+    last_write_checksum: sha1:c2255558cff6f50c0a719a5cc3334764e3c23c76
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -1151,11 +1151,11 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:a4ee6af39350563e0040229f18350be9811e5381
+    last_write_checksum: sha1:0fc92fbbb0f8168ff8da05861e11f3f4f9479e5a
   src/noresponse/accounts.py:
     last_write_checksum: sha1:8d3d9eb6190e2bca35614368fae5b74a5a96d62d
   src/noresponse/assessments.py:
-    last_write_checksum: sha1:40858b85d73e54e00390435f0a8d809ba586e121
+    last_write_checksum: sha1:466a02376805a379c28c0cbabe208bd3c889f336
   src/noresponse/audit.py:
     last_write_checksum: sha1:4cbe79b4df5a0130906a93a0a779e88ecaebe141
   src/noresponse/basesdk.py:
@@ -1455,7 +1455,7 @@ trackedFiles:
   src/noresponse/models/shared/admission.py:
     last_write_checksum: sha1:f7781d1cd2d5b711757f93103a333efda95891ae
   src/noresponse/models/shared/aggregatebucket.py:
-    last_write_checksum: sha1:45fedd1d5d28f3db5914f5071c7c77dbf91ca7c4
+    last_write_checksum: sha1:ad1133daac1e4314bfac38000f91bd0d3be7e6f9
   src/noresponse/models/shared/aggregatedimension.py:
     last_write_checksum: sha1:ce8ae3f70d7a36b75a56b0b60149797927097db4
   src/noresponse/models/shared/aggregategroup.py:
@@ -1475,11 +1475,11 @@ trackedFiles:
   src/noresponse/models/shared/assessment.py:
     last_write_checksum: sha1:a2b89c0c7c5a4462f837bd1c403fd58ff6a61679
   src/noresponse/models/shared/assessmentaggregate.py:
-    last_write_checksum: sha1:d5b267aeea555e69125a45d061d3e5f70030e369
+    last_write_checksum: sha1:779f011f64b180580e8f24b269863ac044aaa726
   src/noresponse/models/shared/assessmentaggregatecoverage.py:
     last_write_checksum: sha1:3f9e8cf76eeedf2a7c4e60699c9ac36cf5acc45a
   src/noresponse/models/shared/assessmentaggregaterequest.py:
-    last_write_checksum: sha1:6c749efbfa2210f7ccf8b029a28cbfaf45fd9c5e
+    last_write_checksum: sha1:70a9492a2b9d35cdc0a6c4d1420667d94101da33
   src/noresponse/models/shared/assessmentdeletion.py:
     last_write_checksum: sha1:56a9aaa5fd744f39302e8e70a78ffc557369c946
   src/noresponse/models/shared/assessmentdeletionaccount.py:
@@ -1571,7 +1571,7 @@ trackedFiles:
   src/noresponse/models/shared/breachsummary.py:
     last_write_checksum: sha1:940b3331495b982831df41c61b131722df332828
   src/noresponse/models/shared/bucket.py:
-    last_write_checksum: sha1:0c0eb6b328b48fdb82f88c945c938c0227a94254
+    last_write_checksum: sha1:054918745e4ad91d2eb319753050ca728c507661
   src/noresponse/models/shared/conclusion.py:
     last_write_checksum: sha1:7c22fa6b5a0cdcbf6a1ba473fd8d2cda049cc1df
   src/noresponse/models/shared/confidence.py:
@@ -2359,10 +2359,10 @@ examples:
   aggregateAssessments:
     noresponse-default-aggregate-assessments:
       requestBody:
-        application/json: {"from": "2026-10-19T00:00:00Z", "to": "2026-10-26T00:00:00Z", "bucket": "week", "limit": 20, "country": "GB"}
+        application/json: {"from": "2026-10-19T00:00:00Z", "to": "2026-10-26T00:00:00Z", "bucket": "week", "time_zone": "UTC", "limit": 20, "country": "GB"}
       responses:
         "200":
-          application/json: {"schema_version": "1", "from": "2026-10-19T00:00:00.000Z", "to": "2026-10-26T00:00:00.000Z", "bucket": "week", "group_by": [], "metrics": [], "retention_days": 365, "groups_truncated": false, "coverage": {"as_of": "2026-01-01T00:00:00Z", "first_answers_started_at": "2026-01-01T00:00:00Z", "score_outcomes_started_at": "2026-01-01T00:00:00Z", "retained_from": "2026-01-01T00:00:00Z", "population": "first_answers", "erased_records_included": true, "overlapping_groups": false, "late_flip_unit": "decision_transitions", "historical_backfill": false}, "buckets": []}
+          application/json: {"schema_version": "1", "from": "2026-10-19T00:00:00.000Z", "to": "2026-10-26T00:00:00.000Z", "bucket": "week", "group_by": [], "metrics": [], "time_zone": "UTC", "retention_days": 365, "groups_truncated": false, "coverage": {"as_of": "2026-01-01T00:00:00Z", "first_answers_started_at": "2026-01-01T00:00:00Z", "score_outcomes_started_at": "2026-01-01T00:00:00Z", "retained_from": "2026-01-01T00:00:00Z", "population": "first_answers", "erased_records_included": true, "overlapping_groups": false, "late_flip_unit": "decision_transitions", "historical_backfill": false}, "buckets": []}
         "400":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 400, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "invalid_idempotency_key", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "401":

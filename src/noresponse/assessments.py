@@ -2617,6 +2617,7 @@ class Assessments(BaseSDK):
         from_: str,
         to: str,
         bucket: models.shared.Bucket,
+        time_zone: Optional[str] = "UTC",
         group_by: Optional[Iterable[models.shared.AggregateDimension]] = None,
         metrics: Optional[
             Iterable[models.shared.AssessmentAggregateRequestMetric]
@@ -2644,11 +2645,12 @@ class Assessments(BaseSDK):
     ) -> models.operations.AggregateAssessmentsResponse:
         r"""Count assessments by time, decision and reason
 
-        Count this environment's assessments created in [from,to) by hour, day or week, grouped by up to two of decision, flow, recommendation, band, reason, lane, country, asn and list_match. Each assessment counts once, by its first answer; late results do not count it again and appear in late_flips. Optional metrics add a score histogram per flow, that histogram by the latest reported outcome, and late account decision changes. from and to start a bucket and cover at most 366 days (31 for hour buckets) inside the retention period. The filters are search's and describe the first answer: send them to search with revision first to list a cell's assessments. Counts hold no identifier, stay when an assessment or account is deleted, and report reasons by code and impact band. No Idempotency-Key.
+        Count this environment's assessments created in [from,to) by UTC hour, or by day or week from local midnight in time_zone (an IANA name, UTC by default; at most 92 days in a zone other than UTC), grouped by up to two of decision, flow, recommendation, band, reason, lane, country, asn and list_match. Each assessment counts once, by its first answer; late results do not count it again and appear in late_flips. Optional metrics add a score histogram per flow, that histogram by the latest reported outcome, and late account decision changes. from and to start a bucket and cover at most 366 days (31 for hour buckets) inside the retention period. The filters are search's and describe the first answer: send them to search with revision first to list a cell's assessments. Counts hold no identifier, stay when an assessment or account is deleted, and report reasons by code and impact band. No Idempotency-Key.
 
         :param from_: The first bucket's start.
         :param to: The end, excluded: the start of the bucket after the last.
-        :param bucket: The period each count covers, in UTC; a week starts on Monday.
+        :param bucket: The period each count covers: an hour, or a day or a week (from Monday) in time_zone. Hour buckets are whole UTC hours in any time zone.
+        :param time_zone: The IANA time zone whose local midnight starts each day and week bucket, such as Europe/London or Asia/Kolkata; daylight saving changes make those days 23 or 25 hours long. A name the zone database does not know is refused (400 invalid_request naming time_zone). Day and week buckets in a zone other than UTC cover at most 92 days (400 invalid_request naming to); a year of them reads too many hourly counts to answer in time. Hour buckets stay whole UTC hours. Bucket starts, from and to stay instants. With the default population, a zone whose local midnight falls inside a UTC hour (a half-hour offset such as Asia/Kolkata) is refused for day and week buckets, as those counts are kept by the hour; retained_first_answers counts it.
         :param group_by: At most two dimensions to count by, of which at most one is reason, lane, country or asn. An assessment counts once in each of its reasons and incomplete lanes, so those groups can add up to more than the bucket's count. With population retained_first_answers, both dimensions can be facets; counts cover retained first answers only.
         :param metrics: count: each bucket's count and groups. score_histogram: first answers by flow and 5-point score bucket. score_outcomes: the histogram's first answers that have a reported outcome, by flow, 5-point score bucket and the latest outcome reported for the assessment (POST /v1/assessments/{assessment_id}/outcomes); the rest of a bin has none reported. late_flips: changes of an assessment's account decision for its flow after its first answer, by from, to and delay.
         :param limit: The most groups answered: the largest over the whole range, then by value. groups_truncated says when there were more.
@@ -2686,6 +2688,7 @@ class Assessments(BaseSDK):
             from_=from_,
             to=to,
             bucket=bucket,
+            time_zone=time_zone,
             group_by=utils.unmarshal(
                 group_by, Optional[List[models.shared.AggregateDimension]]
             ),
@@ -2860,6 +2863,7 @@ class Assessments(BaseSDK):
         from_: str,
         to: str,
         bucket: models.shared.Bucket,
+        time_zone: Optional[str] = "UTC",
         group_by: Optional[Iterable[models.shared.AggregateDimension]] = None,
         metrics: Optional[
             Iterable[models.shared.AssessmentAggregateRequestMetric]
@@ -2887,11 +2891,12 @@ class Assessments(BaseSDK):
     ) -> models.operations.AggregateAssessmentsResponse:
         r"""Count assessments by time, decision and reason
 
-        Count this environment's assessments created in [from,to) by hour, day or week, grouped by up to two of decision, flow, recommendation, band, reason, lane, country, asn and list_match. Each assessment counts once, by its first answer; late results do not count it again and appear in late_flips. Optional metrics add a score histogram per flow, that histogram by the latest reported outcome, and late account decision changes. from and to start a bucket and cover at most 366 days (31 for hour buckets) inside the retention period. The filters are search's and describe the first answer: send them to search with revision first to list a cell's assessments. Counts hold no identifier, stay when an assessment or account is deleted, and report reasons by code and impact band. No Idempotency-Key.
+        Count this environment's assessments created in [from,to) by UTC hour, or by day or week from local midnight in time_zone (an IANA name, UTC by default; at most 92 days in a zone other than UTC), grouped by up to two of decision, flow, recommendation, band, reason, lane, country, asn and list_match. Each assessment counts once, by its first answer; late results do not count it again and appear in late_flips. Optional metrics add a score histogram per flow, that histogram by the latest reported outcome, and late account decision changes. from and to start a bucket and cover at most 366 days (31 for hour buckets) inside the retention period. The filters are search's and describe the first answer: send them to search with revision first to list a cell's assessments. Counts hold no identifier, stay when an assessment or account is deleted, and report reasons by code and impact band. No Idempotency-Key.
 
         :param from_: The first bucket's start.
         :param to: The end, excluded: the start of the bucket after the last.
-        :param bucket: The period each count covers, in UTC; a week starts on Monday.
+        :param bucket: The period each count covers: an hour, or a day or a week (from Monday) in time_zone. Hour buckets are whole UTC hours in any time zone.
+        :param time_zone: The IANA time zone whose local midnight starts each day and week bucket, such as Europe/London or Asia/Kolkata; daylight saving changes make those days 23 or 25 hours long. A name the zone database does not know is refused (400 invalid_request naming time_zone). Day and week buckets in a zone other than UTC cover at most 92 days (400 invalid_request naming to); a year of them reads too many hourly counts to answer in time. Hour buckets stay whole UTC hours. Bucket starts, from and to stay instants. With the default population, a zone whose local midnight falls inside a UTC hour (a half-hour offset such as Asia/Kolkata) is refused for day and week buckets, as those counts are kept by the hour; retained_first_answers counts it.
         :param group_by: At most two dimensions to count by, of which at most one is reason, lane, country or asn. An assessment counts once in each of its reasons and incomplete lanes, so those groups can add up to more than the bucket's count. With population retained_first_answers, both dimensions can be facets; counts cover retained first answers only.
         :param metrics: count: each bucket's count and groups. score_histogram: first answers by flow and 5-point score bucket. score_outcomes: the histogram's first answers that have a reported outcome, by flow, 5-point score bucket and the latest outcome reported for the assessment (POST /v1/assessments/{assessment_id}/outcomes); the rest of a bin has none reported. late_flips: changes of an assessment's account decision for its flow after its first answer, by from, to and delay.
         :param limit: The most groups answered: the largest over the whole range, then by value. groups_truncated says when there were more.
@@ -2929,6 +2934,7 @@ class Assessments(BaseSDK):
             from_=from_,
             to=to,
             bucket=bucket,
+            time_zone=time_zone,
             group_by=utils.unmarshal(
                 group_by, Optional[List[models.shared.AggregateDimension]]
             ),

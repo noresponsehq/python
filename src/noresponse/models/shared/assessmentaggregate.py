@@ -32,9 +32,11 @@ class AssessmentAggregateTypedDict(TypedDict):
     from_: str
     to: str
     bucket: Bucket
-    r"""The period each count covers, in UTC; a week starts on Monday."""
+    r"""The period each count covers: an hour, or a day or a week (from Monday) in time_zone. Hour buckets are whole UTC hours in any time zone."""
     group_by: List[AggregateDimension]
     metrics: List[AssessmentAggregateMetric]
+    time_zone: str
+    r"""The time zone whose local midnight started each day and week bucket, as requested; UTC when the request named none."""
     groups_truncated: bool
     r"""true when more groups had counts than limit allowed."""
     buckets: List[AggregateBucketTypedDict]
@@ -54,11 +56,14 @@ class AssessmentAggregate(BaseModel):
     to: str
 
     bucket: Bucket
-    r"""The period each count covers, in UTC; a week starts on Monday."""
+    r"""The period each count covers: an hour, or a day or a week (from Monday) in time_zone. Hour buckets are whole UTC hours in any time zone."""
 
     group_by: List[AggregateDimension]
 
     metrics: List[AssessmentAggregateMetric]
+
+    time_zone: str
+    r"""The time zone whose local midnight started each day and week bucket, as requested; UTC when the request named none."""
 
     groups_truncated: bool
     r"""true when more groups had counts than limit allowed."""

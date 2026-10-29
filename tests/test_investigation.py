@@ -19,7 +19,8 @@ CASES = [
     ("assessments", "search", (), {"from_": FROM, "to": TO, "decision": "block", "limit": 1, "cursor": "next_fixture"},
      "search", "POST", "/v1/assessments/search", 200),
     ("assessments", "aggregate", (), {"from_": FROM, "to": TO, "bucket": "day", "group_by": ["decision", "reason"],
-                                      "metrics": ["count", "late_flips"], "flow": "account_creation", "revision": "first"},
+                                      "metrics": ["count", "late_flips"], "flow": "account_creation", "revision": "first",
+                                      "time_zone": "Europe/London"},
      "aggregate", "POST", "/v1/assessments/aggregate", 200),
     ("assessments", "retrieve_version", (ASSESSMENT, 1), {"response_mode": "standard"},
      "revision", "GET", f"/v1/assessments/{ASSESSMENT}/versions/1", 200),
@@ -59,7 +60,7 @@ def verify(result, seen, name, method, path):
     if name == "aggregate":
         assert json.loads(request.content) == {"from": FROM, "to": TO, "bucket": "day", "group_by": ["decision", "reason"],
                                                "metrics": ["count", "late_flips"], "limit": 20, "flow": "account_creation",
-                                               "revision": "first"}
+                                               "revision": "first", "time_zone": "Europe/London"}
         assert result.buckets[0].groups[0].reason == "aged_identity" and result.buckets[0].groups[0].impact == "medium"
         assert result.buckets[0].late_flips[0].to == "review"
     if name == "outcome":

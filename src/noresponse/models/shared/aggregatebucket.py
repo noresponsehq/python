@@ -11,6 +11,7 @@ from typing_extensions import NotRequired, TypedDict
 
 class AggregateBucketTypedDict(TypedDict):
     start: str
+    r"""The bucket's first instant, in UTC. A day or week bucket in a time zone starts at local midnight there, so in Asia/Tokyo a day starts at 15:00Z the day before."""
     count: NotRequired[int]
     r"""Assessments first answered whose creation falls in the bucket. With metric count."""
     groups: NotRequired[List[AggregateGroupTypedDict]]
@@ -23,6 +24,7 @@ class AggregateBucketTypedDict(TypedDict):
 
 class AggregateBucket(BaseModel):
     start: str
+    r"""The bucket's first instant, in UTC. A day or week bucket in a time zone starts at local midnight there, so in Asia/Tokyo a day starts at 15:00Z the day before."""
 
     count: Optional[int] = None
     r"""Assessments first answered whose creation falls in the bucket. With metric count."""
