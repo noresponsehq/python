@@ -522,6 +522,7 @@ if TYPE_CHECKING:
         RotateWebhookSigningKeyResponse,
         RotateWebhookSigningKeyResponseTypedDict,
     )
+    from .searchaccounts import SearchAccountsResponse, SearchAccountsResponseTypedDict
     from .searchassessments import (
         SearchAssessmentsResponse,
         SearchAssessmentsResponseTypedDict,
@@ -914,6 +915,8 @@ __all__ = [
     "RotateWebhookSigningKeyRequestTypedDict",
     "RotateWebhookSigningKeyResponse",
     "RotateWebhookSigningKeyResponseTypedDict",
+    "SearchAccountsResponse",
+    "SearchAccountsResponseTypedDict",
     "SearchAssessmentsResponse",
     "SearchAssessmentsResponseTypedDict",
     "SendWebhookTestEventRequest",
@@ -1289,6 +1292,8 @@ _dynamic_imports: dict[str, str] = {
     "RotateWebhookSigningKeyRequestTypedDict": ".rotatewebhooksigningkey",
     "RotateWebhookSigningKeyResponse": ".rotatewebhooksigningkey",
     "RotateWebhookSigningKeyResponseTypedDict": ".rotatewebhooksigningkey",
+    "SearchAccountsResponse": ".searchaccounts",
+    "SearchAccountsResponseTypedDict": ".searchaccounts",
     "SearchAssessmentsResponse": ".searchassessments",
     "SearchAssessmentsResponseTypedDict": ".searchassessments",
     "SendWebhookTestEventRequest": ".sendwebhooktestevent",

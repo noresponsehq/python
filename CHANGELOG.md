@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.4.1
+
+* `sdk.accounts.search()`: **Added**
+
 ## 9.4.0
 
 * `sdk.assessments.create()`:  `response.detail.risk.details.breach_names[]` **Changed**

@@ -1,0 +1,9 @@
+# SearchAccountsResponse
+
+
+## Fields
+
+| Field                                                                      | Type                                                                       | Required                                                                   | Description                                                                |
+| -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `headers`                                                                  | Dict[str, List[*str*]]                                                     | :heavy_check_mark:                                                         | N/A                                                                        |
+| `result`                                                                   | [shared.AccountDirectoryPage](../../models/shared/accountdirectorypage.md) | :heavy_check_mark:                                                         | N/A                                                                        |
