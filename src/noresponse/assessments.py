@@ -3106,6 +3106,7 @@ class Assessments(BaseSDK):
         from_: str,
         to: str,
         account_id: Optional[str] = None,
+        email: Optional[str] = None,
         flow: Optional[models.shared.Flow] = None,
         status: Optional[models.shared.Status] = None,
         recommendation: Optional[models.shared.Recommendation] = None,
@@ -3123,6 +3124,7 @@ class Assessments(BaseSDK):
         score_min: Optional[int] = None,
         score_max: Optional[int] = None,
         list_match: Optional[models.shared.ListMatch] = None,
+        changed: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -3130,7 +3132,7 @@ class Assessments(BaseSDK):
     ) -> models.operations.SearchAssessmentsResponse:
         r"""Search assessments across this environment
 
-        Search retained assessments created in [from,to), over at most 366 days. Filters use each assessment decision, rather than the current account decision. Results can change between pages. Keep the assessment version to retrieve the exact decision later. Each item's detail.identifiers holds the identifiers its assessment was sent, exactly as received. This read does not require an idempotency key.
+        Search retained assessments created in [from,to), over at most 366 days. Filters use each assessment decision, rather than the current account decision. Results can change between pages. Keep the assessment version to retrieve the exact decision later. Each item's detail.identifiers holds the identifiers its assessment was sent, exactly as received, and first_decision holds the decision of its first answer. email finds every assessment of the accounts that sent a mailbox, matched as lists match it. changed keeps the assessments a later revision changed. total counts every match, exactly up to 10000. This read does not require an idempotency key.
 
         :param from_:
         :param to:
@@ -3149,6 +3151,7 @@ class Assessments(BaseSDK):
             from_=from_,
             to=to,
             account_id=account_id,
+            email=email,
             flow=flow,
             status=status,
             recommendation=recommendation,
@@ -3166,6 +3169,7 @@ class Assessments(BaseSDK):
             score_min=score_min,
             score_max=score_max,
             list_match=list_match,
+            changed=changed,
         )
 
         _noresponse_response_mode, http_headers = response_helpers.consume_response_mode(http_headers)
@@ -3275,6 +3279,7 @@ class Assessments(BaseSDK):
                 http_res,
                 parse_exc_,
             ) and whitespace are refused by the pattern, as is an exact-shape JWT; a hex digest such as a SHA-256 is allowed, because hashing an internal id is a common pseudonymous scheme. A value such as '07700900123' or 'jane.doe.gmail.com' cannot be told apart from an opaque id. It travels in bodies, and in a URL only as the path segment of GET /v1/accounts/{account_id} and its /assessments. An assessment requested by a provider hook at pre_registration, which has no account yet, carries the server-issued account_id pre: followed by its assessment_id.
+        :param email: Assessments of every account that one of its retained admitted assessments sent this mailbox as identifiers.email, matched as lists match an email entry: case-insensitive, a +tag removed and, at gmail.com and googlemail.com, the dots of the local part ignored. Only assessments stored since email list matching began carry the mailbox. An address that is not a valid mailbox is refused with 400.
         :param flow: The event an assessment is made for: account_creation (a user creates an account), login (a user returns to an existing account) or purchase (a payment or a credit grant). The account's risk is reported with the decision for this flow.
         :param status: complete: final; nothing is still running. A lane that failed or missed its 10 s deadline stays listed in incomplete_sources, and confidence is lower. partial: a recommendation exists and at least one lane is still running or did not settle (see incomplete_sources). pending: nothing usable before the deadline; no recommendation yet, poll or wait for the webhook.
         :param recommendation: The recommended action: allow, step_up or review. Your application applies it.
@@ -3292,6 +3297,7 @@ class Assessments(BaseSDK):
         :param score_min: Inclusive lower score bound. Pending answers without a score do not match.
         :param score_max: Inclusive upper score bound, at least score_min when both are supplied.
         :param list_match: The list action captured at the first answer. Requires revision first. Older answers without captured list state do not match, including none.
+        :param changed: true returns only assessments whose latest stored revision's decision differs from their first answer's decision (see decision); false only the others. An assessment whose first answer or latest revision has no decision yet is not changed. Cannot be combined with revision first.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3311,6 +3317,7 @@ class Assessments(BaseSDK):
             from_=from_,
             to=to,
             account_id=account_id,
+            email=email,
             flow=flow,
             status=status,
             recommendation=recommendation,
@@ -3328,6 +3335,7 @@ class Assessments(BaseSDK):
             score_min=score_min,
             score_max=score_max,
             list_match=list_match,
+            changed=changed,
         )
 
         _noresponse_response_mode, http_headers = (
@@ -3480,6 +3488,7 @@ class Assessments(BaseSDK):
         from_: str,
         to: str,
         account_id: Optional[str] = None,
+        email: Optional[str] = None,
         flow: Optional[models.shared.Flow] = None,
         status: Optional[models.shared.Status] = None,
         recommendation: Optional[models.shared.Recommendation] = None,
@@ -3497,6 +3506,7 @@ class Assessments(BaseSDK):
         score_min: Optional[int] = None,
         score_max: Optional[int] = None,
         list_match: Optional[models.shared.ListMatch] = None,
+        changed: Optional[bool] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -3504,7 +3514,7 @@ class Assessments(BaseSDK):
     ) -> models.operations.SearchAssessmentsResponse:
         r"""Search assessments across this environment
 
-        Search retained assessments created in [from,to), over at most 366 days. Filters use each assessment decision, rather than the current account decision. Results can change between pages. Keep the assessment version to retrieve the exact decision later. Each item's detail.identifiers holds the identifiers its assessment was sent, exactly as received. This read does not require an idempotency key.
+        Search retained assessments created in [from,to), over at most 366 days. Filters use each assessment decision, rather than the current account decision. Results can change between pages. Keep the assessment version to retrieve the exact decision later. Each item's detail.identifiers holds the identifiers its assessment was sent, exactly as received, and first_decision holds the decision of its first answer. email finds every assessment of the accounts that sent a mailbox, matched as lists match it. changed keeps the assessments a later revision changed. total counts every match, exactly up to 10000. This read does not require an idempotency key.
 
         :param from_:
         :param to:
@@ -3523,6 +3533,7 @@ class Assessments(BaseSDK):
             from_=from_,
             to=to,
             account_id=account_id,
+            email=email,
             flow=flow,
             status=status,
             recommendation=recommendation,
@@ -3540,6 +3551,7 @@ class Assessments(BaseSDK):
             score_min=score_min,
             score_max=score_max,
             list_match=list_match,
+            changed=changed,
         )
 
         _noresponse_response_mode, http_headers = response_helpers.consume_response_mode(http_headers)
@@ -3649,6 +3661,7 @@ class Assessments(BaseSDK):
                 http_res,
                 parse_exc_,
             ) and whitespace are refused by the pattern, as is an exact-shape JWT; a hex digest such as a SHA-256 is allowed, because hashing an internal id is a common pseudonymous scheme. A value such as '07700900123' or 'jane.doe.gmail.com' cannot be told apart from an opaque id. It travels in bodies, and in a URL only as the path segment of GET /v1/accounts/{account_id} and its /assessments. An assessment requested by a provider hook at pre_registration, which has no account yet, carries the server-issued account_id pre: followed by its assessment_id.
+        :param email: Assessments of every account that one of its retained admitted assessments sent this mailbox as identifiers.email, matched as lists match an email entry: case-insensitive, a +tag removed and, at gmail.com and googlemail.com, the dots of the local part ignored. Only assessments stored since email list matching began carry the mailbox. An address that is not a valid mailbox is refused with 400.
         :param flow: The event an assessment is made for: account_creation (a user creates an account), login (a user returns to an existing account) or purchase (a payment or a credit grant). The account's risk is reported with the decision for this flow.
         :param status: complete: final; nothing is still running. A lane that failed or missed its 10 s deadline stays listed in incomplete_sources, and confidence is lower. partial: a recommendation exists and at least one lane is still running or did not settle (see incomplete_sources). pending: nothing usable before the deadline; no recommendation yet, poll or wait for the webhook.
         :param recommendation: The recommended action: allow, step_up or review. Your application applies it.
@@ -3666,6 +3679,7 @@ class Assessments(BaseSDK):
         :param score_min: Inclusive lower score bound. Pending answers without a score do not match.
         :param score_max: Inclusive upper score bound, at least score_min when both are supplied.
         :param list_match: The list action captured at the first answer. Requires revision first. Older answers without captured list state do not match, including none.
+        :param changed: true returns only assessments whose latest stored revision's decision differs from their first answer's decision (see decision); false only the others. An assessment whose first answer or latest revision has no decision yet is not changed. Cannot be combined with revision first.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3685,6 +3699,7 @@ class Assessments(BaseSDK):
             from_=from_,
             to=to,
             account_id=account_id,
+            email=email,
             flow=flow,
             status=status,
             recommendation=recommendation,
@@ -3702,6 +3717,7 @@ class Assessments(BaseSDK):
             score_min=score_min,
             score_max=score_max,
             list_match=list_match,
+            changed=changed,
         )
 
         _noresponse_response_mode, http_headers = (

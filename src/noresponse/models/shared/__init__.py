@@ -113,6 +113,10 @@ if TYPE_CHECKING:
         AssessmentRequestPolicyContextTypedDict,
     )
     from .assessmentrevision import AssessmentRevision, AssessmentRevisionTypedDict
+    from .assessmentsearchitem import (
+        AssessmentSearchItem,
+        AssessmentSearchItemTypedDict,
+    )
     from .assessmentsearchpage import (
         AssessmentSearchPage,
         AssessmentSearchPageTypedDict,
@@ -716,6 +720,8 @@ __all__ = [
     "AssessmentRequestTypedDict",
     "AssessmentRevision",
     "AssessmentRevisionTypedDict",
+    "AssessmentSearchItem",
+    "AssessmentSearchItemTypedDict",
     "AssessmentSearchPage",
     "AssessmentSearchPageTypedDict",
     "AssessmentSearchRequest",
@@ -1307,6 +1313,8 @@ _dynamic_imports: dict[str, str] = {
     "AssessmentRequestPolicyContextTypedDict": ".assessmentrequestpolicycontext",
     "AssessmentRevision": ".assessmentrevision",
     "AssessmentRevisionTypedDict": ".assessmentrevision",
+    "AssessmentSearchItem": ".assessmentsearchitem",
+    "AssessmentSearchItemTypedDict": ".assessmentsearchitem",
     "AssessmentSearchPage": ".assessmentsearchpage",
     "AssessmentSearchPageTypedDict": ".assessmentsearchpage",
     "AssessmentSearchRequest": ".assessmentsearchrequest",

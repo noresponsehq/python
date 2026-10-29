@@ -24,6 +24,8 @@ class AssessmentSearchRequestTypedDict(TypedDict):
     to: str
     account_id: NotRequired[str]
     r"""Your own opaque identifier for the account being checked, scoped to your workspace. Use an id you mint, with no direct identifier (email, phone, name or national id) in it. '|' is accepted so an Auth0 user id such as 'auth0|64abc' passes unchanged; '@', '+', '$' and whitespace are refused by the pattern, as is an exact-shape JWT; a hex digest such as a SHA-256 is allowed, because hashing an internal id is a common pseudonymous scheme. A value such as '07700900123' or 'jane.doe.gmail.com' cannot be told apart from an opaque id. It travels in bodies, and in a URL only as the path segment of GET /v1/accounts/{account_id} and its /assessments. An assessment requested by a provider hook at pre_registration, which has no account yet, carries the server-issued account_id pre: followed by its assessment_id."""
+    email: NotRequired[str]
+    r"""Assessments of every account that one of its retained admitted assessments sent this mailbox as identifiers.email, matched as lists match an email entry: case-insensitive, a +tag removed and, at gmail.com and googlemail.com, the dots of the local part ignored. Only assessments stored since email list matching began carry the mailbox. An address that is not a valid mailbox is refused with 400."""
     flow: NotRequired[Flow]
     r"""The event an assessment is made for: account_creation (a user creates an account), login (a user returns to an existing account) or purchase (a payment or a credit grant). The account's risk is reported with the decision for this flow."""
     status: NotRequired[Status]
@@ -54,6 +56,8 @@ class AssessmentSearchRequestTypedDict(TypedDict):
     r"""Inclusive upper score bound, at least score_min when both are supplied."""
     list_match: NotRequired[ListMatch]
     r"""The list action captured at the first answer. Requires revision first. Older answers without captured list state do not match, including none."""
+    changed: NotRequired[bool]
+    r"""true returns only assessments whose latest stored revision's decision differs from their first answer's decision (see decision); false only the others. An assessment whose first answer or latest revision has no decision yet is not changed. Cannot be combined with revision first."""
 
 
 class AssessmentSearchRequest(BaseModel):
@@ -65,6 +69,9 @@ class AssessmentSearchRequest(BaseModel):
 
     account_id: Optional[str] = None
     r"""Your own opaque identifier for the account being checked, scoped to your workspace. Use an id you mint, with no direct identifier (email, phone, name or national id) in it. '|' is accepted so an Auth0 user id such as 'auth0|64abc' passes unchanged; '@', '+', '$' and whitespace are refused by the pattern, as is an exact-shape JWT; a hex digest such as a SHA-256 is allowed, because hashing an internal id is a common pseudonymous scheme. A value such as '07700900123' or 'jane.doe.gmail.com' cannot be told apart from an opaque id. It travels in bodies, and in a URL only as the path segment of GET /v1/accounts/{account_id} and its /assessments. An assessment requested by a provider hook at pre_registration, which has no account yet, carries the server-issued account_id pre: followed by its assessment_id."""
+
+    email: Optional[str] = None
+    r"""Assessments of every account that one of its retained admitted assessments sent this mailbox as identifiers.email, matched as lists match an email entry: case-insensitive, a +tag removed and, at gmail.com and googlemail.com, the dots of the local part ignored. Only assessments stored since email list matching began carry the mailbox. An address that is not a valid mailbox is refused with 400."""
 
     flow: Optional[Flow] = None
     r"""The event an assessment is made for: account_creation (a user creates an account), login (a user returns to an existing account) or purchase (a payment or a credit grant). The account's risk is reported with the decision for this flow."""
@@ -113,11 +120,15 @@ class AssessmentSearchRequest(BaseModel):
     list_match: Optional[ListMatch] = None
     r"""The list action captured at the first answer. Requires revision first. Older answers without captured list state do not match, including none."""
 
+    changed: Optional[bool] = None
+    r"""true returns only assessments whose latest stored revision's decision differs from their first answer's decision (see decision); false only the others. An assessment whose first answer or latest revision has no decision yet is not changed. Cannot be combined with revision first."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
             [
                 "account_id",
+                "email",
                 "flow",
                 "status",
                 "recommendation",
@@ -135,6 +146,7 @@ class AssessmentSearchRequest(BaseModel):
                 "score_min",
                 "score_max",
                 "list_match",
+                "changed",
             ]
         )
         serialized = handler(self)

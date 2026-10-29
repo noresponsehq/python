@@ -1,5 +1,5 @@
 from __future__ import annotations
-from .assessmentrevision import AssessmentRevision, AssessmentRevisionTypedDict
+from .assessmentsearchitem import AssessmentSearchItem, AssessmentSearchItemTypedDict
 from noresponse.types import BaseModel, UNSET_SENTINEL
 from noresponse.utils import validate_const
 import pydantic
@@ -10,9 +10,13 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class AssessmentSearchPageTypedDict(TypedDict):
-    r"""A bounded page of latest assessment revisions, newest creation first. Each revision identifies the exact result found; no current account risk is attached."""
+    r"""A bounded page of latest assessment revisions, newest creation first, with how many assessments match the filters. Each item is the revision found and its first answer's decision; no current account risk is attached."""
 
-    items: List[AssessmentRevisionTypedDict]
+    items: List[AssessmentSearchItemTypedDict]
+    total: int
+    r"""How many assessments match the filters over every page, counted when this page was read: exact up to 10000. At 10000 or more it is 10000 and total_capped is true. The cursor does not change it; a later page can count differently, as results are live."""
+    total_capped: bool
+    r"""True when at least 10000 assessments match, so total is 10000 and not the exact count."""
     schema_version: Literal["1"]
     r"""Version of the body shape."""
     next_cursor: NotRequired[str]
@@ -22,9 +26,15 @@ class AssessmentSearchPageTypedDict(TypedDict):
 
 
 class AssessmentSearchPage(BaseModel):
-    r"""A bounded page of latest assessment revisions, newest creation first. Each revision identifies the exact result found; no current account risk is attached."""
+    r"""A bounded page of latest assessment revisions, newest creation first, with how many assessments match the filters. Each item is the revision found and its first answer's decision; no current account risk is attached."""
 
-    items: List[AssessmentRevision]
+    items: List[AssessmentSearchItem]
+
+    total: int
+    r"""How many assessments match the filters over every page, counted when this page was read: exact up to 10000. At 10000 or more it is 10000 and total_capped is true. The cursor does not change it; a later page can count differently, as results are live."""
+
+    total_capped: bool
+    r"""True when at least 10000 assessments match, so total is 10000 and not the exact count."""
 
     schema_version: Annotated[
         Annotated[Literal["1"], AfterValidator(validate_const("1"))],

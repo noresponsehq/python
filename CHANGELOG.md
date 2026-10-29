@@ -1,5 +1,11 @@
 # Changelog
 
+## 9.2.0
+
+* `sdk.assessments.search()`: 
+  *  `request` **Changed**
+  *  `response` **Changed**
+
 ## 9.1.0
 
 * `sdk.usage.get()`:  `response.console_lookups` **Added**
