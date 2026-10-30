@@ -296,6 +296,10 @@ if TYPE_CHECKING:
     from .identifiermatch import IdentifierMatch, IdentifierMatchTypedDict
     from .identifiersearch import IdentifierSearch, IdentifierSearchTypedDict
     from .identifiersearchkind import IdentifierSearchKind
+    from .identifiersubmission import (
+        IdentifierSubmission,
+        IdentifierSubmissionTypedDict,
+    )
     from .identifiertermmatch import IdentifierTermMatch, IdentifierTermMatchTypedDict
     from .impact import Impact
     from .incompletereason import IncompleteReason
@@ -337,6 +341,8 @@ if TYPE_CHECKING:
     from .keyusageevent import KeyUsageEvent, KeyUsageEventTypedDict
     from .lane import Lane
     from .linetype import LineType
+    from .linkedaccount import LinkedAccount, LinkedAccountTypedDict
+    from .linkedaccountpage import LinkedAccountPage, LinkedAccountPageTypedDict
     from .listbulkrequest import ListBulkRequest, ListBulkRequestTypedDict
     from .listchange import ListChange, ListChangeTypedDict
     from .listchangestate import ListChangeState
@@ -578,6 +584,7 @@ if TYPE_CHECKING:
         SettingsRequestFlows,
         SettingsRequestFlowsTypedDict,
     )
+    from .sharedidentifier import SharedIdentifier, SharedIdentifierTypedDict
     from .signal import Signal, SignalTypedDict
     from .signaloutcome import SignalOutcome
     from .signingkey import SigningKey, SigningKeyTypedDict
@@ -932,6 +939,8 @@ __all__ = [
     "IdentifierSearch",
     "IdentifierSearchKind",
     "IdentifierSearchTypedDict",
+    "IdentifierSubmission",
+    "IdentifierSubmissionTypedDict",
     "IdentifierTermMatch",
     "IdentifierTermMatchTypedDict",
     "Impact",
@@ -986,6 +995,10 @@ __all__ = [
     "KeyUsageEventTypedDict",
     "Lane",
     "LineType",
+    "LinkedAccount",
+    "LinkedAccountPage",
+    "LinkedAccountPageTypedDict",
+    "LinkedAccountTypedDict",
     "ListBulkRequest",
     "ListBulkRequestTypedDict",
     "ListChange",
@@ -1196,6 +1209,8 @@ __all__ = [
     "SettingsRequestFlowsTypedDict",
     "SettingsRequestTypedDict",
     "SettingsTypedDict",
+    "SharedIdentifier",
+    "SharedIdentifierTypedDict",
     "Signal",
     "SignalOutcome",
     "SignalTypedDict",
@@ -1548,6 +1563,8 @@ _dynamic_imports: dict[str, str] = {
     "IdentifierSearch": ".identifiersearch",
     "IdentifierSearchTypedDict": ".identifiersearch",
     "IdentifierSearchKind": ".identifiersearchkind",
+    "IdentifierSubmission": ".identifiersubmission",
+    "IdentifierSubmissionTypedDict": ".identifiersubmission",
     "IdentifierTermMatch": ".identifiertermmatch",
     "IdentifierTermMatchTypedDict": ".identifiertermmatch",
     "Impact": ".impact",
@@ -1605,6 +1622,10 @@ _dynamic_imports: dict[str, str] = {
     "KeyUsageEventTypedDict": ".keyusageevent",
     "Lane": ".lane",
     "LineType": ".linetype",
+    "LinkedAccount": ".linkedaccount",
+    "LinkedAccountTypedDict": ".linkedaccount",
+    "LinkedAccountPage": ".linkedaccountpage",
+    "LinkedAccountPageTypedDict": ".linkedaccountpage",
     "ListBulkRequest": ".listbulkrequest",
     "ListBulkRequestTypedDict": ".listbulkrequest",
     "ListChange": ".listchange",
@@ -1835,6 +1856,8 @@ _dynamic_imports: dict[str, str] = {
     "SettingsRequestTypedDict": ".settingsrequest",
     "SettingsRequestFlows": ".settingsrequestflows",
     "SettingsRequestFlowsTypedDict": ".settingsrequestflows",
+    "SharedIdentifier": ".sharedidentifier",
+    "SharedIdentifierTypedDict": ".sharedidentifier",
     "Signal": ".signal",
     "SignalTypedDict": ".signal",
     "SignalOutcome": ".signaloutcome",

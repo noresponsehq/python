@@ -327,6 +327,12 @@ if TYPE_CHECKING:
         ListKeysResponse,
         ListKeysResponseTypedDict,
     )
+    from .listlinkedaccounts import (
+        ListLinkedAccountsRequest,
+        ListLinkedAccountsRequestTypedDict,
+        ListLinkedAccountsResponse,
+        ListLinkedAccountsResponseTypedDict,
+    )
     from .listlistentries import (
         ListListEntriesRequest,
         ListListEntriesRequestTypedDict,
@@ -785,6 +791,10 @@ __all__ = [
     "ListKeysRequestTypedDict",
     "ListKeysResponse",
     "ListKeysResponseTypedDict",
+    "ListLinkedAccountsRequest",
+    "ListLinkedAccountsRequestTypedDict",
+    "ListLinkedAccountsResponse",
+    "ListLinkedAccountsResponseTypedDict",
     "ListListEntriesRequest",
     "ListListEntriesRequestTypedDict",
     "ListListEntriesResponse",
@@ -1162,6 +1172,10 @@ _dynamic_imports: dict[str, str] = {
     "ListKeysRequestTypedDict": ".listkeys",
     "ListKeysResponse": ".listkeys",
     "ListKeysResponseTypedDict": ".listkeys",
+    "ListLinkedAccountsRequest": ".listlinkedaccounts",
+    "ListLinkedAccountsRequestTypedDict": ".listlinkedaccounts",
+    "ListLinkedAccountsResponse": ".listlinkedaccounts",
+    "ListLinkedAccountsResponseTypedDict": ".listlinkedaccounts",
     "ListListEntriesRequest": ".listlistentries",
     "ListListEntriesRequestTypedDict": ".listlistentries",
     "ListListEntriesResponse": ".listlistentries",

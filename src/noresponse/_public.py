@@ -36,13 +36,14 @@ from .errors import (
     RateLimitError,
     ResponseValidationError,
 )
-from .models.shared import AuthContext, AuthContextTypedDict, IdentifierSearch, IdentifierMatch, IdentifierExpression, IdentifierExpressionNode, IdentifierTermMatch, AccountDirectoryPage
+from .models.shared import AuthContext, AuthContextTypedDict, IdentifierSearch, IdentifierMatch, IdentifierExpression, IdentifierExpressionNode, IdentifierTermMatch, AccountDirectoryPage, LinkedAccount, SharedIdentifier, IdentifierSubmission
 from .responses import (
     AssessmentSearchPage,
     AssessmentRevision,
     AccountBinding,
     AccountOutcome,
     AccountOutcomePage,
+    LinkedAccountPage,
     AccountDecisionSnapshot,
     CredentialAssociation,
     CredentialPage,
@@ -97,12 +98,16 @@ __all__ = [
     "IdentifierExpression",
     "IdentifierExpressionNode",
     "IdentifierTermMatch",
+    "LinkedAccount",
+    "SharedIdentifier",
+    "IdentifierSubmission",
     "Requests",
     "AssessmentSearchPage",
     "AssessmentRevision",
     "AccountBinding",
     "AccountOutcome",
     "AccountOutcomePage",
+    "LinkedAccountPage",
     "AccountDecisionSnapshot",
     "CredentialAssociation",
     "CredentialPage",

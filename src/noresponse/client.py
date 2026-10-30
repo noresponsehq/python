@@ -52,6 +52,8 @@ from .responses import (
     as_account_outcome,
     AccountOutcomePage,
     as_account_outcome_page,
+    LinkedAccountPage,
+    as_linked_account_page,
     AccountDecisionSnapshot,
     as_account_decision_snapshot,
     CredentialAssociation,
@@ -1007,6 +1009,52 @@ class Accounts(_Accounts):
             http_headers=http_headers,
         )
         return _answer(response, as_account_outcome_page)
+
+    def list_linked(  # type: ignore[override]
+        self,
+        account_id: str,
+        *,
+        limit: Optional[int] = 25,
+        cursor: Optional[str] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> LinkedAccountPage:
+        """Other accounts that submitted an identifier this account submitted. Return the page directly, with headers on meta."""
+        response = _sync(super().list_linked)(
+            account_id,
+            limit=limit,
+            cursor=cursor,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_linked_account_page)
+
+    async def list_linked_async(  # type: ignore[override]
+        self,
+        account_id: str,
+        *,
+        limit: Optional[int] = 25,
+        cursor: Optional[str] = None,
+        retries: OptionalNullable[RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> LinkedAccountPage:
+        """The asyncio form of list_linked."""
+        response = await _async(super().list_linked_async)(
+            account_id,
+            limit=limit,
+            cursor=cursor,
+            retries=retries,
+            server_url=server_url,
+            timeout_ms=timeout_ms,
+            http_headers=http_headers,
+        )
+        return _answer(response, as_linked_account_page)
 
     def retrieve_decision(  # type: ignore[override]
         self,

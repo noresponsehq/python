@@ -40,6 +40,8 @@ CASES = [
      "retired", "DELETE", f"/v1/accounts/{ACCOUNT}/credentials/{CREDENTIAL}", 200),
     ("accounts", "export", (ACCOUNT,), {"response_mode": "standard"},
      "export", "GET", f"/v1/accounts/{ACCOUNT}/export", 200),
+    ("accounts", "list_linked", (ACCOUNT,), {"limit": 1, "cursor": "next_fixture"},
+     "linked", "GET", f"/v1/accounts/{ACCOUNT}/linked_accounts", 200),
     ("requests", "list", (), {"from_": FROM, "to": TO, "request_id": "a" * 32, "status": 200,
                                "limit": 1, "cursor": "next_fixture"},
      "requests", "GET", "/v1/requests", 200),
@@ -227,3 +229,30 @@ def test_combined_identifier_searches_preserve_typed_scope_and_witnesses(asynchr
         ]
         assert actual[1].namespace == "customer"
     assert assessments.meta.request_id == "a" * 32
+
+
+@pytest.mark.parametrize("asynchronous", [False, True])
+def test_linked_accounts_keep_both_submitted_witnesses(asynchronous):
+    from noresponse import LinkedAccountPage, SharedIdentifier
+
+    client, seen = make([answer(EXAMPLES["linked"], 200)])
+
+    async def run():
+        async with client:
+            return await client.accounts.list_linked_async(ACCOUNT, limit=1, cursor="next_fixture")
+
+    if asynchronous:
+        page = asyncio.run(run())
+    else:
+        with client:
+            page = client.accounts.list_linked(ACCOUNT, limit=1, cursor="next_fixture")
+    assert seen[0].url.params["limit"] == "1" and seen[0].url.params["cursor"] == "next_fixture"
+    assert isinstance(page, LinkedAccountPage) and page.meta.request_id == "a" * 32
+    want = EXAMPLES["linked"]["items"][0]
+    shared = page.items[0].shared_identifiers[0]
+    assert isinstance(shared, SharedIdentifier)
+    assert page.items[0].account_id == want["account_id"]
+    expected = want["shared_identifiers"][0]
+    assert (shared.kind, shared.match_basis, shared.account.value, shared.linked_account.value, shared.linked_account.assessment_id) == (
+        expected["kind"], expected["match_basis"], expected["account"]["value"], expected["linked_account"]["value"], expected["linked_account"]["assessment_id"])
+    assert page.next_cursor == "next_fixture" and page.total_capped is False

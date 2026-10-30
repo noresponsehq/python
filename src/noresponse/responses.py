@@ -38,6 +38,7 @@ __all__ = [
     "AccountBinding",
     "AccountOutcome",
     "AccountOutcomePage",
+    "LinkedAccountPage",
     "AccountDecisionSnapshot",
     "CredentialAssociation",
     "CredentialPage",
@@ -169,6 +170,14 @@ class AccountOutcomePage(_WithMeta, _shared.AccountOutcomePage):
 
 def as_account_outcome_page(source: _shared.AccountOutcomePage, meta: ResponseMeta) -> AccountOutcomePage:
     return _attach(AccountOutcomePage, source, meta)
+
+
+class LinkedAccountPage(_WithMeta, _shared.LinkedAccountPage):
+    """The validated LinkedAccountPage response with HTTP metadata."""
+
+
+def as_linked_account_page(source: _shared.LinkedAccountPage, meta: ResponseMeta) -> LinkedAccountPage:
+    return _attach(LinkedAccountPage, source, meta)
 
 
 class AccountDecisionSnapshot(_WithMeta, _shared.AccountDecisionSnapshot):
