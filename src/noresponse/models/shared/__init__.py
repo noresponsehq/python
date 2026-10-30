@@ -272,10 +272,31 @@ if TYPE_CHECKING:
     from .from_ import From
     from .hookpoint import HookPoint
     from .identifier import Identifier
+    from .identifierexpression import (
+        IdentifierExpression,
+        IdentifierExpressionTypedDict,
+    )
+    from .identifierexpressionleaf import (
+        IdentifierExpressionLeaf,
+        IdentifierExpressionLeafTypedDict,
+    )
+    from .identifierexpressionnode import (
+        IdentifierExpressionNode,
+        IdentifierExpressionNodeTypedDict,
+    )
+    from .identifierexpressionnodelevelone import (
+        IdentifierExpressionNodeLevelOne,
+        IdentifierExpressionNodeLevelOneTypedDict,
+    )
+    from .identifierexpressionnodeleveltwo import (
+        IdentifierExpressionNodeLevelTwo,
+        IdentifierExpressionNodeLevelTwoTypedDict,
+    )
     from .identifierkind import IdentifierKind
     from .identifiermatch import IdentifierMatch, IdentifierMatchTypedDict
     from .identifiersearch import IdentifierSearch, IdentifierSearchTypedDict
     from .identifiersearchkind import IdentifierSearchKind
+    from .identifiertermmatch import IdentifierTermMatch, IdentifierTermMatchTypedDict
     from .impact import Impact
     from .incompletereason import IncompleteReason
     from .incompletesource import IncompleteSource, IncompleteSourceTypedDict
@@ -547,6 +568,7 @@ if TYPE_CHECKING:
     from .risksummaryphone import RiskSummaryPhone, RiskSummaryPhoneTypedDict
     from .risksummaryusername import RiskSummaryUsername, RiskSummaryUsernameTypedDict
     from .role import Role
+    from .scope_enum import ScopeEnum
     from .security import Security, SecurityTypedDict
     from .sentidentifiers import SentIdentifiers, SentIdentifiersTypedDict
     from .settings import Settings, SettingsTypedDict
@@ -894,12 +916,24 @@ __all__ = [
     "IPSummaryType",
     "IPSummaryTypedDict",
     "Identifier",
+    "IdentifierExpression",
+    "IdentifierExpressionLeaf",
+    "IdentifierExpressionLeafTypedDict",
+    "IdentifierExpressionNode",
+    "IdentifierExpressionNodeLevelOne",
+    "IdentifierExpressionNodeLevelOneTypedDict",
+    "IdentifierExpressionNodeLevelTwo",
+    "IdentifierExpressionNodeLevelTwoTypedDict",
+    "IdentifierExpressionNodeTypedDict",
+    "IdentifierExpressionTypedDict",
     "IdentifierKind",
     "IdentifierMatch",
     "IdentifierMatchTypedDict",
     "IdentifierSearch",
     "IdentifierSearchKind",
     "IdentifierSearchTypedDict",
+    "IdentifierTermMatch",
+    "IdentifierTermMatchTypedDict",
     "Impact",
     "IncompleteReason",
     "IncompleteSource",
@@ -1149,6 +1183,7 @@ __all__ = [
     "RiskSummaryUsernameTypedDict",
     "RiskTypedDict",
     "Role",
+    "ScopeEnum",
     "Security",
     "SecurityTypedDict",
     "SentIdentifiers",
@@ -1497,12 +1532,24 @@ _dynamic_imports: dict[str, str] = {
     "From": ".from_",
     "HookPoint": ".hookpoint",
     "Identifier": ".identifier",
+    "IdentifierExpression": ".identifierexpression",
+    "IdentifierExpressionTypedDict": ".identifierexpression",
+    "IdentifierExpressionLeaf": ".identifierexpressionleaf",
+    "IdentifierExpressionLeafTypedDict": ".identifierexpressionleaf",
+    "IdentifierExpressionNode": ".identifierexpressionnode",
+    "IdentifierExpressionNodeTypedDict": ".identifierexpressionnode",
+    "IdentifierExpressionNodeLevelOne": ".identifierexpressionnodelevelone",
+    "IdentifierExpressionNodeLevelOneTypedDict": ".identifierexpressionnodelevelone",
+    "IdentifierExpressionNodeLevelTwo": ".identifierexpressionnodeleveltwo",
+    "IdentifierExpressionNodeLevelTwoTypedDict": ".identifierexpressionnodeleveltwo",
     "IdentifierKind": ".identifierkind",
     "IdentifierMatch": ".identifiermatch",
     "IdentifierMatchTypedDict": ".identifiermatch",
     "IdentifierSearch": ".identifiersearch",
     "IdentifierSearchTypedDict": ".identifiersearch",
     "IdentifierSearchKind": ".identifiersearchkind",
+    "IdentifierTermMatch": ".identifiertermmatch",
+    "IdentifierTermMatchTypedDict": ".identifiertermmatch",
     "Impact": ".impact",
     "IncompleteReason": ".incompletereason",
     "IncompleteSource": ".incompletesource",
@@ -1775,6 +1822,7 @@ _dynamic_imports: dict[str, str] = {
     "RiskSummaryUsername": ".risksummaryusername",
     "RiskSummaryUsernameTypedDict": ".risksummaryusername",
     "Role": ".role",
+    "ScopeEnum": ".scope_enum",
     "Security": ".security",
     "SecurityTypedDict": ".security",
     "SentIdentifiers": ".sentidentifiers",

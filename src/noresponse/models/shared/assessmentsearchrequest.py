@@ -3,6 +3,7 @@ from .answerrevision import AnswerRevision
 from .band import Band
 from .decision import Decision
 from .flow import Flow
+from .identifierexpression import IdentifierExpression, IdentifierExpressionTypedDict
 from .identifiersearch import IdentifierSearch, IdentifierSearchTypedDict
 from .impact import Impact
 from .lane import Lane
@@ -19,7 +20,7 @@ from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class AssessmentSearchRequestTypedDict(TypedDict):
-    r"""Search retained assessments created in [from,to), at most 366 days. identifier matches the submitted value of each returned assessment directly. The legacy email filter keeps its account-wide mailbox semantics and cannot be combined with identifier. Other filters combine using AND and describe assessment decisions, separate from current account decisions. Results use newest-created order with an assessment-ID tie break and are live, not a snapshot across pages. Requires history or investigate authority; identifier/email filtering also requires identifier-read permission. Detailed response mode additionally requires detailed permission. No Idempotency-Key."""
+    r"""Search retained assessments created in [from,to), at most 366 days. identifier matches the submitted value of each returned assessment directly. The legacy email filter keeps its account-wide mailbox semantics and cannot be combined with identifier. Other filters combine using AND and describe assessment decisions, separate from current account decisions. Results use newest-created order with an assessment-ID tie break and are live, not a snapshot across pages. Requires history or investigate authority; identifier, identifier_expression and email filtering also require identifier-read permission. Detailed response mode additionally requires detailed permission. No Idempotency-Key. identifier_expression requires scope assessment and matches the complete expression within each returned submission; account scope returns 400 invalid_request. At most 8 raw terms and 3 group levels. Mutually exclusive with identifier and email."""
 
     from_: str
     to: str
@@ -35,7 +36,7 @@ class AssessmentSearchRequestTypedDict(TypedDict):
     r"""The recommended action: allow, step_up or review. Your application applies it."""
     limit: NotRequired[int]
     cursor: NotRequired[str]
-    r"""Opaque, expiring cursor bound to this environment, operation and every filter. Keep the filters unchanged."""
+    r"""Opaque, expiring cursor bound to workspace, environment, operation and all filters, including expression scope, ordered structure and original term values. Keep grouping, operand order, matching modes and values unchanged; an omitted match is equivalent to exact. The page limit may change."""
     response_mode: NotRequired[ResponseMode]
     r"""standard returns the consolidated risk response; detailed adds merged provider-neutral facts when the key has detailed scope. There is no raw mode."""
     decision: NotRequired[Decision]
@@ -61,10 +62,12 @@ class AssessmentSearchRequestTypedDict(TypedDict):
     r"""true returns only assessments whose latest stored revision's decision differs from their first answer's decision (see decision); false only the others. An assessment whose first answer or latest revision has no decision yet is not changed. Cannot be combined with revision first."""
     identifier: NotRequired[IdentifierSearchTypedDict]
     r"""One customer-submitted identifier. Defaults to exact comparison of the original submitted value. canonical uses the supported identifier normalisation without an ownership claim: email preserves local-part case, NFC-normalises it and lowercases the domain without removing dots or tags; phone uses international E.164 without extensions or an inferred region; username uses NFC and Unicode case folding within the customer namespace. mailbox is email-only and explicitly selects existing list rules: case-insensitive, remove +tag, and ignore local-part dots at gmail.com and googlemail.com; googlemail.com maps to gmail.com. Username requires namespace customer. Email and phone forbid namespace. Source-discovered identifiers and platform handles are not searched. Unsupported kinds, namespaces, modes and invalid values return 400. Search equality does not establish verified ownership or merge accounts."""
+    identifier_expression: NotRequired[IdentifierExpressionTypedDict]
+    r"""A bounded AND/OR expression over submitted identifiers. Required scope assessment means the entire expression must match one retained assessment. Scope account permits each term to match a different retained assessment of the same account and is accepted only by account search. Exactly one of term, and or or is allowed at every node. Groups contain 2 to 8 operands, with at most 3 nested group levels and 8 raw term occurrences over the entire expression. A root term is allowed. Duplicate terms with the same kind, match rule, namespace and normalized comparison are idempotent, but count toward the raw limit. Match rules default to exact and preserve the existing identifier contract. Only retained submitted identifiers can satisfy a term. Unknown fields, unsupported scopes and malformed or oversized expressions return 400 invalid_request."""
 
 
 class AssessmentSearchRequest(BaseModel):
-    r"""Search retained assessments created in [from,to), at most 366 days. identifier matches the submitted value of each returned assessment directly. The legacy email filter keeps its account-wide mailbox semantics and cannot be combined with identifier. Other filters combine using AND and describe assessment decisions, separate from current account decisions. Results use newest-created order with an assessment-ID tie break and are live, not a snapshot across pages. Requires history or investigate authority; identifier/email filtering also requires identifier-read permission. Detailed response mode additionally requires detailed permission. No Idempotency-Key."""
+    r"""Search retained assessments created in [from,to), at most 366 days. identifier matches the submitted value of each returned assessment directly. The legacy email filter keeps its account-wide mailbox semantics and cannot be combined with identifier. Other filters combine using AND and describe assessment decisions, separate from current account decisions. Results use newest-created order with an assessment-ID tie break and are live, not a snapshot across pages. Requires history or investigate authority; identifier, identifier_expression and email filtering also require identifier-read permission. Detailed response mode additionally requires detailed permission. No Idempotency-Key. identifier_expression requires scope assessment and matches the complete expression within each returned submission; account scope returns 400 invalid_request. At most 8 raw terms and 3 group levels. Mutually exclusive with identifier and email."""
 
     from_: Annotated[str, pydantic.Field(alias="from")]
 
@@ -88,7 +91,7 @@ class AssessmentSearchRequest(BaseModel):
     limit: Optional[int] = 20
 
     cursor: Optional[str] = None
-    r"""Opaque, expiring cursor bound to this environment, operation and every filter. Keep the filters unchanged."""
+    r"""Opaque, expiring cursor bound to workspace, environment, operation and all filters, including expression scope, ordered structure and original term values. Keep grouping, operand order, matching modes and values unchanged; an omitted match is equivalent to exact. The page limit may change."""
 
     response_mode: Optional[ResponseMode] = None
     r"""standard returns the consolidated risk response; detailed adds merged provider-neutral facts when the key has detailed scope. There is no raw mode."""
@@ -129,6 +132,9 @@ class AssessmentSearchRequest(BaseModel):
     identifier: Optional[IdentifierSearch] = None
     r"""One customer-submitted identifier. Defaults to exact comparison of the original submitted value. canonical uses the supported identifier normalisation without an ownership claim: email preserves local-part case, NFC-normalises it and lowercases the domain without removing dots or tags; phone uses international E.164 without extensions or an inferred region; username uses NFC and Unicode case folding within the customer namespace. mailbox is email-only and explicitly selects existing list rules: case-insensitive, remove +tag, and ignore local-part dots at gmail.com and googlemail.com; googlemail.com maps to gmail.com. Username requires namespace customer. Email and phone forbid namespace. Source-discovered identifiers and platform handles are not searched. Unsupported kinds, namespaces, modes and invalid values return 400. Search equality does not establish verified ownership or merge accounts."""
 
+    identifier_expression: Optional[IdentifierExpression] = None
+    r"""A bounded AND/OR expression over submitted identifiers. Required scope assessment means the entire expression must match one retained assessment. Scope account permits each term to match a different retained assessment of the same account and is accepted only by account search. Exactly one of term, and or or is allowed at every node. Groups contain 2 to 8 operands, with at most 3 nested group levels and 8 raw term occurrences over the entire expression. A root term is allowed. Duplicate terms with the same kind, match rule, namespace and normalized comparison are idempotent, but count toward the raw limit. Match rules default to exact and preserve the existing identifier contract. Only retained submitted identifiers can satisfy a term. Unknown fields, unsupported scopes and malformed or oversized expressions return 400 invalid_request."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -154,6 +160,7 @@ class AssessmentSearchRequest(BaseModel):
                 "list_match",
                 "changed",
                 "identifier",
+                "identifier_expression",
             ]
         )
         serialized = handler(self)

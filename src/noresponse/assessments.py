@@ -3136,6 +3136,12 @@ class Assessments(BaseSDK):
                 models.shared.IdentifierSearch, models.shared.IdentifierSearchTypedDict
             ]
         ] = None,
+        identifier_expression: Optional[
+            Union[
+                models.shared.IdentifierExpression,
+                models.shared.IdentifierExpressionTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -3143,7 +3149,7 @@ class Assessments(BaseSDK):
     ) -> models.operations.SearchAssessmentsResponse:
         r"""Search assessments across this environment
 
-        Search retained assessments created in [from,to), at most 366 days. identifier directly matches that assessment's submitted email, phone or customer-namespace username using exact, canonical or explicitly selected email mailbox matching. matched_identifier explains the original value and match basis. Legacy email keeps its account-wide mailbox semantics and cannot be combined with identifier. Other filters combine using AND and describe assessment decisions, separate from current account decisions. Each item carries the original submitted identifiers and its first_decision when available. Newest-created order has an assessment-ID tie break. Results are live across pages; each page's total and items use one database snapshot. Totals are exact below 10000 and capped at 10000. Requires history or investigate authority and identifier-read permission for identifier/email filters; detailed mode also requires detailed permission. No Idempotency-Key.
+        Search retained assessments created in [from,to), at most 366 days. identifier directly matches that assessment's submitted email, phone or customer-namespace username using exact, canonical or explicitly selected email mailbox matching. matched_identifier explains the original value and match basis. Legacy email keeps its account-wide mailbox semantics and cannot be combined with identifier. Other filters combine using AND and describe assessment decisions, separate from current account decisions. Each item carries the original submitted identifiers and its first_decision when available. Newest-created order has an assessment-ID tie break. Results are live across pages; each page's total and items use one database snapshot. Totals are exact below 10000 and capped at 10000. Requires history or investigate authority and identifier-read permission for identifier, identifier_expression or email filters; detailed mode also requires detailed permission. No Idempotency-Key. identifier_expression combines submitted terms with bounded AND/OR, at most 8 raw terms and 3 group levels. Each node selects exactly one of term, and, or. Groups have 2 to 8 operands. Duplicate normalized terms are idempotent and still count toward the limit. identifier_expression, identifier and email are mutually exclusive. Expression results use matched_identifiers with original submitted witnesses and zero-based depth-first term_index. All satisfied unique terms are returned in first-occurrence order. Cursors bind scope, ordered structure, original values, matching modes and all other filters; changing only page limit is allowed. Expression scope must be assessment: each returned assessment itself satisfies the complete expression. Scope account is rejected with 400 invalid_request; use account search for historical combinations.
 
         :param from_:
         :param to:
@@ -3182,6 +3188,7 @@ class Assessments(BaseSDK):
             list_match=list_match,
             changed=changed,
             identifier=utils.get_pydantic_model(identifier, Optional[models.shared.IdentifierSearch]),
+            identifier_expression=utils.get_pydantic_model(identifier_expression, Optional[models.shared.IdentifierExpression]),
         )
 
         _noresponse_response_mode, http_headers = response_helpers.consume_response_mode(http_headers)
@@ -3296,7 +3303,7 @@ class Assessments(BaseSDK):
         :param status: Processing state, separate from evidence coverage. complete: final; nothing is still running, but unsupported, failed or unanswered lanes remain in incomplete_sources. partial: a recommendation exists and evidence is incomplete; assessment_url identifies continuing work when present. pending: no recommendation yet; poll or wait for the webhook. Finished processing does not mean all sources answered.
         :param recommendation: The recommended action: allow, step_up or review. Your application applies it.
         :param limit:
-        :param cursor: Opaque, expiring cursor bound to this environment, operation and every filter. Keep the filters unchanged.
+        :param cursor: Opaque, expiring cursor bound to workspace, environment, operation and all filters, including expression scope, ordered structure and original term values. Keep grouping, operand order, matching modes and values unchanged; an omitted match is equivalent to exact. The page limit may change.
         :param response_mode: standard returns the consolidated risk response; detailed adds merged provider-neutral facts when the key has detailed scope. There is no raw mode.
         :param decision: An assessment's own decision: block when its stored risk.block is true, otherwise its recommendation. It is not the account's decision or held-admission state.
         :param revision: Which answer of each assessment the filters describe: latest, the latest stored revision, or first, the first answer, as served when the assessment was first answered (POST /v1/assessments/aggregate counts first answers). A cell of an aggregate drills down to POST /v1/assessments/search with the same filters, revision first and the cell's bucket as from and to.
@@ -3311,6 +3318,7 @@ class Assessments(BaseSDK):
         :param list_match: The list action captured at the first answer. Requires revision first. Older answers without captured list state do not match, including none.
         :param changed: true returns only assessments whose latest stored revision's decision differs from their first answer's decision (see decision); false only the others. An assessment whose first answer or latest revision has no decision yet is not changed. Cannot be combined with revision first.
         :param identifier: One customer-submitted identifier. Defaults to exact comparison of the original submitted value. canonical uses the supported identifier normalisation without an ownership claim: email preserves local-part case, NFC-normalises it and lowercases the domain without removing dots or tags; phone uses international E.164 without extensions or an inferred region; username uses NFC and Unicode case folding within the customer namespace. mailbox is email-only and explicitly selects existing list rules: case-insensitive, remove +tag, and ignore local-part dots at gmail.com and googlemail.com; googlemail.com maps to gmail.com. Username requires namespace customer. Email and phone forbid namespace. Source-discovered identifiers and platform handles are not searched. Unsupported kinds, namespaces, modes and invalid values return 400. Search equality does not establish verified ownership or merge accounts.
+        :param identifier_expression: A bounded AND/OR expression over submitted identifiers. Required scope assessment means the entire expression must match one retained assessment. Scope account permits each term to match a different retained assessment of the same account and is accepted only by account search. Exactly one of term, and or or is allowed at every node. Groups contain 2 to 8 operands, with at most 3 nested group levels and 8 raw term occurrences over the entire expression. A root term is allowed. Duplicate terms with the same kind, match rule, namespace and normalized comparison are idempotent, but count toward the raw limit. Match rules default to exact and preserve the existing identifier contract. Only retained submitted identifiers can satisfy a term. Unknown fields, unsupported scopes and malformed or oversized expressions return 400 invalid_request.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3351,6 +3359,9 @@ class Assessments(BaseSDK):
             changed=changed,
             identifier=utils.get_pydantic_model(
                 identifier, Optional[models.shared.IdentifierSearch]
+            ),
+            identifier_expression=utils.get_pydantic_model(
+                identifier_expression, Optional[models.shared.IdentifierExpression]
             ),
         )
 
@@ -3528,6 +3539,12 @@ class Assessments(BaseSDK):
                 models.shared.IdentifierSearch, models.shared.IdentifierSearchTypedDict
             ]
         ] = None,
+        identifier_expression: Optional[
+            Union[
+                models.shared.IdentifierExpression,
+                models.shared.IdentifierExpressionTypedDict,
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -3535,7 +3552,7 @@ class Assessments(BaseSDK):
     ) -> models.operations.SearchAssessmentsResponse:
         r"""Search assessments across this environment
 
-        Search retained assessments created in [from,to), at most 366 days. identifier directly matches that assessment's submitted email, phone or customer-namespace username using exact, canonical or explicitly selected email mailbox matching. matched_identifier explains the original value and match basis. Legacy email keeps its account-wide mailbox semantics and cannot be combined with identifier. Other filters combine using AND and describe assessment decisions, separate from current account decisions. Each item carries the original submitted identifiers and its first_decision when available. Newest-created order has an assessment-ID tie break. Results are live across pages; each page's total and items use one database snapshot. Totals are exact below 10000 and capped at 10000. Requires history or investigate authority and identifier-read permission for identifier/email filters; detailed mode also requires detailed permission. No Idempotency-Key.
+        Search retained assessments created in [from,to), at most 366 days. identifier directly matches that assessment's submitted email, phone or customer-namespace username using exact, canonical or explicitly selected email mailbox matching. matched_identifier explains the original value and match basis. Legacy email keeps its account-wide mailbox semantics and cannot be combined with identifier. Other filters combine using AND and describe assessment decisions, separate from current account decisions. Each item carries the original submitted identifiers and its first_decision when available. Newest-created order has an assessment-ID tie break. Results are live across pages; each page's total and items use one database snapshot. Totals are exact below 10000 and capped at 10000. Requires history or investigate authority and identifier-read permission for identifier, identifier_expression or email filters; detailed mode also requires detailed permission. No Idempotency-Key. identifier_expression combines submitted terms with bounded AND/OR, at most 8 raw terms and 3 group levels. Each node selects exactly one of term, and, or. Groups have 2 to 8 operands. Duplicate normalized terms are idempotent and still count toward the limit. identifier_expression, identifier and email are mutually exclusive. Expression results use matched_identifiers with original submitted witnesses and zero-based depth-first term_index. All satisfied unique terms are returned in first-occurrence order. Cursors bind scope, ordered structure, original values, matching modes and all other filters; changing only page limit is allowed. Expression scope must be assessment: each returned assessment itself satisfies the complete expression. Scope account is rejected with 400 invalid_request; use account search for historical combinations.
 
         :param from_:
         :param to:
@@ -3574,6 +3591,7 @@ class Assessments(BaseSDK):
             list_match=list_match,
             changed=changed,
             identifier=utils.get_pydantic_model(identifier, Optional[models.shared.IdentifierSearch]),
+            identifier_expression=utils.get_pydantic_model(identifier_expression, Optional[models.shared.IdentifierExpression]),
         )
 
         _noresponse_response_mode, http_headers = response_helpers.consume_response_mode(http_headers)
@@ -3688,7 +3706,7 @@ class Assessments(BaseSDK):
         :param status: Processing state, separate from evidence coverage. complete: final; nothing is still running, but unsupported, failed or unanswered lanes remain in incomplete_sources. partial: a recommendation exists and evidence is incomplete; assessment_url identifies continuing work when present. pending: no recommendation yet; poll or wait for the webhook. Finished processing does not mean all sources answered.
         :param recommendation: The recommended action: allow, step_up or review. Your application applies it.
         :param limit:
-        :param cursor: Opaque, expiring cursor bound to this environment, operation and every filter. Keep the filters unchanged.
+        :param cursor: Opaque, expiring cursor bound to workspace, environment, operation and all filters, including expression scope, ordered structure and original term values. Keep grouping, operand order, matching modes and values unchanged; an omitted match is equivalent to exact. The page limit may change.
         :param response_mode: standard returns the consolidated risk response; detailed adds merged provider-neutral facts when the key has detailed scope. There is no raw mode.
         :param decision: An assessment's own decision: block when its stored risk.block is true, otherwise its recommendation. It is not the account's decision or held-admission state.
         :param revision: Which answer of each assessment the filters describe: latest, the latest stored revision, or first, the first answer, as served when the assessment was first answered (POST /v1/assessments/aggregate counts first answers). A cell of an aggregate drills down to POST /v1/assessments/search with the same filters, revision first and the cell's bucket as from and to.
@@ -3703,6 +3721,7 @@ class Assessments(BaseSDK):
         :param list_match: The list action captured at the first answer. Requires revision first. Older answers without captured list state do not match, including none.
         :param changed: true returns only assessments whose latest stored revision's decision differs from their first answer's decision (see decision); false only the others. An assessment whose first answer or latest revision has no decision yet is not changed. Cannot be combined with revision first.
         :param identifier: One customer-submitted identifier. Defaults to exact comparison of the original submitted value. canonical uses the supported identifier normalisation without an ownership claim: email preserves local-part case, NFC-normalises it and lowercases the domain without removing dots or tags; phone uses international E.164 without extensions or an inferred region; username uses NFC and Unicode case folding within the customer namespace. mailbox is email-only and explicitly selects existing list rules: case-insensitive, remove +tag, and ignore local-part dots at gmail.com and googlemail.com; googlemail.com maps to gmail.com. Username requires namespace customer. Email and phone forbid namespace. Source-discovered identifiers and platform handles are not searched. Unsupported kinds, namespaces, modes and invalid values return 400. Search equality does not establish verified ownership or merge accounts.
+        :param identifier_expression: A bounded AND/OR expression over submitted identifiers. Required scope assessment means the entire expression must match one retained assessment. Scope account permits each term to match a different retained assessment of the same account and is accepted only by account search. Exactly one of term, and or or is allowed at every node. Groups contain 2 to 8 operands, with at most 3 nested group levels and 8 raw term occurrences over the entire expression. A root term is allowed. Duplicate terms with the same kind, match rule, namespace and normalized comparison are idempotent, but count toward the raw limit. Match rules default to exact and preserve the existing identifier contract. Only retained submitted identifiers can satisfy a term. Unknown fields, unsupported scopes and malformed or oversized expressions return 400 invalid_request.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -3743,6 +3762,9 @@ class Assessments(BaseSDK):
             changed=changed,
             identifier=utils.get_pydantic_model(
                 identifier, Optional[models.shared.IdentifierSearch]
+            ),
+            identifier_expression=utils.get_pydantic_model(
+                identifier_expression, Optional[models.shared.IdentifierExpression]
             ),
         )
 

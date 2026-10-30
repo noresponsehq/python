@@ -2,6 +2,7 @@ from __future__ import annotations
 from .account import Account, AccountTypedDict
 from .assessmentrevision import AssessmentRevision, AssessmentRevisionTypedDict
 from .identifiermatch import IdentifierMatch, IdentifierMatchTypedDict
+from .identifiertermmatch import IdentifierTermMatch, IdentifierTermMatchTypedDict
 from noresponse.types import BaseModel, UNSET_SENTINEL, UnrecognizedStr
 from pydantic import model_serializer
 from typing import List, Literal, Optional, Union
@@ -30,6 +31,8 @@ class AccountDirectoryPageItemTypedDict(TypedDict):
     r"""Body of the 200 answer to GET /v1/accounts/{account_id}: the one current risk of one of the calling workspace's accounts. It is the risk of the account's latest assessment that has a decision (status complete or partial), by created_at and then assessment_id, scored exactly as GET /v1/assessments/{assessment_id} scores that assessment, plus the account's own reason shared_api_key when a key issued to the account was used from many IP addresses or countries (POST /v1/key_usage/batches). Its assessments are the account's history (GET /v1/accounts/{account_id}/assessments)."""
     matched_identifier: NotRequired[IdentifierMatchTypedDict]
     r"""Why this result matched a typed identifier search. value is the original value submitted in assessment_id. Provenance records a customer submission, not a source discovery or verified ownership. Equality is deterministic and has no inferred confidence score. An account result names its newest retained matching assessment, which can differ from latest."""
+    matched_identifiers: NotRequired[List[IdentifierTermMatchTypedDict]]
+    r"""Present only for identifier_expression. All satisfied unique terms, ordered by term_index, with original submitted values and retained assessment witnesses. A duplicate normalized term appears once at its first raw leaf index. The legacy single identifier filter instead returns matched_identifier."""
 
 
 class AccountDirectoryPageItem(BaseModel):
@@ -51,9 +54,14 @@ class AccountDirectoryPageItem(BaseModel):
     matched_identifier: Optional[IdentifierMatch] = None
     r"""Why this result matched a typed identifier search. value is the original value submitted in assessment_id. Provenance records a customer submission, not a source discovery or verified ownership. Equality is deterministic and has no inferred confidence score. An account result names its newest retained matching assessment, which can differ from latest."""
 
+    matched_identifiers: Optional[List[IdentifierTermMatch]] = None
+    r"""Present only for identifier_expression. All satisfied unique terms, ordered by term_index, with original submitted values and retained assessment witnesses. A duplicate normalized term appears once at its first raw leaf index. The legacy single identifier filter instead returns matched_identifier."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["waiting_for", "current", "matched_identifier"])
+        optional_fields = set(
+            ["waiting_for", "current", "matched_identifier", "matched_identifiers"]
+        )
         serialized = handler(self)
         m = {}
 

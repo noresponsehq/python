@@ -182,3 +182,48 @@ def test_identifier_searches_preserve_typed_inputs_and_match_evidence(asynchrono
     assert assessments.meta.request_id == "a" * 32
     assert accounts.items[0].current is None
     assert [request.url.path for request in seen] == ["/v1/accounts/search", "/v1/assessments/search"]
+
+
+@pytest.mark.parametrize("asynchronous", [False, True])
+def test_combined_identifier_searches_preserve_typed_scope_and_witnesses(asynchronous):
+    from noresponse import IdentifierExpression, IdentifierTermMatch
+
+    expression = {"and": [
+        {"term": {"kind": "phone", "value": "+14155552671", "match": "canonical"}},
+        {"or": [
+            {"term": {"kind": "email", "value": "other@example.com", "match": "exact"}},
+            {"term": {"kind": "username", "value": "janedoe", "match": "canonical", "namespace": "customer"}},
+        ]},
+    ]}
+    matched = [
+        {"kind": "phone", "value": "+14155552671", "match_basis": "canonical", "provenance": "submitted", "assessment_id": ASSESSMENT, "term_index": 0},
+        {"kind": "username", "value": "JaneDoe", "match_basis": "canonical", "namespace": "customer", "provenance": "submitted", "assessment_id": ASSESSMENT, "term_index": 2},
+    ]
+    account_query = IdentifierExpression.model_validate({"scope": "account", "expression": expression})
+    assessment_query = IdentifierExpression.model_validate({"scope": "assessment", "expression": expression})
+    account_page = {"schema_version": "1", "items": [{"account_id": ACCOUNT, "latest": EXAMPLES["revision"], "assessments": 2, "matched_identifiers": matched}], "total": 1, "total_capped": False}
+    assessment_page = {"schema_version": "1", "retention_days": 365, "items": [{**EXAMPLES["revision"], "matched_identifiers": matched}], "total": 1, "total_capped": False}
+    client, seen = make([answer(account_page, 200), answer(assessment_page, 200)])
+
+    async def run():
+        async with client:
+            return (await client.accounts.search_async(identifier_expression=account_query),
+                    await client.assessments.search_async(from_=FROM, to=TO, identifier_expression=assessment_query))
+
+    if asynchronous:
+        account_response, assessments = asyncio.run(run())
+    else:
+        with client:
+            account_response = client.accounts.search(identifier_expression=account_query)
+            assessments = client.assessments.search(from_=FROM, to=TO, identifier_expression=assessment_query)
+    assert account_response.headers["x-request-id"] == ["a" * 32]
+    for index, page in enumerate((account_response.result, assessments)):
+        assert json.loads(seen[index].content)["identifier_expression"] == {"scope": "assessment" if index else "account", "expression": expression}
+        assert page.items[0].matched_identifier is None
+        actual = page.items[0].matched_identifiers
+        assert all(isinstance(value, IdentifierTermMatch) for value in actual)
+        assert [(value.term_index, value.kind, value.value, value.assessment_id) for value in actual] == [
+            (value["term_index"], value["kind"], value["value"], value["assessment_id"]) for value in matched
+        ]
+        assert actual[1].namespace == "customer"
+    assert assessments.meta.request_id == "a" * 32

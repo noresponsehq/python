@@ -390,6 +390,23 @@ Set `NORESPONSE_LOG=debug`, or pass `debug_logger`, to get one line per request 
 
 </details>
 
+## Combine submitted identifiers
+
+Search accounts and assessments with explicit AND/OR combinations of submitted
+email, phone and customer-namespace username terms. Use `IdentifierExpression`
+and its required `scope`: `assessment` requires one submission to satisfy the
+whole expression; `account` can combine different retained submissions of the
+same account and is accepted only by account search. Pass the expression through the generated search request `identifier_expression` field.
+
+Expressions have at most eight raw terms and three group levels. The original
+exact, canonical and explicit mailbox matching rules still apply to each term.
+Expression results contain indexed `IdentifierTermMatch` records with the
+original submitted value and originating assessment, separate from current
+account risk. Single-identifier and legacy email filters retain their behavior.
+
+See the [combined-search contract and examples](https://docs.noresponse.org/reference/investigation#combine-submitted-identifiers)
+for the expression shape, scope differences, permissions and pagination.
+
 ## Support
 
 [Open an issue](https://github.com/noresponsehq/python/issues) and include the request ID from the response or error.
