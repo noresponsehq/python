@@ -58,6 +58,14 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"young_email_domain"`
 - `"email_domain_no_mx"`
 - `"email_domain_nonexistent"`
+- `"google_account_missing"`
+- `"google_empty_account"`
+- `"google_active_profile"`
+- `"google_aged_account"`
+- `"google_name_match"`
+- `"google_name_mismatch"`
+- `"google_country_match"`
+- `"google_country_mismatch"`
 - `"forum_sanctioned"`
 - `"prior_payment_abuse"`
 - `"ip_history_match"`

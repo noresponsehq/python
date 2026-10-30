@@ -1,5 +1,33 @@
 # Changelog
 
+## 9.5.5
+
+* `sdk.assessments.create()`:  `response.account.risk.reasons[].code` **Changed**
+* `sdk.assessments.get()`:  `response.account.risk.reasons[].code` **Changed**
+* `sdk.assessments.query()`:  `response.items[].risk.reasons[].code` **Changed**
+* `sdk.assessments.aggregate()`: 
+  *  `request.reason` **Changed**
+  *  `response.buckets[].groups[].reason` **Changed**
+* `sdk.assessments.search()`: 
+  *  `request.reason` **Changed**
+  *  `response.items[].detail.risk.reasons[].code` **Changed**
+* `sdk.assessments.retrieve_version()`:  `response.detail.risk.reasons[].code` **Changed**
+* `sdk.accounts.list_changed()`:  `response.items[].risk.reasons[].code` **Changed**
+* `sdk.accounts.get()`:  `response.risk.reasons[].code` **Changed**
+* `sdk.accounts.list_assessments()`:  `response.items[].risk.reasons[].code` **Changed**
+* `sdk.accounts.retrieve_decision()`:  `response.account.risk.reasons[].code` **Changed**
+* `sdk.accounts.export()`:  `response.assessments[].detail.risk.reasons[].code` **Changed**
+* `sdk.accounts.list_decisions()`:  `response.items[].account.risk.reasons[].code` **Changed**
+* `sdk.accounts.search()`:  `response.items[].latest.detail.risk.reasons[].code` **Changed**
+* `sdk.settings.get()`:  `response.refused_sources[].enum(google)` **Added**
+* `sdk.settings.update()`: 
+  *  `request.refused_sources[].enum(google)` **Added**
+  *  `response.refused_sources[].enum(google)` **Added**
+* `sdk.settings.list_history()`:  `response.items[].settings.refused_sources[].enum(google)` **Added**
+* `sdk.settings.restore()`:  `response.refused_sources[].enum(google)` **Added**
+* `sdk.requests.list()`:  `response.items[].decision.account.risk.reasons[].code` **Changed**
+* `sdk.evaluations.publish()`:  `response.refused_sources[].enum(google)` **Added**
+
 ## 9.5.4
 
 * `sdk.assessments.create()`:  `response.detail.risk.details.accounts` **Added**
