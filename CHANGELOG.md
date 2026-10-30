@@ -1,5 +1,15 @@
 # Changelog
 
+## 9.5.3
+
+* `sdk.settings.get()`:  `response.refused_sources[]` **Changed**
+* `sdk.settings.update()`: 
+  *  `request.refused_sources[]` **Changed**
+  *  `response.refused_sources[]` **Changed**
+* `sdk.settings.list_history()`:  `response.items[].settings.refused_sources[]` **Changed**
+* `sdk.settings.restore()`:  `response.refused_sources[]` **Changed**
+* `sdk.evaluations.publish()`:  `response.refused_sources[]` **Changed**
+
 ## 9.5.2
 
 * `sdk.accounts.list_linked()`: **Added**

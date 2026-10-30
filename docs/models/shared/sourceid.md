@@ -1,6 +1,6 @@
 # SourceID
 
-A NoResponse source: github (GitHub accounts), phone (the phone lookup), breach (breach exposure), rdap (the email domain's registration), mx (the email domain's mail servers) or ipintel (IP intelligence).
+A NoResponse source: github (GitHub accounts), phone (the phone lookup), breach (breach exposure), rdap (the email domain's registration), mx (the email domain's mail servers), ipintel (IP intelligence) or an email account source that searches one platform for an account by email address (adobe, nvidia, wix, life360, zapier).
 
 ## Example Usage
 
@@ -22,3 +22,8 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"rdap"`
 - `"mx"`
 - `"ipintel"`
+- `"adobe"`
+- `"nvidia"`
+- `"wix"`
+- `"life360"`
+- `"zapier"`
