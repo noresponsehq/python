@@ -57,6 +57,7 @@ if TYPE_CHECKING:
         AccountRiskChangedEventTypedDict,
     )
     from .accountriskreason import AccountRiskReason, AccountRiskReasonTypedDict
+    from .accounttype import AccountType
     from .action import Action
     from .admission import Admission
     from .aggregatebucket import AggregateBucket, AggregateBucketTypedDict
@@ -374,6 +375,7 @@ if TYPE_CHECKING:
     from .namespace import Namespace
     from .notfounderrorcode import NotFoundErrorCode
     from .onexpiry import OnExpiry
+    from .onlineaccount import OnlineAccount, OnlineAccountTypedDict, SignIn
     from .operationalaggregate import (
         OperationalAggregate,
         OperationalAggregateTypedDict,
@@ -710,6 +712,7 @@ __all__ = [
     "AccountRiskReason",
     "AccountRiskReasonTypedDict",
     "AccountRiskTypedDict",
+    "AccountType",
     "AccountTypedDict",
     "Action",
     "Actor",
@@ -1045,6 +1048,8 @@ __all__ = [
     "Namespace",
     "NotFoundErrorCode",
     "OnExpiry",
+    "OnlineAccount",
+    "OnlineAccountTypedDict",
     "OperationalAggregate",
     "OperationalAggregateBucket",
     "OperationalAggregateBucketTypedDict",
@@ -1211,6 +1216,7 @@ __all__ = [
     "SettingsTypedDict",
     "SharedIdentifier",
     "SharedIdentifierTypedDict",
+    "SignIn",
     "Signal",
     "SignalOutcome",
     "SignalTypedDict",
@@ -1346,6 +1352,7 @@ _dynamic_imports: dict[str, str] = {
     "AccountRiskChangedEventTypedDict": ".accountriskchangedevent",
     "AccountRiskReason": ".accountriskreason",
     "AccountRiskReasonTypedDict": ".accountriskreason",
+    "AccountType": ".accounttype",
     "Action": ".action",
     "Admission": ".admission",
     "AggregateBucket": ".aggregatebucket",
@@ -1664,6 +1671,9 @@ _dynamic_imports: dict[str, str] = {
     "Namespace": ".namespace",
     "NotFoundErrorCode": ".notfounderrorcode",
     "OnExpiry": ".onexpiry",
+    "OnlineAccount": ".onlineaccount",
+    "OnlineAccountTypedDict": ".onlineaccount",
+    "SignIn": ".onlineaccount",
     "OperationalAggregate": ".operationalaggregate",
     "OperationalAggregateTypedDict": ".operationalaggregate",
     "OperationalAggregateBucket": ".operationalaggregatebucket",

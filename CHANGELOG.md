@@ -1,5 +1,16 @@
 # Changelog
 
+## 9.5.4
+
+* `sdk.assessments.create()`:  `response.detail.risk.details.accounts` **Added**
+* `sdk.assessments.get()`:  `response.detail.risk.details.accounts` **Added**
+* `sdk.assessments.query()`:  `response.items[].risk.details.accounts` **Added**
+* `sdk.assessments.search()`:  `response.items[].detail.risk.details.accounts` **Added**
+* `sdk.assessments.retrieve_version()`:  `response.detail.risk.details.accounts` **Added**
+* `sdk.accounts.list_assessments()`:  `response.items[].risk.details.accounts` **Added**
+* `sdk.accounts.export()`:  `response.assessments[].detail.risk.details.accounts` **Added**
+* `sdk.accounts.search()`:  `response.items[].latest.detail.risk.details.accounts` **Added**
+
 ## 9.5.3
 
 * `sdk.settings.get()`:  `response.refused_sources[]` **Changed**

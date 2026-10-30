@@ -1,5 +1,6 @@
 from __future__ import annotations
 from .breach import Breach, BreachTypedDict
+from .onlineaccount import OnlineAccount, OnlineAccountTypedDict
 from .riskdetailsbreachname import RiskDetailsBreachName, RiskDetailsBreachNameTypedDict
 from .riskdetailsevent import RiskDetailsEvent, RiskDetailsEventTypedDict
 from .riskdetailsphonename import RiskDetailsPhoneName, RiskDetailsPhoneNameTypedDict
@@ -19,6 +20,8 @@ class RiskDetailsTypedDict(TypedDict):
     r"""Names found next to the identifiers in breach records, merged, with the number of distinct tables each was seen in and the sites of those tables."""
     events: NotRequired[List[RiskDetailsEventTypedDict]]
     r"""The identity's dated footprint events, newest first, at most 300: the year and month, what happened (created, last_active, breached), the site, its category, the kind of evidence and the identifier it belongs to. No breach value: dates are coarsened to the month."""
+    accounts: NotRequired[List[OnlineAccountTypedDict]]
+    r"""Every online-account search of the email or username: the platform, what the search came to and, for an account found, what the platform returned beside it. Found first, then not found, then searches that failed or are still running, each by platform name; at most 64. A failed or running search keeps its own outcome and is not reported as not_found."""
 
 
 class RiskDetails(BaseModel):
@@ -35,9 +38,14 @@ class RiskDetails(BaseModel):
     events: Optional[List[RiskDetailsEvent]] = None
     r"""The identity's dated footprint events, newest first, at most 300: the year and month, what happened (created, last_active, breached), the site, its category, the kind of evidence and the identifier it belongs to. No breach value: dates are coarsened to the month."""
 
+    accounts: Optional[List[OnlineAccount]] = None
+    r"""Every online-account search of the email or username: the platform, what the search came to and, for an account found, what the platform returned beside it. Found first, then not found, then searches that failed or are still running, each by platform name; at most 64. A failed or running search keeps its own outcome and is not reported as not_found."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["phone_names", "breaches", "breach_names", "events"])
+        optional_fields = set(
+            ["phone_names", "breaches", "breach_names", "events", "accounts"]
+        )
         serialized = handler(self)
         m = {}
 
