@@ -18,3 +18,6 @@ This is an open enum. Unrecognized values will not fail type checks.
 
 - `"workspace_forbidden"`
 - `"role_forbidden"`
+- `"email_unverified"`
+- `"onboarding_in_review"`
+- `"onboarding_refused"`

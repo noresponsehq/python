@@ -7,6 +7,9 @@ PermissionDeniedErrorCode = Union[
     Literal[
         "workspace_forbidden",
         "role_forbidden",
+        "email_unverified",
+        "onboarding_in_review",
+        "onboarding_refused",
     ],
     UnrecognizedStr,
 ]
