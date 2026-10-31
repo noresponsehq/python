@@ -40,3 +40,4 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"evaluation_limit_reached"`
 - `"already_member"`
 - `"member_limit_reached"`
+- `"aggregate_erased_data"`

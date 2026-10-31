@@ -25,8 +25,6 @@ class ListReviewsRequestTypedDict(TypedDict):
     unassigned: NotRequired[bool]
     assignee_principal_id: NotRequired[str]
     r"""Filter by immutable member ID. Mutually exclusive with assignee and unassigned=true."""
-    account_id: NotRequired[str]
-    r"""Only reviews of this exact account in the authenticated workspace and environment. Applied before pagination and bound into the cursor."""
 
 
 class ListReviewsRequest(BaseModel):
@@ -77,12 +75,6 @@ class ListReviewsRequest(BaseModel):
     ] = None
     r"""Filter by immutable member ID. Mutually exclusive with assignee and unassigned=true."""
 
-    account_id: Annotated[
-        Optional[str],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = None
-    r"""Only reviews of this exact account in the authenticated workspace and environment. Applied before pagination and bound into the cursor."""
-
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -94,7 +86,6 @@ class ListReviewsRequest(BaseModel):
                 "assignee",
                 "unassigned",
                 "assignee_principal_id",
-                "account_id",
             ]
         )
         serialized = handler(self)

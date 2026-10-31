@@ -29,6 +29,7 @@ ConflictErrorCode = Union[
         "evaluation_limit_reached",
         "already_member",
         "member_limit_reached",
+        "aggregate_erased_data",
     ],
     UnrecognizedStr,
 ]

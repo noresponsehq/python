@@ -528,6 +528,7 @@ if TYPE_CHECKING:
     )
     from .reviewcreaterequest import ReviewCreateRequest, ReviewCreateRequestTypedDict
     from .reviewlist import ReviewList, ReviewListTypedDict
+    from .reviewqueryrequest import ReviewQueryRequest, ReviewQueryRequestTypedDict
     from .reviewresolutionlist import (
         ReviewResolutionList,
         ReviewResolutionListTypedDict,
@@ -1146,6 +1147,8 @@ __all__ = [
     "ReviewCreateRequestTypedDict",
     "ReviewList",
     "ReviewListTypedDict",
+    "ReviewQueryRequest",
+    "ReviewQueryRequestTypedDict",
     "ReviewResolutionList",
     "ReviewResolutionListTypedDict",
     "ReviewResolveRequest",
@@ -1799,6 +1802,8 @@ _dynamic_imports: dict[str, str] = {
     "ReviewCreateRequestTypedDict": ".reviewcreaterequest",
     "ReviewList": ".reviewlist",
     "ReviewListTypedDict": ".reviewlist",
+    "ReviewQueryRequest": ".reviewqueryrequest",
+    "ReviewQueryRequestTypedDict": ".reviewqueryrequest",
     "ReviewResolutionList": ".reviewresolutionlist",
     "ReviewResolutionListTypedDict": ".reviewresolutionlist",
     "ReviewResolveRequest": ".reviewresolverequest",

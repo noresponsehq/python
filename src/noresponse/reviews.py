@@ -31,7 +31,6 @@ class Reviews(BaseSDK):
         assignee: Optional[str] = None,
         unassigned: Optional[bool] = None,
         assignee_principal_id: Optional[str] = None,
-        account_id: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -39,7 +38,7 @@ class Reviews(BaseSDK):
     ) -> Optional[models.operations.ListReviewsResponse]:
         r"""List retained account reviews.
 
-        List retained investigation reviews using filters and an authenticated cursor. Optional account_id selects one exact account in this environment before pagination. All filters are bound into the cursor.
+        List retained investigation reviews using filters and an authenticated cursor. Use reviews.query to filter by account_id in a JSON body. All filters are bound into the cursor.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
@@ -50,7 +49,6 @@ class Reviews(BaseSDK):
         :param assignee:
         :param unassigned:
         :param assignee_principal_id: Filter by immutable member ID. Mutually exclusive with assignee and unassigned=true.
-        :param account_id: Only reviews of this exact account in the authenticated workspace and environment. Applied before pagination and bound into the cursor.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -76,7 +74,6 @@ class Reviews(BaseSDK):
             assignee=assignee,
             unassigned=unassigned,
             assignee_principal_id=assignee_principal_id,
-            account_id=account_id,
         )
 
         _noresponse_response_mode, http_headers = (
@@ -136,7 +133,6 @@ class Reviews(BaseSDK):
                     assignee=assignee,
                     unassigned=unassigned,
                     assignee_principal_id=assignee_principal_id,
-                    account_id=account_id,
                     retries=retries,
                     server_url=server_url,
                     timeout_ms=timeout_ms,
@@ -262,7 +258,6 @@ class Reviews(BaseSDK):
         assignee: Optional[str] = None,
         unassigned: Optional[bool] = None,
         assignee_principal_id: Optional[str] = None,
-        account_id: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -270,7 +265,7 @@ class Reviews(BaseSDK):
     ) -> Optional[models.operations.ListReviewsResponse]:
         r"""List retained account reviews.
 
-        List retained investigation reviews using filters and an authenticated cursor. Optional account_id selects one exact account in this environment before pagination. All filters are bound into the cursor.
+        List retained investigation reviews using filters and an authenticated cursor. Use reviews.query to filter by account_id in a JSON body. All filters are bound into the cursor.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
@@ -281,7 +276,6 @@ class Reviews(BaseSDK):
         :param assignee:
         :param unassigned:
         :param assignee_principal_id: Filter by immutable member ID. Mutually exclusive with assignee and unassigned=true.
-        :param account_id: Only reviews of this exact account in the authenticated workspace and environment. Applied before pagination and bound into the cursor.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -307,7 +301,6 @@ class Reviews(BaseSDK):
             assignee=assignee,
             unassigned=unassigned,
             assignee_principal_id=assignee_principal_id,
-            account_id=account_id,
         )
 
         _noresponse_response_mode, http_headers = (
@@ -372,7 +365,6 @@ class Reviews(BaseSDK):
                     assignee=assignee,
                     unassigned=unassigned,
                     assignee_principal_id=assignee_principal_id,
-                    account_id=account_id,
                     retries=retries,
                     server_url=server_url,
                     timeout_ms=timeout_ms,
@@ -6267,6 +6259,417 @@ class Reviews(BaseSDK):
                 parse_exc_,
             )
 
+    def query(
+        self,
+        workspace_id: str,
+        environment: models.shared.KeyEnvironment,
+        *,
+        account_id: Optional[str] = None,
+        status: Optional[models.shared.ReviewStatus] = None,
+        priority: Optional[models.shared.Priority] = None,
+        assignee: Optional[str] = None,
+        unassigned: Optional[bool] = None,
+        assignee_principal_id: Optional[str] = None,
+        limit: Optional[int] = 50,
+        cursor: Optional[str] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.operations.QueryReviewsResponse:
+        r"""Query retained reviews without identifiers in URLs.
+
+        Query retained investigation reviews using a JSON body, including an exact account_id filter. All filters are bound into the cursor.
+
+        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
+        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
+        :param account_id: Only reviews of this exact account in the authenticated workspace and environment. Applied before pagination.
+        :param status:
+        :param priority:
+        :param assignee:
+        :param unassigned:
+        :param assignee_principal_id:
+        :param limit:
+        :param cursor:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.operations.QueryReviewsRequest(
+            workspace_id=workspace_id,
+            environment=environment,
+            body=models.shared.ReviewQueryRequest(
+                account_id=account_id,
+                status=status,
+                priority=priority,
+                assignee=assignee,
+                unassigned=unassigned,
+                assignee_principal_id=assignee_principal_id,
+                limit=limit,
+                cursor=cursor,
+            ),
+        )
+
+        _noresponse_response_mode, http_headers = (
+            response_helpers.consume_response_mode(http_headers)
+        )
+        req = self._build_request(
+            method="POST",
+            path="/v1/workspaces/{workspace_id}/reviews/{environment}/query",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.body, False, False, "json", models.shared.ReviewQueryRequest
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 8000, 2, 30000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["408", "429", "5XX"])
+
+        def _noresponse_parse_response(http_res):
+            response_data: Any = None
+            if utils.match_response(http_res, "200", "application/json"):
+                return models.operations.QueryReviewsResponse(
+                    result=unmarshal_json_response(models.shared.ReviewList, http_res),
+                    headers=utils.get_response_headers(http_res.headers),
+                )
+            if utils.match_response(http_res, "400", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.BadRequestErrorData, http_res
+                )
+                raise models.errors.BadRequestError(response_data, http_res)
+            if utils.match_response(http_res, "401", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.AuthenticationErrorData, http_res
+                )
+                raise models.errors.AuthenticationError(response_data, http_res)
+            if utils.match_response(http_res, "403", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.PermissionDeniedErrorData, http_res
+                )
+                raise models.errors.PermissionDeniedError(response_data, http_res)
+            if utils.match_response(http_res, "404", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.NotFoundErrorData, http_res
+                )
+                raise models.errors.NotFoundError(response_data, http_res)
+            if utils.match_response(http_res, "409", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.ConflictErrorData, http_res
+                )
+                raise models.errors.ConflictError(response_data, http_res)
+            if utils.match_response(http_res, "429", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.RateLimitErrorData, http_res
+                )
+                raise models.errors.RateLimitError(response_data, http_res)
+            if utils.match_response(http_res, "4XX", "*"):
+                http_res_text = utils.stream_to_text(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+            if utils.match_response(http_res, "5XX", "*"):
+                http_res_text = utils.stream_to_text(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+
+            raise models.errors.APIStatusError("Unexpected response received", http_res)
+
+        _noresponse_hook_ctx = HookContext(
+            config=self.sdk_configuration,
+            base_url=base_url or "",
+            operation_id="queryReviews",
+            oauth2_scopes=None,
+            security_source=get_security_from_env(
+                self.sdk_configuration.security, models.shared.Security
+            ),
+            tags=["reviews"],
+            extensions=None,
+            response=ResponseContext(mode=_noresponse_response_mode, execution="sync"),
+        )
+        http_res = self.do_request(
+            hook_ctx=_noresponse_hook_ctx,
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            stream=_noresponse_response_mode == "streaming",
+            retry_config=retry_config,
+        )
+        if _noresponse_response_mode != "parsed":
+            if utils.match_status_codes(["4XX", "5XX"], http_res.status_code):
+                http_res.read()
+                try:
+                    _noresponse_parse_response(http_res)
+                except Exception as parse_exc_:
+                    response_helpers.raise_parse_error(
+                        self.sdk_configuration.__dict__["_hooks"],
+                        AfterParseErrorContext(_noresponse_hook_ctx),
+                        http_res,
+                        parse_exc_,
+                    )
+            _noresponse_response_cls = (
+                response_helpers.StreamedAPIResponse
+                if _noresponse_response_mode == "streaming"
+                else response_helpers.APIResponse
+            )
+            return cast(
+                Any,
+                _noresponse_response_cls(
+                    raw=http_res,
+                    parser=_noresponse_parse_response,
+                    mode="buffered",
+                    client_ref=self,
+                    hook_ctx=AfterParseErrorContext(_noresponse_hook_ctx),
+                    hooks=self.sdk_configuration.__dict__.get("_hooks"),
+                ),
+            )
+        try:
+            return _noresponse_parse_response(http_res)
+        except Exception as parse_exc_:
+            response_helpers.raise_parse_error(
+                self.sdk_configuration.__dict__["_hooks"],
+                AfterParseErrorContext(_noresponse_hook_ctx),
+                http_res,
+                parse_exc_,
+            )
+
+    async def query_async(
+        self,
+        workspace_id: str,
+        environment: models.shared.KeyEnvironment,
+        *,
+        account_id: Optional[str] = None,
+        status: Optional[models.shared.ReviewStatus] = None,
+        priority: Optional[models.shared.Priority] = None,
+        assignee: Optional[str] = None,
+        unassigned: Optional[bool] = None,
+        assignee_principal_id: Optional[str] = None,
+        limit: Optional[int] = 50,
+        cursor: Optional[str] = None,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.operations.QueryReviewsResponse:
+        r"""Query retained reviews without identifiers in URLs.
+
+        Query retained investigation reviews using a JSON body, including an exact account_id filter. All filters are bound into the cursor.
+
+        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
+        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
+        :param account_id: Only reviews of this exact account in the authenticated workspace and environment. Applied before pagination.
+        :param status:
+        :param priority:
+        :param assignee:
+        :param unassigned:
+        :param assignee_principal_id:
+        :param limit:
+        :param cursor:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.operations.QueryReviewsRequest(
+            workspace_id=workspace_id,
+            environment=environment,
+            body=models.shared.ReviewQueryRequest(
+                account_id=account_id,
+                status=status,
+                priority=priority,
+                assignee=assignee,
+                unassigned=unassigned,
+                assignee_principal_id=assignee_principal_id,
+                limit=limit,
+                cursor=cursor,
+            ),
+        )
+
+        _noresponse_response_mode, http_headers = (
+            response_helpers.consume_response_mode(http_headers)
+        )
+        req = self._build_request_async(
+            method="POST",
+            path="/v1/workspaces/{workspace_id}/reviews/{environment}/query",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.body, False, False, "json", models.shared.ReviewQueryRequest
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 8000, 2, 30000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["408", "429", "5XX"])
+
+        async def _noresponse_parse_response(http_res):
+            response_data: Any = None
+            if utils.match_response(http_res, "200", "application/json"):
+                return models.operations.QueryReviewsResponse(
+                    result=unmarshal_json_response(models.shared.ReviewList, http_res),
+                    headers=utils.get_response_headers(http_res.headers),
+                )
+            if utils.match_response(http_res, "400", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.BadRequestErrorData, http_res
+                )
+                raise models.errors.BadRequestError(response_data, http_res)
+            if utils.match_response(http_res, "401", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.AuthenticationErrorData, http_res
+                )
+                raise models.errors.AuthenticationError(response_data, http_res)
+            if utils.match_response(http_res, "403", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.PermissionDeniedErrorData, http_res
+                )
+                raise models.errors.PermissionDeniedError(response_data, http_res)
+            if utils.match_response(http_res, "404", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.NotFoundErrorData, http_res
+                )
+                raise models.errors.NotFoundError(response_data, http_res)
+            if utils.match_response(http_res, "409", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.ConflictErrorData, http_res
+                )
+                raise models.errors.ConflictError(response_data, http_res)
+            if utils.match_response(http_res, "429", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.RateLimitErrorData, http_res
+                )
+                raise models.errors.RateLimitError(response_data, http_res)
+            if utils.match_response(http_res, "4XX", "*"):
+                http_res_text = await utils.stream_to_text_async(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+            if utils.match_response(http_res, "5XX", "*"):
+                http_res_text = await utils.stream_to_text_async(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+
+            raise models.errors.APIStatusError("Unexpected response received", http_res)
+
+        _noresponse_hook_ctx = HookContext(
+            config=self.sdk_configuration,
+            base_url=base_url or "",
+            operation_id="queryReviews",
+            oauth2_scopes=None,
+            security_source=get_security_from_env(
+                self.sdk_configuration.security, models.shared.Security
+            ),
+            tags=["reviews"],
+            extensions=None,
+            response=ResponseContext(mode=_noresponse_response_mode, execution="async"),
+        )
+        http_res = await self.do_request_async(
+            hook_ctx=_noresponse_hook_ctx,
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            stream=_noresponse_response_mode == "streaming",
+            retry_config=retry_config,
+        )
+        if _noresponse_response_mode != "parsed":
+            if utils.match_status_codes(["4XX", "5XX"], http_res.status_code):
+                await http_res.aread()
+                try:
+                    await _noresponse_parse_response(http_res)
+                except Exception as parse_exc_:
+                    await response_helpers.raise_parse_error_async(
+                        self.sdk_configuration.__dict__.get("_async_hooks"),
+                        self.sdk_configuration.__dict__.get("_hooks"),
+                        AfterParseErrorContext(_noresponse_hook_ctx),
+                        http_res,
+                        parse_exc_,
+                    )
+            _noresponse_response_cls = (
+                response_helpers.AsyncStreamedAPIResponse
+                if _noresponse_response_mode == "streaming"
+                else response_helpers.AsyncAPIResponse
+            )
+            return cast(
+                Any,
+                _noresponse_response_cls(
+                    raw=http_res,
+                    parser=_noresponse_parse_response,
+                    mode="buffered",
+                    client_ref=self,
+                    hook_ctx=AfterParseErrorContext(_noresponse_hook_ctx),
+                    hooks=self.sdk_configuration.__dict__.get("_hooks"),
+                    async_hooks=self.sdk_configuration.__dict__.get("_async_hooks"),
+                ),
+            )
+        try:
+            return await _noresponse_parse_response(http_res)
+        except Exception as parse_exc_:
+            await response_helpers.raise_parse_error_async(
+                self.sdk_configuration.__dict__.get("_async_hooks"),
+                self.sdk_configuration.__dict__.get("_hooks"),
+                AfterParseErrorContext(_noresponse_hook_ctx),
+                http_res,
+                parse_exc_,
+            )
+
 
 class ReviewsWithRawResponse:
     def __init__(self, sdk: Reviews) -> None:
@@ -6362,6 +6765,10 @@ class ReviewsWithRawResponse:
         )
         self.delete_subject_async = response_helpers.async_to_raw_response_wrapper(
             sdk.delete_subject_async, "http_headers"
+        )
+        self.query = response_helpers.to_raw_response_wrapper(sdk.query, "http_headers")
+        self.query_async = response_helpers.async_to_raw_response_wrapper(
+            sdk.query_async, "http_headers"
         )
 
 
@@ -6465,4 +6872,10 @@ class ReviewsWithStreamingResponse:
         )
         self.delete_subject_async = response_helpers.async_to_streamed_response_wrapper(
             sdk.delete_subject_async, "http_headers"
+        )
+        self.query = response_helpers.to_streamed_response_wrapper(
+            sdk.query, "http_headers"
+        )
+        self.query_async = response_helpers.async_to_streamed_response_wrapper(
+            sdk.query_async, "http_headers"
         )

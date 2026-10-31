@@ -425,6 +425,12 @@ if TYPE_CHECKING:
         QueryAccountAssessmentsResponse,
         QueryAccountAssessmentsResponseTypedDict,
     )
+    from .queryreviews import (
+        QueryReviewsRequest,
+        QueryReviewsRequestTypedDict,
+        QueryReviewsResponse,
+        QueryReviewsResponseTypedDict,
+    )
     from .recordaccountoutcome import (
         RecordAccountOutcomeRequest,
         RecordAccountOutcomeRequestTypedDict,
@@ -855,6 +861,10 @@ __all__ = [
     "PublishPolicyEvaluationResponseTypedDict",
     "QueryAccountAssessmentsResponse",
     "QueryAccountAssessmentsResponseTypedDict",
+    "QueryReviewsRequest",
+    "QueryReviewsRequestTypedDict",
+    "QueryReviewsResponse",
+    "QueryReviewsResponseTypedDict",
     "RecordAccountOutcomeRequest",
     "RecordAccountOutcomeRequestTypedDict",
     "RecordAccountOutcomeResponse",
@@ -1236,6 +1246,10 @@ _dynamic_imports: dict[str, str] = {
     "PublishPolicyEvaluationResponseTypedDict": ".publishpolicyevaluation",
     "QueryAccountAssessmentsResponse": ".queryaccountassessments",
     "QueryAccountAssessmentsResponseTypedDict": ".queryaccountassessments",
+    "QueryReviewsRequest": ".queryreviews",
+    "QueryReviewsRequestTypedDict": ".queryreviews",
+    "QueryReviewsResponse": ".queryreviews",
+    "QueryReviewsResponseTypedDict": ".queryreviews",
     "RecordAccountOutcomeRequest": ".recordaccountoutcome",
     "RecordAccountOutcomeRequestTypedDict": ".recordaccountoutcome",
     "RecordAccountOutcomeResponse": ".recordaccountoutcome",
