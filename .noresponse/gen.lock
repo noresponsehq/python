@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: a0e0d0cd1063c5d6007d02718ad1ee52
+  docChecksum: 623be4e65c19c53c8176883467622963
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 10.0.7
-  configChecksum: 3f4344a991732ace964a35a0f0a31786
+  releaseVersion: 10.0.8
+  configChecksum: c464c6dd6bbf0ac9f51a276c53078cc0
 features:
   python:
     additionalDependencies: 1.1.0
@@ -577,7 +577,7 @@ trackedFiles:
   docs/models/shared/attributeagreement.md:
     last_write_checksum: sha1:50a134056abf026f0a28ee3a3ef91ef941908866
   docs/models/shared/auditevent.md:
-    last_write_checksum: sha1:f57352437f3bd153dc10c5a2c6a3eaf40ebb3a2a
+    last_write_checksum: sha1:2037f493d69d22cc24244741ed8c64502e253364
   docs/models/shared/auditeventevent.md:
     last_write_checksum: sha1:3bb366567c59d04aa45ed2da716c1926dad0bda6
   docs/models/shared/auditeventlist.md:
@@ -1203,7 +1203,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:b00adf52bf1a4ddd1c683d4d478e73554a987043
   pyproject.toml:
-    last_write_checksum: sha1:d641de62287216aa01d6d262b6378f63b8469086
+    last_write_checksum: sha1:35390a412449513c9e90f920ee1792933a9af0b7
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -1219,7 +1219,7 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:e60d8535d868e9c0dc0c16f5cace8f6d1007d6c1
+    last_write_checksum: sha1:c92abf51a9ba328bd014590e04a9b0132fd95a7f
   src/noresponse/accounts.py:
     last_write_checksum: sha1:8c1bb1bed57733e59eeee63ef04e3969818cc031
   src/noresponse/assessments.py:
@@ -1611,7 +1611,7 @@ trackedFiles:
   src/noresponse/models/shared/attributeagreement.py:
     last_write_checksum: sha1:dcd75b77f1df3eb1a48fd438d236c71a04fcd0a8
   src/noresponse/models/shared/auditevent.py:
-    last_write_checksum: sha1:0a9e382c014944aec033885709462f81e3abf5dd
+    last_write_checksum: sha1:c44d1caa1ce49bf6799cb475d67fa20d1f6cb31b
   src/noresponse/models/shared/auditeventevent.py:
     last_write_checksum: sha1:ea27e7c21e722713d8405afd092c726015a16b42
   src/noresponse/models/shared/auditeventlist.py:

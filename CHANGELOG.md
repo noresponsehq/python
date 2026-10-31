@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.0.8
+
+No changes detected.
+
 ## 10.0.7
 
 * `sdk.accounts.search()`:  `request.email_domain` **Added**
