@@ -75,3 +75,5 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"nationality_mismatch"`
 - `"minor_identity"`
 - `"reported_account_abuse"`
+- `"breach_city_match"`
+- `"breach_city_mismatch"`

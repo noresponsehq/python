@@ -17,7 +17,7 @@ class ConsistencyTypedDict(TypedDict):
     ip: NotRequired[ConsistencyValue]
     r"""How a submitted identifier agrees with what the evidence holds for the other identifiers. unknown is a definite 'cannot tell' (for example a truncated or too-common breach result); absent means the comparison was not made."""
     country: NotRequired[Country]
-    r"""IP country, phone country, breach countries and policy_context.region together."""
+    r"""IP country, phone country, breach countries and policy_context.region together. When the breach records give a country, the timezone and locale countries count too. The IP country of a proxy or hosting network does not count."""
 
 
 class Consistency(BaseModel):
@@ -33,7 +33,7 @@ class Consistency(BaseModel):
     r"""How a submitted identifier agrees with what the evidence holds for the other identifiers. unknown is a definite 'cannot tell' (for example a truncated or too-common breach result); absent means the comparison was not made."""
 
     country: Optional[Country] = None
-    r"""IP country, phone country, breach countries and policy_context.region together."""
+    r"""IP country, phone country, breach countries and policy_context.region together. When the breach records give a country, the timezone and locale countries count too. The IP country of a proxy or hosting network does not count."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
