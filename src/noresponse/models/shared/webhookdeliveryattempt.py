@@ -22,6 +22,10 @@ class WebhookDeliveryAttemptTypedDict(TypedDict):
     r"""Milliseconds from sending the request to the answer or the failure."""
     attempted_at: str
     r"""When the request was sent. Its NR-Webhook-Timestamp is this time in Unix seconds."""
+    assessment_id: NotRequired[str]
+    r"""The assessment an assessment.updated event reported, while that assessment is held. Absent on every other event, on a test event and on a notice that the assessment was erased or expired."""
+    account_id: NotRequired[str]
+    r"""The account an account.risk_changed event reported. Absent on every other event."""
     response_code: NotRequired[int]
     r"""The HTTP status the endpoint answered. Absent when no response was read."""
     failure: NotRequired[Failure]
@@ -50,6 +54,12 @@ class WebhookDeliveryAttempt(BaseModel):
     attempted_at: str
     r"""When the request was sent. Its NR-Webhook-Timestamp is this time in Unix seconds."""
 
+    assessment_id: Optional[str] = None
+    r"""The assessment an assessment.updated event reported, while that assessment is held. Absent on every other event, on a test event and on a notice that the assessment was erased or expired."""
+
+    account_id: Optional[str] = None
+    r"""The account an account.risk_changed event reported. Absent on every other event."""
+
     response_code: Optional[int] = None
     r"""The HTTP status the endpoint answered. Absent when no response was read."""
 
@@ -58,7 +68,9 @@ class WebhookDeliveryAttempt(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["response_code", "failure"])
+        optional_fields = set(
+            ["assessment_id", "account_id", "response_code", "failure"]
+        )
         serialized = handler(self)
         m = {}
 
