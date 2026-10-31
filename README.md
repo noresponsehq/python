@@ -347,6 +347,8 @@ async def handler(request: Request) -> Response:
 
 ### Late enforcement
 
+Deliveries can overlap. Give `with_account_lock` a lock on the account that all your workers share. Store the result's risk version inside it. Without the lock, an old decision can undo a newer one. [Overlapping deliveries](https://docs.noresponse.org/guides/late-results#overlapping-deliveries) says what the lock must do.
+
 A decision can rise after you admitted the account, once a slow source settles. `account.risk_changed` wakes your handler; `handle_risk_change` verifies it, reads the account's current risk (the event's own copy is ignored), asks you where the account is in your flow, and enforces it through your identity provider:
 
 ```python

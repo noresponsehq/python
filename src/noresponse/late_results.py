@@ -121,6 +121,13 @@ class ActionProvider:
 
 
 GetAccountState = Callable[[Any], Optional[AccountStateAnswer]]
+# Serializes enforcement of one account across your workers. Hold an exclusive
+# lock on the account id, call enforce, store the result's risk_version and any
+# state change, then release the lock. An exception must propagate. Inside the
+# lock the handler reads the account's risk and your state again, so a stale
+# event or listed account cannot undo a newer decision. Without it, overlapping
+# calls can act on an old decision after a newer one.
+WithAccountLock = Callable[[str, Callable[[], EnforcementResult]], Any]
 
 
 def handle_risk_change(
@@ -134,6 +141,7 @@ def handle_risk_change(
     flows: Optional[Mapping[str, FlowPolicy]] = None,
     tolerance_seconds: int = DEFAULT_TOLERANCE_SECONDS,
     now: Optional[float] = None,
+    with_account_lock: Optional[WithAccountLock] = None,
 ) -> EnforcementResult:
     """Verify an account.risk_changed delivery and enforce the account's current risk.
 
@@ -143,12 +151,40 @@ def handle_risk_change(
     event = construct_event(payload, headers, secrets, tolerance_seconds=tolerance_seconds, now=now)
     if event.type != "account.risk_changed" or getattr(event, "test", None) is True:
         return EnforcementResult(event=event, skipped="not_actionable")
-    try:
-        account = client.accounts.get(event.data.account.id)
-    except NotFoundError:
-        return EnforcementResult(event=event, skipped="account_gone")
-    result = enforce_account(client, account, provider=provider, get_account_state=get_account_state, flows=flows)
+    result = _under_account_lock(client, event.data.account.id, provider, get_account_state, flows, with_account_lock)
     return EnforcementResult(event, result.account, result.state, result.risk_version, result.skipped, result.enforcements)
+
+
+def _under_account_lock(
+    client: Any,
+    account_id: str,
+    provider: ActionProvider,
+    get_account_state: GetAccountState,
+    flows: Optional[Mapping[str, FlowPolicy]],
+    with_account_lock: Optional[WithAccountLock],
+) -> EnforcementResult:
+    """Read the account's current risk and enforce it, inside with_account_lock when you gave one."""
+
+    def enforce() -> EnforcementResult:
+        try:
+            account = client.accounts.get(account_id)
+        except NotFoundError:
+            return EnforcementResult(skipped="account_gone")
+        return _enforce_as_read(client, account, provider, get_account_state, flows)
+
+    if with_account_lock is None:
+        return enforce()
+    result: Optional[EnforcementResult] = None
+
+    def enforce_and_keep() -> EnforcementResult:
+        nonlocal result
+        result = enforce()
+        return result
+
+    with_account_lock(account_id, enforce_and_keep)
+    if result is None:
+        raise RuntimeError("with_account_lock returned without running enforce")
+    return result
 
 
 def _text(value: Any) -> str:
@@ -162,9 +198,24 @@ def enforce_account(
     provider: ActionProvider,
     get_account_state: GetAccountState,
     flows: Optional[Mapping[str, FlowPolicy]] = None,
+    with_account_lock: Optional[WithAccountLock] = None,
 ) -> EnforcementResult:
-    """Enforce one account as read: the account a handler fetched, or one from
-    accounts.list_changed(unenforced=True) when catching up."""
+    """Enforce one account: the account a handler fetched, or one from
+    accounts.list_changed(unenforced=True) when catching up. With
+    with_account_lock the account is read again inside the lock; without it the
+    account is enforced as given."""
+    if with_account_lock is not None:
+        return _under_account_lock(client, account.id, provider, get_account_state, flows, with_account_lock)
+    return _enforce_as_read(client, account, provider, get_account_state, flows)
+
+
+def _enforce_as_read(
+    client: Any,
+    account: Any,
+    provider: ActionProvider,
+    get_account_state: GetAccountState,
+    flows: Optional[Mapping[str, FlowPolicy]],
+) -> EnforcementResult:
     answer = get_account_state(account)
     if answer is None:
         return EnforcementResult(account=account, skipped="unknown_user")

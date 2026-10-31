@@ -143,3 +143,51 @@ def test_identity_provider_needs_its_credentials():
         identity_provider("auth0", token="t")
     with pytest.raises(ValueError):
         identity_provider("okta", token="t")
+
+
+def vector_named(name):
+    return next(c for c in VECTORS["cases"] if c["name"] == name)
+
+
+def test_with_account_lock_covers_the_read_the_provider_change_and_the_record():
+    vector = vector_named("workos_restricted_allow_reinstates_when_opted_in")
+    transcript = Transcript(vector["exchanges"])
+    client, http = client_for(transcript)
+    provider = identity_provider(vector["provider"], token=VECTORS["provider_token"], http=http)
+    raw, headers = sign(vector["event"])
+    seen = []
+
+    def lock(account_id, enforce):
+        seen.extend([account_id, transcript.next])
+        enforce()
+        seen.append(transcript.next)
+
+    result = handle_risk_change(client, raw, headers, SECRETS, provider=provider, now=VECTORS["now"],
+                                get_account_state=lambda a: AccountStateAnswer("restricted", vector["state"]["user_id"]),
+                                flows={"login": FlowPolicy(reinstate=True)}, with_account_lock=lock)
+    transcript.done()
+    assert seen == [vector["event"]["data"]["account"]["id"], 0, len(vector["exchanges"])]
+    assert [e.action for e in result.enforcements] == ["unrestrict"]
+    assert result.event.id == vector["event"]["id"]
+
+
+def test_under_with_account_lock_enforce_account_acts_on_the_current_risk():
+    vector = vector_named("restricted_account_records_none")
+    first = json.loads(json.dumps(vector["exchanges"][0]))
+    first["response"]["body"]["risk_version"] = 1
+    first["response"]["body"]["decisions_by_flow"]["login"] = "allow"
+    transcript = Transcript([first, *vector["exchanges"]])
+    client, http = client_for(transcript)
+    stale = client.accounts.get(vector["event"]["data"]["account"]["id"])
+    provider = identity_provider(vector["provider"], token=VECTORS["provider_token"], http=http)
+    result = enforce_account(client, stale, provider=provider, get_account_state=lambda a: AccountStateAnswer("restricted"),
+                             flows={"login": FlowPolicy(reinstate=True)}, with_account_lock=lambda account_id, enforce: enforce())
+    transcript.done()
+    assert [e.action for e in result.enforcements] == ["none"]
+
+
+def test_a_with_account_lock_that_does_not_run_enforce_fails():
+    account = SimpleNamespace(id="acct_7f3a9c")
+    with pytest.raises(RuntimeError, match="without running enforce"):
+        enforce_account(SimpleNamespace(), account, provider=custom_provider({}), get_account_state=lambda a: None,
+                        with_account_lock=lambda account_id, enforce: None)
