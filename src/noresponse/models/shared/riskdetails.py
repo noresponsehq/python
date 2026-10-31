@@ -1,6 +1,10 @@
 from __future__ import annotations
 from .breach import Breach, BreachTypedDict
 from .onlineaccount import OnlineAccount, OnlineAccountTypedDict
+from .riskdetailsattributeconflict import (
+    RiskDetailsAttributeConflict,
+    RiskDetailsAttributeConflictTypedDict,
+)
 from .riskdetailsbreachname import RiskDetailsBreachName, RiskDetailsBreachNameTypedDict
 from .riskdetailsevent import RiskDetailsEvent, RiskDetailsEventTypedDict
 from .riskdetailsphonename import RiskDetailsPhoneName, RiskDetailsPhoneNameTypedDict
@@ -22,6 +26,8 @@ class RiskDetailsTypedDict(TypedDict):
     r"""The identity's dated footprint events, newest first, at most 300: the year and month, what happened (created, last_active, breached), the site, its category, the kind of evidence and the identifier it belongs to. No breach value: dates are coarsened to the month."""
     accounts: NotRequired[List[OnlineAccountTypedDict]]
     r"""Every online-account search of the email or username: the platform, what the search came to and, for an account found, what the platform returned beside it. Found first, then not found, then searches that failed or are still running, each by platform name; at most 64. A failed or running search keeps its own outcome and is not reported as not_found."""
+    attribute_conflicts: NotRequired[List[RiskDetailsAttributeConflictTypedDict]]
+    r"""What an identity_attribute_conflict reason weighed: each attribute the records disagree on and the sites reporting it. Absent when the reason did not fire, and on an answer stored before conflicts were recorded. No value is served."""
 
 
 class RiskDetails(BaseModel):
@@ -41,10 +47,20 @@ class RiskDetails(BaseModel):
     accounts: Optional[List[OnlineAccount]] = None
     r"""Every online-account search of the email or username: the platform, what the search came to and, for an account found, what the platform returned beside it. Found first, then not found, then searches that failed or are still running, each by platform name; at most 64. A failed or running search keeps its own outcome and is not reported as not_found."""
 
+    attribute_conflicts: Optional[List[RiskDetailsAttributeConflict]] = None
+    r"""What an identity_attribute_conflict reason weighed: each attribute the records disagree on and the sites reporting it. Absent when the reason did not fire, and on an answer stored before conflicts were recorded. No value is served."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["phone_names", "breaches", "breach_names", "events", "accounts"]
+            [
+                "phone_names",
+                "breaches",
+                "breach_names",
+                "events",
+                "accounts",
+                "attribute_conflicts",
+            ]
         )
         serialized = handler(self)
         m = {}

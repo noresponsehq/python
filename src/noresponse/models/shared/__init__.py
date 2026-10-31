@@ -148,6 +148,7 @@ if TYPE_CHECKING:
         AssessmentUpdatedEventTypedDict,
     )
     from .assurancelevel import AssuranceLevel
+    from .attribute import Attribute
     from .attributeagreement import AttributeAgreement, AttributeAgreementTypedDict
     from .auditevent import (
         Actor,
@@ -561,6 +562,10 @@ if TYPE_CHECKING:
     from .riskconfidence import RiskConfidence
     from .riskcoverage import RiskCoverage, RiskCoverageTypedDict
     from .riskdetails import RiskDetails, RiskDetailsTypedDict
+    from .riskdetailsattributeconflict import (
+        RiskDetailsAttributeConflict,
+        RiskDetailsAttributeConflictTypedDict,
+    )
     from .riskdetailsbreachname import (
         RiskDetailsBreachName,
         RiskDetailsBreachNameTypedDict,
@@ -790,6 +795,7 @@ __all__ = [
     "AssessmentUpdatedEvent",
     "AssessmentUpdatedEventTypedDict",
     "AssuranceLevel",
+    "Attribute",
     "AttributeAgreement",
     "AttributeAgreementTypedDict",
     "AuditEvent",
@@ -1184,6 +1190,8 @@ __all__ = [
     "RiskCoverage",
     "RiskCoverageTypedDict",
     "RiskDetails",
+    "RiskDetailsAttributeConflict",
+    "RiskDetailsAttributeConflictTypedDict",
     "RiskDetailsBreachName",
     "RiskDetailsBreachNameTypedDict",
     "RiskDetailsEvent",
@@ -1425,6 +1433,7 @@ _dynamic_imports: dict[str, str] = {
     "AssessmentUpdatedEvent": ".assessmentupdatedevent",
     "AssessmentUpdatedEventTypedDict": ".assessmentupdatedevent",
     "AssuranceLevel": ".assurancelevel",
+    "Attribute": ".attribute",
     "AttributeAgreement": ".attributeagreement",
     "AttributeAgreementTypedDict": ".attributeagreement",
     "Actor": ".auditevent",
@@ -1840,6 +1849,8 @@ _dynamic_imports: dict[str, str] = {
     "RiskCoverageTypedDict": ".riskcoverage",
     "RiskDetails": ".riskdetails",
     "RiskDetailsTypedDict": ".riskdetails",
+    "RiskDetailsAttributeConflict": ".riskdetailsattributeconflict",
+    "RiskDetailsAttributeConflictTypedDict": ".riskdetailsattributeconflict",
     "RiskDetailsBreachName": ".riskdetailsbreachname",
     "RiskDetailsBreachNameTypedDict": ".riskdetailsbreachname",
     "RiskDetailsEvent": ".riskdetailsevent",

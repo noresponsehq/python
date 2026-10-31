@@ -34,6 +34,10 @@ class RiskTypedDict(TypedDict):
     r"""true when the workspace's block threshold is set and score reached it. A provider hook can deny the account creation on it; the provider decides and enforces. It does not change recommendation. It is false while blocking is off, the default, and a body from before the flag existed omits it: read absent as false."""
     block_threshold: NotRequired[int]
     r"""The block threshold this answer used: block is true exactly when score is at least this value. Absent while blocking is off. NoResponse sets it per workspace on request, at or above the review threshold."""
+    step_up_threshold: NotRequired[int]
+    r"""The score at which this answer's flow starts to recommend step_up. Absent from an answer stored before it was recorded."""
+    review_threshold: NotRequired[int]
+    r"""The score at which this answer's flow starts to recommend review. An answer nothing answered recommends review below it, with confidence unavailable. Absent from an answer stored before it was recorded."""
     policy_basis: Literal["heuristic_unvalidated"]
     r"""Labels the v0 policy as hand-authored and not statistically validated."""
     summary: NotRequired[RiskSummaryTypedDict]
@@ -70,6 +74,12 @@ class Risk(BaseModel):
     block_threshold: Optional[int] = None
     r"""The block threshold this answer used: block is true exactly when score is at least this value. Absent while blocking is off. NoResponse sets it per workspace on request, at or above the review threshold."""
 
+    step_up_threshold: Optional[int] = None
+    r"""The score at which this answer's flow starts to recommend step_up. Absent from an answer stored before it was recorded."""
+
+    review_threshold: Optional[int] = None
+    r"""The score at which this answer's flow starts to recommend review. An answer nothing answered recommends review below it, with confidence unavailable. Absent from an answer stored before it was recorded."""
+
     policy_basis: Annotated[
         Annotated[
             Literal["heuristic_unvalidated"],
@@ -87,7 +97,16 @@ class Risk(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["block", "block_threshold", "summary", "details"])
+        optional_fields = set(
+            [
+                "block",
+                "block_threshold",
+                "step_up_threshold",
+                "review_threshold",
+                "summary",
+                "details",
+            ]
+        )
         serialized = handler(self)
         m = {}
 
