@@ -180,6 +180,7 @@ if TYPE_CHECKING:
     from .badrequesterrorcode import BadRequestErrorCode
     from .band import Band
     from .breach import Breach, BreachTypedDict
+    from .breachconduct import BreachConduct
     from .breachexposed import BreachExposed
     from .breachkind import BreachKind
     from .breachselector import BreachSelector
@@ -828,6 +829,7 @@ __all__ = [
     "BadRequestErrorCode",
     "Band",
     "Breach",
+    "BreachConduct",
     "BreachExposed",
     "BreachKind",
     "BreachSelector",
@@ -1470,6 +1472,7 @@ _dynamic_imports: dict[str, str] = {
     "Band": ".band",
     "Breach": ".breach",
     "BreachTypedDict": ".breach",
+    "BreachConduct": ".breachconduct",
     "BreachExposed": ".breachexposed",
     "BreachKind": ".breachkind",
     "BreachSelector": ".breachselector",

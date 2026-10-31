@@ -1,4 +1,5 @@
 from __future__ import annotations
+from .breachconduct import BreachConduct
 from .breachexposed import BreachExposed
 from .breachkind import BreachKind
 from .breachselector import BreachSelector
@@ -25,6 +26,8 @@ class BreachTypedDict(TypedDict):
     month: NotRequired[int]
     r"""Absent when only the year is known."""
     exposed: NotRequired[List[BreachExposed]]
+    conduct: NotRequired[List[BreachConduct]]
+    r"""What this table's rows record against the matched email or username: the tables behind the forum_sanctioned and prior_payment_abuse reasons. Absent when the rows record none, for a table matched on an IP address, and from an answer stored before it was recorded."""
 
 
 class Breach(BaseModel):
@@ -52,9 +55,14 @@ class Breach(BaseModel):
 
     exposed: Optional[List[BreachExposed]] = None
 
+    conduct: Optional[List[BreachConduct]] = None
+    r"""What this table's rows record against the matched email or username: the tables behind the forum_sanctioned and prior_payment_abuse reasons. Absent when the rows record none, for a table matched on an IP address, and from an answer stored before it was recorded."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["domain", "category", "year", "month", "exposed"])
+        optional_fields = set(
+            ["domain", "category", "year", "month", "exposed", "conduct"]
+        )
         serialized = handler(self)
         m = {}
 

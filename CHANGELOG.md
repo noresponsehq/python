@@ -1,5 +1,16 @@
 # Changelog
 
+## 10.0.3
+
+* `sdk.assessments.create()`:  `response.detail.risk.details.breaches[].conduct` **Added**
+* `sdk.assessments.get()`:  `response.detail.risk.details.breaches[].conduct` **Added**
+* `sdk.assessments.query()`:  `response.items[].risk.details.breaches[].conduct` **Added**
+* `sdk.assessments.search()`:  `response.items[].detail.risk.details.breaches[].conduct` **Added**
+* `sdk.assessments.retrieve_version()`:  `response.detail.risk.details.breaches[].conduct` **Added**
+* `sdk.accounts.list_assessments()`:  `response.items[].risk.details.breaches[].conduct` **Added**
+* `sdk.accounts.export()`:  `response.assessments[].detail.risk.details.breaches[].conduct` **Added**
+* `sdk.accounts.search()`:  `response.items[].latest.detail.risk.details.breaches[].conduct` **Added**
+
 ## 10.0.2
 
 * `sdk.assessments.create()`:  `response.detail.risk` **Changed**
