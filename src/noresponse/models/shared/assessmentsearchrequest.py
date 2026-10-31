@@ -8,6 +8,7 @@ from .identifiersearch import IdentifierSearch, IdentifierSearchTypedDict
 from .impact import Impact
 from .lane import Lane
 from .listmatch import ListMatch
+from .origin import Origin
 from .reasoncode import ReasonCode
 from .recommendation import Recommendation
 from .responsemode import ResponseMode
@@ -32,6 +33,8 @@ class AssessmentSearchRequestTypedDict(TypedDict):
     r"""The event an assessment is made for: account_creation (a user creates an account), login (a user returns to an existing account) or purchase (a payment or a credit grant). The account's risk is reported with the decision for this flow."""
     status: NotRequired[Status]
     r"""Processing state, separate from evidence coverage. complete: final; nothing is still running, but unsupported, failed or unanswered lanes remain in incomplete_sources. partial: a recommendation exists and evidence is incomplete; assessment_url identifies continuing work when present. pending: no recommendation yet; poll or wait for the webhook. Finished processing does not mean all sources answered."""
+    origin: NotRequired[Origin]
+    r"""api (the default) searches the assessments your integration sent. lookup searches the assessments your team ran by hand on the console's Lookup page. The API sets an assessment's origin from the credential that sent it. A lookup is not in any other list, count, webhook event or account."""
     recommendation: NotRequired[Recommendation]
     r"""The recommended action: allow, step_up or review. Your application applies it."""
     limit: NotRequired[int]
@@ -84,6 +87,9 @@ class AssessmentSearchRequest(BaseModel):
 
     status: Optional[Status] = None
     r"""Processing state, separate from evidence coverage. complete: final; nothing is still running, but unsupported, failed or unanswered lanes remain in incomplete_sources. partial: a recommendation exists and evidence is incomplete; assessment_url identifies continuing work when present. pending: no recommendation yet; poll or wait for the webhook. Finished processing does not mean all sources answered."""
+
+    origin: Optional[Origin] = None
+    r"""api (the default) searches the assessments your integration sent. lookup searches the assessments your team ran by hand on the console's Lookup page. The API sets an assessment's origin from the credential that sent it. A lookup is not in any other list, count, webhook event or account."""
 
     recommendation: Optional[Recommendation] = None
     r"""The recommended action: allow, step_up or review. Your application applies it."""
@@ -143,6 +149,7 @@ class AssessmentSearchRequest(BaseModel):
                 "email",
                 "flow",
                 "status",
+                "origin",
                 "recommendation",
                 "limit",
                 "cursor",

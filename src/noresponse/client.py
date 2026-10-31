@@ -174,6 +174,7 @@ class Assessments(_Assessments):
         *,
         from_: str,
         to: str,
+        origin: Optional[models.shared.Origin] = None,
         account_id: Optional[str] = None,
         email: Optional[str] = None,
         identifier: Optional[Union[models.shared.IdentifierSearch, models.shared.IdentifierSearchTypedDict]] = None,
@@ -205,6 +206,7 @@ class Assessments(_Assessments):
         response = _sync(super().search)(
             from_=from_,
             to=to,
+            origin=origin,
             account_id=account_id,
             email=email,
             identifier=identifier,
@@ -239,6 +241,7 @@ class Assessments(_Assessments):
         *,
         from_: str,
         to: str,
+        origin: Optional[models.shared.Origin] = None,
         account_id: Optional[str] = None,
         email: Optional[str] = None,
         identifier: Optional[Union[models.shared.IdentifierSearch, models.shared.IdentifierSearchTypedDict]] = None,
@@ -270,6 +273,7 @@ class Assessments(_Assessments):
         response = await _async(super().search_async)(
             from_=from_,
             to=to,
+            origin=origin,
             account_id=account_id,
             email=email,
             identifier=identifier,

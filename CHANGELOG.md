@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.0.5
+
+* `sdk.assessments.search()`:  `request.origin` **Added**
+
 ## 10.0.4
 
 * `sdk.assessments.create()`:  `response.account.risk.reasons[].code` **Changed**

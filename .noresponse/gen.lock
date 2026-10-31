@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: 2b871695c60c75f6bf13e08d710e9a6c
+  docChecksum: e984df02a5aee59723c78eea38774baf
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 10.0.4
-  configChecksum: 49dfa4f0e8a3905a9f9e2d35ddc122b9
+  releaseVersion: 10.0.5
+  configChecksum: 4eb1d6b84f707f1ce6e47ea0181a8c84
 features:
   python:
     additionalDependencies: 1.1.0
@@ -565,7 +565,7 @@ trackedFiles:
   docs/models/shared/assessmentsearchpage.md:
     last_write_checksum: sha1:9c77a12b1025fbb43f68d3143392370de699de14
   docs/models/shared/assessmentsearchrequest.md:
-    last_write_checksum: sha1:50dab84f708113a03ee2efde6e07cf79a8ed2e90
+    last_write_checksum: sha1:cef3b5ae7a7aaad4d7294af6a4ba6fa6c130ec57
   docs/models/shared/assessmentupdateddata.md:
     last_write_checksum: sha1:ab05ce8d9e0db2a2d752a093c24861122e01752a
   docs/models/shared/assessmentupdatedevent.md:
@@ -918,6 +918,8 @@ trackedFiles:
     last_write_checksum: sha1:4373e646354f4f6acfb2edef12ad6896d9b429c8
   docs/models/shared/operationalaggregatetotals.md:
     last_write_checksum: sha1:9117a08da69078624b011228a81ea0c78774b41f
+  docs/models/shared/origin.md:
+    last_write_checksum: sha1:85327b8fd151d98a657eebbbcd47b93e4a37c75c
   docs/models/shared/outcome.md:
     last_write_checksum: sha1:3f25aa0bc4bccbe39b12e693fab40ec812d89b92
   docs/models/shared/outcomes.md:
@@ -1201,7 +1203,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:b00adf52bf1a4ddd1c683d4d478e73554a987043
   pyproject.toml:
-    last_write_checksum: sha1:b34e4433b84b0417421c145b9e2c105d7a9b1021
+    last_write_checksum: sha1:464445143b95afe37360b8720d9af67162a3ac43
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -1217,11 +1219,11 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:60d3a30d4fb6eebed3a284056661ce55bc8b66b4
+    last_write_checksum: sha1:481d8d7449c0fabfad18aae3b61075c72c26b6b6
   src/noresponse/accounts.py:
     last_write_checksum: sha1:d98fb449017c8da59562a7a70a03fe2d7f16b041
   src/noresponse/assessments.py:
-    last_write_checksum: sha1:a5bb79207afe475aaa60b42db28a7088a853269e
+    last_write_checksum: sha1:8cedb6e0e58af55763055518ff1d925d5cbb157a
   src/noresponse/audit.py:
     last_write_checksum: sha1:4cbe79b4df5a0130906a93a0a779e88ecaebe141
   src/noresponse/basesdk.py:
@@ -1475,7 +1477,7 @@ trackedFiles:
   src/noresponse/models/operations/updatesettings.py:
     last_write_checksum: sha1:a1c4d3af6ff0780cafd90d92347319266b0a4a5b
   src/noresponse/models/shared/__init__.py:
-    last_write_checksum: sha1:c45fedc06dafa47af886393e418ad7fc9ae6b907
+    last_write_checksum: sha1:dcdd3031b07954c6c468b20daba90bb95907f0bc
   src/noresponse/models/shared/account.py:
     last_write_checksum: sha1:776f3ab4597212e0151452619ccf32c619b320da
   src/noresponse/models/shared/accountbinding.py:
@@ -1597,7 +1599,7 @@ trackedFiles:
   src/noresponse/models/shared/assessmentsearchpage.py:
     last_write_checksum: sha1:2528b89020582977e5fcda1eb0c4a86e075b2d3e
   src/noresponse/models/shared/assessmentsearchrequest.py:
-    last_write_checksum: sha1:9d20e2028911930a0c2846e2b9082b99966f0e25
+    last_write_checksum: sha1:0791e8d960d9c75df46502f33fe56374cd166a22
   src/noresponse/models/shared/assessmentupdateddata.py:
     last_write_checksum: sha1:659c650f22586feb57cb27b84399233d1a5650f8
   src/noresponse/models/shared/assessmentupdatedevent.py:
@@ -1914,6 +1916,8 @@ trackedFiles:
     last_write_checksum: sha1:a5d0b741b29095333739d12ed288b9c837eddeba
   src/noresponse/models/shared/operationalaggregatetotals.py:
     last_write_checksum: sha1:8f10250c8dc75112d9b41199e5f75d5b1cf626c9
+  src/noresponse/models/shared/origin.py:
+    last_write_checksum: sha1:310f359b82e4776b7f7670495915577278b6fd8d
   src/noresponse/models/shared/outcome.py:
     last_write_checksum: sha1:2eaec23fbe8847caf521715b7360efb1236c48ed
   src/noresponse/models/shared/outcomes.py:

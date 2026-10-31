@@ -394,6 +394,7 @@ if TYPE_CHECKING:
         OperationalAggregateTotals,
         OperationalAggregateTotalsTypedDict,
     )
+    from .origin import Origin
     from .outcome import Outcome
     from .outcomes import Outcomes, OutcomesTypedDict
     from .outcomesbyoutcome import OutcomesByOutcome, OutcomesByOutcomeTypedDict
@@ -1067,6 +1068,7 @@ __all__ = [
     "OperationalAggregateTotals",
     "OperationalAggregateTotalsTypedDict",
     "OperationalAggregateTypedDict",
+    "Origin",
     "Outcome",
     "Outcomes",
     "OutcomesByOutcome",
@@ -1697,6 +1699,7 @@ _dynamic_imports: dict[str, str] = {
     "OperationalAggregateQueueTypedDict": ".operationalaggregatequeue",
     "OperationalAggregateTotals": ".operationalaggregatetotals",
     "OperationalAggregateTotalsTypedDict": ".operationalaggregatetotals",
+    "Origin": ".origin",
     "Outcome": ".outcome",
     "Outcomes": ".outcomes",
     "OutcomesTypedDict": ".outcomes",

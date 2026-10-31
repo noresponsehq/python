@@ -3115,6 +3115,7 @@ class Assessments(BaseSDK):
         email: Optional[str] = None,
         flow: Optional[models.shared.Flow] = None,
         status: Optional[models.shared.Status] = None,
+        origin: Optional[models.shared.Origin] = None,
         recommendation: Optional[models.shared.Recommendation] = None,
         limit: Optional[int] = 20,
         cursor: Optional[str] = None,
@@ -3171,6 +3172,7 @@ class Assessments(BaseSDK):
             email=email,
             flow=flow,
             status=status,
+            origin=origin,
             recommendation=recommendation,
             limit=limit,
             cursor=cursor,
@@ -3301,6 +3303,7 @@ class Assessments(BaseSDK):
         :param email: Assessments of every account that one of its retained admitted assessments sent this mailbox as identifiers.email, matched as lists match an email entry: case-insensitive, a +tag removed and, at gmail.com and googlemail.com, the dots of the local part ignored. Only assessments stored since email list matching began carry the mailbox. An address that is not a valid mailbox is refused with 400.
         :param flow: The event an assessment is made for: account_creation (a user creates an account), login (a user returns to an existing account) or purchase (a payment or a credit grant). The account's risk is reported with the decision for this flow.
         :param status: Processing state, separate from evidence coverage. complete: final; nothing is still running, but unsupported, failed or unanswered lanes remain in incomplete_sources. partial: a recommendation exists and evidence is incomplete; assessment_url identifies continuing work when present. pending: no recommendation yet; poll or wait for the webhook. Finished processing does not mean all sources answered.
+        :param origin: api (the default) searches the assessments your integration sent. lookup searches the assessments your team ran by hand on the console's Lookup page. The API sets an assessment's origin from the credential that sent it. A lookup is not in any other list, count, webhook event or account.
         :param recommendation: The recommended action: allow, step_up or review. Your application applies it.
         :param limit:
         :param cursor: Opaque, expiring cursor bound to workspace, environment, operation and all filters, including expression scope, ordered structure and original term values. Keep grouping, operand order, matching modes and values unchanged; an omitted match is equivalent to exact. The page limit may change.
@@ -3341,6 +3344,7 @@ class Assessments(BaseSDK):
             email=email,
             flow=flow,
             status=status,
+            origin=origin,
             recommendation=recommendation,
             limit=limit,
             cursor=cursor,
@@ -3518,6 +3522,7 @@ class Assessments(BaseSDK):
         email: Optional[str] = None,
         flow: Optional[models.shared.Flow] = None,
         status: Optional[models.shared.Status] = None,
+        origin: Optional[models.shared.Origin] = None,
         recommendation: Optional[models.shared.Recommendation] = None,
         limit: Optional[int] = 20,
         cursor: Optional[str] = None,
@@ -3574,6 +3579,7 @@ class Assessments(BaseSDK):
             email=email,
             flow=flow,
             status=status,
+            origin=origin,
             recommendation=recommendation,
             limit=limit,
             cursor=cursor,
@@ -3704,6 +3710,7 @@ class Assessments(BaseSDK):
         :param email: Assessments of every account that one of its retained admitted assessments sent this mailbox as identifiers.email, matched as lists match an email entry: case-insensitive, a +tag removed and, at gmail.com and googlemail.com, the dots of the local part ignored. Only assessments stored since email list matching began carry the mailbox. An address that is not a valid mailbox is refused with 400.
         :param flow: The event an assessment is made for: account_creation (a user creates an account), login (a user returns to an existing account) or purchase (a payment or a credit grant). The account's risk is reported with the decision for this flow.
         :param status: Processing state, separate from evidence coverage. complete: final; nothing is still running, but unsupported, failed or unanswered lanes remain in incomplete_sources. partial: a recommendation exists and evidence is incomplete; assessment_url identifies continuing work when present. pending: no recommendation yet; poll or wait for the webhook. Finished processing does not mean all sources answered.
+        :param origin: api (the default) searches the assessments your integration sent. lookup searches the assessments your team ran by hand on the console's Lookup page. The API sets an assessment's origin from the credential that sent it. A lookup is not in any other list, count, webhook event or account.
         :param recommendation: The recommended action: allow, step_up or review. Your application applies it.
         :param limit:
         :param cursor: Opaque, expiring cursor bound to workspace, environment, operation and all filters, including expression scope, ordered structure and original term values. Keep grouping, operand order, matching modes and values unchanged; an omitted match is equivalent to exact. The page limit may change.
@@ -3744,6 +3751,7 @@ class Assessments(BaseSDK):
             email=email,
             flow=flow,
             status=status,
+            origin=origin,
             recommendation=recommendation,
             limit=limit,
             cursor=cursor,
