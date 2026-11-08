@@ -1,0 +1,9 @@
+# ListScreeningsResponse
+
+
+## Fields
+
+| Field                                                        | Type                                                         | Required                                                     | Description                                                  |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| `headers`                                                    | Dict[str, List[*str*]]                                       | :heavy_check_mark:                                           | N/A                                                          |
+| `result`                                                     | [shared.ScreeningList](../../models/shared/screeninglist.md) | :heavy_check_mark:                                           | N/A                                                          |

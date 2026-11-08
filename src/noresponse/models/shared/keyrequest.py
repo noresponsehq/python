@@ -25,6 +25,7 @@ KeyRequestScope = Literal[
     "policy_publish",
     "members",
     "members_manage",
+    "events",
 ]
 
 

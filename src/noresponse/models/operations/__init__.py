@@ -3,6 +3,12 @@ from typing import Any, TYPE_CHECKING
 from noresponse.utils.dynamic_imports import lazy_getattr, lazy_dir
 
 if TYPE_CHECKING:
+    from .addattendees import (
+        AddAttendeesRequest,
+        AddAttendeesRequestTypedDict,
+        AddAttendeesResponse,
+        AddAttendeesResponseTypedDict,
+    )
     from .addreviewsubject import (
         AddReviewSubjectRequest,
         AddReviewSubjectRequestTypedDict,
@@ -45,6 +51,12 @@ if TYPE_CHECKING:
         CancelPolicyEvaluationResponse,
         CancelPolicyEvaluationResponseTypedDict,
     )
+    from .cancelscreening import (
+        CancelScreeningRequest,
+        CancelScreeningRequestTypedDict,
+        CancelScreeningResponse,
+        CancelScreeningResponseTypedDict,
+    )
     from .changelists import (
         ChangeListsRequest,
         ChangeListsRequestTypedDict,
@@ -74,6 +86,12 @@ if TYPE_CHECKING:
         CreateCustomerExportRequestTypedDict,
         CreateCustomerExportResponse,
         CreateCustomerExportResponseTypedDict,
+    )
+    from .createevent import (
+        CreateEventRequest,
+        CreateEventRequestTypedDict,
+        CreateEventResponse,
+        CreateEventResponseTypedDict,
     )
     from .createintegration import (
         CreateIntegrationResponse,
@@ -130,6 +148,12 @@ if TYPE_CHECKING:
         DeleteAssessmentRequestTypedDict,
         DeleteAssessmentResponse,
         DeleteAssessmentResponseTypedDict,
+    )
+    from .deleteevent import (
+        DeleteEventRequest,
+        DeleteEventRequestTypedDict,
+        DeleteEventResponse,
+        DeleteEventResponseTypedDict,
     )
     from .deleteintegration import (
         DeleteIntegrationRequest,
@@ -203,6 +227,12 @@ if TYPE_CHECKING:
         GetAssessmentVersionResponse,
         GetAssessmentVersionResponseTypedDict,
     )
+    from .getattendee import (
+        GetAttendeeRequest,
+        GetAttendeeRequestTypedDict,
+        GetAttendeeResponse,
+        GetAttendeeResponseTypedDict,
+    )
     from .getauditretention import (
         GetAuditRetentionRequest,
         GetAuditRetentionRequestTypedDict,
@@ -220,6 +250,12 @@ if TYPE_CHECKING:
         GetErasureReceiptRequestTypedDict,
         GetErasureReceiptResponse,
         GetErasureReceiptResponseTypedDict,
+    )
+    from .getevent import (
+        GetEventRequest,
+        GetEventRequestTypedDict,
+        GetEventResponse,
+        GetEventResponseTypedDict,
     )
     from .getlistchange import (
         GetListChangeRequest,
@@ -244,6 +280,12 @@ if TYPE_CHECKING:
         GetReviewRequestTypedDict,
         GetReviewResponse,
         GetReviewResponseTypedDict,
+    )
+    from .getscreening import (
+        GetScreeningRequest,
+        GetScreeningRequestTypedDict,
+        GetScreeningResponse,
+        GetScreeningResponseTypedDict,
     )
     from .getsettings import (
         GetSettingsRequest,
@@ -293,6 +335,12 @@ if TYPE_CHECKING:
         ListAccountsResponse,
         ListAccountsResponseTypedDict,
     )
+    from .listattendees import (
+        ListAttendeesRequest,
+        ListAttendeesRequestTypedDict,
+        ListAttendeesResponse,
+        ListAttendeesResponseTypedDict,
+    )
     from .listauditevents import (
         ListAuditEventsRequest,
         ListAuditEventsRequestTypedDict,
@@ -310,6 +358,12 @@ if TYPE_CHECKING:
         ListCustomerExportsRequestTypedDict,
         ListCustomerExportsResponse,
         ListCustomerExportsResponseTypedDict,
+    )
+    from .listevents import (
+        ListEventsRequest,
+        ListEventsRequestTypedDict,
+        ListEventsResponse,
+        ListEventsResponseTypedDict,
     )
     from .listintegrations import (
         ListIntegrationsResponse,
@@ -392,6 +446,12 @@ if TYPE_CHECKING:
         ListReviewViewsRequestTypedDict,
         ListReviewViewsResponse,
         ListReviewViewsResponseTypedDict,
+    )
+    from .listscreenings import (
+        ListScreeningsRequest,
+        ListScreeningsRequestTypedDict,
+        ListScreeningsResponse,
+        ListScreeningsResponseTypedDict,
     )
     from .listwebhookdeliveries import (
         ListWebhookDeliveriesRequest,
@@ -509,6 +569,12 @@ if TYPE_CHECKING:
         RetryCustomerExportResponse,
         RetryCustomerExportResponseTypedDict,
     )
+    from .reviewattendee import (
+        ReviewAttendeeRequest,
+        ReviewAttendeeRequestTypedDict,
+        ReviewAttendeeResponse,
+        ReviewAttendeeResponseTypedDict,
+    )
     from .revokeinvite import (
         RevokeInviteRequest,
         RevokeInviteRequestTypedDict,
@@ -545,6 +611,12 @@ if TYPE_CHECKING:
         SendWebhookTestEventResponse,
         SendWebhookTestEventResponseTypedDict,
     )
+    from .startscreening import (
+        StartScreeningRequest,
+        StartScreeningRequestTypedDict,
+        StartScreeningResponse,
+        StartScreeningResponseTypedDict,
+    )
     from .summarizeworkspaceoperations import (
         SummarizeWorkspaceOperationsRequest,
         SummarizeWorkspaceOperationsRequestTypedDict,
@@ -557,6 +629,12 @@ if TYPE_CHECKING:
         UpdateAuditRetentionRequestTypedDict,
         UpdateAuditRetentionResponse,
         UpdateAuditRetentionResponseTypedDict,
+    )
+    from .updateevent import (
+        UpdateEventRequest,
+        UpdateEventRequestTypedDict,
+        UpdateEventResponse,
+        UpdateEventResponseTypedDict,
     )
     from .updatemember import (
         UpdateMemberRequest,
@@ -584,6 +662,10 @@ if TYPE_CHECKING:
     )
 
 __all__ = [
+    "AddAttendeesRequest",
+    "AddAttendeesRequestTypedDict",
+    "AddAttendeesResponse",
+    "AddAttendeesResponseTypedDict",
     "AddReviewSubjectRequest",
     "AddReviewSubjectRequestTypedDict",
     "AddReviewSubjectResponse",
@@ -610,6 +692,10 @@ __all__ = [
     "CancelPolicyEvaluationRequestTypedDict",
     "CancelPolicyEvaluationResponse",
     "CancelPolicyEvaluationResponseTypedDict",
+    "CancelScreeningRequest",
+    "CancelScreeningRequestTypedDict",
+    "CancelScreeningResponse",
+    "CancelScreeningResponseTypedDict",
     "ChangeListsRequest",
     "ChangeListsRequestTypedDict",
     "ChangeListsResponse",
@@ -630,6 +716,10 @@ __all__ = [
     "CreateCustomerExportRequestTypedDict",
     "CreateCustomerExportResponse",
     "CreateCustomerExportResponseTypedDict",
+    "CreateEventRequest",
+    "CreateEventRequestTypedDict",
+    "CreateEventResponse",
+    "CreateEventResponseTypedDict",
     "CreateIntegrationResponse",
     "CreateIntegrationResponseTypedDict",
     "CreateInviteRequest",
@@ -666,6 +756,10 @@ __all__ = [
     "DeleteAssessmentRequestTypedDict",
     "DeleteAssessmentResponse",
     "DeleteAssessmentResponseTypedDict",
+    "DeleteEventRequest",
+    "DeleteEventRequestTypedDict",
+    "DeleteEventResponse",
+    "DeleteEventResponseTypedDict",
     "DeleteIntegrationRequest",
     "DeleteIntegrationRequestTypedDict",
     "DeleteIntegrationResponse",
@@ -715,6 +809,10 @@ __all__ = [
     "GetAssessmentVersionRequestTypedDict",
     "GetAssessmentVersionResponse",
     "GetAssessmentVersionResponseTypedDict",
+    "GetAttendeeRequest",
+    "GetAttendeeRequestTypedDict",
+    "GetAttendeeResponse",
+    "GetAttendeeResponseTypedDict",
     "GetAuditRetentionRequest",
     "GetAuditRetentionRequestTypedDict",
     "GetAuditRetentionResponse",
@@ -727,6 +825,10 @@ __all__ = [
     "GetErasureReceiptRequestTypedDict",
     "GetErasureReceiptResponse",
     "GetErasureReceiptResponseTypedDict",
+    "GetEventRequest",
+    "GetEventRequestTypedDict",
+    "GetEventResponse",
+    "GetEventResponseTypedDict",
     "GetListChangeRequest",
     "GetListChangeRequestTypedDict",
     "GetListChangeResponse",
@@ -743,6 +845,10 @@ __all__ = [
     "GetReviewRequestTypedDict",
     "GetReviewResponse",
     "GetReviewResponseTypedDict",
+    "GetScreeningRequest",
+    "GetScreeningRequestTypedDict",
+    "GetScreeningResponse",
+    "GetScreeningResponseTypedDict",
     "GetSettingsRequest",
     "GetSettingsRequestTypedDict",
     "GetSettingsResponse",
@@ -775,6 +881,10 @@ __all__ = [
     "ListAccountsRequestTypedDict",
     "ListAccountsResponse",
     "ListAccountsResponseTypedDict",
+    "ListAttendeesRequest",
+    "ListAttendeesRequestTypedDict",
+    "ListAttendeesResponse",
+    "ListAttendeesResponseTypedDict",
     "ListAuditEventsRequest",
     "ListAuditEventsRequestTypedDict",
     "ListAuditEventsResponse",
@@ -787,6 +897,10 @@ __all__ = [
     "ListCustomerExportsRequestTypedDict",
     "ListCustomerExportsResponse",
     "ListCustomerExportsResponseTypedDict",
+    "ListEventsRequest",
+    "ListEventsRequestTypedDict",
+    "ListEventsResponse",
+    "ListEventsResponseTypedDict",
     "ListIntegrationsResponse",
     "ListIntegrationsResponseTypedDict",
     "ListInvitesRequest",
@@ -841,6 +955,10 @@ __all__ = [
     "ListReviewsRequestTypedDict",
     "ListReviewsResponse",
     "ListReviewsResponseTypedDict",
+    "ListScreeningsRequest",
+    "ListScreeningsRequestTypedDict",
+    "ListScreeningsResponse",
+    "ListScreeningsResponseTypedDict",
     "ListWebhookDeliveriesRequest",
     "ListWebhookDeliveriesRequestTypedDict",
     "ListWebhookDeliveriesResponse",
@@ -917,6 +1035,10 @@ __all__ = [
     "RetryCustomerExportRequestTypedDict",
     "RetryCustomerExportResponse",
     "RetryCustomerExportResponseTypedDict",
+    "ReviewAttendeeRequest",
+    "ReviewAttendeeRequestTypedDict",
+    "ReviewAttendeeResponse",
+    "ReviewAttendeeResponseTypedDict",
     "RevokeInviteRequest",
     "RevokeInviteRequestTypedDict",
     "RevokeInviteResponse",
@@ -943,6 +1065,10 @@ __all__ = [
     "SendWebhookTestEventRequestTypedDict",
     "SendWebhookTestEventResponse",
     "SendWebhookTestEventResponseTypedDict",
+    "StartScreeningRequest",
+    "StartScreeningRequestTypedDict",
+    "StartScreeningResponse",
+    "StartScreeningResponseTypedDict",
     "SummarizeWorkspaceOperationsRequest",
     "SummarizeWorkspaceOperationsRequestTypedDict",
     "SummarizeWorkspaceOperationsResponse",
@@ -951,6 +1077,10 @@ __all__ = [
     "UpdateAuditRetentionRequestTypedDict",
     "UpdateAuditRetentionResponse",
     "UpdateAuditRetentionResponseTypedDict",
+    "UpdateEventRequest",
+    "UpdateEventRequestTypedDict",
+    "UpdateEventResponse",
+    "UpdateEventResponseTypedDict",
     "UpdateMemberRequest",
     "UpdateMemberRequestTypedDict",
     "UpdateMemberResponse",
@@ -970,6 +1100,10 @@ __all__ = [
 ]
 
 _dynamic_imports: dict[str, str] = {
+    "AddAttendeesRequest": ".addattendees",
+    "AddAttendeesRequestTypedDict": ".addattendees",
+    "AddAttendeesResponse": ".addattendees",
+    "AddAttendeesResponseTypedDict": ".addattendees",
     "AddReviewSubjectRequest": ".addreviewsubject",
     "AddReviewSubjectRequestTypedDict": ".addreviewsubject",
     "AddReviewSubjectResponse": ".addreviewsubject",
@@ -996,6 +1130,10 @@ _dynamic_imports: dict[str, str] = {
     "CancelPolicyEvaluationRequestTypedDict": ".cancelpolicyevaluation",
     "CancelPolicyEvaluationResponse": ".cancelpolicyevaluation",
     "CancelPolicyEvaluationResponseTypedDict": ".cancelpolicyevaluation",
+    "CancelScreeningRequest": ".cancelscreening",
+    "CancelScreeningRequestTypedDict": ".cancelscreening",
+    "CancelScreeningResponse": ".cancelscreening",
+    "CancelScreeningResponseTypedDict": ".cancelscreening",
     "ChangeListsRequest": ".changelists",
     "ChangeListsRequestTypedDict": ".changelists",
     "ChangeListsResponse": ".changelists",
@@ -1016,6 +1154,10 @@ _dynamic_imports: dict[str, str] = {
     "CreateCustomerExportRequestTypedDict": ".createcustomerexport",
     "CreateCustomerExportResponse": ".createcustomerexport",
     "CreateCustomerExportResponseTypedDict": ".createcustomerexport",
+    "CreateEventRequest": ".createevent",
+    "CreateEventRequestTypedDict": ".createevent",
+    "CreateEventResponse": ".createevent",
+    "CreateEventResponseTypedDict": ".createevent",
     "CreateIntegrationResponse": ".createintegration",
     "CreateIntegrationResponseTypedDict": ".createintegration",
     "CreateInviteRequest": ".createinvite",
@@ -1052,6 +1194,10 @@ _dynamic_imports: dict[str, str] = {
     "DeleteAssessmentRequestTypedDict": ".deleteassessment",
     "DeleteAssessmentResponse": ".deleteassessment",
     "DeleteAssessmentResponseTypedDict": ".deleteassessment",
+    "DeleteEventRequest": ".deleteevent",
+    "DeleteEventRequestTypedDict": ".deleteevent",
+    "DeleteEventResponse": ".deleteevent",
+    "DeleteEventResponseTypedDict": ".deleteevent",
     "DeleteIntegrationRequest": ".deleteintegration",
     "DeleteIntegrationRequestTypedDict": ".deleteintegration",
     "DeleteIntegrationResponse": ".deleteintegration",
@@ -1100,6 +1246,10 @@ _dynamic_imports: dict[str, str] = {
     "GetAssessmentVersionRequestTypedDict": ".getassessmentversion",
     "GetAssessmentVersionResponse": ".getassessmentversion",
     "GetAssessmentVersionResponseTypedDict": ".getassessmentversion",
+    "GetAttendeeRequest": ".getattendee",
+    "GetAttendeeRequestTypedDict": ".getattendee",
+    "GetAttendeeResponse": ".getattendee",
+    "GetAttendeeResponseTypedDict": ".getattendee",
     "GetAuditRetentionRequest": ".getauditretention",
     "GetAuditRetentionRequestTypedDict": ".getauditretention",
     "GetAuditRetentionResponse": ".getauditretention",
@@ -1112,6 +1262,10 @@ _dynamic_imports: dict[str, str] = {
     "GetErasureReceiptRequestTypedDict": ".geterasurereceipt",
     "GetErasureReceiptResponse": ".geterasurereceipt",
     "GetErasureReceiptResponseTypedDict": ".geterasurereceipt",
+    "GetEventRequest": ".getevent",
+    "GetEventRequestTypedDict": ".getevent",
+    "GetEventResponse": ".getevent",
+    "GetEventResponseTypedDict": ".getevent",
     "GetListChangeRequest": ".getlistchange",
     "GetListChangeRequestTypedDict": ".getlistchange",
     "GetListChangeResponse": ".getlistchange",
@@ -1128,6 +1282,10 @@ _dynamic_imports: dict[str, str] = {
     "GetReviewRequestTypedDict": ".getreview",
     "GetReviewResponse": ".getreview",
     "GetReviewResponseTypedDict": ".getreview",
+    "GetScreeningRequest": ".getscreening",
+    "GetScreeningRequestTypedDict": ".getscreening",
+    "GetScreeningResponse": ".getscreening",
+    "GetScreeningResponseTypedDict": ".getscreening",
     "GetSettingsRequest": ".getsettings",
     "GetSettingsRequestTypedDict": ".getsettings",
     "GetSettingsResponse": ".getsettings",
@@ -1160,6 +1318,10 @@ _dynamic_imports: dict[str, str] = {
     "ListAccountsRequestTypedDict": ".listaccounts",
     "ListAccountsResponse": ".listaccounts",
     "ListAccountsResponseTypedDict": ".listaccounts",
+    "ListAttendeesRequest": ".listattendees",
+    "ListAttendeesRequestTypedDict": ".listattendees",
+    "ListAttendeesResponse": ".listattendees",
+    "ListAttendeesResponseTypedDict": ".listattendees",
     "ListAuditEventsRequest": ".listauditevents",
     "ListAuditEventsRequestTypedDict": ".listauditevents",
     "ListAuditEventsResponse": ".listauditevents",
@@ -1172,6 +1334,10 @@ _dynamic_imports: dict[str, str] = {
     "ListCustomerExportsRequestTypedDict": ".listcustomerexports",
     "ListCustomerExportsResponse": ".listcustomerexports",
     "ListCustomerExportsResponseTypedDict": ".listcustomerexports",
+    "ListEventsRequest": ".listevents",
+    "ListEventsRequestTypedDict": ".listevents",
+    "ListEventsResponse": ".listevents",
+    "ListEventsResponseTypedDict": ".listevents",
     "ListIntegrationsResponse": ".listintegrations",
     "ListIntegrationsResponseTypedDict": ".listintegrations",
     "ListInvitesRequest": ".listinvites",
@@ -1226,6 +1392,10 @@ _dynamic_imports: dict[str, str] = {
     "ListReviewViewsRequestTypedDict": ".listreviewviews",
     "ListReviewViewsResponse": ".listreviewviews",
     "ListReviewViewsResponseTypedDict": ".listreviewviews",
+    "ListScreeningsRequest": ".listscreenings",
+    "ListScreeningsRequestTypedDict": ".listscreenings",
+    "ListScreeningsResponse": ".listscreenings",
+    "ListScreeningsResponseTypedDict": ".listscreenings",
     "ListWebhookDeliveriesRequest": ".listwebhookdeliveries",
     "ListWebhookDeliveriesRequestTypedDict": ".listwebhookdeliveries",
     "ListWebhookDeliveriesResponse": ".listwebhookdeliveries",
@@ -1302,6 +1472,10 @@ _dynamic_imports: dict[str, str] = {
     "RetryCustomerExportRequestTypedDict": ".retrycustomerexport",
     "RetryCustomerExportResponse": ".retrycustomerexport",
     "RetryCustomerExportResponseTypedDict": ".retrycustomerexport",
+    "ReviewAttendeeRequest": ".reviewattendee",
+    "ReviewAttendeeRequestTypedDict": ".reviewattendee",
+    "ReviewAttendeeResponse": ".reviewattendee",
+    "ReviewAttendeeResponseTypedDict": ".reviewattendee",
     "RevokeInviteRequest": ".revokeinvite",
     "RevokeInviteRequestTypedDict": ".revokeinvite",
     "RevokeInviteResponse": ".revokeinvite",
@@ -1328,6 +1502,10 @@ _dynamic_imports: dict[str, str] = {
     "SendWebhookTestEventRequestTypedDict": ".sendwebhooktestevent",
     "SendWebhookTestEventResponse": ".sendwebhooktestevent",
     "SendWebhookTestEventResponseTypedDict": ".sendwebhooktestevent",
+    "StartScreeningRequest": ".startscreening",
+    "StartScreeningRequestTypedDict": ".startscreening",
+    "StartScreeningResponse": ".startscreening",
+    "StartScreeningResponseTypedDict": ".startscreening",
     "SummarizeWorkspaceOperationsRequest": ".summarizeworkspaceoperations",
     "SummarizeWorkspaceOperationsRequestTypedDict": ".summarizeworkspaceoperations",
     "SummarizeWorkspaceOperationsResponse": ".summarizeworkspaceoperations",
@@ -1337,6 +1515,10 @@ _dynamic_imports: dict[str, str] = {
     "UpdateAuditRetentionRequestTypedDict": ".updateauditretention",
     "UpdateAuditRetentionResponse": ".updateauditretention",
     "UpdateAuditRetentionResponseTypedDict": ".updateauditretention",
+    "UpdateEventRequest": ".updateevent",
+    "UpdateEventRequestTypedDict": ".updateevent",
+    "UpdateEventResponse": ".updateevent",
+    "UpdateEventResponseTypedDict": ".updateevent",
     "UpdateMemberRequest": ".updatemember",
     "UpdateMemberRequestTypedDict": ".updatemember",
     "UpdateMemberResponse": ".updatemember",

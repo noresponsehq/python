@@ -31,6 +31,9 @@ ConflictErrorCode = Union[
         "member_limit_reached",
         "owner_invite_pending",
         "aggregate_erased_data",
+        "event_conflict",
+        "event_limit_reached",
+        "screening_unavailable",
     ],
     UnrecognizedStr,
 ]

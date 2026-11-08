@@ -1,0 +1,16 @@
+# EventRequest
+
+Creates an event.
+
+
+## Fields
+
+| Field                                                               | Type                                                                | Required                                                            | Description                                                         | Example                                                             |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `name`                                                              | *str*                                                               | :heavy_check_mark:                                                  | The event's name.                                                   | Annual shareholder meeting                                          |
+| `starts_at`                                                         | *str*                                                               | :heavy_check_mark:                                                  | When the event starts.                                              | 2026-01-01T00:00:00Z                                                |
+| `ends_at`                                                           | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | When the event ends, at or after its start; the start when omitted. | 2026-01-02T00:00:00Z                                                |
+| `venue`                                                             | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | Where the event is held.                                            | Example Convention Centre                                           |
+| `host`                                                              | *Optional[str]*                                                     | :heavy_minus_sign:                                                  | The organisation hosting the event.                                 | Example Holdings                                                    |
+| `principals`                                                        | List[[shared.Principal](../../models/shared/principal.md)]          | :heavy_minus_sign:                                                  | The people the event protects, at most 20.                          |                                                                     |
+| `topics`                                                            | List[*str*]                                                         | :heavy_minus_sign:                                                  | Sensitive topics the screening reads posts against, at most 50.     |                                                                     |

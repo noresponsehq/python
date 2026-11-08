@@ -148,6 +148,35 @@ if TYPE_CHECKING:
         AssessmentUpdatedEventTypedDict,
     )
     from .assurancelevel import AssuranceLevel
+    from .attendee import (
+        Attendee,
+        AttendeeCoverage,
+        AttendeeCoverageTypedDict,
+        AttendeeTypedDict,
+    )
+    from .attendeebatch import AttendeeBatch, AttendeeBatchTypedDict
+    from .attendeebatchitem import AttendeeBatchItem, AttendeeBatchItemTypedDict
+    from .attendeebatchitemoutcome import AttendeeBatchItemOutcome
+    from .attendeebatchrequest import (
+        AttendeeBatchRequest,
+        AttendeeBatchRequestTypedDict,
+    )
+    from .attendeedecision import AttendeeDecision
+    from .attendeeidentity import AttendeeIdentity, AttendeeIdentityTypedDict
+    from .attendeelist import AttendeeList, AttendeeListTypedDict
+    from .attendeereport import (
+        AttendeeReport,
+        AttendeeReportTypedDict,
+        Finding,
+        FindingTypedDict,
+        Profile,
+        ProfileTypedDict,
+    )
+    from .attendeereview import AttendeeReview, AttendeeReviewTypedDict
+    from .attendeereviewrequest import (
+        AttendeeReviewRequest,
+        AttendeeReviewRequestTypedDict,
+    )
     from .attribute import Attribute
     from .attributeagreement import AttributeAgreement, AttributeAgreementTypedDict
     from .auditevent import (
@@ -256,6 +285,10 @@ if TYPE_CHECKING:
     )
     from .erasurereceipttargetname import ErasureReceiptTargetName
     from .erasurereceipttargetstatus import ErasureReceiptTargetStatus
+    from .event import Event, EventTypedDict
+    from .eventlist import EventList, EventListTypedDict
+    from .eventrequest import EventRequest, EventRequestTypedDict
+    from .eventupdate import EventUpdate, EventUpdateTypedDict
     from .export import Export, ExportTypedDict
     from .exportassessmentoutcome import (
         ExportAssessmentOutcome,
@@ -273,6 +306,9 @@ if TYPE_CHECKING:
     from .footprinttimeline import FootprintTimeline, FootprintTimelineTypedDict
     from .freshness import Freshness
     from .from_ import From
+    from .handle import Handle, HandleTypedDict
+    from .handleplatform import HandlePlatform
+    from .highestband import HighestBand
     from .hookpoint import HookPoint
     from .identifier import Identifier
     from .identifierexpression import (
@@ -346,6 +382,8 @@ if TYPE_CHECKING:
     from .linetype import LineType
     from .linkedaccount import LinkedAccount, LinkedAccountTypedDict
     from .linkedaccountpage import LinkedAccountPage, LinkedAccountPageTypedDict
+    from .listattendeesband import ListAttendeesBand
+    from .listattendeesdecision import ListAttendeesDecision
     from .listbulkrequest import ListBulkRequest, ListBulkRequestTypedDict
     from .listchange import ListChange, ListChangeTypedDict
     from .listchangestate import ListChangeState
@@ -364,6 +402,7 @@ if TYPE_CHECKING:
     from .listmatch import ListMatch
     from .listpreviewrequest import ListPreviewRequest, ListPreviewRequestTypedDict
     from .match import Match
+    from .matchstate import MatchState
     from .member import Member, MemberDeniedAction, MemberEnvironment, MemberTypedDict
     from .memberlist import MemberList, MemberListTypedDict
     from .memberstatus import MemberStatus
@@ -500,6 +539,7 @@ if TYPE_CHECKING:
         PolicyRestoreRequestTypedDict,
     )
     from .population import Population
+    from .principal import Principal, PrincipalTypedDict
     from .priority import Priority
     from .probleminvalidparam import ProblemInvalidParam, ProblemInvalidParamTypedDict
     from .provenance import Provenance
@@ -585,6 +625,19 @@ if TYPE_CHECKING:
     from .risksummaryusername import RiskSummaryUsername, RiskSummaryUsernameTypedDict
     from .role import Role
     from .scope_enum import ScopeEnum
+    from .screening import Screening, ScreeningPlatform, ScreeningTypedDict
+    from .screeningcancelrequest import (
+        ScreeningCancelRequest,
+        ScreeningCancelRequestTypedDict,
+    )
+    from .screeningdepth import ScreeningDepth
+    from .screeninglist import ScreeningList, ScreeningListTypedDict
+    from .screeningrequest import (
+        ScreeningRequest,
+        ScreeningRequestPlatform,
+        ScreeningRequestTypedDict,
+    )
+    from .screeningstatus import ScreeningStatus
     from .security import Security, SecurityTypedDict
     from .sentidentifiers import SentIdentifiers, SentIdentifiersTypedDict
     from .settings import Settings, SettingsTypedDict
@@ -797,6 +850,28 @@ __all__ = [
     "AssessmentUpdatedEvent",
     "AssessmentUpdatedEventTypedDict",
     "AssuranceLevel",
+    "Attendee",
+    "AttendeeBatch",
+    "AttendeeBatchItem",
+    "AttendeeBatchItemOutcome",
+    "AttendeeBatchItemTypedDict",
+    "AttendeeBatchRequest",
+    "AttendeeBatchRequestTypedDict",
+    "AttendeeBatchTypedDict",
+    "AttendeeCoverage",
+    "AttendeeCoverageTypedDict",
+    "AttendeeDecision",
+    "AttendeeIdentity",
+    "AttendeeIdentityTypedDict",
+    "AttendeeList",
+    "AttendeeListTypedDict",
+    "AttendeeReport",
+    "AttendeeReportTypedDict",
+    "AttendeeReview",
+    "AttendeeReviewRequest",
+    "AttendeeReviewRequestTypedDict",
+    "AttendeeReviewTypedDict",
+    "AttendeeTypedDict",
     "Attribute",
     "AttributeAgreement",
     "AttributeAgreementTypedDict",
@@ -908,6 +983,14 @@ __all__ = [
     "ErasureReceiptTargetStatus",
     "ErasureReceiptTargetTypedDict",
     "ErasureReceiptTypedDict",
+    "Event",
+    "EventList",
+    "EventListTypedDict",
+    "EventRequest",
+    "EventRequestTypedDict",
+    "EventTypedDict",
+    "EventUpdate",
+    "EventUpdateTypedDict",
     "Exclusion",
     "Export",
     "ExportAssessmentOutcome",
@@ -917,6 +1000,8 @@ __all__ = [
     "FailureReason",
     "Filter",
     "FilterTypedDict",
+    "Finding",
+    "FindingTypedDict",
     "Flow",
     "FlowChange",
     "FlowChangeTypedDict",
@@ -931,6 +1016,10 @@ __all__ = [
     "FootprintTypedDict",
     "Freshness",
     "From",
+    "Handle",
+    "HandlePlatform",
+    "HandleTypedDict",
+    "HighestBand",
     "HookPoint",
     "IPSummary",
     "IPSummaryType",
@@ -1012,6 +1101,8 @@ __all__ = [
     "LinkedAccountPage",
     "LinkedAccountPageTypedDict",
     "LinkedAccountTypedDict",
+    "ListAttendeesBand",
+    "ListAttendeesDecision",
     "ListBulkRequest",
     "ListBulkRequestTypedDict",
     "ListChange",
@@ -1039,6 +1130,7 @@ __all__ = [
     "LocationUnion",
     "LocationUnionTypedDict",
     "Match",
+    "MatchState",
     "Member",
     "MemberDeniedAction",
     "MemberEnvironment",
@@ -1121,9 +1213,13 @@ __all__ = [
     "PolicyRestoreRequest",
     "PolicyRestoreRequestTypedDict",
     "Population",
+    "Principal",
+    "PrincipalTypedDict",
     "Priority",
     "ProblemInvalidParam",
     "ProblemInvalidParamTypedDict",
+    "Profile",
+    "ProfileTypedDict",
     "Provenance",
     "Publication",
     "PublicationTypedDict",
@@ -1217,6 +1313,18 @@ __all__ = [
     "RiskTypedDict",
     "Role",
     "ScopeEnum",
+    "Screening",
+    "ScreeningCancelRequest",
+    "ScreeningCancelRequestTypedDict",
+    "ScreeningDepth",
+    "ScreeningList",
+    "ScreeningListTypedDict",
+    "ScreeningPlatform",
+    "ScreeningRequest",
+    "ScreeningRequestPlatform",
+    "ScreeningRequestTypedDict",
+    "ScreeningStatus",
+    "ScreeningTypedDict",
     "Security",
     "SecurityTypedDict",
     "SentIdentifiers",
@@ -1437,6 +1545,32 @@ _dynamic_imports: dict[str, str] = {
     "AssessmentUpdatedEvent": ".assessmentupdatedevent",
     "AssessmentUpdatedEventTypedDict": ".assessmentupdatedevent",
     "AssuranceLevel": ".assurancelevel",
+    "Attendee": ".attendee",
+    "AttendeeCoverage": ".attendee",
+    "AttendeeCoverageTypedDict": ".attendee",
+    "AttendeeTypedDict": ".attendee",
+    "AttendeeBatch": ".attendeebatch",
+    "AttendeeBatchTypedDict": ".attendeebatch",
+    "AttendeeBatchItem": ".attendeebatchitem",
+    "AttendeeBatchItemTypedDict": ".attendeebatchitem",
+    "AttendeeBatchItemOutcome": ".attendeebatchitemoutcome",
+    "AttendeeBatchRequest": ".attendeebatchrequest",
+    "AttendeeBatchRequestTypedDict": ".attendeebatchrequest",
+    "AttendeeDecision": ".attendeedecision",
+    "AttendeeIdentity": ".attendeeidentity",
+    "AttendeeIdentityTypedDict": ".attendeeidentity",
+    "AttendeeList": ".attendeelist",
+    "AttendeeListTypedDict": ".attendeelist",
+    "AttendeeReport": ".attendeereport",
+    "AttendeeReportTypedDict": ".attendeereport",
+    "Finding": ".attendeereport",
+    "FindingTypedDict": ".attendeereport",
+    "Profile": ".attendeereport",
+    "ProfileTypedDict": ".attendeereport",
+    "AttendeeReview": ".attendeereview",
+    "AttendeeReviewTypedDict": ".attendeereview",
+    "AttendeeReviewRequest": ".attendeereviewrequest",
+    "AttendeeReviewRequestTypedDict": ".attendeereviewrequest",
     "Attribute": ".attribute",
     "AttributeAgreement": ".attributeagreement",
     "AttributeAgreementTypedDict": ".attributeagreement",
@@ -1547,6 +1681,14 @@ _dynamic_imports: dict[str, str] = {
     "ErasureReceiptTargetTypedDict": ".erasurereceipttarget",
     "ErasureReceiptTargetName": ".erasurereceipttargetname",
     "ErasureReceiptTargetStatus": ".erasurereceipttargetstatus",
+    "Event": ".event",
+    "EventTypedDict": ".event",
+    "EventList": ".eventlist",
+    "EventListTypedDict": ".eventlist",
+    "EventRequest": ".eventrequest",
+    "EventRequestTypedDict": ".eventrequest",
+    "EventUpdate": ".eventupdate",
+    "EventUpdateTypedDict": ".eventupdate",
     "Export": ".export",
     "ExportTypedDict": ".export",
     "ExportAssessmentOutcome": ".exportassessmentoutcome",
@@ -1569,6 +1711,10 @@ _dynamic_imports: dict[str, str] = {
     "FootprintTimelineTypedDict": ".footprinttimeline",
     "Freshness": ".freshness",
     "From": ".from_",
+    "Handle": ".handle",
+    "HandleTypedDict": ".handle",
+    "HandlePlatform": ".handleplatform",
+    "HighestBand": ".highestband",
     "HookPoint": ".hookpoint",
     "Identifier": ".identifier",
     "IdentifierExpression": ".identifierexpression",
@@ -1650,6 +1796,8 @@ _dynamic_imports: dict[str, str] = {
     "LinkedAccountTypedDict": ".linkedaccount",
     "LinkedAccountPage": ".linkedaccountpage",
     "LinkedAccountPageTypedDict": ".linkedaccountpage",
+    "ListAttendeesBand": ".listattendeesband",
+    "ListAttendeesDecision": ".listattendeesdecision",
     "ListBulkRequest": ".listbulkrequest",
     "ListBulkRequestTypedDict": ".listbulkrequest",
     "ListChange": ".listchange",
@@ -1673,6 +1821,7 @@ _dynamic_imports: dict[str, str] = {
     "ListPreviewRequest": ".listpreviewrequest",
     "ListPreviewRequestTypedDict": ".listpreviewrequest",
     "Match": ".match",
+    "MatchState": ".matchstate",
     "Member": ".member",
     "MemberDeniedAction": ".member",
     "MemberEnvironment": ".member",
@@ -1780,6 +1929,8 @@ _dynamic_imports: dict[str, str] = {
     "PolicyRestoreRequest": ".policyrestorerequest",
     "PolicyRestoreRequestTypedDict": ".policyrestorerequest",
     "Population": ".population",
+    "Principal": ".principal",
+    "PrincipalTypedDict": ".principal",
     "Priority": ".priority",
     "ProblemInvalidParam": ".probleminvalidparam",
     "ProblemInvalidParamTypedDict": ".probleminvalidparam",
@@ -1876,6 +2027,18 @@ _dynamic_imports: dict[str, str] = {
     "RiskSummaryUsernameTypedDict": ".risksummaryusername",
     "Role": ".role",
     "ScopeEnum": ".scope_enum",
+    "Screening": ".screening",
+    "ScreeningPlatform": ".screening",
+    "ScreeningTypedDict": ".screening",
+    "ScreeningCancelRequest": ".screeningcancelrequest",
+    "ScreeningCancelRequestTypedDict": ".screeningcancelrequest",
+    "ScreeningDepth": ".screeningdepth",
+    "ScreeningList": ".screeninglist",
+    "ScreeningListTypedDict": ".screeninglist",
+    "ScreeningRequest": ".screeningrequest",
+    "ScreeningRequestPlatform": ".screeningrequest",
+    "ScreeningRequestTypedDict": ".screeningrequest",
+    "ScreeningStatus": ".screeningstatus",
     "Security": ".security",
     "SecurityTypedDict": ".security",
     "SentIdentifiers": ".sentidentifiers",

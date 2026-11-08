@@ -27,6 +27,7 @@ KeyScope = Union[
         "policy_publish",
         "members",
         "members_manage",
+        "events",
     ],
     UnrecognizedStr,
 ]

@@ -1,5 +1,129 @@
 # Changelog
 
+## 10.0.10
+
+* `sdk.events.list()`: **Added**
+* `sdk.events.create()`: **Added**
+* `sdk.events.get()`: **Added**
+* `sdk.events.delete()`: **Added**
+* `sdk.events.update()`: **Added**
+* `sdk.events.list_attendees()`: **Added**
+* `sdk.events.add_attendees()`: **Added**
+* `sdk.events.get_attendee()`: **Added**
+* `sdk.events.review_attendee()`: **Added**
+* `sdk.events.list_screenings()`: **Added**
+* `sdk.events.start_screening()`: **Added**
+* `sdk.events.get_screening()`: **Added**
+* `sdk.events.cancel_screening()`: **Added**
+* `sdk.assessments.create()`:  `error.code` **Changed**
+* `sdk.assessments.get()`:  `error.code` **Changed**
+* `sdk.assessments.delete()`:  `error.code` **Changed**
+* `sdk.assessments.record_outcome()`:  `error.code` **Changed**
+* `sdk.assessments.query()`:  `error.code` **Changed**
+* `sdk.assessments.aggregate()`:  `error.code` **Changed**
+* `sdk.assessments.search()`:  `error.code` **Changed**
+* `sdk.assessments.retrieve_version()`:  `error.code` **Changed**
+* `sdk.assessments.bind_account()`:  `error.code` **Changed**
+* `sdk.accounts.list_changed()`:  `error.code` **Changed**
+* `sdk.accounts.get()`:  `error.code` **Changed**
+* `sdk.accounts.delete()`:  `error.code` **Changed**
+* `sdk.accounts.list_assessments()`:  `error.code` **Changed**
+* `sdk.accounts.list_linked()`:  `error.code` **Changed**
+* `sdk.accounts.list_enforcements()`:  `error.code` **Changed**
+* `sdk.accounts.record_enforcement()`:  `error.code` **Changed**
+* `sdk.accounts.list_outcomes()`:  `error.code` **Changed**
+* `sdk.accounts.record_outcome()`:  `error.code` **Changed**
+* `sdk.accounts.retrieve_decision()`:  `error.code` **Changed**
+* `sdk.accounts.list_credentials()`:  `error.code` **Changed**
+* `sdk.accounts.associate_credential()`:  `error.code` **Changed**
+* `sdk.accounts.retire_credential()`:  `error.code` **Changed**
+* `sdk.accounts.export()`:  `error.code` **Changed**
+* `sdk.accounts.list_decisions()`:  `error.code` **Changed**
+* `sdk.accounts.search()`:  `error.code` **Changed**
+* `sdk.key_usage.record()`:  `error.code` **Changed**
+* `sdk.keys.rotate()`:  `error.code` **Changed**
+* `sdk.keys.list()`: 
+  *  `response.items[].scopes[].enum(events)` **Added**
+  *  `error.code` **Changed**
+* `sdk.keys.create()`: 
+  *  `request.scopes[].enum(events)` **Added**
+  *  `response.scopes[].enum(events)` **Added**
+  *  `error.code` **Changed**
+* `sdk.keys.revoke()`: 
+  *  `response.scopes[].enum(events)` **Added**
+  *  `error.code` **Changed**
+* `sdk.integrations.list()`:  `error.code` **Changed**
+* `sdk.integrations.create()`:  `error.code` **Changed**
+* `sdk.integrations.delete()`:  `error.code` **Changed**
+* `sdk.integrations.rotate()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.list()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.create()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.delete()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.rotate_signing_key()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.send_test_event()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.list_deliveries()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.replay_delivery()`:  `error.code` **Changed**
+* `sdk.webhook_endpoints.aggregate()`:  `error.code` **Changed**
+* `sdk.members.list()`:  `error.code` **Changed**
+* `sdk.members.remove()`:  `error.code` **Changed**
+* `sdk.members.update()`:  `error.code` **Changed**
+* `sdk.audit.list()`:  `error.code` **Changed**
+* `sdk.audit.get_retention()`:  `error.code` **Changed**
+* `sdk.audit.update_retention()`:  `error.code` **Changed**
+* `sdk.audit.list_streams()`:  `error.code` **Changed**
+* `sdk.audit.configure_stream()`:  `error.code` **Changed**
+* `sdk.audit.remove_stream()`:  `error.code` **Changed**
+* `sdk.audit.replay_stream()`:  `error.code` **Changed**
+* `sdk.usage.get()`:  `error.code` **Changed**
+* `sdk.invites.list()`:  `error.code` **Changed**
+* `sdk.invites.create()`:  `error.code` **Changed**
+* `sdk.invites.revoke()`:  `error.code` **Changed**
+* `sdk.invites.resend()`:  `error.code` **Changed**
+* `sdk.settings.get()`:  `error.code` **Changed**
+* `sdk.settings.update()`:  `error.code` **Changed**
+* `sdk.settings.list_history()`:  `error.code` **Changed**
+* `sdk.settings.restore()`:  `error.code` **Changed**
+* `sdk.settings.preview()`:  `error.code` **Changed**
+* `sdk.requests.list()`:  `error.code` **Changed**
+* `sdk.requests.aggregate()`:  `error.code` **Changed**
+* `sdk.lists.list()`:  `error.code` **Changed**
+* `sdk.lists.create()`:  `error.code` **Changed**
+* `sdk.lists.delete()`:  `error.code` **Changed**
+* `sdk.lists.preview()`:  `error.code` **Changed**
+* `sdk.lists.change()`:  `error.code` **Changed**
+* `sdk.lists.get_change()`:  `error.code` **Changed**
+* `sdk.reviews.list()`:  `error.code` **Changed**
+* `sdk.reviews.create()`:  `error.code` **Changed**
+* `sdk.reviews.get()`:  `error.code` **Changed**
+* `sdk.reviews.update()`:  `error.code` **Changed**
+* `sdk.reviews.resolve()`:  `error.code` **Changed**
+* `sdk.reviews.list_comments()`:  `error.code` **Changed**
+* `sdk.reviews.comment()`:  `error.code` **Changed**
+* `sdk.reviews.list_resolutions()`:  `error.code` **Changed**
+* `sdk.reviews.list_views()`:  `error.code` **Changed**
+* `sdk.reviews.create_view()`:  `error.code` **Changed**
+* `sdk.reviews.delete_view()`:  `error.code` **Changed**
+* `sdk.reviews.update_view()`:  `error.code` **Changed**
+* `sdk.reviews.export()`:  `error.code` **Changed**
+* `sdk.reviews.list_subjects()`:  `error.code` **Changed**
+* `sdk.reviews.add_subject()`:  `error.code` **Changed**
+* `sdk.reviews.delete_subject()`:  `error.code` **Changed**
+* `sdk.reviews.query()`:  `error.code` **Changed**
+* `sdk.erasures.get()`:  `error.code` **Changed**
+* `sdk.exports.list()`:  `error.code` **Changed**
+* `sdk.exports.create()`:  `error.code` **Changed**
+* `sdk.exports.get()`:  `error.code` **Changed**
+* `sdk.exports.cancel()`:  `error.code` **Changed**
+* `sdk.exports.retry()`:  `error.code` **Changed**
+* `sdk.exports.download_chunk()`:  `error.code` **Changed**
+* `sdk.evaluations.list()`:  `error.code` **Changed**
+* `sdk.evaluations.create()`:  `error.code` **Changed**
+* `sdk.evaluations.get()`:  `error.code` **Changed**
+* `sdk.evaluations.get_result()`:  `error.code` **Changed**
+* `sdk.evaluations.cancel()`:  `error.code` **Changed**
+* `sdk.evaluations.publish()`:  `error.code` **Changed**
+* `sdk.operations.summarize()`:  `error.code` **Changed**
+
 ## 10.0.9
 
 No changes detected.
