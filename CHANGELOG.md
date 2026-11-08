@@ -1,5 +1,143 @@
 # Changelog
 
+## 10.0.11
+
+* `sdk.assessments.create()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.assessments.get()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.assessments.delete()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.assessments.record_outcome()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.assessments.query()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.assessments.aggregate()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.assessments.search()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.assessments.retrieve_version()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.assessments.bind_account()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.accounts.list_changed()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.accounts.get()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.accounts.delete()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.accounts.list_assessments()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.accounts.list_linked()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.accounts.list_enforcements()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.accounts.record_enforcement()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.accounts.list_outcomes()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.accounts.record_outcome()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.accounts.retrieve_decision()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.accounts.list_credentials()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.accounts.associate_credential()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.accounts.retire_credential()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.accounts.export()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.accounts.list_decisions()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.accounts.search()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.key_usage.record()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.keys.rotate()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.keys.list()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.keys.create()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.keys.revoke()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.integrations.list()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.integrations.create()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.integrations.delete()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.integrations.rotate()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.webhook_endpoints.list()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.webhook_endpoints.create()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.webhook_endpoints.delete()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.webhook_endpoints.rotate_signing_key()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.webhook_endpoints.send_test_event()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.webhook_endpoints.list_deliveries()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.webhook_endpoints.replay_delivery()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.webhook_endpoints.aggregate()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.members.list()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.members.remove()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.members.update()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.audit.list()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.audit.get_retention()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.audit.update_retention()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.audit.list_streams()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.audit.configure_stream()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.audit.remove_stream()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.audit.replay_stream()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.usage.get()`: 
+  *  `response.items[].metric.enum(screenings)` **Added**
+  *  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.invites.list()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.invites.create()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.invites.revoke()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.invites.resend()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.settings.get()`: 
+  *  `response.screening_daily_cap` **Added**
+  *  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.settings.update()`: 
+  *  `request.screening_daily_cap` **Added**
+  *  `response.screening_daily_cap` **Added**
+  *  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.settings.list_history()`: 
+  *  `response.items[].settings.screening_daily_cap` **Added**
+  *  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.settings.restore()`: 
+  *  `response.screening_daily_cap` **Added**
+  *  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.settings.preview()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.requests.list()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.requests.aggregate()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.lists.list()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.lists.create()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.lists.delete()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.lists.preview()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.lists.change()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.lists.get_change()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.reviews.list()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.reviews.create()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.reviews.get()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.reviews.update()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.reviews.resolve()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.reviews.list_comments()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.reviews.comment()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.reviews.list_resolutions()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.reviews.list_views()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.reviews.create_view()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.reviews.delete_view()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.reviews.update_view()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.reviews.export()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.reviews.list_subjects()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.reviews.add_subject()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.reviews.delete_subject()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.reviews.query()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.erasures.get()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.exports.list()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.exports.create()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.exports.get()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.exports.cancel()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.exports.retry()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.exports.download_chunk()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.evaluations.list()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.evaluations.create()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.evaluations.get()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.evaluations.get_result()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.evaluations.cancel()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.evaluations.publish()`: 
+  *  `response.screening_daily_cap` **Added**
+  *  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.operations.summarize()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.events.list()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.events.create()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.events.get()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.events.delete()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.events.update()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.events.list_attendees()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.events.add_attendees()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.events.get_attendee()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.events.review_attendee()`:  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.events.list_screenings()`: 
+  *  `response.items[]` **Changed**
+  *  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.events.start_screening()`: 
+  *  `response` **Changed**
+  *  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.events.get_screening()`: 
+  *  `response` **Changed**
+  *  `error.code.enum(screening_cap_exceeded)` **Added**
+* `sdk.events.cancel_screening()`: 
+  *  `response` **Changed**
+  *  `error.code.enum(screening_cap_exceeded)` **Added**
+
 ## 10.0.10
 
 * `sdk.events.list()`: **Added**

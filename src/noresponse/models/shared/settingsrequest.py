@@ -1,7 +1,13 @@
 from __future__ import annotations
 from .settingsrequestflows import SettingsRequestFlows, SettingsRequestFlowsTypedDict
 from .sourceid import SourceID
-from noresponse.types import BaseModel, UNSET_SENTINEL
+from noresponse.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from pydantic import model_serializer
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
@@ -13,6 +19,8 @@ class SettingsRequestTypedDict(TypedDict):
     retention_days: NotRequired[int]
     refused_sources: NotRequired[List[SourceID]]
     r"""Replaces the refused sources; [] refuses none. A change applies to new assessments within a minute."""
+    screening_daily_cap: NotRequired[Nullable[int]]
+    r"""Replaces the daily screening cap, in minor units of USD; null removes the cap. Needs settings.write only, like retention_days."""
     flows: NotRequired[SettingsRequestFlowsTypedDict]
     r"""Use account_creation or its deprecated alias signup, not both."""
     expected_policy_version: NotRequired[int]
@@ -28,6 +36,9 @@ class SettingsRequest(BaseModel):
     refused_sources: Optional[List[SourceID]] = None
     r"""Replaces the refused sources; [] refuses none. A change applies to new assessments within a minute."""
 
+    screening_daily_cap: OptionalNullable[int] = UNSET
+    r"""Replaces the daily screening cap, in minor units of USD; null removes the cap. Needs settings.write only, like retention_days."""
+
     flows: Optional[SettingsRequestFlows] = None
     r"""Use account_creation or its deprecated alias signup, not both."""
 
@@ -42,20 +53,30 @@ class SettingsRequest(BaseModel):
             [
                 "retention_days",
                 "refused_sources",
+                "screening_daily_cap",
                 "flows",
                 "expected_policy_version",
                 "change_reason",
             ]
         )
+        nullable_fields = set(["screening_daily_cap"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
                     m[k] = val
 
         return m

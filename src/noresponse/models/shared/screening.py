@@ -45,6 +45,10 @@ class ScreeningTypedDict(TypedDict):
     r"""Attendees screened so far, failed ones included."""
     attendees_flagged: int
     attendees_failed: int
+    estimated_spend: int
+    r"""What the screening was estimated to cost when it started, in minor units of USD (cents): its attendees at its depth and platforms. Until the screening finishes, what it has not yet spent counts against the environment's screening_daily_cap."""
+    spent: int
+    r"""What the attendees it has screened recorded, in minor units of USD. Each counts toward the UTC day it was recorded on; a failed attendee records nothing."""
     started_at: NotRequired[str]
     finished_at: NotRequired[str]
     error_code: NotRequired[str]
@@ -83,6 +87,12 @@ class Screening(BaseModel):
     attendees_flagged: int
 
     attendees_failed: int
+
+    estimated_spend: int
+    r"""What the screening was estimated to cost when it started, in minor units of USD (cents): its attendees at its depth and platforms. Until the screening finishes, what it has not yet spent counts against the environment's screening_daily_cap."""
+
+    spent: int
+    r"""What the attendees it has screened recorded, in minor units of USD. Each counts toward the UTC day it was recorded on; a failed attendee records nothing."""
 
     started_at: Optional[str] = None
 

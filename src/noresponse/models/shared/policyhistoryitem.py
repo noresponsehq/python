@@ -9,7 +9,7 @@ from typing_extensions import NotRequired, TypedDict
 
 class PolicyHistoryItemTypedDict(TypedDict):
     settings: SettingsTypedDict
-    r"""One environment's settings: how long its assessments are kept, and for each flow the risk thresholds that decide it and the depth a request that names none is served at, and the sources it refuses. Live and test each have their own. A flow without thresholds of its own uses account_creation's (inherits_account_creation). Every change is recorded in the audit log as settings.updated, with who made it."""
+    r"""One environment's settings: how long its assessments are kept, and for each flow the risk thresholds that decide it and the depth a request that names none is served at, the sources it refuses, and the daily cap on screening spend. Live and test each have their own. A flow without thresholds of its own uses account_creation's (inherits_account_creation). Every change is recorded in the audit log as settings.updated, with who made it."""
     recorded_at: NotRequired[str]
     r"""Capture time, not a backfilled activation time. Absent only for the current configuration before its first capture."""
     change_reason: NotRequired[str]
@@ -20,7 +20,7 @@ class PolicyHistoryItemTypedDict(TypedDict):
 
 class PolicyHistoryItem(BaseModel):
     settings: Settings
-    r"""One environment's settings: how long its assessments are kept, and for each flow the risk thresholds that decide it and the depth a request that names none is served at, and the sources it refuses. Live and test each have their own. A flow without thresholds of its own uses account_creation's (inherits_account_creation). Every change is recorded in the audit log as settings.updated, with who made it."""
+    r"""One environment's settings: how long its assessments are kept, and for each flow the risk thresholds that decide it and the depth a request that names none is served at, the sources it refuses, and the daily cap on screening spend. Live and test each have their own. A flow without thresholds of its own uses account_creation's (inherits_account_creation). Every change is recorded in the audit log as settings.updated, with who made it."""
 
     recorded_at: Optional[str] = None
     r"""Capture time, not a backfilled activation time. Absent only for the current configuration before its first capture."""

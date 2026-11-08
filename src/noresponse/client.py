@@ -1753,6 +1753,7 @@ class Settings(_Settings):
         *,
         retention_days: Optional[int] = None,
         refused_sources: Optional[Iterable[Union[models.shared.SourceID, str]]] = None,
+        screening_daily_cap: OptionalNullable[int] = UNSET,
         flows: Optional[Union[models.shared.SettingsRequestFlows, models.shared.SettingsRequestFlowsTypedDict]] = None,
         expected_policy_version: Optional[int] = None,
         change_reason: Optional[str] = None,
@@ -1761,10 +1762,11 @@ class Settings(_Settings):
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> SettingsModel:
-        """Change only what you name, in one transaction."""
+        """Change only what you name, in one transaction. screening_daily_cap=None removes the cap."""
         response = _sync(super().update)(
             workspace_id, cast(Any, environment), retention_days=retention_days,
-            refused_sources=cast(Any, None if refused_sources is None else list(refused_sources)), flows=flows,
+            refused_sources=cast(Any, None if refused_sources is None else list(refused_sources)),
+            screening_daily_cap=screening_daily_cap, flows=flows,
             expected_policy_version=expected_policy_version,
             change_reason=change_reason,
             retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers,
@@ -1778,6 +1780,7 @@ class Settings(_Settings):
         *,
         retention_days: Optional[int] = None,
         refused_sources: Optional[Iterable[Union[models.shared.SourceID, str]]] = None,
+        screening_daily_cap: OptionalNullable[int] = UNSET,
         flows: Optional[Union[models.shared.SettingsRequestFlows, models.shared.SettingsRequestFlowsTypedDict]] = None,
         expected_policy_version: Optional[int] = None,
         change_reason: Optional[str] = None,
@@ -1789,7 +1792,8 @@ class Settings(_Settings):
         """The asyncio form of update."""
         response = await _async(super().update_async)(
             workspace_id, cast(Any, environment), retention_days=retention_days,
-            refused_sources=cast(Any, None if refused_sources is None else list(refused_sources)), flows=flows,
+            refused_sources=cast(Any, None if refused_sources is None else list(refused_sources)),
+            screening_daily_cap=screening_daily_cap, flows=flows,
             expected_policy_version=expected_policy_version,
             change_reason=change_reason,
             retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers,

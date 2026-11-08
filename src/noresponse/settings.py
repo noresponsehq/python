@@ -30,7 +30,7 @@ class Settings(BaseSDK):
     ) -> models.operations.GetSettingsResponse:
         r"""Read an environment's settings.
 
-        Read this environment retention, source selection and effective flow policies. A flow without its own thresholds inherits account_creation. Requires settings or management. Another environment answers404. Read-only and safe to retry.
+        Read this environment retention, source selection, daily screening cap and effective flow policies. A flow without its own thresholds inherits account_creation. Requires settings or management. Another environment answers404. Read-only and safe to retry.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
@@ -205,7 +205,7 @@ class Settings(BaseSDK):
     ) -> models.operations.GetSettingsResponse:
         r"""Read an environment's settings.
 
-        Read this environment retention, source selection and effective flow policies. A flow without its own thresholds inherits account_creation. Requires settings or management. Another environment answers404. Read-only and safe to retry.
+        Read this environment retention, source selection, daily screening cap and effective flow policies. A flow without its own thresholds inherits account_creation. Requires settings or management. Another environment answers404. Read-only and safe to retry.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
@@ -378,6 +378,7 @@ class Settings(BaseSDK):
         *,
         retention_days: Optional[int] = None,
         refused_sources: Optional[Iterable[models.shared.SourceID]] = None,
+        screening_daily_cap: OptionalNullable[int] = UNSET,
         flows: Optional[
             Union[
                 models.shared.SettingsRequestFlows,
@@ -393,12 +394,13 @@ class Settings(BaseSDK):
     ) -> models.operations.UpdateSettingsResponse:
         r"""Change an environment's settings.
 
-        Change named retention, source or flow settings in one transaction. Requires settings or management; changes to active policy also require policy_publish, which legacy management includes. Use expected_policy_version to reject concurrent changes and record a change_reason. Each accepted change creates a fresh version and an atomic audit event. Retention-only edits do not require policy publication authority. Flow thresholds preserve their declared ordering and bounds.
+        Change named retention, screening cap, source or flow settings in one transaction. Requires settings or management; changes to active policy also require policy_publish, which legacy management includes. Use expected_policy_version to reject concurrent changes and record a change_reason. Each accepted change creates a fresh version and an atomic audit event. Retention and screening cap edits do not require policy publication authority. Flow thresholds preserve their declared ordering and bounds.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param retention_days:
         :param refused_sources: Replaces the refused sources; [] refuses none. A change applies to new assessments within a minute.
+        :param screening_daily_cap: Replaces the daily screening cap, in minor units of USD; null removes the cap. Needs settings.write only, like retention_days.
         :param flows: Use account_creation or its deprecated alias signup, not both.
         :param expected_policy_version: Compare-and-set guard. A stale version returns 409 policy_version_conflict before any change; every settings write including retention advances the version.
         :param change_reason:
@@ -425,6 +427,7 @@ class Settings(BaseSDK):
                 refused_sources=utils.unmarshal(
                     refused_sources, Optional[List[models.shared.SourceID]]
                 ),
+                screening_daily_cap=screening_daily_cap,
                 flows=utils.get_pydantic_model(
                     flows, Optional[models.shared.SettingsRequestFlows]
                 ),
@@ -582,6 +585,7 @@ class Settings(BaseSDK):
         *,
         retention_days: Optional[int] = None,
         refused_sources: Optional[Iterable[models.shared.SourceID]] = None,
+        screening_daily_cap: OptionalNullable[int] = UNSET,
         flows: Optional[
             Union[
                 models.shared.SettingsRequestFlows,
@@ -597,12 +601,13 @@ class Settings(BaseSDK):
     ) -> models.operations.UpdateSettingsResponse:
         r"""Change an environment's settings.
 
-        Change named retention, source or flow settings in one transaction. Requires settings or management; changes to active policy also require policy_publish, which legacy management includes. Use expected_policy_version to reject concurrent changes and record a change_reason. Each accepted change creates a fresh version and an atomic audit event. Retention-only edits do not require policy publication authority. Flow thresholds preserve their declared ordering and bounds.
+        Change named retention, screening cap, source or flow settings in one transaction. Requires settings or management; changes to active policy also require policy_publish, which legacy management includes. Use expected_policy_version to reject concurrent changes and record a change_reason. Each accepted change creates a fresh version and an atomic audit event. Retention and screening cap edits do not require policy publication authority. Flow thresholds preserve their declared ordering and bounds.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param retention_days:
         :param refused_sources: Replaces the refused sources; [] refuses none. A change applies to new assessments within a minute.
+        :param screening_daily_cap: Replaces the daily screening cap, in minor units of USD; null removes the cap. Needs settings.write only, like retention_days.
         :param flows: Use account_creation or its deprecated alias signup, not both.
         :param expected_policy_version: Compare-and-set guard. A stale version returns 409 policy_version_conflict before any change; every settings write including retention advances the version.
         :param change_reason:
@@ -629,6 +634,7 @@ class Settings(BaseSDK):
                 refused_sources=utils.unmarshal(
                     refused_sources, Optional[List[models.shared.SourceID]]
                 ),
+                screening_daily_cap=screening_daily_cap,
                 flows=utils.get_pydantic_model(
                     flows, Optional[models.shared.SettingsRequestFlows]
                 ),

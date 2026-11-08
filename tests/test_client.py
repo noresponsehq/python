@@ -508,6 +508,16 @@ def test_keys_and_settings_manage_the_signing_keys_environment():
     assert all("nr-acting-user" not in r.headers for r in seen)
 
 
+def test_settings_set_and_remove_the_daily_screening_cap():
+    settings = fixture("valid/settings.json")
+    workspace = settings["workspace_id"]
+    sdk, seen = make([answer(settings), answer(settings)])
+    assert sdk.settings.update(workspace, "live", screening_daily_cap=120000).screening_daily_cap is None
+    sdk.settings.update(workspace, "live", screening_daily_cap=None)
+    # A number sets the cap and null removes it; leaving it out changes nothing (see above).
+    assert [json.loads(r.content) for r in seen] == [{"screening_daily_cap": 120000}, {"screening_daily_cap": None}]
+
+
 @pytest.mark.parametrize("asynchronous", [False, True])
 def test_key_lifecycle_metadata_and_secret_once_replay(asynchronous):
     created = {**fixture("valid/key-created-by-management-key.json"),

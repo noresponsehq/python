@@ -44,4 +44,5 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"aggregate_erased_data"`
 - `"event_conflict"`
 - `"event_limit_reached"`
+- `"screening_cap_exceeded"`
 - `"screening_unavailable"`
