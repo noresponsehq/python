@@ -47,3 +47,21 @@ value: shared.AccountRiskChangedEvent = /* values here */
 value: shared.AuditEventEvent = /* values here */
 ```
 
+### `shared.ScreeningCompletedEvent`
+
+```python
+value: shared.ScreeningCompletedEvent = /* values here */
+```
+
+### `shared.AttendeeFlaggedEvent`
+
+```python
+value: shared.AttendeeFlaggedEvent = /* values here */
+```
+
+### `shared.AttendeeDecidedEvent`
+
+```python
+value: shared.AttendeeDecidedEvent = /* values here */
+```
+

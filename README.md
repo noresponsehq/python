@@ -313,6 +313,7 @@ Verify the exact bytes you received, then act on the typed event. `secrets` maps
 import os
 from noresponse import construct_event, WebhookVerificationError
 from noresponse import AccountDeleted, AccountRiskChanged, AssessmentExpired, EndpointVerification, WebhookEndpointDisabled, WorkspaceDeleted
+from noresponse import AttendeeDecided, AttendeeFlagged, ScreeningCompleted
 
 SECRETS = {
     os.environ["NORESPONSE_WEBHOOK_KEY_ID"]: os.environ["NORESPONSE_WEBHOOK_SECRET"],
@@ -338,6 +339,12 @@ async def handler(request: Request) -> Response:
         forget_environment(data.environment)
     elif isinstance(data, WebhookEndpointDisabled):  # another endpoint failed for 72 hours and is disabled
         alert_ops(data.endpoint_id, data.failing_since)
+    elif isinstance(data, ScreeningCompleted):  # a screening of an event finished; it names no attendee
+        report_screening(data.event_id, data.status, data.by_band, data.partial_coverage)
+    elif isinstance(data, AttendeeFlagged):  # a screening flagged an attendee: its highest band, never what was posted
+        queue_review(data.event_id, data.attendee_id, data.highest_band)
+    elif isinstance(data, AttendeeDecided):  # cleared, watch or escalated; keep the latest decided_at per attendee
+        apply_decision(data.attendee_id, data.decision, data.decided_at)
     elif isinstance(data, AssessmentExpired):
         forget(data.assessment_id)  # GET now answers 404
     # Any other assessment.updated reports progress only: apply nothing.

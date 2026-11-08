@@ -12,8 +12,11 @@ from noresponse.models.shared import (
     AccountDeletedEvent,
     AccountRiskChangedEvent,
     AssessmentUpdatedEvent,
+    AttendeeDecidedEvent,
+    AttendeeFlaggedEvent,
     AuditEventEvent,
     EndpointVerificationEvent,
+    ScreeningCompletedEvent,
     WebhookEndpointDisabledEvent,
     WorkspaceDeletedEvent,
 )
@@ -30,6 +33,9 @@ EVENT_MODELS = {
     "webhook_endpoint.disabled": WebhookEndpointDisabledEvent,
     "account.risk_changed": AccountRiskChangedEvent,
     "audit.event": AuditEventEvent,
+    "screening.completed": ScreeningCompletedEvent,
+    "attendee.flagged": AttendeeFlaggedEvent,
+    "attendee.decided": AttendeeDecidedEvent,
 }
 
 

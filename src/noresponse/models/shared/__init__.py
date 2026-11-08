@@ -161,7 +161,18 @@ if TYPE_CHECKING:
         AttendeeBatchRequest,
         AttendeeBatchRequestTypedDict,
     )
+    from .attendeedecided import AttendeeDecided, AttendeeDecidedTypedDict
+    from .attendeedecidedevent import (
+        AttendeeDecidedEvent,
+        AttendeeDecidedEventTypedDict,
+    )
     from .attendeedecision import AttendeeDecision
+    from .attendeeflagged import AttendeeFlagged, AttendeeFlaggedTypedDict
+    from .attendeeflaggedevent import (
+        AttendeeFlaggedEvent,
+        AttendeeFlaggedEventTypedDict,
+    )
+    from .attendeeflaggedmatchstate import AttendeeFlaggedMatchState
     from .attendeeidentity import AttendeeIdentity, AttendeeIdentityTypedDict
     from .attendeelist import AttendeeList, AttendeeListTypedDict
     from .attendeereport import (
@@ -630,6 +641,16 @@ if TYPE_CHECKING:
         ScreeningCancelRequest,
         ScreeningCancelRequestTypedDict,
     )
+    from .screeningcompleted import ScreeningCompleted, ScreeningCompletedTypedDict
+    from .screeningcompletedbyband import (
+        ScreeningCompletedByBand,
+        ScreeningCompletedByBandTypedDict,
+    )
+    from .screeningcompletedevent import (
+        ScreeningCompletedEvent,
+        ScreeningCompletedEventTypedDict,
+    )
+    from .screeningcompletedstatus import ScreeningCompletedStatus
     from .screeningdepth import ScreeningDepth
     from .screeninglist import ScreeningList, ScreeningListTypedDict
     from .screeningrequest import (
@@ -860,7 +881,16 @@ __all__ = [
     "AttendeeBatchTypedDict",
     "AttendeeCoverage",
     "AttendeeCoverageTypedDict",
+    "AttendeeDecided",
+    "AttendeeDecidedEvent",
+    "AttendeeDecidedEventTypedDict",
+    "AttendeeDecidedTypedDict",
     "AttendeeDecision",
+    "AttendeeFlagged",
+    "AttendeeFlaggedEvent",
+    "AttendeeFlaggedEventTypedDict",
+    "AttendeeFlaggedMatchState",
+    "AttendeeFlaggedTypedDict",
     "AttendeeIdentity",
     "AttendeeIdentityTypedDict",
     "AttendeeList",
@@ -1316,6 +1346,13 @@ __all__ = [
     "Screening",
     "ScreeningCancelRequest",
     "ScreeningCancelRequestTypedDict",
+    "ScreeningCompleted",
+    "ScreeningCompletedByBand",
+    "ScreeningCompletedByBandTypedDict",
+    "ScreeningCompletedEvent",
+    "ScreeningCompletedEventTypedDict",
+    "ScreeningCompletedStatus",
+    "ScreeningCompletedTypedDict",
     "ScreeningDepth",
     "ScreeningList",
     "ScreeningListTypedDict",
@@ -1556,7 +1593,16 @@ _dynamic_imports: dict[str, str] = {
     "AttendeeBatchItemOutcome": ".attendeebatchitemoutcome",
     "AttendeeBatchRequest": ".attendeebatchrequest",
     "AttendeeBatchRequestTypedDict": ".attendeebatchrequest",
+    "AttendeeDecided": ".attendeedecided",
+    "AttendeeDecidedTypedDict": ".attendeedecided",
+    "AttendeeDecidedEvent": ".attendeedecidedevent",
+    "AttendeeDecidedEventTypedDict": ".attendeedecidedevent",
     "AttendeeDecision": ".attendeedecision",
+    "AttendeeFlagged": ".attendeeflagged",
+    "AttendeeFlaggedTypedDict": ".attendeeflagged",
+    "AttendeeFlaggedEvent": ".attendeeflaggedevent",
+    "AttendeeFlaggedEventTypedDict": ".attendeeflaggedevent",
+    "AttendeeFlaggedMatchState": ".attendeeflaggedmatchstate",
     "AttendeeIdentity": ".attendeeidentity",
     "AttendeeIdentityTypedDict": ".attendeeidentity",
     "AttendeeList": ".attendeelist",
@@ -2032,6 +2078,13 @@ _dynamic_imports: dict[str, str] = {
     "ScreeningTypedDict": ".screening",
     "ScreeningCancelRequest": ".screeningcancelrequest",
     "ScreeningCancelRequestTypedDict": ".screeningcancelrequest",
+    "ScreeningCompleted": ".screeningcompleted",
+    "ScreeningCompletedTypedDict": ".screeningcompleted",
+    "ScreeningCompletedByBand": ".screeningcompletedbyband",
+    "ScreeningCompletedByBandTypedDict": ".screeningcompletedbyband",
+    "ScreeningCompletedEvent": ".screeningcompletedevent",
+    "ScreeningCompletedEventTypedDict": ".screeningcompletedevent",
+    "ScreeningCompletedStatus": ".screeningcompletedstatus",
     "ScreeningDepth": ".screeningdepth",
     "ScreeningList": ".screeninglist",
     "ScreeningListTypedDict": ".screeninglist",
