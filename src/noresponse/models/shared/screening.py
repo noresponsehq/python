@@ -1,28 +1,13 @@
 from __future__ import annotations
 from .auditsettingsenvironment import AuditSettingsEnvironment
+from .handleplatform import HandlePlatform
 from .screeningdepth import ScreeningDepth
+from .screeningspend import ScreeningSpend, ScreeningSpendTypedDict
 from .screeningstatus import ScreeningStatus
-from noresponse.types import BaseModel, UNSET_SENTINEL, UnrecognizedStr
+from noresponse.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
-from typing import List, Literal, Optional, Union
+from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
-
-
-ScreeningPlatform = Union[
-    Literal[
-        "instagram",
-        "x",
-        "bluesky",
-        "youtube",
-        "tiktok",
-        "facebook",
-        "threads",
-        "reddit",
-        "telegram",
-        "linkedin",
-    ],
-    UnrecognizedStr,
-]
 
 
 class ScreeningTypedDict(TypedDict):
@@ -32,9 +17,9 @@ class ScreeningTypedDict(TypedDict):
     event_id: str
     environment: AuditSettingsEnvironment
     status: ScreeningStatus
-    r"""partial finished with some attendees not covered; attendees_failed counts them."""
+    r"""partial finished with some attendees or platforms not covered; attendees_failed and attendees_partial count them."""
     depth: ScreeningDepth
-    platforms: List[ScreeningPlatform]
+    platforms: List[HandlePlatform]
     requested_by: str
     created_at: str
     expires_at: str
@@ -45,10 +30,14 @@ class ScreeningTypedDict(TypedDict):
     r"""Attendees screened so far, failed ones included."""
     attendees_flagged: int
     attendees_failed: int
+    attendees_partial: int
+    r"""Attendees screened with some requested platform not covered; their coverage names which."""
     estimated_spend: int
     r"""What the screening was estimated to cost when it started, in minor units of USD (cents): its attendees at its depth and platforms. Until the screening finishes, what it has not yet spent counts against the environment's screening_daily_cap."""
     spent: int
     r"""What the attendees it has screened recorded, in minor units of USD. Each counts toward the UTC day it was recorded on; a failed attendee records nothing."""
+    spend: ScreeningSpendTypedDict
+    r"""What screening cost, in US cents, in total and per implementation."""
     started_at: NotRequired[str]
     finished_at: NotRequired[str]
     error_code: NotRequired[str]
@@ -65,11 +54,11 @@ class Screening(BaseModel):
     environment: AuditSettingsEnvironment
 
     status: ScreeningStatus
-    r"""partial finished with some attendees not covered; attendees_failed counts them."""
+    r"""partial finished with some attendees or platforms not covered; attendees_failed and attendees_partial count them."""
 
     depth: ScreeningDepth
 
-    platforms: List[ScreeningPlatform]
+    platforms: List[HandlePlatform]
 
     requested_by: str
 
@@ -88,11 +77,17 @@ class Screening(BaseModel):
 
     attendees_failed: int
 
+    attendees_partial: int
+    r"""Attendees screened with some requested platform not covered; their coverage names which."""
+
     estimated_spend: int
     r"""What the screening was estimated to cost when it started, in minor units of USD (cents): its attendees at its depth and platforms. Until the screening finishes, what it has not yet spent counts against the environment's screening_daily_cap."""
 
     spent: int
     r"""What the attendees it has screened recorded, in minor units of USD. Each counts toward the UTC day it was recorded on; a failed attendee records nothing."""
+
+    spend: ScreeningSpend
+    r"""What screening cost, in US cents, in total and per implementation."""
 
     started_at: Optional[str] = None
 

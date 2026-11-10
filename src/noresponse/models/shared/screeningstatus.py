@@ -14,4 +14,4 @@ ScreeningStatus = Union[
     ],
     UnrecognizedStr,
 ]
-r"""partial finished with some attendees not covered; attendees_failed counts them."""
+r"""partial finished with some attendees or platforms not covered; attendees_failed and attendees_partial count them."""

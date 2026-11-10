@@ -1,5 +1,19 @@
 # Changelog
 
+## 10.0.13
+
+* `sdk.events.list_attendees()`:  `response.items[]` **Changed**
+* `sdk.events.add_attendees()`: 
+  *  `request.attendees[].handles[].platform.enum(synthetic)` **Added**
+* `sdk.events.get_attendee()`:  `response` **Changed**
+* `sdk.events.review_attendee()`:  `response` **Changed**
+* `sdk.events.list_screenings()`:  `response.items[]` **Changed**
+* `sdk.events.start_screening()`: 
+  *  `request.platforms[].enum(synthetic)` **Added**
+  *  `response` **Changed**
+* `sdk.events.get_screening()`:  `response` **Changed**
+* `sdk.events.cancel_screening()`:  `response` **Changed**
+
 ## 10.0.12
 
 No changes detected.

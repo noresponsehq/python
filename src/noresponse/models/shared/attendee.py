@@ -3,18 +3,12 @@ from .attendeedecision import AttendeeDecision
 from .handle import Handle, HandleTypedDict
 from .highestband import HighestBand
 from .matchstate import MatchState
+from .screeningcoverage import ScreeningCoverage, ScreeningCoverageTypedDict
+from .screeningspend import ScreeningSpend, ScreeningSpendTypedDict
 from noresponse.types import BaseModel, Nullable, UNSET_SENTINEL
 from pydantic import model_serializer
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
-
-
-class AttendeeCoverageTypedDict(TypedDict):
-    r"""What the latest screening read, per platform."""
-
-
-class AttendeeCoverage(BaseModel):
-    r"""What the latest screening read, per platform."""
 
 
 class AttendeeTypedDict(TypedDict):
@@ -30,10 +24,12 @@ class AttendeeTypedDict(TypedDict):
     r"""The most severe finding's band, or null when nothing was flagged."""
     decision: Nullable[AttendeeDecision]
     r"""The latest reviewer decision, or null before any."""
-    coverage: AttendeeCoverageTypedDict
-    r"""What the latest screening read, per platform."""
+    coverage: ScreeningCoverageTypedDict
+    r"""The denominator of a screening: accounts found, how many could be read, items read and the period they span, so a clean result is distinct from a person nobody could see."""
     created_at: str
     updated_at: str
+    spend: ScreeningSpendTypedDict
+    r"""What screening cost, in US cents, in total and per implementation."""
     external_id: NotRequired[str]
     r"""Your own id for the attendee, unique within the event. A later row with the same external id updates this attendee."""
     email: NotRequired[str]
@@ -72,12 +68,15 @@ class Attendee(BaseModel):
     decision: Nullable[AttendeeDecision]
     r"""The latest reviewer decision, or null before any."""
 
-    coverage: AttendeeCoverage
-    r"""What the latest screening read, per platform."""
+    coverage: ScreeningCoverage
+    r"""The denominator of a screening: accounts found, how many could be read, items read and the period they span, so a clean result is distinct from a person nobody could see."""
 
     created_at: str
 
     updated_at: str
+
+    spend: ScreeningSpend
+    r"""What screening cost, in US cents, in total and per implementation."""
 
     external_id: Optional[str] = None
     r"""Your own id for the attendee, unique within the event. A later row with the same external id updates this attendee."""

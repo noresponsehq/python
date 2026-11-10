@@ -8,6 +8,7 @@ class HandleTypedDict(TypedDict):
     r"""An account the attendee is known to hold."""
 
     platform: HandlePlatform
+    r"""A platform a screening can cover. synthetic is the deterministic connector's own platform, for exercising the product end to end with no network."""
     handle: str
     r"""The account's handle, without a leading @."""
 
@@ -16,6 +17,7 @@ class Handle(BaseModel):
     r"""An account the attendee is known to hold."""
 
     platform: HandlePlatform
+    r"""A platform a screening can cover. synthetic is the deterministic connector's own platform, for exercising the product end to end with no network."""
 
     handle: str
     r"""The account's handle, without a leading @."""

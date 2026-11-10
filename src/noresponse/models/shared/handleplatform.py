@@ -15,6 +15,8 @@ HandlePlatform = Union[
         "reddit",
         "telegram",
         "linkedin",
+        "synthetic",
     ],
     UnrecognizedStr,
 ]
+r"""A platform a screening can cover. synthetic is the deterministic connector's own platform, for exercising the product end to end with no network."""

@@ -3810,7 +3810,7 @@ class Events(BaseSDK):
         *,
         idempotency_key: str,
         depth: models.shared.ScreeningDepth,
-        platforms: Iterable[models.shared.ScreeningRequestPlatform],
+        platforms: Iterable[models.shared.HandlePlatform],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -3818,7 +3818,7 @@ class Events(BaseSDK):
     ) -> models.operations.StartScreeningResponse:
         r"""Start a screening.
 
-        Start a screening of new attendees and everyone on watch or escalated, with an Idempotency-Key. It finishes completed, partial or failed minutes to hours later; poll it. The answer carries estimated_spend; a screening whose estimate exceeds what the daily screening cap has left answers 409 screening_cap_exceeded. The test environment screens with stand-ins that find no accounts.
+        Start a screening of new attendees and everyone on watch or escalated, with an Idempotency-Key. It finishes completed, partial or failed minutes to hours later; poll it. The answer carries estimated_spend; a screening whose estimate exceeds what the daily screening cap has left answers 409 screening_cap_exceeded. The test environment screens with the synthetic connector, which makes up deterministic profiles, posts and findings.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
@@ -3849,7 +3849,7 @@ class Events(BaseSDK):
             body=models.shared.ScreeningRequest(
                 depth=depth,
                 platforms=utils.unmarshal(
-                    platforms, List[models.shared.ScreeningRequestPlatform]
+                    platforms, List[models.shared.HandlePlatform]
                 ),
             ),
         )
@@ -4004,7 +4004,7 @@ class Events(BaseSDK):
         *,
         idempotency_key: str,
         depth: models.shared.ScreeningDepth,
-        platforms: Iterable[models.shared.ScreeningRequestPlatform],
+        platforms: Iterable[models.shared.HandlePlatform],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -4012,7 +4012,7 @@ class Events(BaseSDK):
     ) -> models.operations.StartScreeningResponse:
         r"""Start a screening.
 
-        Start a screening of new attendees and everyone on watch or escalated, with an Idempotency-Key. It finishes completed, partial or failed minutes to hours later; poll it. The answer carries estimated_spend; a screening whose estimate exceeds what the daily screening cap has left answers 409 screening_cap_exceeded. The test environment screens with stand-ins that find no accounts.
+        Start a screening of new attendees and everyone on watch or escalated, with an Idempotency-Key. It finishes completed, partial or failed minutes to hours later; poll it. The answer carries estimated_spend; a screening whose estimate exceeds what the daily screening cap has left answers 409 screening_cap_exceeded. The test environment screens with the synthetic connector, which makes up deterministic profiles, posts and findings.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
@@ -4043,7 +4043,7 @@ class Events(BaseSDK):
             body=models.shared.ScreeningRequest(
                 depth=depth,
                 platforms=utils.unmarshal(
-                    platforms, List[models.shared.ScreeningRequestPlatform]
+                    platforms, List[models.shared.HandlePlatform]
                 ),
             ),
         )
