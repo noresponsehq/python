@@ -665,6 +665,15 @@ if TYPE_CHECKING:
     )
     from .screeningmatchevidencekind import ScreeningMatchEvidenceKind
     from .screeningmedia import ScreeningMedia, ScreeningMediaTypedDict
+    from .screeningmediaobservation import (
+        ScreeningMediaObservation,
+        ScreeningMediaObservationTypedDict,
+    )
+    from .screeningnotanalysedcount import (
+        ScreeningNotAnalysedCount,
+        ScreeningNotAnalysedCountTypedDict,
+    )
+    from .screeningnotanalysedreason import ScreeningNotAnalysedReason
     from .screeningplatformcoverage import (
         ScreeningPlatformCoverage,
         ScreeningPlatformCoverageTypedDict,
@@ -1395,7 +1404,12 @@ __all__ = [
     "ScreeningMatchEvidenceTypedDict",
     "ScreeningMatchTypedDict",
     "ScreeningMedia",
+    "ScreeningMediaObservation",
+    "ScreeningMediaObservationTypedDict",
     "ScreeningMediaTypedDict",
+    "ScreeningNotAnalysedCount",
+    "ScreeningNotAnalysedCountTypedDict",
+    "ScreeningNotAnalysedReason",
     "ScreeningPlatformCoverage",
     "ScreeningPlatformCoverageStatus",
     "ScreeningPlatformCoverageTypedDict",
@@ -2159,6 +2173,11 @@ _dynamic_imports: dict[str, str] = {
     "ScreeningMatchEvidenceKind": ".screeningmatchevidencekind",
     "ScreeningMedia": ".screeningmedia",
     "ScreeningMediaTypedDict": ".screeningmedia",
+    "ScreeningMediaObservation": ".screeningmediaobservation",
+    "ScreeningMediaObservationTypedDict": ".screeningmediaobservation",
+    "ScreeningNotAnalysedCount": ".screeningnotanalysedcount",
+    "ScreeningNotAnalysedCountTypedDict": ".screeningnotanalysedcount",
+    "ScreeningNotAnalysedReason": ".screeningnotanalysedreason",
     "ScreeningPlatformCoverage": ".screeningplatformcoverage",
     "ScreeningPlatformCoverageTypedDict": ".screeningplatformcoverage",
     "ScreeningPlatformCoverageStatus": ".screeningplatformcoveragestatus",

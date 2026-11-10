@@ -1,6 +1,10 @@
 from __future__ import annotations
 from .findingband import FindingBand
 from .findingcategory import FindingCategory
+from .screeningmediaobservation import (
+    ScreeningMediaObservation,
+    ScreeningMediaObservationTypedDict,
+)
 from noresponse.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
 from typing import List, Optional
@@ -29,6 +33,8 @@ class ScreeningFindingTypedDict(TypedDict):
     r"""How severe a finding is, most severe first."""
     quote: NotRequired[str]
     r"""The exact words of the first evidence item that the finding rests on, as the analyser quoted them."""
+    media_observations: NotRequired[List[ScreeningMediaObservationTypedDict]]
+    r"""What the analyser saw in each image among evidence that the finding rests on. Unlike quote, an observation cannot be checked against the record: judge it against the image at the media item's permalink."""
 
 
 class ScreeningFinding(BaseModel):
@@ -65,9 +71,12 @@ class ScreeningFinding(BaseModel):
     quote: Optional[str] = None
     r"""The exact words of the first evidence item that the finding rests on, as the analyser quoted them."""
 
+    media_observations: Optional[List[ScreeningMediaObservation]] = None
+    r"""What the analyser saw in each image among evidence that the finding rests on. Unlike quote, an observation cannot be checked against the record: judge it against the image at the media item's permalink."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["capped_from", "quote"])
+        optional_fields = set(["capped_from", "quote", "media_observations"])
         serialized = handler(self)
         m = {}
 

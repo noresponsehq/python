@@ -1,5 +1,9 @@
 from __future__ import annotations
 from .handleplatform import HandlePlatform
+from .screeningnotanalysedcount import (
+    ScreeningNotAnalysedCount,
+    ScreeningNotAnalysedCountTypedDict,
+)
 from .screeningplatformcoverage import (
     ScreeningPlatformCoverage,
     ScreeningPlatformCoverageTypedDict,
@@ -19,6 +23,8 @@ class ScreeningCoverageTypedDict(TypedDict):
     platforms: List[ScreeningPlatformCoverageTypedDict]
     items_not_analysed: NotRequired[int]
     r"""Items read that the analyser could not analyse. Above zero, the attendee is partial: a finding may be missing from them."""
+    not_analysed_by_reason: NotRequired[List[ScreeningNotAnalysedCountTypedDict]]
+    r"""items_not_analysed split by reason, each reason once with at least one item."""
     period_from: NotRequired[str]
     r"""The oldest item read on any platform."""
     period_to: NotRequired[str]
@@ -41,6 +47,9 @@ class ScreeningCoverage(BaseModel):
     items_not_analysed: Optional[int] = None
     r"""Items read that the analyser could not analyse. Above zero, the attendee is partial: a finding may be missing from them."""
 
+    not_analysed_by_reason: Optional[List[ScreeningNotAnalysedCount]] = None
+    r"""items_not_analysed split by reason, each reason once with at least one item."""
+
     period_from: Optional[str] = None
     r"""The oldest item read on any platform."""
 
@@ -53,7 +62,13 @@ class ScreeningCoverage(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["items_not_analysed", "period_from", "period_to", "not_searched"]
+            [
+                "items_not_analysed",
+                "not_analysed_by_reason",
+                "period_from",
+                "period_to",
+                "not_searched",
+            ]
         )
         serialized = handler(self)
         m = {}
