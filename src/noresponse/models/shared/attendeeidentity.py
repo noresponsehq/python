@@ -1,4 +1,5 @@
 from __future__ import annotations
+from .attendeerole import AttendeeRole
 from .handle import Handle, HandleTypedDict
 from noresponse.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
@@ -23,6 +24,8 @@ class AttendeeIdentityTypedDict(TypedDict):
     r"""Where the attendee lives."""
     handles: NotRequired[List[HandleTypedDict]]
     r"""Accounts the attendee is known to hold, at most 20."""
+    role: NotRequired[AttendeeRole]
+    r"""The attendee's role at the event: guest (a ticket holder), crew, vendor or press. Leave it out when you do not know it: an attendee without one has no role, not guest. A later row naming the same attendee replaces it, and a change of role alone keeps the attendee's screening results."""
 
 
 class AttendeeIdentity(BaseModel):
@@ -49,10 +52,13 @@ class AttendeeIdentity(BaseModel):
     handles: Optional[List[Handle]] = None
     r"""Accounts the attendee is known to hold, at most 20."""
 
+    role: Optional[AttendeeRole] = None
+    r"""The attendee's role at the event: guest (a ticket holder), crew, vendor or press. Leave it out when you do not know it: an attendee without one has no role, not guest. A later row naming the same attendee replaces it, and a change of role alone keeps the attendee's screening results."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["external_id", "email", "phone", "company", "city", "handles"]
+            ["external_id", "email", "phone", "company", "city", "handles", "role"]
         )
         serialized = handler(self)
         m = {}

@@ -1929,6 +1929,7 @@ class Events(BaseSDK):
         after: Optional[str] = None,
         band: Optional[models.shared.ListAttendeesBand] = None,
         decision: Optional[models.shared.ListAttendeesDecision] = None,
+        role: Optional[models.shared.ListAttendeesRole] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -1945,6 +1946,7 @@ class Events(BaseSDK):
         :param after: Read attendees after this one.
         :param band: Only attendees whose highest finding has this band; none for attendees with no finding.
         :param decision: Only attendees with this decision; undecided for none yet.
+        :param role: Only attendees with this role; unstated for attendees whose role was not given.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -1968,6 +1970,7 @@ class Events(BaseSDK):
             after=after,
             band=band,
             decision=decision,
+            role=role,
         )
 
         _noresponse_response_mode, http_headers = (
@@ -2121,6 +2124,7 @@ class Events(BaseSDK):
         after: Optional[str] = None,
         band: Optional[models.shared.ListAttendeesBand] = None,
         decision: Optional[models.shared.ListAttendeesDecision] = None,
+        role: Optional[models.shared.ListAttendeesRole] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -2137,6 +2141,7 @@ class Events(BaseSDK):
         :param after: Read attendees after this one.
         :param band: Only attendees whose highest finding has this band; none for attendees with no finding.
         :param decision: Only attendees with this decision; undecided for none yet.
+        :param role: Only attendees with this role; unstated for attendees whose role was not given.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -2160,6 +2165,7 @@ class Events(BaseSDK):
             after=after,
             band=band,
             decision=decision,
+            role=role,
         )
 
         _noresponse_response_mode, http_headers = (

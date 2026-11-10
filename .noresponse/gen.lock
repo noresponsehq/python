@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: e0a6fd7480c939b73a9bf4bb431aa830
+  docChecksum: 72792067a8ee94c2a7ac593c2bd4decc
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 10.0.13
-  configChecksum: 01b00013bd81d627c42f7bcc46f0a88c
+  releaseVersion: 10.0.14
+  configChecksum: 6a1b17c200076d6f67003ef0858c4cd2
 features:
   python:
     additionalDependencies: 1.1.0
@@ -271,7 +271,7 @@ trackedFiles:
   docs/models/operations/listaccountsresponse.md:
     last_write_checksum: sha1:fa568b77c6b7fc999d41d81d1c59bc6701211022
   docs/models/operations/listattendeesrequest.md:
-    last_write_checksum: sha1:522ff082b083433d5939cb564233404789382be4
+    last_write_checksum: sha1:672eb0024c8346c2a1e0efd9d9e1157568ea44c8
   docs/models/operations/listattendeesresponse.md:
     last_write_checksum: sha1:ce55567b0d2315eb13d9af469429a3453595244f
   docs/models/operations/listauditeventsrequest.md:
@@ -627,7 +627,7 @@ trackedFiles:
   docs/models/shared/assurancelevel.md:
     last_write_checksum: sha1:5282e9b32241e928ed2615c116469c98c10081eb
   docs/models/shared/attendee.md:
-    last_write_checksum: sha1:fa3ba10d34c2b897bfbb1c95297f3703113a9a0a
+    last_write_checksum: sha1:56440c04889a6832a2e747089975e0240b33d62e
   docs/models/shared/attendeebatch.md:
     last_write_checksum: sha1:7213365dd4e1576da9e1ec67e9faf1c1b1fe6a12
   docs/models/shared/attendeebatchitem.md:
@@ -649,7 +649,7 @@ trackedFiles:
   docs/models/shared/attendeeflaggedmatchstate.md:
     last_write_checksum: sha1:a804efde9a716d21a07b0563fb235a5a4d8da71e
   docs/models/shared/attendeeidentity.md:
-    last_write_checksum: sha1:b5e54e375718d3f81109e391e419a79aa0a8b0a3
+    last_write_checksum: sha1:d388b97eed8b88dd1d994acb205de9c7a5a4405e
   docs/models/shared/attendeelist.md:
     last_write_checksum: sha1:64af28e5dfe7ba356399bdf1343e560cc43a78d3
   docs/models/shared/attendeereport.md:
@@ -658,6 +658,8 @@ trackedFiles:
     last_write_checksum: sha1:019980eeca8f1ab4f9159a40f4608a11df5a2f65
   docs/models/shared/attendeereviewrequest.md:
     last_write_checksum: sha1:b4c998a71fc181af3f2d73101ea8f5813003f86d
+  docs/models/shared/attendeerole.md:
+    last_write_checksum: sha1:3ed2d2bc3804d7285f7f2a4e1ceb761ce80f92c6
   docs/models/shared/attribute.md:
     last_write_checksum: sha1:574711a2cbb2e76d6ca7547dc63d9e1b3b220cee
   docs/models/shared/attributeagreement.md:
@@ -954,6 +956,8 @@ trackedFiles:
     last_write_checksum: sha1:5b66a7a80c2c9beded30f5979b688b8f67abcac0
   docs/models/shared/listattendeesdecision.md:
     last_write_checksum: sha1:59c01044b686e2a81983f9c40c01db7ec5196735
+  docs/models/shared/listattendeesrole.md:
+    last_write_checksum: sha1:614f0104c9b5766dbe03d836dc793de38f495880
   docs/models/shared/listbulkrequest.md:
     last_write_checksum: sha1:d7f09154727f45b30fd91e43740ea2c83b1427d0
   docs/models/shared/listchange.md:
@@ -1365,7 +1369,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:b00adf52bf1a4ddd1c683d4d478e73554a987043
   pyproject.toml:
-    last_write_checksum: sha1:380cd8a10e1452f8678e0fa96d10c353af44efd5
+    last_write_checksum: sha1:2db7d0388f2875982c816534500c5008c0c66583
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -1381,7 +1385,7 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:856307b12f1643e4006126a7dbbd93d41d33661e
+    last_write_checksum: sha1:8be2ed29659a46913a32f8bc31b3ce73a0b774cd
   src/noresponse/accounts.py:
     last_write_checksum: sha1:8c1bb1bed57733e59eeee63ef04e3969818cc031
   src/noresponse/assessments.py:
@@ -1395,7 +1399,7 @@ trackedFiles:
   src/noresponse/evaluations.py:
     last_write_checksum: sha1:134a49b94b9b703d1aabbcff090c502ae816cdab
   src/noresponse/events.py:
-    last_write_checksum: sha1:7266d3ee7001f232c97df261f0c44a51d87c0914
+    last_write_checksum: sha1:069e6595338ced9235c3b1902e2040a2e63b6177
   src/noresponse/exports.py:
     last_write_checksum: sha1:ea5953ebd1ebe7f1678b9751e1722c96cb5add89
   src/noresponse/httpclient.py:
@@ -1553,7 +1557,7 @@ trackedFiles:
   src/noresponse/models/operations/listaccounts.py:
     last_write_checksum: sha1:646bf464718fb32903735a20e5228dea58a27eb7
   src/noresponse/models/operations/listattendees.py:
-    last_write_checksum: sha1:d1d649bbcd5cd31b48ebf35a62c50efb17a3957e
+    last_write_checksum: sha1:68b98e2eb6e79fe4ddb26d2ab6c929a02e098480
   src/noresponse/models/operations/listauditevents.py:
     last_write_checksum: sha1:5b79a1d6c5c183b0d63b571db2cc81d76e85e05d
   src/noresponse/models/operations/listauditstreams.py:
@@ -1667,7 +1671,7 @@ trackedFiles:
   src/noresponse/models/operations/updatesettings.py:
     last_write_checksum: sha1:a1c4d3af6ff0780cafd90d92347319266b0a4a5b
   src/noresponse/models/shared/__init__.py:
-    last_write_checksum: sha1:4bf29ae42fcf144a7a5c9124654ff4f57efcad88
+    last_write_checksum: sha1:91a82aef35635ae884bc6e272bd57d08340a5058
   src/noresponse/models/shared/access.py:
     last_write_checksum: sha1:f264705d0b86ae7628d29e4b8122e7d76b1d50b4
   src/noresponse/models/shared/account.py:
@@ -1799,7 +1803,7 @@ trackedFiles:
   src/noresponse/models/shared/assurancelevel.py:
     last_write_checksum: sha1:20f56472c43d70727b44ee6cb2dabc77bb1e7361
   src/noresponse/models/shared/attendee.py:
-    last_write_checksum: sha1:47da83f6a14d993a20fcd625e0d2810e3beb4180
+    last_write_checksum: sha1:c856e98e3869ab0c06e0b5810567cbb6177d3841
   src/noresponse/models/shared/attendeebatch.py:
     last_write_checksum: sha1:5a94a4bb84a886dc3c376c0c3446ac591c5fa0c9
   src/noresponse/models/shared/attendeebatchitem.py:
@@ -1821,7 +1825,7 @@ trackedFiles:
   src/noresponse/models/shared/attendeeflaggedmatchstate.py:
     last_write_checksum: sha1:05618076253ea00227e56e4509d9cc5b190a90dd
   src/noresponse/models/shared/attendeeidentity.py:
-    last_write_checksum: sha1:6a753404805d49fa053cf945618ba71a4aebd940
+    last_write_checksum: sha1:e7bff457fd426985a11c26a32c45c1512663640a
   src/noresponse/models/shared/attendeelist.py:
     last_write_checksum: sha1:3dddaf44e79a399dd765401a396234104d1c631d
   src/noresponse/models/shared/attendeereport.py:
@@ -1830,6 +1834,8 @@ trackedFiles:
     last_write_checksum: sha1:3a539b99d4b63f8a35241ac0fc9bb15225db5805
   src/noresponse/models/shared/attendeereviewrequest.py:
     last_write_checksum: sha1:b2d4573a80307c4ee5b656a3d0889054ccb446b6
+  src/noresponse/models/shared/attendeerole.py:
+    last_write_checksum: sha1:af8172101b6fbb1bbd6ea43ad1941a2409b79a27
   src/noresponse/models/shared/attribute.py:
     last_write_checksum: sha1:eca7fdb98f24bc5ea413816c2e3ff76fb5dd274c
   src/noresponse/models/shared/attributeagreement.py:
@@ -2106,6 +2112,8 @@ trackedFiles:
     last_write_checksum: sha1:ad4bf6d2ba4ec3be81d0363eabee4d6f989dd746
   src/noresponse/models/shared/listattendeesdecision.py:
     last_write_checksum: sha1:b9bbdd4829e49955fe9840cbcbaeea8275724849
+  src/noresponse/models/shared/listattendeesrole.py:
+    last_write_checksum: sha1:a30704878884ad2bfeb1e97f21413b24eaf21f91
   src/noresponse/models/shared/listbulkrequest.py:
     last_write_checksum: sha1:e552959365ec7d72a960b7212e1d423c5f0e1cca
   src/noresponse/models/shared/listchange.py:

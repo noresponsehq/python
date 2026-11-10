@@ -1,5 +1,6 @@
 from __future__ import annotations
 from .attendeedecision import AttendeeDecision
+from .attendeerole import AttendeeRole
 from .handle import Handle, HandleTypedDict
 from .highestband import HighestBand
 from .matchstate import MatchState
@@ -42,6 +43,8 @@ class AttendeeTypedDict(TypedDict):
     r"""Where the attendee lives."""
     handles: NotRequired[List[HandleTypedDict]]
     r"""Accounts the attendee is known to hold, at most 20."""
+    role: NotRequired[AttendeeRole]
+    r"""The attendee's role at the event: guest (a ticket holder), crew, vendor or press. Leave it out when you do not know it: an attendee without one has no role, not guest. A later row naming the same attendee replaces it, and a change of role alone keeps the attendee's screening results."""
     decision_note: NotRequired[str]
     decided_by: NotRequired[str]
     decided_at: NotRequired[str]
@@ -96,6 +99,9 @@ class Attendee(BaseModel):
     handles: Optional[List[Handle]] = None
     r"""Accounts the attendee is known to hold, at most 20."""
 
+    role: Optional[AttendeeRole] = None
+    r"""The attendee's role at the event: guest (a ticket holder), crew, vendor or press. Leave it out when you do not know it: an attendee without one has no role, not guest. A later row naming the same attendee replaces it, and a change of role alone keeps the attendee's screening results."""
+
     decision_note: Optional[str] = None
 
     decided_by: Optional[str] = None
@@ -116,6 +122,7 @@ class Attendee(BaseModel):
                 "company",
                 "city",
                 "handles",
+                "role",
                 "decision_note",
                 "decided_by",
                 "decided_at",

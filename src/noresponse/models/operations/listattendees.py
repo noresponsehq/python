@@ -4,6 +4,7 @@ from noresponse.models.shared import (
     keyenvironment as shared_keyenvironment,
     listattendeesband as shared_listattendeesband,
     listattendeesdecision as shared_listattendeesdecision,
+    listattendeesrole as shared_listattendeesrole,
 )
 from noresponse.types import BaseModel, UNSET_SENTINEL
 from noresponse.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
@@ -26,6 +27,8 @@ class ListAttendeesRequestTypedDict(TypedDict):
     r"""Only attendees whose highest finding has this band; none for attendees with no finding."""
     decision: NotRequired[shared_listattendeesdecision.ListAttendeesDecision]
     r"""Only attendees with this decision; undecided for none yet."""
+    role: NotRequired[shared_listattendeesrole.ListAttendeesRole]
+    r"""Only attendees with this role; unstated for attendees whose role was not given."""
 
 
 class ListAttendeesRequest(BaseModel):
@@ -68,9 +71,15 @@ class ListAttendeesRequest(BaseModel):
     ] = None
     r"""Only attendees with this decision; undecided for none yet."""
 
+    role: Annotated[
+        Optional[shared_listattendeesrole.ListAttendeesRole],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Only attendees with this role; unstated for attendees whose role was not given."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["limit", "after", "band", "decision"])
+        optional_fields = set(["limit", "after", "band", "decision", "role"])
         serialized = handler(self)
         m = {}
 

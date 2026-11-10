@@ -177,6 +177,7 @@ if TYPE_CHECKING:
         AttendeeReviewRequest,
         AttendeeReviewRequestTypedDict,
     )
+    from .attendeerole import AttendeeRole
     from .attribute import Attribute
     from .attributeagreement import AttributeAgreement, AttributeAgreementTypedDict
     from .auditevent import (
@@ -386,6 +387,7 @@ if TYPE_CHECKING:
     from .linkedaccountpage import LinkedAccountPage, LinkedAccountPageTypedDict
     from .listattendeesband import ListAttendeesBand
     from .listattendeesdecision import ListAttendeesDecision
+    from .listattendeesrole import ListAttendeesRole
     from .listbulkrequest import ListBulkRequest, ListBulkRequestTypedDict
     from .listchange import ListChange, ListChangeTypedDict
     from .listchangestate import ListChangeState
@@ -908,6 +910,7 @@ __all__ = [
     "AttendeeReviewRequest",
     "AttendeeReviewRequestTypedDict",
     "AttendeeReviewTypedDict",
+    "AttendeeRole",
     "AttendeeTypedDict",
     "Attribute",
     "AttributeAgreement",
@@ -1140,6 +1143,7 @@ __all__ = [
     "LinkedAccountTypedDict",
     "ListAttendeesBand",
     "ListAttendeesDecision",
+    "ListAttendeesRole",
     "ListBulkRequest",
     "ListBulkRequestTypedDict",
     "ListChange",
@@ -1640,6 +1644,7 @@ _dynamic_imports: dict[str, str] = {
     "AttendeeReviewTypedDict": ".attendeereview",
     "AttendeeReviewRequest": ".attendeereviewrequest",
     "AttendeeReviewRequestTypedDict": ".attendeereviewrequest",
+    "AttendeeRole": ".attendeerole",
     "Attribute": ".attribute",
     "AttributeAgreement": ".attributeagreement",
     "AttributeAgreementTypedDict": ".attributeagreement",
@@ -1869,6 +1874,7 @@ _dynamic_imports: dict[str, str] = {
     "LinkedAccountPageTypedDict": ".linkedaccountpage",
     "ListAttendeesBand": ".listattendeesband",
     "ListAttendeesDecision": ".listattendeesdecision",
+    "ListAttendeesRole": ".listattendeesrole",
     "ListBulkRequest": ".listbulkrequest",
     "ListBulkRequestTypedDict": ".listbulkrequest",
     "ListChange": ".listchange",
