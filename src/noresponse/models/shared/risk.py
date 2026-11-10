@@ -41,9 +41,9 @@ class RiskTypedDict(TypedDict):
     policy_basis: Literal["heuristic_unvalidated"]
     r"""Labels the v0 policy as hand-authored and not statistically validated."""
     summary: NotRequired[RiskSummaryTypedDict]
-    r"""A few typed facts per identifier. Every fact is optional: absent means the evidence did not answer and makes no claim, while false or 0 is a definite answer. Lanes that do not exist yet leave their members absent."""
+    r"""A few typed facts per identifier: an assessment's risk.summary, and an event screening attendee's lookup summary. Every fact is optional: absent means the evidence did not answer and makes no claim, while false or 0 is a definite answer."""
     details: NotRequired[RiskDetailsTypedDict]
-    r"""Detailed view only (response_mode=detailed, which needs the detailed scope); a standard answer leaves it out. Merged observations without provider, source, origin, raw breach record, value or score."""
+    r"""Merged observations behind the summary, served only to a caller who may read evidence: no provider, source, origin, raw breach record or score."""
 
 
 class Risk(BaseModel):
@@ -90,10 +90,10 @@ class Risk(BaseModel):
     r"""Labels the v0 policy as hand-authored and not statistically validated."""
 
     summary: Optional[RiskSummary] = None
-    r"""A few typed facts per identifier. Every fact is optional: absent means the evidence did not answer and makes no claim, while false or 0 is a definite answer. Lanes that do not exist yet leave their members absent."""
+    r"""A few typed facts per identifier: an assessment's risk.summary, and an event screening attendee's lookup summary. Every fact is optional: absent means the evidence did not answer and makes no claim, while false or 0 is a definite answer."""
 
     details: Optional[RiskDetails] = None
-    r"""Detailed view only (response_mode=detailed, which needs the detailed scope); a standard answer leaves it out. Merged observations without provider, source, origin, raw breach record, value or score."""
+    r"""Merged observations behind the summary, served only to a caller who may read evidence: no provider, source, origin, raw breach record or score."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

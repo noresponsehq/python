@@ -15,7 +15,7 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class RiskDetailsTypedDict(TypedDict):
-    r"""Detailed view only (response_mode=detailed, which needs the detailed scope); a standard answer leaves it out. Merged observations without provider, source, origin, raw breach record, value or score."""
+    r"""Merged observations behind the summary, served only to a caller who may read evidence: no provider, source, origin, raw breach record or score."""
 
     phone_names: NotRequired[List[RiskDetailsPhoneNameTypedDict]]
     breaches: NotRequired[List[BreachTypedDict]]
@@ -31,7 +31,7 @@ class RiskDetailsTypedDict(TypedDict):
 
 
 class RiskDetails(BaseModel):
-    r"""Detailed view only (response_mode=detailed, which needs the detailed scope); a standard answer leaves it out. Merged observations without provider, source, origin, raw breach record, value or score."""
+    r"""Merged observations behind the summary, served only to a caller who may read evidence: no provider, source, origin, raw breach record or score."""
 
     phone_names: Optional[List[RiskDetailsPhoneName]] = None
 

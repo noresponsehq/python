@@ -3,12 +3,14 @@ from .attendee import Attendee, AttendeeTypedDict
 from .attendeereview import AttendeeReview, AttendeeReviewTypedDict
 from .otherevents import OtherEvents, OtherEventsTypedDict
 from .screeningfinding import ScreeningFinding, ScreeningFindingTypedDict
+from .screeninglookup import ScreeningLookup, ScreeningLookupTypedDict
 from .screeningmedia import ScreeningMedia, ScreeningMediaTypedDict
 from .screeningpost import ScreeningPost, ScreeningPostTypedDict
 from .screeningprofile import ScreeningProfile, ScreeningProfileTypedDict
-from noresponse.types import BaseModel
-from typing import List
-from typing_extensions import TypedDict
+from noresponse.types import BaseModel, UNSET_SENTINEL
+from pydantic import model_serializer
+from typing import List, Optional
+from typing_extensions import NotRequired, TypedDict
 
 
 class AttendeeReportTypedDict(TypedDict):
@@ -28,6 +30,8 @@ class AttendeeReportTypedDict(TypedDict):
     r"""Every recorded decision, oldest first."""
     other_events: OtherEventsTypedDict
     r"""Where else in the environment the attendee appears, read live from those events: deleting one removes it here."""
+    lookup: NotRequired[ScreeningLookupTypedDict]
+    r"""What the signup check's lookups found for an attendee: account presence for the email, phone and usernames (the attendee's handles), the phone lookup, the email domain's registration and the breach search. Context and coverage for the reviewer, not a finding: nothing here sets a band or a match state."""
 
 
 class AttendeeReport(BaseModel):
@@ -53,3 +57,22 @@ class AttendeeReport(BaseModel):
 
     other_events: OtherEvents
     r"""Where else in the environment the attendee appears, read live from those events: deleting one removes it here."""
+
+    lookup: Optional[ScreeningLookup] = None
+    r"""What the signup check's lookups found for an attendee: account presence for the email, phone and usernames (the attendee's handles), the phone lookup, the email domain's registration and the breach search. Context and coverage for the reviewer, not a finding: nothing here sets a band or a match state."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["lookup"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
