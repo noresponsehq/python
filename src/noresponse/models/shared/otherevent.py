@@ -29,11 +29,13 @@ class OtherEventTypedDict(TypedDict):
     matched_on: List[MatchedOn]
     r"""Which identifiers match, in this order. external_id appears only beside email or phone: the same external id alone is not a match, since ticket numbers may be reused across events."""
     match_state: MatchState
-    r"""How sure the latest screening is that it found the attendee's accounts. unscreened until a screening reaches the attendee."""
+    r"""How sure the latest screening is that it found the attendee's accounts. unscreened until a screening reaches the attendee, and after one that had no profile to check (no_profile_to_check)."""
     highest_band: Nullable[HighestBand]
     r"""That attendee's most severe band at that event, or null."""
     decision: Nullable[AttendeeDecision]
     r"""The latest reviewer decision at that event, or null before any."""
+    no_profile_to_check: NotRequired[bool]
+    r"""true when that attendee's latest screening had no profile to check (see the attendee's no_profile_to_check). Left out otherwise."""
     decided_by: NotRequired[str]
     r"""Who made that decision."""
     decided_at: NotRequired[str]
@@ -56,13 +58,16 @@ class OtherEvent(BaseModel):
     r"""Which identifiers match, in this order. external_id appears only beside email or phone: the same external id alone is not a match, since ticket numbers may be reused across events."""
 
     match_state: MatchState
-    r"""How sure the latest screening is that it found the attendee's accounts. unscreened until a screening reaches the attendee."""
+    r"""How sure the latest screening is that it found the attendee's accounts. unscreened until a screening reaches the attendee, and after one that had no profile to check (no_profile_to_check)."""
 
     highest_band: Nullable[HighestBand]
     r"""That attendee's most severe band at that event, or null."""
 
     decision: Nullable[AttendeeDecision]
     r"""The latest reviewer decision at that event, or null before any."""
+
+    no_profile_to_check: Optional[bool] = None
+    r"""true when that attendee's latest screening had no profile to check (see the attendee's no_profile_to_check). Left out otherwise."""
 
     decided_by: Optional[str] = None
     r"""Who made that decision."""
@@ -72,7 +77,7 @@ class OtherEvent(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["decided_by", "decided_at"])
+        optional_fields = set(["no_profile_to_check", "decided_by", "decided_at"])
         nullable_fields = set(["highest_band", "decision"])
         serialized = handler(self)
         m = {}

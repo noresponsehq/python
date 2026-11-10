@@ -20,7 +20,7 @@ class AttendeeTypedDict(TypedDict):
     name: str
     r"""The attendee's full name."""
     match_state: MatchState
-    r"""How sure the latest screening is that it found the attendee's accounts. unscreened until a screening reaches the attendee."""
+    r"""How sure the latest screening is that it found the attendee's accounts. unscreened until a screening reaches the attendee, and after one that had no profile to check (no_profile_to_check)."""
     highest_band: Nullable[HighestBand]
     r"""The most severe finding's band, or null when nothing was flagged."""
     decision: Nullable[AttendeeDecision]
@@ -45,6 +45,8 @@ class AttendeeTypedDict(TypedDict):
     r"""Accounts the attendee is known to hold, at most 20."""
     role: NotRequired[AttendeeRole]
     r"""The attendee's role at the event: guest (a ticket holder), crew, vendor or press. Leave it out when you do not know it: an attendee without one has no role, not guest. A later row naming the same attendee replaces it, and a change of role alone keeps the attendee's screening results."""
+    no_profile_to_check: NotRequired[bool]
+    r"""true when the latest screening reached the attendee but the list gave nothing to look up on any requested platform, such as no handle for a platform that reads supplied handles only: nobody looked for a profile. match_state stays unscreened, every platform is in coverage.not_searched, and the attendee is neither none_found nor failed and does not make the screening partial. Its lookups are on its report. Left out otherwise."""
     decision_note: NotRequired[str]
     decided_by: NotRequired[str]
     decided_at: NotRequired[str]
@@ -63,7 +65,7 @@ class Attendee(BaseModel):
     r"""The attendee's full name."""
 
     match_state: MatchState
-    r"""How sure the latest screening is that it found the attendee's accounts. unscreened until a screening reaches the attendee."""
+    r"""How sure the latest screening is that it found the attendee's accounts. unscreened until a screening reaches the attendee, and after one that had no profile to check (no_profile_to_check)."""
 
     highest_band: Nullable[HighestBand]
     r"""The most severe finding's band, or null when nothing was flagged."""
@@ -102,6 +104,9 @@ class Attendee(BaseModel):
     role: Optional[AttendeeRole] = None
     r"""The attendee's role at the event: guest (a ticket holder), crew, vendor or press. Leave it out when you do not know it: an attendee without one has no role, not guest. A later row naming the same attendee replaces it, and a change of role alone keeps the attendee's screening results."""
 
+    no_profile_to_check: Optional[bool] = None
+    r"""true when the latest screening reached the attendee but the list gave nothing to look up on any requested platform, such as no handle for a platform that reads supplied handles only: nobody looked for a profile. match_state stays unscreened, every platform is in coverage.not_searched, and the attendee is neither none_found nor failed and does not make the screening partial. Its lookups are on its report. Left out otherwise."""
+
     decision_note: Optional[str] = None
 
     decided_by: Optional[str] = None
@@ -123,6 +128,7 @@ class Attendee(BaseModel):
                 "city",
                 "handles",
                 "role",
+                "no_profile_to_check",
                 "decision_note",
                 "decided_by",
                 "decided_at",

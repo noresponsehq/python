@@ -1,5 +1,11 @@
 # Changelog
 
+## 10.0.21
+
+* `sdk.events.list_attendees()`:  `response.items[].no_profile_to_check` **Added**
+* `sdk.events.get_attendee()`:  `response` **Changed**
+* `sdk.events.review_attendee()`:  `response.no_profile_to_check` **Added**
+
 ## 10.0.20
 
 * `sdk.events.list_attendees()`:  `response.items[].coverage.not_analysed_by_reason` **Added**
