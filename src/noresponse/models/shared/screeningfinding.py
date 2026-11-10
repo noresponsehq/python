@@ -27,6 +27,8 @@ class ScreeningFindingTypedDict(TypedDict):
     created_at: str
     capped_from: NotRequired[FindingBand]
     r"""How severe a finding is, most severe first."""
+    quote: NotRequired[str]
+    r"""The exact words of the first evidence item that the finding rests on, as the analyser quoted them."""
 
 
 class ScreeningFinding(BaseModel):
@@ -60,9 +62,12 @@ class ScreeningFinding(BaseModel):
     capped_from: Optional[FindingBand] = None
     r"""How severe a finding is, most severe first."""
 
+    quote: Optional[str] = None
+    r"""The exact words of the first evidence item that the finding rests on, as the analyser quoted them."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["capped_from"])
+        optional_fields = set(["capped_from", "quote"])
         serialized = handler(self)
         m = {}
 

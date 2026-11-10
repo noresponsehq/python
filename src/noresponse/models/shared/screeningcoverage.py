@@ -16,6 +16,8 @@ class ScreeningCoverageTypedDict(TypedDict):
     accounts_accessible: int
     items_read: int
     platforms: List[ScreeningPlatformCoverageTypedDict]
+    items_not_analysed: NotRequired[int]
+    r"""Items read that the analyser could not analyse. Above zero, the attendee is partial: a finding may be missing from them."""
     period_from: NotRequired[str]
     r"""The oldest item read on any platform."""
     period_to: NotRequired[str]
@@ -33,6 +35,9 @@ class ScreeningCoverage(BaseModel):
 
     platforms: List[ScreeningPlatformCoverage]
 
+    items_not_analysed: Optional[int] = None
+    r"""Items read that the analyser could not analyse. Above zero, the attendee is partial: a finding may be missing from them."""
+
     period_from: Optional[str] = None
     r"""The oldest item read on any platform."""
 
@@ -41,7 +46,7 @@ class ScreeningCoverage(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["period_from", "period_to"])
+        optional_fields = set(["items_not_analysed", "period_from", "period_to"])
         serialized = handler(self)
         m = {}
 
