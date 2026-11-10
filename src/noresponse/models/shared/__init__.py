@@ -439,6 +439,8 @@ if TYPE_CHECKING:
         OperationalAggregateTotalsTypedDict,
     )
     from .origin import Origin
+    from .otherevent import MatchedOn, OtherEvent, OtherEventTypedDict
+    from .otherevents import OtherEvents, OtherEventsTypedDict
     from .outcome import Outcome
     from .outcomes import Outcomes, OutcomesTypedDict
     from .outcomesbyoutcome import OutcomesByOutcome, OutcomesByOutcomeTypedDict
@@ -1172,6 +1174,7 @@ __all__ = [
     "LocationUnionTypedDict",
     "Match",
     "MatchState",
+    "MatchedOn",
     "MediaType",
     "Member",
     "MemberDeniedAction",
@@ -1203,6 +1206,10 @@ __all__ = [
     "OperationalAggregateTotalsTypedDict",
     "OperationalAggregateTypedDict",
     "Origin",
+    "OtherEvent",
+    "OtherEventTypedDict",
+    "OtherEvents",
+    "OtherEventsTypedDict",
     "Outcome",
     "Outcomes",
     "OutcomesByOutcome",
@@ -1927,6 +1934,11 @@ _dynamic_imports: dict[str, str] = {
     "OperationalAggregateTotals": ".operationalaggregatetotals",
     "OperationalAggregateTotalsTypedDict": ".operationalaggregatetotals",
     "Origin": ".origin",
+    "MatchedOn": ".otherevent",
+    "OtherEvent": ".otherevent",
+    "OtherEventTypedDict": ".otherevent",
+    "OtherEvents": ".otherevents",
+    "OtherEventsTypedDict": ".otherevents",
     "Outcome": ".outcome",
     "Outcomes": ".outcomes",
     "OutcomesTypedDict": ".outcomes",

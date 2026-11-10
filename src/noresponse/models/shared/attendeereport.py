@@ -1,6 +1,7 @@
 from __future__ import annotations
 from .attendee import Attendee, AttendeeTypedDict
 from .attendeereview import AttendeeReview, AttendeeReviewTypedDict
+from .otherevents import OtherEvents, OtherEventsTypedDict
 from .screeningfinding import ScreeningFinding, ScreeningFindingTypedDict
 from .screeningmedia import ScreeningMedia, ScreeningMediaTypedDict
 from .screeningpost import ScreeningPost, ScreeningPostTypedDict
@@ -11,7 +12,7 @@ from typing_extensions import TypedDict
 
 
 class AttendeeReportTypedDict(TypedDict):
-    r"""Everything known about one attendee."""
+    r"""Everything known about one attendee, and where else in the environment they appear."""
 
     attendee: AttendeeTypedDict
     r"""An attendee and where their screening and review stand."""
@@ -25,10 +26,12 @@ class AttendeeReportTypedDict(TypedDict):
     r"""The images and videos the findings cite."""
     reviews: List[AttendeeReviewTypedDict]
     r"""Every recorded decision, oldest first."""
+    other_events: OtherEventsTypedDict
+    r"""Where else in the environment the attendee appears, read live from those events: deleting one removes it here."""
 
 
 class AttendeeReport(BaseModel):
-    r"""Everything known about one attendee."""
+    r"""Everything known about one attendee, and where else in the environment they appear."""
 
     attendee: Attendee
     r"""An attendee and where their screening and review stand."""
@@ -47,3 +50,6 @@ class AttendeeReport(BaseModel):
 
     reviews: List[AttendeeReview]
     r"""Every recorded decision, oldest first."""
+
+    other_events: OtherEvents
+    r"""Where else in the environment the attendee appears, read live from those events: deleting one removes it here."""

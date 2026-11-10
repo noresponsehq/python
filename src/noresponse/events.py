@@ -2721,7 +2721,7 @@ class Events(BaseSDK):
     ) -> models.operations.GetAttendeeResponse:
         r"""Read an attendee's report.
 
-        Read an attendee's report: matched profiles, findings with their evidence and every recorded decision.
+        Read an attendee's report: matched profiles, findings with their evidence, every recorded decision, and the other events where the same email or phone appears.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
@@ -2904,7 +2904,7 @@ class Events(BaseSDK):
     ) -> models.operations.GetAttendeeResponse:
         r"""Read an attendee's report.
 
-        Read an attendee's report: matched profiles, findings with their evidence and every recorded decision.
+        Read an attendee's report: matched profiles, findings with their evidence, every recorded decision, and the other events where the same email or phone appears.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
