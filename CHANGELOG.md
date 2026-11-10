@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.0.19
+
+No changes detected.
+
 ## 10.0.18
 
 * `sdk.events.get_attendee()`:  `response.lookup` **Added**

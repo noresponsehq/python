@@ -10,7 +10,7 @@ class ScreeningMatchEvidenceTypedDict(TypedDict):
     r"""One identifier that ties a profile to the attendee."""
 
     kind: ScreeningMatchEvidenceKind
-    r"""What matched. email, phone, supplied_handle and source_fact are hard identifiers; company, city and school are soft."""
+    r"""What matched. email, phone, supplied_handle and source_fact are hard identifiers; company, city and school are soft. supplied_handle is a handle on the attendee row; source_fact is an account a profile found by the attendee's lookups lists."""
     resolver: str
     r"""The resolver, collector or analyser that produced a record, by its catalogue name."""
     detail: NotRequired[str]
@@ -21,7 +21,7 @@ class ScreeningMatchEvidence(BaseModel):
     r"""One identifier that ties a profile to the attendee."""
 
     kind: ScreeningMatchEvidenceKind
-    r"""What matched. email, phone, supplied_handle and source_fact are hard identifiers; company, city and school are soft."""
+    r"""What matched. email, phone, supplied_handle and source_fact are hard identifiers; company, city and school are soft. supplied_handle is a handle on the attendee row; source_fact is an account a profile found by the attendee's lookups lists."""
 
     resolver: str
     r"""The resolver, collector or analyser that produced a record, by its catalogue name."""
