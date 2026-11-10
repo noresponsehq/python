@@ -1,5 +1,11 @@
 # Changelog
 
+## 10.0.17
+
+* `sdk.events.list_attendees()`:  `response.items[].coverage.not_searched` **Added**
+* `sdk.events.get_attendee()`:  `response.attendee.coverage.not_searched` **Added**
+* `sdk.events.review_attendee()`:  `response.coverage.not_searched` **Added**
+
 ## 10.0.16
 
 * `sdk.events.get_attendee()`:  `response.other_events` **Added**

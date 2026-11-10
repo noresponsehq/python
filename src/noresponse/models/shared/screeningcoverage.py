@@ -1,4 +1,5 @@
 from __future__ import annotations
+from .handleplatform import HandlePlatform
 from .screeningplatformcoverage import (
     ScreeningPlatformCoverage,
     ScreeningPlatformCoverageTypedDict,
@@ -22,6 +23,8 @@ class ScreeningCoverageTypedDict(TypedDict):
     r"""The oldest item read on any platform."""
     period_to: NotRequired[str]
     r"""The newest item read on any platform."""
+    not_searched: NotRequired[List[HandlePlatform]]
+    r"""Requested platforms where the attendee gave the screening nothing to look up, such as no handle for a platform that reads supplied handles only. Nothing looked and nothing failed: such a platform is not in platforms, is not none_found and does not make the attendee partial."""
 
 
 class ScreeningCoverage(BaseModel):
@@ -44,9 +47,14 @@ class ScreeningCoverage(BaseModel):
     period_to: Optional[str] = None
     r"""The newest item read on any platform."""
 
+    not_searched: Optional[List[HandlePlatform]] = None
+    r"""Requested platforms where the attendee gave the screening nothing to look up, such as no handle for a platform that reads supplied handles only. Nothing looked and nothing failed: such a platform is not in platforms, is not none_found and does not make the attendee partial."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["items_not_analysed", "period_from", "period_to"])
+        optional_fields = set(
+            ["items_not_analysed", "period_from", "period_to", "not_searched"]
+        )
         serialized = handler(self)
         m = {}
 
