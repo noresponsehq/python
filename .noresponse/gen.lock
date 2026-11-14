@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: 313977d97391bf96ef296c7dc53a7d69
+  docChecksum: b5add61ac0e7b3f57be72fdb73fbe1e3
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 12.0.5
-  configChecksum: f96c7260eaeb02b67069031f989dbbf5
+  releaseVersion: 12.0.6
+  configChecksum: 31538a729a71859e0ccdf974b7889aa1
 features:
   python:
     additionalDependencies: 1.1.0
@@ -1151,7 +1151,7 @@ trackedFiles:
   docs/models/shared/recordremaining.md:
     last_write_checksum: sha1:d873507b04dcffd1f45fcccde5a6c154de7bf5bc
   docs/models/shared/recordrole.md:
-    last_write_checksum: sha1:06c3e1e7a7a65b75a03ee669c5b3d9a37200bb25
+    last_write_checksum: sha1:536312f5f89b03069d9383b20be5cbf240b31254
   docs/models/shared/recordsource.md:
     last_write_checksum: sha1:361b7956cb8b2a058b994460203c52edbdd76b62
   docs/models/shared/recordverdict.md:
@@ -1435,7 +1435,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:25c1cac7d5027a26675b69ceac136343007329c3
   pyproject.toml:
-    last_write_checksum: sha1:3bd7668abce0e72a58cd66b5a507bf3a9dd8f655
+    last_write_checksum: sha1:1d3c073d0ca6972894aa0c16bf322fe7f930309e
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -1451,7 +1451,7 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:2f59d74e6ec5f3d7d4d90b720ce217e370b9d03b
+    last_write_checksum: sha1:362360e4bc30e5f324743db383f7b6f80f6c862f
   src/noresponse/accounts.py:
     last_write_checksum: sha1:c09abf6ab3b780a819d1a1ed0af35063bb2625e6
   src/noresponse/assessments.py:
@@ -2349,7 +2349,7 @@ trackedFiles:
   src/noresponse/models/shared/recordremaining.py:
     last_write_checksum: sha1:cd40d13e29d63658ccd937434793a158d857e2b8
   src/noresponse/models/shared/recordrole.py:
-    last_write_checksum: sha1:a392eda7e32ec263c19b53cedd32f0ec2568a793
+    last_write_checksum: sha1:d5ac5e81e60eec444943e51a23dc98e78bb88d2f
   src/noresponse/models/shared/recordsource.py:
     last_write_checksum: sha1:3f42a047b4b099ce0ceb6fcadc3dd207b820fee6
   src/noresponse/models/shared/recordverdict.py:

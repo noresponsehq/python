@@ -19,14 +19,18 @@ RecordRole = Union[
         "banned",
         # What the person wrote about themselves (`long_text`).
         "bio",
-        # The date of birth (`date`).
+        # The date of birth (`date` or `date_time`).
         "born",
         # Whether the site marks the account as a bot (`flag`).
         "bot",
         # The category callers give a phone number, such as telemarketer (`label`).
         "caller_category",
+        # How many chargebacks a shop recorded against the account, or whether it has one (`count` or `flag`).
+        "chargebacks",
         # The banner picture of the profile (`image`).
         "cover_picture",
+        # How many of the account's payments a shop declined (`count`).
+        "declines",
         # Whether the account is deleted or inactive (`flag`).
         "deleted",
         # When the account was deleted (`date` or `date_time`).
@@ -97,6 +101,8 @@ RecordRole = Union[
         "paid",
         # When the password last changed (`date` or `date_time`).
         "password_changed",
+        # The payment method or card brand the account paid with (`label`).
+        "payment_method",
         # The profile picture (`image`).
         "picture",
         # Points on the site (`score`).
@@ -137,6 +143,8 @@ RecordRole = Union[
         "spam_score",
         # A street line of an address (`address`).
         "street",
+        # How many trades a forum account completed (`count`).
+        "trades",
         # Whether the site verified the account (`flag`).
         "verified",
         # Warnings and infractions on the account (`count`).

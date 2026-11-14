@@ -1,5 +1,9 @@
 # Changelog
 
+## 12.0.6
+
+* `sdk.groups.get_person()`:  `response.profiles[].record.fields[].role` **Changed**
+
 ## 12.0.5
 
 * `sdk.groups.start_search()`: **Added**

@@ -26,7 +26,9 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"born"`
 - `"bot"`
 - `"caller_category"`
+- `"chargebacks"`
 - `"cover_picture"`
+- `"declines"`
 - `"deleted"`
 - `"deleted_on"`
 - `"department"`
@@ -62,6 +64,7 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"other_ip"`
 - `"paid"`
 - `"password_changed"`
+- `"payment_method"`
 - `"picture"`
 - `"points"`
 - `"posts"`
@@ -82,6 +85,7 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"site_role"`
 - `"spam_score"`
 - `"street"`
+- `"trades"`
 - `"verified"`
 - `"warnings"`
 - `"website"`
