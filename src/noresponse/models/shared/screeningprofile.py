@@ -1,6 +1,7 @@
 from __future__ import annotations
 from .access import Access
 from .handleplatform import HandlePlatform
+from .postsstopped import PostsStopped
 from .record import Record, RecordTypedDict
 from .screeningmatch import ScreeningMatch, ScreeningMatchTypedDict
 from noresponse.types import BaseModel, UNSET_SENTINEL
@@ -30,6 +31,8 @@ class ScreeningProfileTypedDict(TypedDict):
     avatar_url: NotRequired[str]
     followers: NotRequired[int]
     account_created_at: NotRequired[str]
+    posts_stopped: NotRequired[PostsStopped]
+    r"""Why fewer posts were read than the screening's depth asks for while the account holds more. platform_limit: the platform shows the screening no more of them. page_limit: the pages a screening reads ran out first. rate_limited or unavailable: a later page was held back or failed; the posts before it are kept and the person is partial. Absent when the account was read to its end or to the depth."""
     period_from: NotRequired[str]
     r"""The oldest item read."""
     period_to: NotRequired[str]
@@ -73,6 +76,9 @@ class ScreeningProfile(BaseModel):
 
     account_created_at: Optional[str] = None
 
+    posts_stopped: Optional[PostsStopped] = None
+    r"""Why fewer posts were read than the screening's depth asks for while the account holds more. platform_limit: the platform shows the screening no more of them. page_limit: the pages a screening reads ran out first. rate_limited or unavailable: a later page was held back or failed; the posts before it are kept and the person is partial. Absent when the account was read to its end or to the depth."""
+
     period_from: Optional[str] = None
     r"""The oldest item read."""
 
@@ -91,6 +97,7 @@ class ScreeningProfile(BaseModel):
                 "avatar_url",
                 "followers",
                 "account_created_at",
+                "posts_stopped",
                 "period_from",
                 "period_to",
                 "record",

@@ -18,6 +18,10 @@ class ScreeningPostTypedDict(TypedDict):
     posted_at: str
     kind: Literal["post"]
     reply_to: NotRequired[str]
+    repost_of: NotRequired[str]
+    r"""The permalink of the post this one reposts. text then holds that post's author's words, not the person's."""
+    quote_of: NotRequired[str]
+    r"""The permalink of the post this one quotes. text holds the person's own words alone."""
     screenshot_sha256: NotRequired[str]
     r"""SHA-256 of the screenshot taken of a flagged item."""
     captured_at: NotRequired[str]
@@ -44,6 +48,12 @@ class ScreeningPost(BaseModel):
 
     reply_to: Optional[str] = None
 
+    repost_of: Optional[str] = None
+    r"""The permalink of the post this one reposts. text then holds that post's author's words, not the person's."""
+
+    quote_of: Optional[str] = None
+    r"""The permalink of the post this one quotes. text holds the person's own words alone."""
+
     screenshot_sha256: Optional[str] = None
     r"""SHA-256 of the screenshot taken of a flagged item."""
 
@@ -52,7 +62,9 @@ class ScreeningPost(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["reply_to", "screenshot_sha256", "captured_at"])
+        optional_fields = set(
+            ["reply_to", "repost_of", "quote_of", "screenshot_sha256", "captured_at"]
+        )
         serialized = handler(self)
         m = {}
 
