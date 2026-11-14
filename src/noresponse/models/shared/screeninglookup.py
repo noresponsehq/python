@@ -1,4 +1,5 @@
 from __future__ import annotations
+from .record import Record, RecordTypedDict
 from .riskdetails import RiskDetails, RiskDetailsTypedDict
 from .risksummary import RiskSummary, RiskSummaryTypedDict
 from .screeninglookupcheck import ScreeningLookupCheck, ScreeningLookupCheckTypedDict
@@ -19,6 +20,8 @@ class ScreeningLookupTypedDict(TypedDict):
     r"""A few typed facts per identifier: an assessment's risk.summary, and a screened person's lookup summary. Every fact is optional: absent means the evidence did not answer and makes no claim, while false or 0 is a definite answer."""
     details: NotRequired[RiskDetailsTypedDict]
     r"""Merged observations behind the summary, served only to a caller who may read evidence: no provider, source, origin, raw breach record or score."""
+    records: NotRequired[List[RecordTypedDict]]
+    r"""What each source that found an account answered, whole: every field under the source's own names, each answer once. Served only to a caller who may read evidence, as details are."""
 
 
 class ScreeningLookup(BaseModel):
@@ -36,9 +39,12 @@ class ScreeningLookup(BaseModel):
     details: Optional[RiskDetails] = None
     r"""Merged observations behind the summary, served only to a caller who may read evidence: no provider, source, origin, raw breach record or score."""
 
+    records: Optional[List[Record]] = None
+    r"""What each source that found an account answered, whole: every field under the source's own names, each answer once. Served only to a caller who may read evidence, as details are."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["summary", "details"])
+        optional_fields = set(["summary", "details", "records"])
         serialized = handler(self)
         m = {}
 

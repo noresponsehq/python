@@ -1,6 +1,7 @@
 from __future__ import annotations
 from .access import Access
 from .handleplatform import HandlePlatform
+from .record import Record, RecordTypedDict
 from .screeningmatch import ScreeningMatch, ScreeningMatchTypedDict
 from noresponse.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
@@ -33,6 +34,8 @@ class ScreeningProfileTypedDict(TypedDict):
     r"""The oldest item read."""
     period_to: NotRequired[str]
     r"""The newest item read."""
+    record: NotRequired[RecordTypedDict]
+    r"""One answer from one source: where it came from, what found it and every field it holds."""
 
 
 class ScreeningProfile(BaseModel):
@@ -76,6 +79,9 @@ class ScreeningProfile(BaseModel):
     period_to: Optional[str] = None
     r"""The newest item read."""
 
+    record: Optional[Record] = None
+    r"""One answer from one source: where it came from, what found it and every field it holds."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -87,6 +93,7 @@ class ScreeningProfile(BaseModel):
                 "account_created_at",
                 "period_from",
                 "period_to",
+                "record",
             ]
         )
         serialized = handler(self)

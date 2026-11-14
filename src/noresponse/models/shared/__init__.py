@@ -544,6 +544,10 @@ if TYPE_CHECKING:
     from .reasoncode import ReasonCode
     from .reasonidentifier import ReasonIdentifier
     from .recommendation import Recommendation
+    from .record import Record, RecordTypedDict
+    from .recordfield import RecordField, RecordFieldTypedDict
+    from .recordmatch import RecordMatch, RecordMatchTypedDict
+    from .recordsource import RecordSource, RecordSourceTypedDict
     from .report import Report, ReportScope, ReportScopeTypedDict, ReportTypedDict
     from .requestaggregaterequest import (
         RequestAggregateRequest,
@@ -1278,6 +1282,14 @@ __all__ = [
     "ReasonCode",
     "ReasonIdentifier",
     "Recommendation",
+    "Record",
+    "RecordField",
+    "RecordFieldTypedDict",
+    "RecordMatch",
+    "RecordMatchTypedDict",
+    "RecordSource",
+    "RecordSourceTypedDict",
+    "RecordTypedDict",
     "Report",
     "ReportScope",
     "ReportScopeTypedDict",
@@ -2045,6 +2057,14 @@ _dynamic_imports: dict[str, str] = {
     "ReasonCode": ".reasoncode",
     "ReasonIdentifier": ".reasonidentifier",
     "Recommendation": ".recommendation",
+    "Record": ".record",
+    "RecordTypedDict": ".record",
+    "RecordField": ".recordfield",
+    "RecordFieldTypedDict": ".recordfield",
+    "RecordMatch": ".recordmatch",
+    "RecordMatchTypedDict": ".recordmatch",
+    "RecordSource": ".recordsource",
+    "RecordSourceTypedDict": ".recordsource",
     "Report": ".report",
     "ReportScope": ".report",
     "ReportScopeTypedDict": ".report",

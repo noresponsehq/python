@@ -1,0 +1,11 @@
+# RecordMatch
+
+One searched value that found the record.
+
+
+## Fields
+
+| Field                                                                                               | Type                                                                                                | Required                                                                                            | Description                                                                                         | Example                                                                                             |
+| --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `by`                                                                                                | *str*                                                                                               | :heavy_check_mark:                                                                                  | The kind of searched value: email, phone, username, name, or handle for a profile read of a handle. | handle                                                                                              |
+| `field`                                                                                             | *Optional[str]*                                                                                     | :heavy_minus_sign:                                                                                  | The field the searched value hit, when the record holds it.                                         | username                                                                                            |
