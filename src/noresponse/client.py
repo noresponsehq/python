@@ -2432,7 +2432,10 @@ class NoResponse(_NoResponse):
     key_usage: KeyUsage  # type: ignore[assignment]
     webhook_endpoints: WebhookEndpoints  # type: ignore[assignment]
     integrations: Integrations  # type: ignore[assignment]
+    # The wrapped groups replace the generated ones; every other generated
+    # group (groups, reviews, members, lists, audit and the rest) stays.
     _sub_sdk_map: Dict[str, Any] = {
+        **_NoResponse._sub_sdk_map,
         "assessments": ("noresponse.client", "Assessments"),
         "accounts": ("noresponse.client", "Accounts"),
         "requests": ("noresponse.client", "Requests"),

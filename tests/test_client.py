@@ -688,3 +688,12 @@ def test_wait_is_callable_from_the_package_root(monkeypatch):
     monkeypatch.setattr(wait_module.time, "sleep", lambda s: None)
     sdk, _ = make([answer(PENDING, headers={"Retry-After": "1"}), answer(COMPLETE)])
     assert noresponse.wait(sdk, PENDING["id"]).status == "complete"
+
+
+def test_the_client_keeps_every_generated_group():
+    # The Python SDK page lists these groups beside the wrapped ones.
+    sdk, _ = make([answer(COMPLETE)])
+    for name in ("groups", "reviews", "members", "invites", "audit", "exports", "evaluations", "lists",
+                 "erasures", "operations", "usage"):
+        assert callable(getattr(getattr(sdk, name), "__init__")), name
+    assert callable(sdk.groups.get_person) and callable(sdk.groups.judge_record)
