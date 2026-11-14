@@ -547,6 +547,7 @@ if TYPE_CHECKING:
     from .record import Record, RecordTypedDict
     from .recordfield import RecordField, RecordFieldTypedDict
     from .recordmatch import RecordMatch, RecordMatchTypedDict
+    from .recordremaining import RecordRemaining, RecordRemainingTypedDict
     from .recordsource import RecordSource, RecordSourceTypedDict
     from .report import Report, ReportScope, ReportScopeTypedDict, ReportTypedDict
     from .requestaggregaterequest import (
@@ -1287,6 +1288,8 @@ __all__ = [
     "RecordFieldTypedDict",
     "RecordMatch",
     "RecordMatchTypedDict",
+    "RecordRemaining",
+    "RecordRemainingTypedDict",
     "RecordSource",
     "RecordSourceTypedDict",
     "RecordTypedDict",
@@ -2063,6 +2066,8 @@ _dynamic_imports: dict[str, str] = {
     "RecordFieldTypedDict": ".recordfield",
     "RecordMatch": ".recordmatch",
     "RecordMatchTypedDict": ".recordmatch",
+    "RecordRemaining": ".recordremaining",
+    "RecordRemainingTypedDict": ".recordremaining",
     "RecordSource": ".recordsource",
     "RecordSourceTypedDict": ".recordsource",
     "Report": ".report",

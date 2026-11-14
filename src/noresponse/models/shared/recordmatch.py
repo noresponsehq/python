@@ -9,7 +9,7 @@ class RecordMatchTypedDict(TypedDict):
     r"""One searched value that found the record."""
 
     by: str
-    r"""The kind of searched value: email, phone, username, name, or handle for a profile read of a handle."""
+    r"""The kind of searched value: email, phone, username, ip, name, or handle for a profile read of a handle."""
     field: NotRequired[str]
     r"""The field the searched value hit, when the record holds it."""
 
@@ -18,7 +18,7 @@ class RecordMatch(BaseModel):
     r"""One searched value that found the record."""
 
     by: str
-    r"""The kind of searched value: email, phone, username, name, or handle for a profile read of a handle."""
+    r"""The kind of searched value: email, phone, username, ip, name, or handle for a profile read of a handle."""
 
     field: Optional[str] = None
     r"""The field the searched value hit, when the record holds it."""

@@ -1,5 +1,6 @@
 from __future__ import annotations
 from .record import Record, RecordTypedDict
+from .recordremaining import RecordRemaining, RecordRemainingTypedDict
 from .riskdetails import RiskDetails, RiskDetailsTypedDict
 from .risksummary import RiskSummary, RiskSummaryTypedDict
 from .screeninglookupcheck import ScreeningLookupCheck, ScreeningLookupCheckTypedDict
@@ -21,7 +22,9 @@ class ScreeningLookupTypedDict(TypedDict):
     details: NotRequired[RiskDetailsTypedDict]
     r"""Merged observations behind the summary, served only to a caller who may read evidence: no provider, source, origin, raw breach record or score."""
     records: NotRequired[List[RecordTypedDict]]
-    r"""What each source that found an account answered, whole: every field under the source's own names, each answer once. Served only to a caller who may read evidence, as details are."""
+    r"""What each source answered, whole, each answer once: every field of each account a connector found, and every column of each breach row the person's email or usernames matched, under the source's own names. Anyone who may read the person reads them: no extra permission applies, breach passwords and hashes included."""
+    remaining: NotRequired[List[RecordRemainingTypedDict]]
+    r"""For each search and source whose matched rows records leave out, how many: a breach search returns at most 20 rows of a table and 100 in all, from its first 64 tables by name. Absent when records hold every matched row."""
 
 
 class ScreeningLookup(BaseModel):
@@ -40,11 +43,14 @@ class ScreeningLookup(BaseModel):
     r"""Merged observations behind the summary, served only to a caller who may read evidence: no provider, source, origin, raw breach record or score."""
 
     records: Optional[List[Record]] = None
-    r"""What each source that found an account answered, whole: every field under the source's own names, each answer once. Served only to a caller who may read evidence, as details are."""
+    r"""What each source answered, whole, each answer once: every field of each account a connector found, and every column of each breach row the person's email or usernames matched, under the source's own names. Anyone who may read the person reads them: no extra permission applies, breach passwords and hashes included."""
+
+    remaining: Optional[List[RecordRemaining]] = None
+    r"""For each search and source whose matched rows records leave out, how many: a breach search returns at most 20 rows of a table and 100 in all, from its first 64 tables by name. Absent when records hold every matched row."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["summary", "details", "records"])
+        optional_fields = set(["summary", "details", "records", "remaining"])
         serialized = handler(self)
         m = {}
 

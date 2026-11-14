@@ -11,7 +11,7 @@ class RecordFieldTypedDict(TypedDict):
     field: str
     r"""The source's own name for the field. A nested value's name is dotted, and a list element's carries its index."""
     original: str
-    r"""The value as the source wrote it. A count is written in decimal and a time in RFC 3339."""
+    r"""The value as the source wrote it. A count is written in decimal and a time in RFC 3339; a breach column's value is as the leak holds it."""
     kind: NotRequired[str]
     r"""What sort of value the field holds. Absent until the field's kind is known."""
     role: NotRequired[str]
@@ -27,7 +27,7 @@ class RecordField(BaseModel):
     r"""The source's own name for the field. A nested value's name is dotted, and a list element's carries its index."""
 
     original: str
-    r"""The value as the source wrote it. A count is written in decimal and a time in RFC 3339."""
+    r"""The value as the source wrote it. A count is written in decimal and a time in RFC 3339; a breach column's value is as the leak holds it."""
 
     kind: Optional[str] = None
     r"""What sort of value the field holds. Absent until the field's kind is known."""

@@ -1,5 +1,9 @@
 # Changelog
 
+## 11.1.2
+
+* `sdk.groups.get_person()`:  `response.lookup.remaining` **Added**
+
 ## 11.1.1
 
 * `sdk.groups.get_person()`:  `response` **Changed**

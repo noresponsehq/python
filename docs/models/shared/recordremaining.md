@@ -1,0 +1,12 @@
+# RecordRemaining
+
+Rows one search matched in one source that the lookup's records leave out, so no answer is cut short in silence.
+
+
+## Fields
+
+| Field                                                                                     | Type                                                                                      | Required                                                                                  | Description                                                                               | Example                                                                                   |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `source`                                                                                  | [shared.RecordSource](../../models/shared/recordsource.md)                                | :heavy_check_mark:                                                                        | Where a record came from.                                                                 |                                                                                           |
+| `by`                                                                                      | *str*                                                                                     | :heavy_check_mark:                                                                        | The kind of searched value whose search matched the rows, as a record's matched names it. | email                                                                                     |
+| `rows`                                                                                    | *int*                                                                                     | :heavy_check_mark:                                                                        | How many rows of the source that search matched beyond the records the lookup carries.    |                                                                                           |

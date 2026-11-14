@@ -17,7 +17,7 @@ class RecordTypedDict(TypedDict):
     matched: List[RecordMatchTypedDict]
     r"""Each kind of searched value that found the record."""
     fields: List[RecordFieldTypedDict]
-    r"""Every field the source returned, in the order the source's connector lists them."""
+    r"""Every field the source returned, in the order the source's connector lists them; a breach row's columns in name order. Nothing is withheld: a breach row's passwords, hashes and salts are fields like any other."""
     observed_at: str
     r"""When the source last gave this answer."""
 
@@ -35,7 +35,7 @@ class Record(BaseModel):
     r"""Each kind of searched value that found the record."""
 
     fields: List[RecordField]
-    r"""Every field the source returned, in the order the source's connector lists them."""
+    r"""Every field the source returned, in the order the source's connector lists them; a breach row's columns in name order. Nothing is withheld: a breach row's passwords, hashes and salts are fields like any other."""
 
     observed_at: str
     r"""When the source last gave this answer."""
