@@ -546,8 +546,10 @@ if TYPE_CHECKING:
     from .recommendation import Recommendation
     from .record import Record, RecordTypedDict
     from .recordfield import RecordField, RecordFieldTypedDict
+    from .recordkind import RecordKind
     from .recordmatch import RecordMatch, RecordMatchTypedDict
     from .recordremaining import RecordRemaining, RecordRemainingTypedDict
+    from .recordrole import RecordRole
     from .recordsource import RecordSource, RecordSourceTypedDict
     from .report import Report, ReportScope, ReportScopeTypedDict, ReportTypedDict
     from .requestaggregaterequest import (
@@ -1286,10 +1288,12 @@ __all__ = [
     "Record",
     "RecordField",
     "RecordFieldTypedDict",
+    "RecordKind",
     "RecordMatch",
     "RecordMatchTypedDict",
     "RecordRemaining",
     "RecordRemainingTypedDict",
+    "RecordRole",
     "RecordSource",
     "RecordSourceTypedDict",
     "RecordTypedDict",
@@ -2064,10 +2068,12 @@ _dynamic_imports: dict[str, str] = {
     "RecordTypedDict": ".record",
     "RecordField": ".recordfield",
     "RecordFieldTypedDict": ".recordfield",
+    "RecordKind": ".recordkind",
     "RecordMatch": ".recordmatch",
     "RecordMatchTypedDict": ".recordmatch",
     "RecordRemaining": ".recordremaining",
     "RecordRemainingTypedDict": ".recordremaining",
+    "RecordRole": ".recordrole",
     "RecordSource": ".recordsource",
     "RecordSourceTypedDict": ".recordsource",
     "Report": ".report",

@@ -1,4 +1,6 @@
 from __future__ import annotations
+from .recordkind import RecordKind
+from .recordrole import RecordRole
 from noresponse.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
 from typing import Optional
@@ -12,12 +14,14 @@ class RecordFieldTypedDict(TypedDict):
     r"""The source's own name for the field. A nested value's name is dotted, and a list element's carries its index."""
     original: str
     r"""The value as the source wrote it. A count is written in decimal and a time in RFC 3339; a breach column's value is as the leak holds it."""
-    kind: NotRequired[str]
-    r"""What sort of value the field holds. Absent until the field's kind is known."""
-    role: NotRequired[str]
-    r"""Which common field it is, where many sources share it, such as handle, display_name, account_id, profile_link, picture, bio, website, linked_account (named by its network), account_status, joined, last_updated, organisation, location, followers, following or posts. Absent for a field only this source returns."""
+    kind: NotRequired[RecordKind]
+    r"""What sort of value a field holds, which decides how it is cleaned, compared and searched again. It comes from the value itself where its shape is certain (an email, an IP, a URL, an international phone number), else from the answer stored for the source's column, else text. A value of any kind is returned."""
+    role: NotRequired[RecordRole]
+    r"""Which common field a value is, where many sources share it: a join date and a birth date are both dates, with the roles joined and born. A platform account's field and a breach row's column with the same meaning carry the same kind and role. A linked_account field is named by its network. Absent for a field only its source returns."""
     value: NotRequired[str]
-    r"""The cleaned value. Absent when it cannot be cleaned, or until the field's kind is known."""
+    r"""The value cleaned to its kind's one form: an email in lower case, a phone number in international form when its country is known, a date in ISO form, a country as its two-letter code, a flag as true or false. Absent when the value cannot be cleaned as its kind; original still holds it."""
+    detail: NotRequired[str]
+    r"""What the value shows of itself beyond its kind: the likely algorithm of a hash, the likely coin of a crypto address or the currency of an amount."""
 
 
 class RecordField(BaseModel):
@@ -29,18 +33,21 @@ class RecordField(BaseModel):
     original: str
     r"""The value as the source wrote it. A count is written in decimal and a time in RFC 3339; a breach column's value is as the leak holds it."""
 
-    kind: Optional[str] = None
-    r"""What sort of value the field holds. Absent until the field's kind is known."""
+    kind: Optional[RecordKind] = None
+    r"""What sort of value a field holds, which decides how it is cleaned, compared and searched again. It comes from the value itself where its shape is certain (an email, an IP, a URL, an international phone number), else from the answer stored for the source's column, else text. A value of any kind is returned."""
 
-    role: Optional[str] = None
-    r"""Which common field it is, where many sources share it, such as handle, display_name, account_id, profile_link, picture, bio, website, linked_account (named by its network), account_status, joined, last_updated, organisation, location, followers, following or posts. Absent for a field only this source returns."""
+    role: Optional[RecordRole] = None
+    r"""Which common field a value is, where many sources share it: a join date and a birth date are both dates, with the roles joined and born. A platform account's field and a breach row's column with the same meaning carry the same kind and role. A linked_account field is named by its network. Absent for a field only its source returns."""
 
     value: Optional[str] = None
-    r"""The cleaned value. Absent when it cannot be cleaned, or until the field's kind is known."""
+    r"""The value cleaned to its kind's one form: an email in lower case, a phone number in international form when its country is known, a date in ISO form, a country as its two-letter code, a flag as true or false. Absent when the value cannot be cleaned as its kind; original still holds it."""
+
+    detail: Optional[str] = None
+    r"""What the value shows of itself beyond its kind: the likely algorithm of a hash, the likely coin of a crypto address or the currency of an amount."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["kind", "role", "value"])
+        optional_fields = set(["kind", "role", "value", "detail"])
         serialized = handler(self)
         m = {}
 
