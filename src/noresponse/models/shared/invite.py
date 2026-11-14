@@ -35,7 +35,7 @@ class InviteTypedDict(TypedDict):
     role: Role
     r"""A built-in capability set. Specialist roles are independent; effective access is returned by GET /v1/workspaces/{workspace_id}/capabilities."""
     created_by: str
-    r"""The stable member id that issued this invite, or the authenticated live API key prefix for members_manage automation. Reissuing preserves the original creator; the audit event names the reissuing actor."""
+    r"""The stable member id that issued this invite, the authenticated live API key prefix for members_manage automation, or, for an invite NoResponse issued for the workspace, NoResponse's own id (adm_ or nrc_). Reissuing preserves the original creator; the audit event names the reissuing actor."""
     created_at: str
     expires_at: str
     email: NotRequired[str]
@@ -65,7 +65,7 @@ class Invite(BaseModel):
     r"""A built-in capability set. Specialist roles are independent; effective access is returned by GET /v1/workspaces/{workspace_id}/capabilities."""
 
     created_by: str
-    r"""The stable member id that issued this invite, or the authenticated live API key prefix for members_manage automation. Reissuing preserves the original creator; the audit event names the reissuing actor."""
+    r"""The stable member id that issued this invite, the authenticated live API key prefix for members_manage automation, or, for an invite NoResponse issued for the workspace, NoResponse's own id (adm_ or nrc_). Reissuing preserves the original creator; the audit event names the reissuing actor."""
 
     created_at: str
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## 11.0.1
+
+No changes detected.
+
 ## 11.0.0
 
 * `sdk.webhook_endpoints.aggregate()`:  `error.code` **Changed** (Breaking ⚠️)

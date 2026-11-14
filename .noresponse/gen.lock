@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: 9f81ad0ce84c2350b7ceca7a41c67e11
+  docChecksum: 263b6a5a670aa7e8efdc92c1790d42ba
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 11.0.0
-  configChecksum: d5dbd4624205aa9cf56c3f85867f7329
+  releaseVersion: 11.0.1
+  configChecksum: 0af25b00b5ccb89e31265359f8b41916
 features:
   python:
     additionalDependencies: 1.1.0
@@ -861,7 +861,7 @@ trackedFiles:
   docs/models/shared/integrationrotationrequest.md:
     last_write_checksum: sha1:9e45424ade903e6e361b3b3d98669a2a397c476c
   docs/models/shared/invite.md:
-    last_write_checksum: sha1:3fd55ed88fd82c1f6286d8e34585ce12a86edba6
+    last_write_checksum: sha1:bc22509df4cafd8c074fb8a2ff931c8b5ba876ac
   docs/models/shared/invitedeniedaction.md:
     last_write_checksum: sha1:5d1856421c6861151e76486374dd3a89a72e6725
   docs/models/shared/inviteenvironment.md:
@@ -1387,7 +1387,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:b00adf52bf1a4ddd1c683d4d478e73554a987043
   pyproject.toml:
-    last_write_checksum: sha1:9df73db1d42609ce42ab10064b252b61dd065d93
+    last_write_checksum: sha1:b0a083db43bca19f6de3ce62a90c945468b7972b
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -1403,7 +1403,7 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:979a669d6cd3bef3dc475a988c28e433151270a8
+    last_write_checksum: sha1:0b3ee2d50b4348d95932acd00cbaef82490ed470
   src/noresponse/accounts.py:
     last_write_checksum: sha1:8c1bb1bed57733e59eeee63ef04e3969818cc031
   src/noresponse/assessments.py:
@@ -2049,7 +2049,7 @@ trackedFiles:
   src/noresponse/models/shared/integrationrotationrequest.py:
     last_write_checksum: sha1:d4e5085ec0b2b7fe6abc8a79416ebfe97a7752a8
   src/noresponse/models/shared/invite.py:
-    last_write_checksum: sha1:571e7dc3469dfcf8b7182220b29e8124c4bb4880
+    last_write_checksum: sha1:f351bf4a671c724e5545085062bc3a19b26fecf7
   src/noresponse/models/shared/invitelist.py:
     last_write_checksum: sha1:76c1547c5d659d24bc77b5c600c6eeb15e0eaa27
   src/noresponse/models/shared/inviterequest.py:
