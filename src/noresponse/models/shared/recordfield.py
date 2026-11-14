@@ -1,4 +1,5 @@
 from __future__ import annotations
+from .recorddistinctive import RecordDistinctive, RecordDistinctiveTypedDict
 from .recordkind import RecordKind
 from .recordrole import RecordRole
 from noresponse.types import BaseModel, UNSET_SENTINEL
@@ -22,6 +23,8 @@ class RecordFieldTypedDict(TypedDict):
     r"""The value cleaned to its kind's one form: an email in lower case, a phone number in international form when its country is known, a date in ISO form, a country as its two-letter code, a flag as true or false. Absent when the value cannot be cleaned as its kind; original still holds it."""
     detail: NotRequired[str]
     r"""What the value shows of itself beyond its kind: the likely algorithm of a hash, the likely coin of a crypto address or the currency of an amount."""
+    distinctive: NotRequired[RecordDistinctiveTypedDict]
+    r"""How distinctive a searchable value is: an email, phone, username, password, hash, person name or IP. Absent for other values, and when its rating could not be worked out, such as when a count failed."""
 
 
 class RecordField(BaseModel):
@@ -45,9 +48,12 @@ class RecordField(BaseModel):
     detail: Optional[str] = None
     r"""What the value shows of itself beyond its kind: the likely algorithm of a hash, the likely coin of a crypto address or the currency of an amount."""
 
+    distinctive: Optional[RecordDistinctive] = None
+    r"""How distinctive a searchable value is: an email, phone, username, password, hash, person name or IP. Absent for other values, and when its rating could not be worked out, such as when a count failed."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["kind", "role", "value", "detail"])
+        optional_fields = set(["kind", "role", "value", "detail", "distinctive"])
         serialized = handler(self)
         m = {}
 

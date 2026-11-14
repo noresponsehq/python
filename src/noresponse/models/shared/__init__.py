@@ -542,10 +542,12 @@ if TYPE_CHECKING:
     from .provenance import Provenance
     from .publication import Publication, PublicationTypedDict
     from .ratelimiterrorcode import RateLimitErrorCode
+    from .rating import Rating
     from .reasoncode import ReasonCode
     from .reasonidentifier import ReasonIdentifier
     from .recommendation import Recommendation
     from .record import Record, RecordTypedDict
+    from .recorddistinctive import RecordDistinctive, RecordDistinctiveTypedDict
     from .recordfield import RecordField, RecordFieldTypedDict
     from .recordkind import RecordKind
     from .recordmatch import RecordMatch, RecordMatchTypedDict
@@ -1284,10 +1286,13 @@ __all__ = [
     "Publication",
     "PublicationTypedDict",
     "RateLimitErrorCode",
+    "Rating",
     "ReasonCode",
     "ReasonIdentifier",
     "Recommendation",
     "Record",
+    "RecordDistinctive",
+    "RecordDistinctiveTypedDict",
     "RecordField",
     "RecordFieldTypedDict",
     "RecordKind",
@@ -2064,11 +2069,14 @@ _dynamic_imports: dict[str, str] = {
     "Publication": ".publication",
     "PublicationTypedDict": ".publication",
     "RateLimitErrorCode": ".ratelimiterrorcode",
+    "Rating": ".rating",
     "ReasonCode": ".reasoncode",
     "ReasonIdentifier": ".reasonidentifier",
     "Recommendation": ".recommendation",
     "Record": ".record",
     "RecordTypedDict": ".record",
+    "RecordDistinctive": ".recorddistinctive",
+    "RecordDistinctiveTypedDict": ".recorddistinctive",
     "RecordField": ".recordfield",
     "RecordFieldTypedDict": ".recordfield",
     "RecordKind": ".recordkind",

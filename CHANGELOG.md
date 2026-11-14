@@ -1,5 +1,9 @@
 # Changelog
 
+## 12.0.2
+
+* `sdk.groups.get_person()`:  `response.profiles[].record.fields[].distinctive` **Added**
+
 ## 12.0.1
 
 * `sdk.groups.get_person()`:  `response` **Changed**
