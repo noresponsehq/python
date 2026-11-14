@@ -554,6 +554,11 @@ if TYPE_CHECKING:
     from .recordremaining import RecordRemaining, RecordRemainingTypedDict
     from .recordrole import RecordRole
     from .recordsource import RecordSource, RecordSourceTypedDict
+    from .recordverdict import RecordVerdict, RecordVerdictTypedDict
+    from .recordverdictrequest import (
+        RecordVerdictRequest,
+        RecordVerdictRequestTypedDict,
+    )
     from .report import Report, ReportScope, ReportScopeTypedDict, ReportTypedDict
     from .requestaggregaterequest import (
         RequestAggregateRequest,
@@ -708,6 +713,7 @@ if TYPE_CHECKING:
     from .usagecountdepth import UsageCountDepth
     from .usagecountflow import UsageCountFlow
     from .useractor import UserActor, UserActorTypedDict
+    from .verdict import Verdict
     from .webhookaggregaterequest import (
         WebhookAggregateRequest,
         WebhookAggregateRequestTypedDict,
@@ -1304,6 +1310,10 @@ __all__ = [
     "RecordSource",
     "RecordSourceTypedDict",
     "RecordTypedDict",
+    "RecordVerdict",
+    "RecordVerdictRequest",
+    "RecordVerdictRequestTypedDict",
+    "RecordVerdictTypedDict",
     "Report",
     "ReportScope",
     "ReportScopeTypedDict",
@@ -1485,6 +1495,7 @@ __all__ = [
     "UsageTypedDict",
     "UserActor",
     "UserActorTypedDict",
+    "Verdict",
     "WaitingFor",
     "WebhookAggregateRequest",
     "WebhookAggregateRequestTypedDict",
@@ -2087,6 +2098,10 @@ _dynamic_imports: dict[str, str] = {
     "RecordRole": ".recordrole",
     "RecordSource": ".recordsource",
     "RecordSourceTypedDict": ".recordsource",
+    "RecordVerdict": ".recordverdict",
+    "RecordVerdictTypedDict": ".recordverdict",
+    "RecordVerdictRequest": ".recordverdictrequest",
+    "RecordVerdictRequestTypedDict": ".recordverdictrequest",
     "Report": ".report",
     "ReportScope": ".report",
     "ReportScopeTypedDict": ".report",
@@ -2258,6 +2273,7 @@ _dynamic_imports: dict[str, str] = {
     "UsageCountFlow": ".usagecountflow",
     "UserActor": ".useractor",
     "UserActorTypedDict": ".useractor",
+    "Verdict": ".verdict",
     "WebhookAggregateRequest": ".webhookaggregaterequest",
     "WebhookAggregateRequestTypedDict": ".webhookaggregaterequest",
     "WebhookDeliveryAttempt": ".webhookdeliveryattempt",

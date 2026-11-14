@@ -299,6 +299,12 @@ if TYPE_CHECKING:
         GetUsageResponse,
         GetUsageResponseTypedDict,
     )
+    from .judgerecord import (
+        JudgeRecordRequest,
+        JudgeRecordRequestTypedDict,
+        JudgeRecordResponse,
+        JudgeRecordResponseTypedDict,
+    )
     from .listaccountassessments import (
         ListAccountAssessmentsRequest,
         ListAccountAssessmentsRequestTypedDict,
@@ -857,6 +863,10 @@ __all__ = [
     "GetUsageRequestTypedDict",
     "GetUsageResponse",
     "GetUsageResponseTypedDict",
+    "JudgeRecordRequest",
+    "JudgeRecordRequestTypedDict",
+    "JudgeRecordResponse",
+    "JudgeRecordResponseTypedDict",
     "ListAccountAssessmentsRequest",
     "ListAccountAssessmentsRequestTypedDict",
     "ListAccountAssessmentsResponse",
@@ -1294,6 +1304,10 @@ _dynamic_imports: dict[str, str] = {
     "GetUsageRequestTypedDict": ".getusage",
     "GetUsageResponse": ".getusage",
     "GetUsageResponseTypedDict": ".getusage",
+    "JudgeRecordRequest": ".judgerecord",
+    "JudgeRecordRequestTypedDict": ".judgerecord",
+    "JudgeRecordResponse": ".judgerecord",
+    "JudgeRecordResponseTypedDict": ".judgerecord",
     "ListAccountAssessmentsRequest": ".listaccountassessments",
     "ListAccountAssessmentsRequestTypedDict": ".listaccountassessments",
     "ListAccountAssessmentsResponse": ".listaccountassessments",

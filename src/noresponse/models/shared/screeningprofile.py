@@ -38,7 +38,7 @@ class ScreeningProfileTypedDict(TypedDict):
     period_to: NotRequired[str]
     r"""The newest item read."""
     record: NotRequired[RecordTypedDict]
-    r"""One answer from one source: where it came from, what found it and every field it holds."""
+    r"""One answer from one source: where it came from, what found it and every field it holds. A person's lookup records also say how likely each is the person."""
 
 
 class ScreeningProfile(BaseModel):
@@ -86,7 +86,7 @@ class ScreeningProfile(BaseModel):
     r"""The newest item read."""
 
     record: Optional[Record] = None
-    r"""One answer from one source: where it came from, what found it and every field it holds."""
+    r"""One answer from one source: where it came from, what found it and every field it holds. A person's lookup records also say how likely each is the person."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

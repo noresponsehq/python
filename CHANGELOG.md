@@ -1,5 +1,10 @@
 # Changelog
 
+## 12.0.3
+
+* `sdk.groups.judge_record()`: **Added**
+* `sdk.groups.get_person()`:  `response.profiles[].record` **Changed**
+
 ## 12.0.2
 
 * `sdk.groups.get_person()`:  `response.profiles[].record.fields[].distinctive` **Added**
