@@ -606,6 +606,12 @@ if TYPE_CHECKING:
         RotateWebhookSigningKeyResponse,
         RotateWebhookSigningKeyResponseTypedDict,
     )
+    from .runsearch import (
+        RunSearchRequest,
+        RunSearchRequestTypedDict,
+        RunSearchResponse,
+        RunSearchResponseTypedDict,
+    )
     from .searchaccounts import SearchAccountsResponse, SearchAccountsResponseTypedDict
     from .searchassessments import (
         SearchAssessmentsResponse,
@@ -622,6 +628,12 @@ if TYPE_CHECKING:
         StartScreeningRequestTypedDict,
         StartScreeningResponse,
         StartScreeningResponseTypedDict,
+    )
+    from .startsearch import (
+        StartSearchRequest,
+        StartSearchRequestTypedDict,
+        StartSearchResponse,
+        StartSearchResponseTypedDict,
     )
     from .summarizeworkspaceoperations import (
         SummarizeWorkspaceOperationsRequest,
@@ -1067,6 +1079,10 @@ __all__ = [
     "RotateWebhookSigningKeyRequestTypedDict",
     "RotateWebhookSigningKeyResponse",
     "RotateWebhookSigningKeyResponseTypedDict",
+    "RunSearchRequest",
+    "RunSearchRequestTypedDict",
+    "RunSearchResponse",
+    "RunSearchResponseTypedDict",
     "SearchAccountsResponse",
     "SearchAccountsResponseTypedDict",
     "SearchAssessmentsResponse",
@@ -1079,6 +1095,10 @@ __all__ = [
     "StartScreeningRequestTypedDict",
     "StartScreeningResponse",
     "StartScreeningResponseTypedDict",
+    "StartSearchRequest",
+    "StartSearchRequestTypedDict",
+    "StartSearchResponse",
+    "StartSearchResponseTypedDict",
     "SummarizeWorkspaceOperationsRequest",
     "SummarizeWorkspaceOperationsRequestTypedDict",
     "SummarizeWorkspaceOperationsResponse",
@@ -1508,6 +1528,10 @@ _dynamic_imports: dict[str, str] = {
     "RotateWebhookSigningKeyRequestTypedDict": ".rotatewebhooksigningkey",
     "RotateWebhookSigningKeyResponse": ".rotatewebhooksigningkey",
     "RotateWebhookSigningKeyResponseTypedDict": ".rotatewebhooksigningkey",
+    "RunSearchRequest": ".runsearch",
+    "RunSearchRequestTypedDict": ".runsearch",
+    "RunSearchResponse": ".runsearch",
+    "RunSearchResponseTypedDict": ".runsearch",
     "SearchAccountsResponse": ".searchaccounts",
     "SearchAccountsResponseTypedDict": ".searchaccounts",
     "SearchAssessmentsResponse": ".searchassessments",
@@ -1520,6 +1544,10 @@ _dynamic_imports: dict[str, str] = {
     "StartScreeningRequestTypedDict": ".startscreening",
     "StartScreeningResponse": ".startscreening",
     "StartScreeningResponseTypedDict": ".startscreening",
+    "StartSearchRequest": ".startsearch",
+    "StartSearchRequestTypedDict": ".startsearch",
+    "StartSearchResponse": ".startsearch",
+    "StartSearchResponseTypedDict": ".startsearch",
     "SummarizeWorkspaceOperationsRequest": ".summarizeworkspaceoperations",
     "SummarizeWorkspaceOperationsRequestTypedDict": ".summarizeworkspaceoperations",
     "SummarizeWorkspaceOperationsResponse": ".summarizeworkspaceoperations",

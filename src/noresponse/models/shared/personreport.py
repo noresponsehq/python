@@ -7,6 +7,7 @@ from .screeninglookup import ScreeningLookup, ScreeningLookupTypedDict
 from .screeningmedia import ScreeningMedia, ScreeningMediaTypedDict
 from .screeningpost import ScreeningPost, ScreeningPostTypedDict
 from .screeningprofile import ScreeningProfile, ScreeningProfileTypedDict
+from .search import Search, SearchTypedDict
 from noresponse.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
 from typing import List, Optional
@@ -32,6 +33,8 @@ class PersonReportTypedDict(TypedDict):
     r"""Where else in the environment the person appears, read live from those groups: deleting one removes it here."""
     lookup: NotRequired[ScreeningLookupTypedDict]
     r"""What the signup check's lookups found for a person: account presence for the email, phone and usernames (the person's handles), the phone lookup, the email domain's registration and the breach search. Context and coverage for the reviewer, not a finding: nothing here sets a band or a match state."""
+    searches: NotRequired[List[SearchTypedDict]]
+    r"""The searches people started on this person's values, newest first: each names the value, and the record and field it came from. Absent when nobody searched."""
 
 
 class PersonReport(BaseModel):
@@ -61,9 +64,12 @@ class PersonReport(BaseModel):
     lookup: Optional[ScreeningLookup] = None
     r"""What the signup check's lookups found for a person: account presence for the email, phone and usernames (the person's handles), the phone lookup, the email domain's registration and the breach search. Context and coverage for the reviewer, not a finding: nothing here sets a band or a match state."""
 
+    searches: Optional[List[Search]] = None
+    r"""The searches people started on this person's values, newest first: each names the value, and the record and field it came from. Absent when nobody searched."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["lookup"])
+        optional_fields = set(["lookup", "searches"])
         serialized = handler(self)
         m = {}
 

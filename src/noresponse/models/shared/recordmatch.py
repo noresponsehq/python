@@ -9,23 +9,28 @@ class RecordMatchTypedDict(TypedDict):
     r"""One searched value that found the record."""
 
     by: str
-    r"""The kind of searched value: email, phone, username, ip, name, or handle for a profile read of a handle."""
+    r"""The kind of searched value: email, phone, username, ip, name, password, hash, or handle for a profile read of a handle."""
     field: NotRequired[str]
     r"""The field the searched value hit, when the record holds it."""
+    search: NotRequired[str]
+    r"""The search a person started on a value of another record that found this one, among the person report's searches, which names the value and the record and field it came from. A record found only by such searches is a lead, whatever kind of value found it. Absent for a match of the lookups."""
 
 
 class RecordMatch(BaseModel):
     r"""One searched value that found the record."""
 
     by: str
-    r"""The kind of searched value: email, phone, username, ip, name, or handle for a profile read of a handle."""
+    r"""The kind of searched value: email, phone, username, ip, name, password, hash, or handle for a profile read of a handle."""
 
     field: Optional[str] = None
     r"""The field the searched value hit, when the record holds it."""
 
+    search: Optional[str] = None
+    r"""The search a person started on a value of another record that found this one, among the person report's searches, which names the value and the record and field it came from. A record found only by such searches is a lead, whatever kind of value found it. Absent for a match of the lookups."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["field"])
+        optional_fields = set(["field", "search"])
         serialized = handler(self)
         m = {}
 

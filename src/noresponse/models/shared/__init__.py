@@ -257,6 +257,7 @@ if TYPE_CHECKING:
     )
     from .erasurereceipttargetname import ErasureReceiptTargetName
     from .erasurereceipttargetstatus import ErasureReceiptTargetStatus
+    from .errorcode import ErrorCode
     from .export import Export, ExportTypedDict
     from .exportassessmentoutcome import (
         ExportAssessmentOutcome,
@@ -689,6 +690,10 @@ if TYPE_CHECKING:
     from .screeningspendline import ScreeningSpendLine, ScreeningSpendLineTypedDict
     from .screeningspendlinerole import ScreeningSpendLineRole
     from .screeningstatus import ScreeningStatus
+    from .search import Search, SearchTypedDict
+    from .searchkind import SearchKind
+    from .searchrequest import SearchRequest, SearchRequestTypedDict
+    from .searchstatus import SearchStatus
     from .security import Security, SecurityTypedDict
     from .sentidentifiers import SentIdentifiers, SentIdentifiersTypedDict
     from .settings import Settings, SettingsTypedDict
@@ -1014,6 +1019,7 @@ __all__ = [
     "ErasureReceiptTargetStatus",
     "ErasureReceiptTargetTypedDict",
     "ErasureReceiptTypedDict",
+    "ErrorCode",
     "Exclusion",
     "Export",
     "ExportAssessmentOutcome",
@@ -1450,6 +1456,12 @@ __all__ = [
     "ScreeningSpendTypedDict",
     "ScreeningStatus",
     "ScreeningTypedDict",
+    "Search",
+    "SearchKind",
+    "SearchRequest",
+    "SearchRequestTypedDict",
+    "SearchStatus",
+    "SearchTypedDict",
     "Security",
     "SecurityTypedDict",
     "SentIdentifiers",
@@ -1782,6 +1794,7 @@ _dynamic_imports: dict[str, str] = {
     "ErasureReceiptTargetTypedDict": ".erasurereceipttarget",
     "ErasureReceiptTargetName": ".erasurereceipttargetname",
     "ErasureReceiptTargetStatus": ".erasurereceipttargetstatus",
+    "ErrorCode": ".errorcode",
     "Export": ".export",
     "ExportTypedDict": ".export",
     "ExportAssessmentOutcome": ".exportassessmentoutcome",
@@ -2238,6 +2251,12 @@ _dynamic_imports: dict[str, str] = {
     "ScreeningSpendLineTypedDict": ".screeningspendline",
     "ScreeningSpendLineRole": ".screeningspendlinerole",
     "ScreeningStatus": ".screeningstatus",
+    "Search": ".search",
+    "SearchTypedDict": ".search",
+    "SearchKind": ".searchkind",
+    "SearchRequest": ".searchrequest",
+    "SearchRequestTypedDict": ".searchrequest",
+    "SearchStatus": ".searchstatus",
     "Security": ".security",
     "SecurityTypedDict": ".security",
     "SentIdentifiers": ".sentidentifiers",
