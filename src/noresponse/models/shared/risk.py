@@ -41,7 +41,7 @@ class RiskTypedDict(TypedDict):
     policy_basis: Literal["heuristic_unvalidated"]
     r"""Labels the v0 policy as hand-authored and not statistically validated."""
     summary: NotRequired[RiskSummaryTypedDict]
-    r"""A few typed facts per identifier: an assessment's risk.summary, and an event screening attendee's lookup summary. Every fact is optional: absent means the evidence did not answer and makes no claim, while false or 0 is a definite answer."""
+    r"""A few typed facts per identifier: an assessment's risk.summary, and a screened person's lookup summary. Every fact is optional: absent means the evidence did not answer and makes no claim, while false or 0 is a definite answer."""
     details: NotRequired[RiskDetailsTypedDict]
     r"""Merged observations behind the summary, served only to a caller who may read evidence: no provider, source, origin, raw breach record or score."""
 
@@ -90,7 +90,7 @@ class Risk(BaseModel):
     r"""Labels the v0 policy as hand-authored and not statistically validated."""
 
     summary: Optional[RiskSummary] = None
-    r"""A few typed facts per identifier: an assessment's risk.summary, and an event screening attendee's lookup summary. Every fact is optional: absent means the evidence did not answer and makes no claim, while false or 0 is a definite answer."""
+    r"""A few typed facts per identifier: an assessment's risk.summary, and a screened person's lookup summary. Every fact is optional: absent means the evidence did not answer and makes no claim, while false or 0 is a definite answer."""
 
     details: Optional[RiskDetails] = None
     r"""Merged observations behind the summary, served only to a caller who may read evidence: no provider, source, origin, raw breach record or score."""

@@ -149,35 +149,6 @@ if TYPE_CHECKING:
         AssessmentUpdatedEventTypedDict,
     )
     from .assurancelevel import AssuranceLevel
-    from .attendee import Attendee, AttendeeTypedDict
-    from .attendeebatch import AttendeeBatch, AttendeeBatchTypedDict
-    from .attendeebatchitem import AttendeeBatchItem, AttendeeBatchItemTypedDict
-    from .attendeebatchitemoutcome import AttendeeBatchItemOutcome
-    from .attendeebatchrequest import (
-        AttendeeBatchRequest,
-        AttendeeBatchRequestTypedDict,
-    )
-    from .attendeedecided import AttendeeDecided, AttendeeDecidedTypedDict
-    from .attendeedecidedevent import (
-        AttendeeDecidedEvent,
-        AttendeeDecidedEventTypedDict,
-    )
-    from .attendeedecision import AttendeeDecision
-    from .attendeeflagged import AttendeeFlagged, AttendeeFlaggedTypedDict
-    from .attendeeflaggedevent import (
-        AttendeeFlaggedEvent,
-        AttendeeFlaggedEventTypedDict,
-    )
-    from .attendeeflaggedmatchstate import AttendeeFlaggedMatchState
-    from .attendeeidentity import AttendeeIdentity, AttendeeIdentityTypedDict
-    from .attendeelist import AttendeeList, AttendeeListTypedDict
-    from .attendeereport import AttendeeReport, AttendeeReportTypedDict
-    from .attendeereview import AttendeeReview, AttendeeReviewTypedDict
-    from .attendeereviewrequest import (
-        AttendeeReviewRequest,
-        AttendeeReviewRequestTypedDict,
-    )
-    from .attendeerole import AttendeeRole
     from .attribute import Attribute
     from .attributeagreement import AttributeAgreement, AttributeAgreementTypedDict
     from .auditevent import (
@@ -286,10 +257,6 @@ if TYPE_CHECKING:
     )
     from .erasurereceipttargetname import ErasureReceiptTargetName
     from .erasurereceipttargetstatus import ErasureReceiptTargetStatus
-    from .event import Event, EventTypedDict
-    from .eventlist import EventList, EventListTypedDict
-    from .eventrequest import EventRequest, EventRequestTypedDict
-    from .eventupdate import EventUpdate, EventUpdateTypedDict
     from .export import Export, ExportTypedDict
     from .exportassessmentoutcome import (
         ExportAssessmentOutcome,
@@ -309,6 +276,10 @@ if TYPE_CHECKING:
     from .footprinttimeline import FootprintTimeline, FootprintTimelineTypedDict
     from .freshness import Freshness
     from .from_ import From
+    from .group import Group, GroupTypedDict
+    from .grouplist import GroupList, GroupListTypedDict
+    from .grouprequest import GroupRequest, GroupRequestTypedDict
+    from .groupupdate import GroupUpdate, GroupUpdateTypedDict
     from .handle import Handle, HandleTypedDict
     from .handleplatform import HandlePlatform
     from .highestband import HighestBand
@@ -385,9 +356,6 @@ if TYPE_CHECKING:
     from .linetype import LineType
     from .linkedaccount import LinkedAccount, LinkedAccountTypedDict
     from .linkedaccountpage import LinkedAccountPage, LinkedAccountPageTypedDict
-    from .listattendeesband import ListAttendeesBand
-    from .listattendeesdecision import ListAttendeesDecision
-    from .listattendeesrole import ListAttendeesRole
     from .listbulkrequest import ListBulkRequest, ListBulkRequestTypedDict
     from .listchange import ListChange, ListChangeTypedDict
     from .listchangestate import ListChangeState
@@ -404,6 +372,9 @@ if TYPE_CHECKING:
     )
     from .listimpacttransitionfrom import ListImpactTransitionFrom
     from .listmatch import ListMatch
+    from .listpeopleband import ListPeopleBand
+    from .listpeopledecision import ListPeopleDecision
+    from .listpeoplerole import ListPeopleRole
     from .listpreviewrequest import ListPreviewRequest, ListPreviewRequestTypedDict
     from .match import Match
     from .matchstate import MatchState
@@ -439,13 +410,30 @@ if TYPE_CHECKING:
         OperationalAggregateTotalsTypedDict,
     )
     from .origin import Origin
-    from .otherevent import MatchedOn, OtherEvent, OtherEventTypedDict
-    from .otherevents import OtherEvents, OtherEventsTypedDict
+    from .othergroup import MatchedOn, OtherGroup, OtherGroupTypedDict
+    from .othergroups import OtherGroups, OtherGroupsTypedDict
     from .outcome import Outcome
     from .outcomes import Outcomes, OutcomesTypedDict
     from .outcomesbyoutcome import OutcomesByOutcome, OutcomesByOutcomeTypedDict
     from .ownertype import OwnerType
     from .permissiondeniederrorcode import PermissionDeniedErrorCode
+    from .person import Person, PersonTypedDict
+    from .personbatch import PersonBatch, PersonBatchTypedDict
+    from .personbatchitem import PersonBatchItem, PersonBatchItemTypedDict
+    from .personbatchitemoutcome import PersonBatchItemOutcome
+    from .personbatchrequest import PersonBatchRequest, PersonBatchRequestTypedDict
+    from .persondecided import PersonDecided, PersonDecidedTypedDict
+    from .persondecidedevent import PersonDecidedEvent, PersonDecidedEventTypedDict
+    from .persondecision import PersonDecision
+    from .personflagged import PersonFlagged, PersonFlaggedTypedDict
+    from .personflaggedevent import PersonFlaggedEvent, PersonFlaggedEventTypedDict
+    from .personflaggedmatchstate import PersonFlaggedMatchState
+    from .personidentity import PersonIdentity, PersonIdentityTypedDict
+    from .personlist import PersonList, PersonListTypedDict
+    from .personreport import PersonReport, PersonReportTypedDict
+    from .personreview import PersonReview, PersonReviewTypedDict
+    from .personreviewrequest import PersonReviewRequest, PersonReviewRequestTypedDict
+    from .personrole import PersonRole
     from .phoneenrichment import PhoneEnrichment, PhoneEnrichmentTypedDict
     from .phoneenrichmentfields import (
         AlternateName,
@@ -899,36 +887,6 @@ __all__ = [
     "AssessmentUpdatedEvent",
     "AssessmentUpdatedEventTypedDict",
     "AssuranceLevel",
-    "Attendee",
-    "AttendeeBatch",
-    "AttendeeBatchItem",
-    "AttendeeBatchItemOutcome",
-    "AttendeeBatchItemTypedDict",
-    "AttendeeBatchRequest",
-    "AttendeeBatchRequestTypedDict",
-    "AttendeeBatchTypedDict",
-    "AttendeeDecided",
-    "AttendeeDecidedEvent",
-    "AttendeeDecidedEventTypedDict",
-    "AttendeeDecidedTypedDict",
-    "AttendeeDecision",
-    "AttendeeFlagged",
-    "AttendeeFlaggedEvent",
-    "AttendeeFlaggedEventTypedDict",
-    "AttendeeFlaggedMatchState",
-    "AttendeeFlaggedTypedDict",
-    "AttendeeIdentity",
-    "AttendeeIdentityTypedDict",
-    "AttendeeList",
-    "AttendeeListTypedDict",
-    "AttendeeReport",
-    "AttendeeReportTypedDict",
-    "AttendeeReview",
-    "AttendeeReviewRequest",
-    "AttendeeReviewRequestTypedDict",
-    "AttendeeReviewTypedDict",
-    "AttendeeRole",
-    "AttendeeTypedDict",
     "Attribute",
     "AttributeAgreement",
     "AttributeAgreementTypedDict",
@@ -1040,14 +998,6 @@ __all__ = [
     "ErasureReceiptTargetStatus",
     "ErasureReceiptTargetTypedDict",
     "ErasureReceiptTypedDict",
-    "Event",
-    "EventList",
-    "EventListTypedDict",
-    "EventRequest",
-    "EventRequestTypedDict",
-    "EventTypedDict",
-    "EventUpdate",
-    "EventUpdateTypedDict",
     "Exclusion",
     "Export",
     "ExportAssessmentOutcome",
@@ -1073,6 +1023,14 @@ __all__ = [
     "FootprintTypedDict",
     "Freshness",
     "From",
+    "Group",
+    "GroupList",
+    "GroupListTypedDict",
+    "GroupRequest",
+    "GroupRequestTypedDict",
+    "GroupTypedDict",
+    "GroupUpdate",
+    "GroupUpdateTypedDict",
     "Handle",
     "HandlePlatform",
     "HandleTypedDict",
@@ -1158,9 +1116,6 @@ __all__ = [
     "LinkedAccountPage",
     "LinkedAccountPageTypedDict",
     "LinkedAccountTypedDict",
-    "ListAttendeesBand",
-    "ListAttendeesDecision",
-    "ListAttendeesRole",
     "ListBulkRequest",
     "ListBulkRequestTypedDict",
     "ListChange",
@@ -1181,6 +1136,9 @@ __all__ = [
     "ListImpactTransitionTypedDict",
     "ListImpactTypedDict",
     "ListMatch",
+    "ListPeopleBand",
+    "ListPeopleDecision",
+    "ListPeopleRole",
     "ListPreviewRequest",
     "ListPreviewRequestTypedDict",
     "Location",
@@ -1221,10 +1179,10 @@ __all__ = [
     "OperationalAggregateTotalsTypedDict",
     "OperationalAggregateTypedDict",
     "Origin",
-    "OtherEvent",
-    "OtherEventTypedDict",
-    "OtherEvents",
-    "OtherEventsTypedDict",
+    "OtherGroup",
+    "OtherGroupTypedDict",
+    "OtherGroups",
+    "OtherGroupsTypedDict",
     "Outcome",
     "Outcomes",
     "OutcomesByOutcome",
@@ -1232,6 +1190,36 @@ __all__ = [
     "OutcomesTypedDict",
     "OwnerType",
     "PermissionDeniedErrorCode",
+    "Person",
+    "PersonBatch",
+    "PersonBatchItem",
+    "PersonBatchItemOutcome",
+    "PersonBatchItemTypedDict",
+    "PersonBatchRequest",
+    "PersonBatchRequestTypedDict",
+    "PersonBatchTypedDict",
+    "PersonDecided",
+    "PersonDecidedEvent",
+    "PersonDecidedEventTypedDict",
+    "PersonDecidedTypedDict",
+    "PersonDecision",
+    "PersonFlagged",
+    "PersonFlaggedEvent",
+    "PersonFlaggedEventTypedDict",
+    "PersonFlaggedMatchState",
+    "PersonFlaggedTypedDict",
+    "PersonIdentity",
+    "PersonIdentityTypedDict",
+    "PersonList",
+    "PersonListTypedDict",
+    "PersonReport",
+    "PersonReportTypedDict",
+    "PersonReview",
+    "PersonReviewRequest",
+    "PersonReviewRequestTypedDict",
+    "PersonReviewTypedDict",
+    "PersonRole",
+    "PersonTypedDict",
     "PhoneEnrichment",
     "PhoneEnrichmentFields",
     "PhoneEnrichmentFieldsTypedDict",
@@ -1647,36 +1635,6 @@ _dynamic_imports: dict[str, str] = {
     "AssessmentUpdatedEvent": ".assessmentupdatedevent",
     "AssessmentUpdatedEventTypedDict": ".assessmentupdatedevent",
     "AssuranceLevel": ".assurancelevel",
-    "Attendee": ".attendee",
-    "AttendeeTypedDict": ".attendee",
-    "AttendeeBatch": ".attendeebatch",
-    "AttendeeBatchTypedDict": ".attendeebatch",
-    "AttendeeBatchItem": ".attendeebatchitem",
-    "AttendeeBatchItemTypedDict": ".attendeebatchitem",
-    "AttendeeBatchItemOutcome": ".attendeebatchitemoutcome",
-    "AttendeeBatchRequest": ".attendeebatchrequest",
-    "AttendeeBatchRequestTypedDict": ".attendeebatchrequest",
-    "AttendeeDecided": ".attendeedecided",
-    "AttendeeDecidedTypedDict": ".attendeedecided",
-    "AttendeeDecidedEvent": ".attendeedecidedevent",
-    "AttendeeDecidedEventTypedDict": ".attendeedecidedevent",
-    "AttendeeDecision": ".attendeedecision",
-    "AttendeeFlagged": ".attendeeflagged",
-    "AttendeeFlaggedTypedDict": ".attendeeflagged",
-    "AttendeeFlaggedEvent": ".attendeeflaggedevent",
-    "AttendeeFlaggedEventTypedDict": ".attendeeflaggedevent",
-    "AttendeeFlaggedMatchState": ".attendeeflaggedmatchstate",
-    "AttendeeIdentity": ".attendeeidentity",
-    "AttendeeIdentityTypedDict": ".attendeeidentity",
-    "AttendeeList": ".attendeelist",
-    "AttendeeListTypedDict": ".attendeelist",
-    "AttendeeReport": ".attendeereport",
-    "AttendeeReportTypedDict": ".attendeereport",
-    "AttendeeReview": ".attendeereview",
-    "AttendeeReviewTypedDict": ".attendeereview",
-    "AttendeeReviewRequest": ".attendeereviewrequest",
-    "AttendeeReviewRequestTypedDict": ".attendeereviewrequest",
-    "AttendeeRole": ".attendeerole",
     "Attribute": ".attribute",
     "AttributeAgreement": ".attributeagreement",
     "AttributeAgreementTypedDict": ".attributeagreement",
@@ -1787,14 +1745,6 @@ _dynamic_imports: dict[str, str] = {
     "ErasureReceiptTargetTypedDict": ".erasurereceipttarget",
     "ErasureReceiptTargetName": ".erasurereceipttargetname",
     "ErasureReceiptTargetStatus": ".erasurereceipttargetstatus",
-    "Event": ".event",
-    "EventTypedDict": ".event",
-    "EventList": ".eventlist",
-    "EventListTypedDict": ".eventlist",
-    "EventRequest": ".eventrequest",
-    "EventRequestTypedDict": ".eventrequest",
-    "EventUpdate": ".eventupdate",
-    "EventUpdateTypedDict": ".eventupdate",
     "Export": ".export",
     "ExportTypedDict": ".export",
     "ExportAssessmentOutcome": ".exportassessmentoutcome",
@@ -1819,6 +1769,14 @@ _dynamic_imports: dict[str, str] = {
     "FootprintTimelineTypedDict": ".footprinttimeline",
     "Freshness": ".freshness",
     "From": ".from_",
+    "Group": ".group",
+    "GroupTypedDict": ".group",
+    "GroupList": ".grouplist",
+    "GroupListTypedDict": ".grouplist",
+    "GroupRequest": ".grouprequest",
+    "GroupRequestTypedDict": ".grouprequest",
+    "GroupUpdate": ".groupupdate",
+    "GroupUpdateTypedDict": ".groupupdate",
     "Handle": ".handle",
     "HandleTypedDict": ".handle",
     "HandlePlatform": ".handleplatform",
@@ -1904,9 +1862,6 @@ _dynamic_imports: dict[str, str] = {
     "LinkedAccountTypedDict": ".linkedaccount",
     "LinkedAccountPage": ".linkedaccountpage",
     "LinkedAccountPageTypedDict": ".linkedaccountpage",
-    "ListAttendeesBand": ".listattendeesband",
-    "ListAttendeesDecision": ".listattendeesdecision",
-    "ListAttendeesRole": ".listattendeesrole",
     "ListBulkRequest": ".listbulkrequest",
     "ListBulkRequestTypedDict": ".listbulkrequest",
     "ListChange": ".listchange",
@@ -1927,6 +1882,9 @@ _dynamic_imports: dict[str, str] = {
     "ListImpactTransitionTypedDict": ".listimpacttransition",
     "ListImpactTransitionFrom": ".listimpacttransitionfrom",
     "ListMatch": ".listmatch",
+    "ListPeopleBand": ".listpeopleband",
+    "ListPeopleDecision": ".listpeopledecision",
+    "ListPeopleRole": ".listpeoplerole",
     "ListPreviewRequest": ".listpreviewrequest",
     "ListPreviewRequestTypedDict": ".listpreviewrequest",
     "Match": ".match",
@@ -1959,11 +1917,11 @@ _dynamic_imports: dict[str, str] = {
     "OperationalAggregateTotals": ".operationalaggregatetotals",
     "OperationalAggregateTotalsTypedDict": ".operationalaggregatetotals",
     "Origin": ".origin",
-    "MatchedOn": ".otherevent",
-    "OtherEvent": ".otherevent",
-    "OtherEventTypedDict": ".otherevent",
-    "OtherEvents": ".otherevents",
-    "OtherEventsTypedDict": ".otherevents",
+    "MatchedOn": ".othergroup",
+    "OtherGroup": ".othergroup",
+    "OtherGroupTypedDict": ".othergroup",
+    "OtherGroups": ".othergroups",
+    "OtherGroupsTypedDict": ".othergroups",
     "Outcome": ".outcome",
     "Outcomes": ".outcomes",
     "OutcomesTypedDict": ".outcomes",
@@ -1971,6 +1929,36 @@ _dynamic_imports: dict[str, str] = {
     "OutcomesByOutcomeTypedDict": ".outcomesbyoutcome",
     "OwnerType": ".ownertype",
     "PermissionDeniedErrorCode": ".permissiondeniederrorcode",
+    "Person": ".person",
+    "PersonTypedDict": ".person",
+    "PersonBatch": ".personbatch",
+    "PersonBatchTypedDict": ".personbatch",
+    "PersonBatchItem": ".personbatchitem",
+    "PersonBatchItemTypedDict": ".personbatchitem",
+    "PersonBatchItemOutcome": ".personbatchitemoutcome",
+    "PersonBatchRequest": ".personbatchrequest",
+    "PersonBatchRequestTypedDict": ".personbatchrequest",
+    "PersonDecided": ".persondecided",
+    "PersonDecidedTypedDict": ".persondecided",
+    "PersonDecidedEvent": ".persondecidedevent",
+    "PersonDecidedEventTypedDict": ".persondecidedevent",
+    "PersonDecision": ".persondecision",
+    "PersonFlagged": ".personflagged",
+    "PersonFlaggedTypedDict": ".personflagged",
+    "PersonFlaggedEvent": ".personflaggedevent",
+    "PersonFlaggedEventTypedDict": ".personflaggedevent",
+    "PersonFlaggedMatchState": ".personflaggedmatchstate",
+    "PersonIdentity": ".personidentity",
+    "PersonIdentityTypedDict": ".personidentity",
+    "PersonList": ".personlist",
+    "PersonListTypedDict": ".personlist",
+    "PersonReport": ".personreport",
+    "PersonReportTypedDict": ".personreport",
+    "PersonReview": ".personreview",
+    "PersonReviewTypedDict": ".personreview",
+    "PersonReviewRequest": ".personreviewrequest",
+    "PersonReviewRequestTypedDict": ".personreviewrequest",
+    "PersonRole": ".personrole",
     "PhoneEnrichment": ".phoneenrichment",
     "PhoneEnrichmentTypedDict": ".phoneenrichment",
     "AlternateName": ".phoneenrichmentfields",

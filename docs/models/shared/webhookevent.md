@@ -53,15 +53,15 @@ value: shared.AuditEventEvent = /* values here */
 value: shared.ScreeningCompletedEvent = /* values here */
 ```
 
-### `shared.AttendeeFlaggedEvent`
+### `shared.PersonFlaggedEvent`
 
 ```python
-value: shared.AttendeeFlaggedEvent = /* values here */
+value: shared.PersonFlaggedEvent = /* values here */
 ```
 
-### `shared.AttendeeDecidedEvent`
+### `shared.PersonDecidedEvent`
 
 ```python
-value: shared.AttendeeDecidedEvent = /* values here */
+value: shared.PersonDecidedEvent = /* values here */
 ```
 

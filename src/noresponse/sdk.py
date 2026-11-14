@@ -18,8 +18,8 @@ if TYPE_CHECKING:
     from noresponse.audit import Audit
     from noresponse.erasures import Erasures
     from noresponse.evaluations import Evaluations
-    from noresponse.events import Events
     from noresponse.exports import Exports
+    from noresponse.groups import Groups
     from noresponse.integrations import Integrations
     from noresponse.invites import Invites
     from noresponse.keys import Keys
@@ -84,8 +84,8 @@ class NoResponse(BaseSDK):
     r"""Frozen policy evaluation evidence and reviewed publication."""
     operations: "Operations"
     r"""Retained outcomes, enforcement reports and review populations."""
-    events: "Events"
-    r"""Events, attendee lists, screenings and reviewer decisions."""
+    groups: "Groups"
+    r"""Groups, lists of people, screenings and reviewer decisions."""
     _sub_sdk_map = {
         "assessments": ("noresponse.assessments", "Assessments"),
         "accounts": ("noresponse.accounts", "Accounts"),
@@ -105,7 +105,7 @@ class NoResponse(BaseSDK):
         "exports": ("noresponse.exports", "Exports"),
         "evaluations": ("noresponse.evaluations", "Evaluations"),
         "operations": ("noresponse.operations", "Operations"),
-        "events": ("noresponse.events", "Events"),
+        "groups": ("noresponse.groups", "Groups"),
     }
 
     def __init__(
@@ -340,8 +340,8 @@ class NoResponseWithRawResponse:
         return self._sdk.operations.with_raw_response
 
     @property
-    def events(self):
-        return self._sdk.events.with_raw_response
+    def groups(self):
+        return self._sdk.groups.with_raw_response
 
 
 class NoResponseWithStreamingResponse:
@@ -421,5 +421,5 @@ class NoResponseWithStreamingResponse:
         return self._sdk.operations.with_streaming_response
 
     @property
-    def events(self):
-        return self._sdk.events.with_streaming_response
+    def groups(self):
+        return self._sdk.groups.with_streaming_response

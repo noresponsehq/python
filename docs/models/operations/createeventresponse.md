@@ -1,9 +1,0 @@
-# CreateEventResponse
-
-
-## Fields
-
-| Field                                        | Type                                         | Required                                     | Description                                  |
-| -------------------------------------------- | -------------------------------------------- | -------------------------------------------- | -------------------------------------------- |
-| `headers`                                    | Dict[str, List[*str*]]                       | :heavy_check_mark:                           | N/A                                          |
-| `result`                                     | [shared.Event](../../models/shared/event.md) | :heavy_check_mark:                           | N/A                                          |

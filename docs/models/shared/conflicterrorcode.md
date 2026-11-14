@@ -42,7 +42,7 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"member_limit_reached"`
 - `"owner_invite_pending"`
 - `"aggregate_erased_data"`
-- `"event_conflict"`
-- `"event_limit_reached"`
+- `"group_conflict"`
+- `"group_limit_reached"`
 - `"screening_cap_exceeded"`
 - `"screening_unavailable"`

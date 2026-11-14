@@ -6,7 +6,7 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class PrincipalTypedDict(TypedDict):
-    r"""A person the event protects."""
+    r"""A person the group protects."""
 
     name: str
     r"""The principal's name."""
@@ -15,7 +15,7 @@ class PrincipalTypedDict(TypedDict):
 
 
 class Principal(BaseModel):
-    r"""A person the event protects."""
+    r"""A person the group protects."""
 
     name: str
     r"""The principal's name."""

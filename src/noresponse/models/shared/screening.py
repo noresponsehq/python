@@ -14,28 +14,28 @@ class ScreeningTypedDict(TypedDict):
     r"""A screening and its progress."""
 
     id: str
-    event_id: str
+    group_id: str
     environment: AuditSettingsEnvironment
     status: ScreeningStatus
-    r"""partial finished with some attendees or platforms not covered; attendees_failed and attendees_partial count them."""
+    r"""partial finished with some people or platforms not covered; people_failed and people_partial count them."""
     depth: ScreeningDepth
     platforms: List[HandlePlatform]
     requested_by: str
     created_at: str
     expires_at: str
     r"""A screening still running then fails with error_code expired."""
-    attendees_total: int
-    r"""Attendees selected when the screening started."""
-    attendees_done: int
-    r"""Attendees screened so far, failed ones included."""
-    attendees_flagged: int
-    attendees_failed: int
-    attendees_partial: int
-    r"""Attendees screened with some requested platform not covered; their coverage names which."""
+    people_total: int
+    r"""People selected when the screening started."""
+    people_done: int
+    r"""People screened so far, failed ones included."""
+    people_flagged: int
+    people_failed: int
+    people_partial: int
+    r"""People screened with some requested platform not covered; their coverage names which."""
     estimated_spend: int
-    r"""What the screening was estimated to cost when it started, in minor units of USD (cents): its attendees at its depth and platforms. Until the screening finishes, what it has not yet spent counts against the environment's screening_daily_cap."""
+    r"""What the screening was estimated to cost when it started, in minor units of USD (cents): its people at its depth and platforms. Until the screening finishes, what it has not yet spent counts against the environment's screening_daily_cap."""
     spent: int
-    r"""What the attendees it has screened recorded, in minor units of USD. Each counts toward the UTC day it was recorded on; a failed attendee records nothing."""
+    r"""What the people it has screened recorded, in minor units of USD. Each counts toward the UTC day it was recorded on; a failed person records nothing."""
     spend: ScreeningSpendTypedDict
     r"""What screening cost, in US cents, in total and per implementation."""
     started_at: NotRequired[str]
@@ -49,12 +49,12 @@ class Screening(BaseModel):
 
     id: str
 
-    event_id: str
+    group_id: str
 
     environment: AuditSettingsEnvironment
 
     status: ScreeningStatus
-    r"""partial finished with some attendees or platforms not covered; attendees_failed and attendees_partial count them."""
+    r"""partial finished with some people or platforms not covered; people_failed and people_partial count them."""
 
     depth: ScreeningDepth
 
@@ -67,24 +67,24 @@ class Screening(BaseModel):
     expires_at: str
     r"""A screening still running then fails with error_code expired."""
 
-    attendees_total: int
-    r"""Attendees selected when the screening started."""
+    people_total: int
+    r"""People selected when the screening started."""
 
-    attendees_done: int
-    r"""Attendees screened so far, failed ones included."""
+    people_done: int
+    r"""People screened so far, failed ones included."""
 
-    attendees_flagged: int
+    people_flagged: int
 
-    attendees_failed: int
+    people_failed: int
 
-    attendees_partial: int
-    r"""Attendees screened with some requested platform not covered; their coverage names which."""
+    people_partial: int
+    r"""People screened with some requested platform not covered; their coverage names which."""
 
     estimated_spend: int
-    r"""What the screening was estimated to cost when it started, in minor units of USD (cents): its attendees at its depth and platforms. Until the screening finishes, what it has not yet spent counts against the environment's screening_daily_cap."""
+    r"""What the screening was estimated to cost when it started, in minor units of USD (cents): its people at its depth and platforms. Until the screening finishes, what it has not yet spent counts against the environment's screening_daily_cap."""
 
     spent: int
-    r"""What the attendees it has screened recorded, in minor units of USD. Each counts toward the UTC day it was recorded on; a failed attendee records nothing."""
+    r"""What the people it has screened recorded, in minor units of USD. Each counts toward the UTC day it was recorded on; a failed person records nothing."""
 
     spend: ScreeningSpend
     r"""What screening cost, in US cents, in total and per implementation."""

@@ -9,7 +9,7 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class ScreeningProfileTypedDict(TypedDict):
-    r"""An account the screening matched to the attendee, how it was matched, and how much of it was read."""
+    r"""An account the screening matched to the person, how it was matched, and how much of it was read."""
 
     id: str
     platform: HandlePlatform
@@ -19,7 +19,7 @@ class ScreeningProfileTypedDict(TypedDict):
     access: Access
     r"""public profiles were read; a private or locked one exists but could not be read."""
     match: ScreeningMatchTypedDict
-    r"""How a profile was matched to the attendee: the state its evidence earns, and the evidence."""
+    r"""How a profile was matched to the person: the state its evidence earns, and the evidence."""
     collector: str
     r"""The resolver, collector or analyser that produced a record, by its catalogue name."""
     items_read: int
@@ -36,7 +36,7 @@ class ScreeningProfileTypedDict(TypedDict):
 
 
 class ScreeningProfile(BaseModel):
-    r"""An account the screening matched to the attendee, how it was matched, and how much of it was read."""
+    r"""An account the screening matched to the person, how it was matched, and how much of it was read."""
 
     id: str
 
@@ -51,7 +51,7 @@ class ScreeningProfile(BaseModel):
     r"""public profiles were read; a private or locked one exists but could not be read."""
 
     match: ScreeningMatch
-    r"""How a profile was matched to the attendee: the state its evidence earns, and the evidence."""
+    r"""How a profile was matched to the person: the state its evidence earns, and the evidence."""
 
     collector: str
     r"""The resolver, collector or analyser that produced a record, by its catalogue name."""

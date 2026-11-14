@@ -7,14 +7,14 @@ from typing_extensions import TypedDict
 
 
 class ScreeningRequestTypedDict(TypedDict):
-    r"""Screens the event's attendees no screening has reached and everyone on watch or escalated."""
+    r"""Screens the group's people no screening has reached and everyone on watch or escalated."""
 
     depth: ScreeningDepth
     platforms: List[HandlePlatform]
 
 
 class ScreeningRequest(BaseModel):
-    r"""Screens the event's attendees no screening has reached and everyone on watch or escalated."""
+    r"""Screens the group's people no screening has reached and everyone on watch or escalated."""
 
     depth: ScreeningDepth
 

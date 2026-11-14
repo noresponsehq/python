@@ -7,4 +7,4 @@ ScreeningCompletedStatus = Literal[
     "partial",
     "failed",
 ]
-r"""completed reached every attendee; partial left some not fully covered (partial_coverage); failed covered nobody."""
+r"""completed reached every person; partial left some not fully covered (partial_coverage); failed covered nobody."""

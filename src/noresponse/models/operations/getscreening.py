@@ -14,7 +14,7 @@ class GetScreeningRequestTypedDict(TypedDict):
     r"""Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404."""
     environment: shared_keyenvironment.KeyEnvironment
     r"""The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404."""
-    event_id: str
+    group_id: str
     screening_id: str
 
 
@@ -30,7 +30,7 @@ class GetScreeningRequest(BaseModel):
     ]
     r"""The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404."""
 
-    event_id: Annotated[
+    group_id: Annotated[
         str, FieldMetadata(path=PathParamMetadata(style="simple", explode=False))
     ]
 

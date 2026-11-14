@@ -27,4 +27,4 @@ value: KeyRequestScope = "assess"
 - `"policy_publish"`
 - `"members"`
 - `"members_manage"`
-- `"events"`
+- `"groups"`

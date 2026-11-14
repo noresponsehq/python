@@ -1,0 +1,10 @@
+# PersonBatchItem
+
+
+## Fields
+
+| Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    | Example                                                                        |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `index`                                                                        | *int*                                                                          | :heavy_check_mark:                                                             | The row's position in the request.                                             |                                                                                |
+| `id`                                                                           | *str*                                                                          | :heavy_check_mark:                                                             | N/A                                                                            | per_01JA2Z8K6Q4V7W9XBCDEFGHJKM                                                 |
+| `outcome`                                                                      | [shared.PersonBatchItemOutcome](../../models/shared/personbatchitemoutcome.md) | :heavy_check_mark:                                                             | unchanged: the row matched a person with the same details.                     |                                                                                |

@@ -22,7 +22,7 @@ class ScreeningCoverageTypedDict(TypedDict):
     items_read: int
     platforms: List[ScreeningPlatformCoverageTypedDict]
     items_not_analysed: NotRequired[int]
-    r"""Items read that the analyser could not analyse. Above zero, the attendee is partial: a finding may be missing from them."""
+    r"""Items read that the analyser could not analyse. Above zero, the person is partial: a finding may be missing from them."""
     not_analysed_by_reason: NotRequired[List[ScreeningNotAnalysedCountTypedDict]]
     r"""items_not_analysed split by reason, each reason once with at least one item."""
     period_from: NotRequired[str]
@@ -30,7 +30,7 @@ class ScreeningCoverageTypedDict(TypedDict):
     period_to: NotRequired[str]
     r"""The newest item read on any platform."""
     not_searched: NotRequired[List[HandlePlatform]]
-    r"""Requested platforms where the attendee gave the screening nothing to look up, such as no handle for a platform that reads supplied handles only. Nothing looked and nothing failed: such a platform is not in platforms, is not none_found and does not make the attendee partial."""
+    r"""Requested platforms where the person gave the screening nothing to look up, such as no handle for a platform that reads supplied handles only. Nothing looked and nothing failed: such a platform is not in platforms, is not none_found and does not make the person partial."""
 
 
 class ScreeningCoverage(BaseModel):
@@ -45,7 +45,7 @@ class ScreeningCoverage(BaseModel):
     platforms: List[ScreeningPlatformCoverage]
 
     items_not_analysed: Optional[int] = None
-    r"""Items read that the analyser could not analyse. Above zero, the attendee is partial: a finding may be missing from them."""
+    r"""Items read that the analyser could not analyse. Above zero, the person is partial: a finding may be missing from them."""
 
     not_analysed_by_reason: Optional[List[ScreeningNotAnalysedCount]] = None
     r"""items_not_analysed split by reason, each reason once with at least one item."""
@@ -57,7 +57,7 @@ class ScreeningCoverage(BaseModel):
     r"""The newest item read on any platform."""
 
     not_searched: Optional[List[HandlePlatform]] = None
-    r"""Requested platforms where the attendee gave the screening nothing to look up, such as no handle for a platform that reads supplied handles only. Nothing looked and nothing failed: such a platform is not in platforms, is not none_found and does not make the attendee partial."""
+    r"""Requested platforms where the person gave the screening nothing to look up, such as no handle for a platform that reads supplied handles only. Nothing looked and nothing failed: such a platform is not in platforms, is not none_found and does not make the person partial."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

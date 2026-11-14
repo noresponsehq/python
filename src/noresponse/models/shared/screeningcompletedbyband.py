@@ -4,7 +4,7 @@ from typing_extensions import TypedDict
 
 
 class ScreeningCompletedByBandTypedDict(TypedDict):
-    r"""Screened attendees by the band of their most severe finding."""
+    r"""Screened people by the band of their most severe finding."""
 
     critical: int
     high: int
@@ -14,7 +14,7 @@ class ScreeningCompletedByBandTypedDict(TypedDict):
 
 
 class ScreeningCompletedByBand(BaseModel):
-    r"""Screened attendees by the band of their most severe finding."""
+    r"""Screened people by the band of their most severe finding."""
 
     critical: int
 

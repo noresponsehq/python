@@ -8,13 +8,13 @@ from .assessmentupdatedevent import (
     AssessmentUpdatedEvent,
     AssessmentUpdatedEventTypedDict,
 )
-from .attendeedecidedevent import AttendeeDecidedEvent, AttendeeDecidedEventTypedDict
-from .attendeeflaggedevent import AttendeeFlaggedEvent, AttendeeFlaggedEventTypedDict
 from .auditeventevent import AuditEventEvent, AuditEventEventTypedDict
 from .endpointverificationevent import (
     EndpointVerificationEvent,
     EndpointVerificationEventTypedDict,
 )
+from .persondecidedevent import PersonDecidedEvent, PersonDecidedEventTypedDict
+from .personflaggedevent import PersonFlaggedEvent, PersonFlaggedEventTypedDict
 from .screeningcompletedevent import (
     ScreeningCompletedEvent,
     ScreeningCompletedEventTypedDict,
@@ -40,8 +40,8 @@ WebhookEventTypedDict = TypeAliasType(
         AccountRiskChangedEventTypedDict,
         AuditEventEventTypedDict,
         ScreeningCompletedEventTypedDict,
-        AttendeeFlaggedEventTypedDict,
-        AttendeeDecidedEventTypedDict,
+        PersonFlaggedEventTypedDict,
+        PersonDecidedEventTypedDict,
     ],
 )
 r"""The body of every webhook delivery: {id, type, created_at, data}, where type chooses the shape of data. Deliveries are at least once and unordered: deduplicate on id, and keep an assessment only when its detail.assessment_version is newer than the one you hold. GET /v1/assessments/{assessment_id} stays authoritative."""
@@ -57,8 +57,8 @@ WebhookEvent = Annotated[
         AccountRiskChangedEvent,
         AuditEventEvent,
         ScreeningCompletedEvent,
-        AttendeeFlaggedEvent,
-        AttendeeDecidedEvent,
+        PersonFlaggedEvent,
+        PersonDecidedEvent,
     ],
     Field(discriminator="type"),
 ]

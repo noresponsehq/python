@@ -53,7 +53,7 @@ async with NoResponse() as nr:
 | --- | --- |
 | Configure this client and explore its methods | [Python SDK guide](https://docs.noresponse.org/sdks/python) |
 | Act when an account's decision changes | [Late results](https://docs.noresponse.org/guides/late-results) |
-| Screen an event's attendees and record decisions | [Events and screenings](https://docs.noresponse.org/reference/events) |
+| Screen a group's people and record decisions | [Groups and screenings](https://docs.noresponse.org/reference/groups) |
 | Explore request and response fields | [API reference](https://docs.noresponse.org/api-reference) |
 
 <details>
@@ -313,7 +313,7 @@ Verify the exact bytes you received, then act on the typed event. `secrets` maps
 import os
 from noresponse import construct_event, WebhookVerificationError
 from noresponse import AccountDeleted, AccountRiskChanged, AssessmentExpired, EndpointVerification, WebhookEndpointDisabled, WorkspaceDeleted
-from noresponse import AttendeeDecided, AttendeeFlagged, ScreeningCompleted
+from noresponse import PersonDecided, PersonFlagged, ScreeningCompleted
 
 SECRETS = {
     os.environ["NORESPONSE_WEBHOOK_KEY_ID"]: os.environ["NORESPONSE_WEBHOOK_SECRET"],
@@ -339,12 +339,12 @@ async def handler(request: Request) -> Response:
         forget_environment(data.environment)
     elif isinstance(data, WebhookEndpointDisabled):  # another endpoint failed for 72 hours and is disabled
         alert_ops(data.endpoint_id, data.failing_since)
-    elif isinstance(data, ScreeningCompleted):  # a screening of an event finished; it names no attendee
-        report_screening(data.event_id, data.status, data.by_band, data.partial_coverage)
-    elif isinstance(data, AttendeeFlagged):  # a screening flagged an attendee: its highest band, never what was posted
-        queue_review(data.event_id, data.attendee_id, data.highest_band)
-    elif isinstance(data, AttendeeDecided):  # cleared, watch or escalated; keep the latest decided_at per attendee
-        apply_decision(data.attendee_id, data.decision, data.decided_at)
+    elif isinstance(data, ScreeningCompleted):  # a screening of a group finished; it names no person
+        report_screening(data.group_id, data.status, data.by_band, data.partial_coverage)
+    elif isinstance(data, PersonFlagged):  # a screening flagged a person: its highest band, never what was posted
+        queue_review(data.group_id, data.person_id, data.highest_band)
+    elif isinstance(data, PersonDecided):  # cleared, watch or escalated; keep the latest decided_at per person
+        apply_decision(data.person_id, data.decision, data.decided_at)
     elif isinstance(data, AssessmentExpired):
         forget(data.assessment_id)  # GET now answers 404
     # Any other assessment.updated reports progress only: apply nothing.

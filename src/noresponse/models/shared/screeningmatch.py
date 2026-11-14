@@ -10,17 +10,17 @@ from typing_extensions import TypedDict
 
 
 class ScreeningMatchTypedDict(TypedDict):
-    r"""How a profile was matched to the attendee: the state its evidence earns, and the evidence."""
+    r"""How a profile was matched to the person: the state its evidence earns, and the evidence."""
 
     state: ProfileMatchState
-    r"""How sure the screening is that a profile is the attendee's, from its evidence: confirmed is a handle on the attendee row, or two or more hard identifiers (email, phone, a supplied handle, or a fact an existing source returned); probable is one identifier beyond the name; possible is the name alone."""
+    r"""How sure the screening is that a profile is the person's, from its evidence: confirmed is a handle on the person row, or two or more hard identifiers (email, phone, a supplied handle, or a fact an existing source returned); probable is one identifier beyond the name; possible is the name alone."""
     evidence: List[ScreeningMatchEvidenceTypedDict]
 
 
 class ScreeningMatch(BaseModel):
-    r"""How a profile was matched to the attendee: the state its evidence earns, and the evidence."""
+    r"""How a profile was matched to the person: the state its evidence earns, and the evidence."""
 
     state: ProfileMatchState
-    r"""How sure the screening is that a profile is the attendee's, from its evidence: confirmed is a handle on the attendee row, or two or more hard identifiers (email, phone, a supplied handle, or a fact an existing source returned); probable is one identifier beyond the name; possible is the name alone."""
+    r"""How sure the screening is that a profile is the person's, from its evidence: confirmed is a handle on the person row, or two or more hard identifiers (email, phone, a supplied handle, or a fact an existing source returned); probable is one identifier beyond the name; possible is the name alone."""
 
     evidence: List[ScreeningMatchEvidence]
