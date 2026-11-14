@@ -535,6 +535,7 @@ if TYPE_CHECKING:
         PolicyRestoreRequestTypedDict,
     )
     from .population import Population
+    from .postplace import PostPlace, PostPlaceTypedDict
     from .postsstopped import PostsStopped
     from .principal import Principal, PrincipalTypedDict
     from .priority import Priority
@@ -1287,6 +1288,8 @@ __all__ = [
     "PolicyRestoreRequest",
     "PolicyRestoreRequestTypedDict",
     "Population",
+    "PostPlace",
+    "PostPlaceTypedDict",
     "PostsStopped",
     "Principal",
     "PrincipalTypedDict",
@@ -2082,6 +2085,8 @@ _dynamic_imports: dict[str, str] = {
     "PolicyRestoreRequest": ".policyrestorerequest",
     "PolicyRestoreRequestTypedDict": ".policyrestorerequest",
     "Population": ".population",
+    "PostPlace": ".postplace",
+    "PostPlaceTypedDict": ".postplace",
     "PostsStopped": ".postsstopped",
     "Principal": ".principal",
     "PrincipalTypedDict": ".principal",
