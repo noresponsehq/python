@@ -5,7 +5,7 @@ from noresponse.utils import validate_const
 import pydantic
 from pydantic import model_serializer
 from pydantic.functional_validators import AfterValidator
-from typing import List, Literal, Optional
+from typing import Any, Dict, List, Literal, Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
 
@@ -33,6 +33,20 @@ class ScreeningPostTypedDict(TypedDict):
     r"""How many comments the platform shows for the post."""
     views: NotRequired[int]
     r"""How many views or plays the platform shows for the post."""
+    shares: NotRequired[int]
+    r"""How many times the platform shows the post was shared or reposted."""
+    language: NotRequired[str]
+    r"""The language the platform says the post is in, as the platform codes it, such as en or pt-BR."""
+    edited: NotRequired[bool]
+    r"""true when the platform marks the post as edited after it went up. Absent when it does not mark it."""
+    sponsored: NotRequired[bool]
+    r"""true when the platform marks the post as a paid partnership or an ad. Absent when it does not mark it."""
+    ai_generated: NotRequired[bool]
+    r"""true when the platform labels the post as made or changed with AI. Absent when it does not label it."""
+    posted_with: NotRequired[str]
+    r"""The app or device the platform says the post was made with."""
+    stated: NotRequired[Dict[str, Any]]
+    r"""Everything else the platform sent about the post, under the platform's own names and as it typed them: counts, ids of linked posts and accounts, links, media details, labels and notices. The fields above are not repeated here. Nothing that describes the account the screening read with, such as whether it liked or saved the post, is ever here."""
     screenshot_sha256: NotRequired[str]
     r"""SHA-256 of the screenshot taken of a flagged item."""
     captured_at: NotRequired[str]
@@ -80,6 +94,27 @@ class ScreeningPost(BaseModel):
     views: Optional[int] = None
     r"""How many views or plays the platform shows for the post."""
 
+    shares: Optional[int] = None
+    r"""How many times the platform shows the post was shared or reposted."""
+
+    language: Optional[str] = None
+    r"""The language the platform says the post is in, as the platform codes it, such as en or pt-BR."""
+
+    edited: Optional[bool] = None
+    r"""true when the platform marks the post as edited after it went up. Absent when it does not mark it."""
+
+    sponsored: Optional[bool] = None
+    r"""true when the platform marks the post as a paid partnership or an ad. Absent when it does not mark it."""
+
+    ai_generated: Optional[bool] = None
+    r"""true when the platform labels the post as made or changed with AI. Absent when it does not label it."""
+
+    posted_with: Optional[str] = None
+    r"""The app or device the platform says the post was made with."""
+
+    stated: Optional[Dict[str, Any]] = None
+    r"""Everything else the platform sent about the post, under the platform's own names and as it typed them: counts, ids of linked posts and accounts, links, media details, labels and notices. The fields above are not repeated here. Nothing that describes the account the screening read with, such as whether it liked or saved the post, is ever here."""
+
     screenshot_sha256: Optional[str] = None
     r"""SHA-256 of the screenshot taken of a flagged item."""
 
@@ -98,6 +133,13 @@ class ScreeningPost(BaseModel):
                 "likes",
                 "comments",
                 "views",
+                "shares",
+                "language",
+                "edited",
+                "sponsored",
+                "ai_generated",
+                "posted_with",
+                "stated",
                 "screenshot_sha256",
                 "captured_at",
             ]
