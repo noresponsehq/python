@@ -1,5 +1,15 @@
 # Changelog
 
+## 12.0.9
+
+* `sdk.settings.get()`:  `response.refused_sources[].enum(scratch)` **Added**
+* `sdk.settings.update()`: 
+  *  `request.refused_sources[].enum(scratch)` **Added**
+  *  `response.refused_sources[].enum(scratch)` **Added**
+* `sdk.settings.list_history()`:  `response.items[].settings.refused_sources[].enum(scratch)` **Added**
+* `sdk.settings.restore()`:  `response.refused_sources[].enum(scratch)` **Added**
+* `sdk.evaluations.publish()`:  `response.refused_sources[].enum(scratch)` **Added**
+
 ## 12.0.8
 
 * `sdk.groups.get_person()`:  `response.posts[]` **Changed**
