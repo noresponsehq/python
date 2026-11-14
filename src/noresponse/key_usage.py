@@ -2,7 +2,7 @@
 
 Your API gateway calls ``record`` once per request made with a key your platform
 issued. The buffer keeps the facts in memory and a background thread
-sends them to POST /v1/key_usage/batches: once ``batch_size`` facts are queued,
+sends them to POST /v1/keys/usage: once ``batch_size`` facts are queued,
 every ``flush_interval`` seconds, and on ``flush()``, ``close()`` or interpreter
 exit. ``record`` does not block and does not raise. When the queue is full the
 oldest fact is dropped and counted. A raw key passed as ``key`` is hashed here
@@ -149,7 +149,7 @@ def _positive(value: Any, name: str, maximum: Optional[int] = None) -> int:
 
 
 class KeyUsageBuffer:
-    """Buffers key usage and sends it to POST /v1/key_usage/batches in the background.
+    """Buffers key usage and sends it to POST /v1/keys/usage in the background.
 
     Make one per process with ``nr.key_usage.buffer()``, call ``record`` on every
     request made with an issued key, and ``close()`` on shutdown (an ``atexit``

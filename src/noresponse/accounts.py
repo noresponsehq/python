@@ -1548,7 +1548,7 @@ class Accounts(BaseSDK):
         )
         req = self._build_request(
             method="GET",
-            path="/v1/accounts/{account_id}/linked_accounts",
+            path="/v1/accounts/{account_id}/links",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1753,7 +1753,7 @@ class Accounts(BaseSDK):
         )
         req = self._build_request_async(
             method="GET",
-            path="/v1/accounts/{account_id}/linked_accounts",
+            path="/v1/accounts/{account_id}/links",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -5984,7 +5984,7 @@ class Accounts(BaseSDK):
                 AfterParseErrorContext(_noresponse_hook_ctx),
                 http_res,
                 parse_exc_,
-            ) and whitespace are refused by the pattern, as is an exact-shape JWT; a hex digest such as a SHA-256 is allowed, because hashing an internal id is a common pseudonymous scheme. A value such as '07700900123' or 'jane.doe.gmail.com' cannot be told apart from an opaque id. It travels in bodies, and in a URL only as the path segment of GET /v1/accounts/{account_id}, its /assessments and its /linked_accounts. An assessment requested by a provider hook at pre_registration, which has no account yet, carries the server-issued account_id pre: followed by its assessment_id.
+            ) and whitespace are refused by the pattern, as is an exact-shape JWT; a hex digest such as a SHA-256 is allowed, because hashing an internal id is a common pseudonymous scheme. A value such as '07700900123' or 'jane.doe.gmail.com' cannot be told apart from an opaque id. It travels in bodies, and in a URL only as the path segment of GET /v1/accounts/{account_id}, its /assessments and its /links. An assessment requested by a provider hook at pre_registration, which has no account yet, carries the server-issued account_id pre: followed by its assessment_id.
         :param email: Assessments of every account that one of its retained admitted assessments sent this mailbox as identifiers.email, matched as lists match an email entry: case-insensitive, a +tag removed and, at gmail.com and googlemail.com, the dots of the local part ignored. Only assessments stored since email list matching began carry the mailbox. An address that is not a valid mailbox is refused with 400.
         :param email_domain: Every account that one of its retained admitted assessments sent an email of this domain or its subdomains, matched as lists match an email_domain entry and with the same identifier-read permission as email. A value that is not a registrable domain is refused with 400. Mutually exclusive with email, identifier and identifier_expression.
         :param limit:
@@ -6327,7 +6327,7 @@ class Accounts(BaseSDK):
                 AfterParseErrorContext(_noresponse_hook_ctx),
                 http_res,
                 parse_exc_,
-            ) and whitespace are refused by the pattern, as is an exact-shape JWT; a hex digest such as a SHA-256 is allowed, because hashing an internal id is a common pseudonymous scheme. A value such as '07700900123' or 'jane.doe.gmail.com' cannot be told apart from an opaque id. It travels in bodies, and in a URL only as the path segment of GET /v1/accounts/{account_id}, its /assessments and its /linked_accounts. An assessment requested by a provider hook at pre_registration, which has no account yet, carries the server-issued account_id pre: followed by its assessment_id.
+            ) and whitespace are refused by the pattern, as is an exact-shape JWT; a hex digest such as a SHA-256 is allowed, because hashing an internal id is a common pseudonymous scheme. A value such as '07700900123' or 'jane.doe.gmail.com' cannot be told apart from an opaque id. It travels in bodies, and in a URL only as the path segment of GET /v1/accounts/{account_id}, its /assessments and its /links. An assessment requested by a provider hook at pre_registration, which has no account yet, carries the server-issued account_id pre: followed by its assessment_id.
         :param email: Assessments of every account that one of its retained admitted assessments sent this mailbox as identifiers.email, matched as lists match an email entry: case-insensitive, a +tag removed and, at gmail.com and googlemail.com, the dots of the local part ignored. Only assessments stored since email list matching began carry the mailbox. An address that is not a valid mailbox is refused with 400.
         :param email_domain: Every account that one of its retained admitted assessments sent an email of this domain or its subdomains, matched as lists match an email_domain entry and with the same identifier-read permission as email. A value that is not a registrable domain is refused with 400. Mutually exclusive with email, identifier and identifier_expression.
         :param limit:

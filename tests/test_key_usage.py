@@ -70,7 +70,7 @@ def test_record_posts_one_batch_with_an_idempotency_key_and_meta():
     assert isinstance(batch, KeyUsageBatch)
     assert batch.id == RECEIPT["id"] and batch.accepted == RECEIPT["accepted"]
     assert batch.meta.idempotent_replayed is True
-    assert seen[0].method == "POST" and seen[0].url.path == "/v1/key_usage/batches"
+    assert seen[0].method == "POST" and seen[0].url.path == "/v1/keys/usage"
     assert UUID.match(seen[0].headers["idempotency-key"])
     assert body(seen[0])["events"][0]["key_sha256"] == HASH
 

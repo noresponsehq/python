@@ -41,7 +41,7 @@ CASES = [
     ("accounts", "export", (ACCOUNT,), {"response_mode": "standard"},
      "export", "GET", f"/v1/accounts/{ACCOUNT}/export", 200),
     ("accounts", "list_linked", (ACCOUNT,), {"limit": 1, "cursor": "next_fixture"},
-     "linked", "GET", f"/v1/accounts/{ACCOUNT}/linked_accounts", 200),
+     "linked", "GET", f"/v1/accounts/{ACCOUNT}/links", 200),
     ("requests", "list", (), {"from_": FROM, "to": TO, "request_id": "a" * 32, "status": 200,
                                "limit": 1, "cursor": "next_fixture"},
      "requests", "GET", "/v1/requests", 200),

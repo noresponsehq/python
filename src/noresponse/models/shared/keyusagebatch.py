@@ -4,7 +4,7 @@ from typing_extensions import TypedDict
 
 
 class KeyUsageBatchTypedDict(TypedDict):
-    r"""The 202 answer of POST /v1/key_usage/batches. A replay with the same Idempotency-Key and body answers the same record and counts nothing again."""
+    r"""The 202 answer of POST /v1/keys/usage. A replay with the same Idempotency-Key and body answers the same record and counts nothing again."""
 
     id: str
     r"""Opaque, server-assigned id of the batch: 'kub_' and a 26-character Crockford base32 ULID."""
@@ -17,7 +17,7 @@ class KeyUsageBatchTypedDict(TypedDict):
 
 
 class KeyUsageBatch(BaseModel):
-    r"""The 202 answer of POST /v1/key_usage/batches. A replay with the same Idempotency-Key and body answers the same record and counts nothing again."""
+    r"""The 202 answer of POST /v1/keys/usage. A replay with the same Idempotency-Key and body answers the same record and counts nothing again."""
 
     id: str
     r"""Opaque, server-assigned id of the batch: 'kub_' and a 26-character Crockford base32 ULID."""

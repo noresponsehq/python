@@ -87,7 +87,7 @@ class Audit(BaseSDK):
         )
         req = self._build_request(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/audit_events",
+            path="/v1/workspaces/{workspace_id}/audit",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -324,7 +324,7 @@ class Audit(BaseSDK):
         )
         req = self._build_request_async(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/audit_events",
+            path="/v1/workspaces/{workspace_id}/audit",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -542,7 +542,7 @@ class Audit(BaseSDK):
         )
         req = self._build_request(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/audit_settings/{environment}",
+            path="/v1/workspaces/{workspace_id}/retention/{environment}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -719,7 +719,7 @@ class Audit(BaseSDK):
         )
         req = self._build_request_async(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/audit_settings/{environment}",
+            path="/v1/workspaces/{workspace_id}/retention/{environment}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -904,7 +904,7 @@ class Audit(BaseSDK):
         )
         req = self._build_request(
             method="PATCH",
-            path="/v1/workspaces/{workspace_id}/audit_settings/{environment}",
+            path="/v1/workspaces/{workspace_id}/retention/{environment}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1089,7 +1089,7 @@ class Audit(BaseSDK):
         )
         req = self._build_request_async(
             method="PATCH",
-            path="/v1/workspaces/{workspace_id}/audit_settings/{environment}",
+            path="/v1/workspaces/{workspace_id}/retention/{environment}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1272,7 +1272,7 @@ class Audit(BaseSDK):
         )
         req = self._build_request(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/audit_streams/{environment}",
+            path="/v1/workspaces/{workspace_id}/streams/{environment}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1449,7 +1449,7 @@ class Audit(BaseSDK):
         )
         req = self._build_request_async(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/audit_streams/{environment}",
+            path="/v1/workspaces/{workspace_id}/streams/{environment}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1637,7 +1637,7 @@ class Audit(BaseSDK):
         )
         req = self._build_request(
             method="POST",
-            path="/v1/workspaces/{workspace_id}/audit_streams/{environment}",
+            path="/v1/workspaces/{workspace_id}/streams/{environment}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1825,7 +1825,7 @@ class Audit(BaseSDK):
         )
         req = self._build_request_async(
             method="POST",
-            path="/v1/workspaces/{workspace_id}/audit_streams/{environment}",
+            path="/v1/workspaces/{workspace_id}/streams/{environment}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -2011,7 +2011,7 @@ class Audit(BaseSDK):
         )
         req = self._build_request(
             method="DELETE",
-            path="/v1/workspaces/{workspace_id}/audit_streams/{environment}/{endpoint_id}",
+            path="/v1/workspaces/{workspace_id}/streams/{environment}/{endpoint_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -2191,7 +2191,7 @@ class Audit(BaseSDK):
         )
         req = self._build_request_async(
             method="DELETE",
-            path="/v1/workspaces/{workspace_id}/audit_streams/{environment}/{endpoint_id}",
+            path="/v1/workspaces/{workspace_id}/streams/{environment}/{endpoint_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -2377,7 +2377,7 @@ class Audit(BaseSDK):
         )
         req = self._build_request(
             method="POST",
-            path="/v1/workspaces/{workspace_id}/audit_streams/{environment}/{endpoint_id}/replay",
+            path="/v1/workspaces/{workspace_id}/streams/{environment}/{endpoint_id}/replay",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -2554,7 +2554,7 @@ class Audit(BaseSDK):
         )
         req = self._build_request_async(
             method="POST",
-            path="/v1/workspaces/{workspace_id}/audit_streams/{environment}/{endpoint_id}/replay",
+            path="/v1/workspaces/{workspace_id}/streams/{environment}/{endpoint_id}/replay",
             base_url=base_url,
             url_variables=url_variables,
             request=request,

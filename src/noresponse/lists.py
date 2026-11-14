@@ -2021,7 +2021,7 @@ class Lists(BaseSDK):
         )
         req = self._build_request(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/list_changes/{environment}/{change_id}",
+            path="/v1/workspaces/{workspace_id}/changes/{environment}/{change_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -2199,7 +2199,7 @@ class Lists(BaseSDK):
         )
         req = self._build_request_async(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/list_changes/{environment}/{change_id}",
+            path="/v1/workspaces/{workspace_id}/changes/{environment}/{change_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,

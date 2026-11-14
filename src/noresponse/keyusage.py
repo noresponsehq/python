@@ -66,7 +66,7 @@ class KeyUsage(BaseSDK):
         )
         req = self._build_request(
             method="POST",
-            path="/v1/key_usage/batches",
+            path="/v1/keys/usage",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -253,7 +253,7 @@ class KeyUsage(BaseSDK):
         )
         req = self._build_request_async(
             method="POST",
-            path="/v1/key_usage/batches",
+            path="/v1/keys/usage",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
