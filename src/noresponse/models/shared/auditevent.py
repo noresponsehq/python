@@ -4,6 +4,7 @@ from .auditsettingsenvironment import AuditSettingsEnvironment
 from .customerexportrequestfilteroutcome import CustomerExportRequestFilterOutcome
 from .environment import Environment
 from .keyactor import KeyActor, KeyActorTypedDict
+from .serviceactor import ServiceActor, ServiceActorTypedDict
 from .useractor import UserActor, UserActorTypedDict
 from functools import partial
 from noresponse.types import BaseModel, UNSET_SENTINEL
@@ -15,7 +16,8 @@ from typing_extensions import Annotated, NotRequired, TypeAliasType, TypedDict
 
 
 ActorTypedDict = TypeAliasType(
-    "ActorTypedDict", Union[KeyActorTypedDict, UserActorTypedDict]
+    "ActorTypedDict",
+    Union[KeyActorTypedDict, ServiceActorTypedDict, UserActorTypedDict],
 )
 
 
@@ -32,11 +34,12 @@ class UnknownActor(BaseModel):
 _ACTOR_VARIANTS: dict[str, Any] = {
     "user": UserActor,
     "api_key": KeyActor,
+    "service": ServiceActor,
 }
 
 
 Actor = Annotated[
-    Union[UserActor, KeyActor, UnknownActor],
+    Union[UserActor, KeyActor, ServiceActor, UnknownActor],
     BeforeValidator(
         partial(
             parse_open_union,

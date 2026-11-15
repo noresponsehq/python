@@ -701,6 +701,7 @@ if TYPE_CHECKING:
     from .searchstatus import SearchStatus
     from .security import Security, SecurityTypedDict
     from .sentidentifiers import SentIdentifiers, SentIdentifiersTypedDict
+    from .serviceactor import ServiceActor, ServiceActorTypedDict
     from .settings import Settings, SettingsTypedDict
     from .settingsflows import SettingsFlows, SettingsFlowsTypedDict
     from .settingsrequest import SettingsRequest, SettingsRequestTypedDict
@@ -1475,6 +1476,8 @@ __all__ = [
     "SecurityTypedDict",
     "SentIdentifiers",
     "SentIdentifiersTypedDict",
+    "ServiceActor",
+    "ServiceActorTypedDict",
     "Settings",
     "SettingsFlows",
     "SettingsFlowsTypedDict",
@@ -2274,6 +2277,8 @@ _dynamic_imports: dict[str, str] = {
     "SecurityTypedDict": ".security",
     "SentIdentifiers": ".sentidentifiers",
     "SentIdentifiersTypedDict": ".sentidentifiers",
+    "ServiceActor": ".serviceactor",
+    "ServiceActorTypedDict": ".serviceactor",
     "Settings": ".settings",
     "SettingsTypedDict": ".settings",
     "SettingsFlows": ".settingsflows",

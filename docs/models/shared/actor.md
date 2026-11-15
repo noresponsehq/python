@@ -15,3 +15,9 @@ value: shared.UserActor = /* values here */
 value: shared.KeyActor = /* values here */
 ```
 
+### `shared.ServiceActor`
+
+```python
+value: shared.ServiceActor = /* values here */
+```
+
