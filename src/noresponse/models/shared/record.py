@@ -13,7 +13,7 @@ class RecordTypedDict(TypedDict):
     r"""One answer from one source: where it came from, what found it and every field it holds. A person's lookup records also say how likely each is the person."""
 
     id: str
-    r"""Made from the source and the fields' names and original values, so the same answer found twice is one record with the same id."""
+    r"""Made from the source and the fields' names and original values, so the same answer found twice is one record with the same id. Its fields are typed as its latest finding typed them."""
     source: RecordSourceTypedDict
     r"""Where a record came from."""
     matched: List[RecordMatchTypedDict]
@@ -38,7 +38,7 @@ class Record(BaseModel):
     r"""One answer from one source: where it came from, what found it and every field it holds. A person's lookup records also say how likely each is the person."""
 
     id: str
-    r"""Made from the source and the fields' names and original values, so the same answer found twice is one record with the same id."""
+    r"""Made from the source and the fields' names and original values, so the same answer found twice is one record with the same id. Its fields are typed as its latest finding typed them."""
 
     source: RecordSource
     r"""Where a record came from."""
