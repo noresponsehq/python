@@ -4,10 +4,17 @@ from noresponse.models.shared import (
     search as shared_search,
     searchrequest as shared_searchrequest,
 )
-from noresponse.types import BaseModel
-from noresponse.utils import FieldMetadata, PathParamMetadata, RequestMetadata
-from typing import Dict, List
-from typing_extensions import Annotated, TypedDict
+from noresponse.types import BaseModel, UNSET_SENTINEL
+from noresponse.utils import (
+    FieldMetadata,
+    HeaderMetadata,
+    PathParamMetadata,
+    RequestMetadata,
+)
+import pydantic
+from pydantic import model_serializer
+from typing import Dict, List, Optional
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class StartSearchRequestTypedDict(TypedDict):
@@ -18,6 +25,8 @@ class StartSearchRequestTypedDict(TypedDict):
     group_id: str
     person_id: str
     body: shared_searchrequest.SearchRequestTypedDict
+    idempotency_key: NotRequired[str]
+    r"""Opaque request key, 16 to 128 characters. Repeating the key and request returns the same resource in its current state while it is retained. A different request with the same key answers 409. Use a new key for a deliberate new operation. Keys are scoped to the environment and operation; person searches also scope them to the group and person."""
 
 
 class StartSearchRequest(BaseModel):
@@ -44,6 +53,29 @@ class StartSearchRequest(BaseModel):
         shared_searchrequest.SearchRequest,
         FieldMetadata(request=RequestMetadata(media_type="application/json")),
     ]
+
+    idempotency_key: Annotated[
+        Optional[str],
+        pydantic.Field(alias="Idempotency-Key"),
+        FieldMetadata(header=HeaderMetadata(style="simple", explode=False)),
+    ] = None
+    r"""Opaque request key, 16 to 128 characters. Repeating the key and request returns the same resource in its current state while it is retained. A different request with the same key answers 409. Use a new key for a deliberate new operation. Keys are scoped to the environment and operation; person searches also scope them to the group and person."""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["Idempotency-Key"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
 
 
 class StartSearchResponseTypedDict(TypedDict):

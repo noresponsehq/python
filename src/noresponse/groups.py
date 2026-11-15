@@ -390,6 +390,7 @@ class Groups(BaseSDK):
         *,
         name: str,
         starts_at: str,
+        idempotency_key: Optional[str] = None,
         ends_at: Optional[str] = None,
         venue: Optional[str] = None,
         host: Optional[str] = None,
@@ -406,12 +407,13 @@ class Groups(BaseSDK):
     ) -> models.operations.CreateGroupResponse:
         r"""Create a group to screen.
 
-        Create a group to screen: its name, start, venue, host, the principals it protects and the sensitive topics posts are read against. An environment holds at most 1000 groups.
+        Create a group to screen: its name, start, venue, host, the principals it protects and the sensitive topics posts are read against. An environment holds at most 1000 groups. Send an Idempotency-Key to repeat a request safely while the group is retained. A replay returns the same group in its current state; changed input returns 409.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param name: The group's name.
         :param starts_at: When the group starts.
+        :param idempotency_key: Opaque request key, 16 to 128 characters. Repeating the key and request returns the same resource in its current state while it is retained. A different request with the same key answers 409. Use a new key for a deliberate new operation. Keys are scoped to the environment and operation; person searches also scope them to the group and person.
         :param ends_at: When the group ends, at or after its start; the start when omitted.
         :param venue: Where the group is held.
         :param host: The organisation hosting the group.
@@ -434,6 +436,7 @@ class Groups(BaseSDK):
         request = models.operations.CreateGroupRequest(
             workspace_id=workspace_id,
             environment=environment,
+            idempotency_key=idempotency_key,
             body=models.shared.GroupRequest(
                 name=name,
                 starts_at=starts_at,
@@ -583,6 +586,7 @@ class Groups(BaseSDK):
         *,
         name: str,
         starts_at: str,
+        idempotency_key: Optional[str] = None,
         ends_at: Optional[str] = None,
         venue: Optional[str] = None,
         host: Optional[str] = None,
@@ -599,12 +603,13 @@ class Groups(BaseSDK):
     ) -> models.operations.CreateGroupResponse:
         r"""Create a group to screen.
 
-        Create a group to screen: its name, start, venue, host, the principals it protects and the sensitive topics posts are read against. An environment holds at most 1000 groups.
+        Create a group to screen: its name, start, venue, host, the principals it protects and the sensitive topics posts are read against. An environment holds at most 1000 groups. Send an Idempotency-Key to repeat a request safely while the group is retained. A replay returns the same group in its current state; changed input returns 409.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param name: The group's name.
         :param starts_at: When the group starts.
+        :param idempotency_key: Opaque request key, 16 to 128 characters. Repeating the key and request returns the same resource in its current state while it is retained. A different request with the same key answers 409. Use a new key for a deliberate new operation. Keys are scoped to the environment and operation; person searches also scope them to the group and person.
         :param ends_at: When the group ends, at or after its start; the start when omitted.
         :param venue: Where the group is held.
         :param host: The organisation hosting the group.
@@ -627,6 +632,7 @@ class Groups(BaseSDK):
         request = models.operations.CreateGroupRequest(
             workspace_id=workspace_id,
             environment=environment,
+            idempotency_key=idempotency_key,
             body=models.shared.GroupRequest(
                 name=name,
                 starts_at=starts_at,
@@ -3825,15 +3831,15 @@ class Groups(BaseSDK):
         *,
         record_id: str,
         field: str,
+        idempotency_key: Optional[str] = None,
         table: Optional[str] = None,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.operations.StartSearchResponse:
         r"""Search again on a value of one of a person's records.
 
-        Search again on the value of one field of one of a person's records, named by the record and field. Nothing searches again by itself. A password or hash search counts its breach rows first and runs only when you run it; read the person to see each search and what it found.
+        Search again on the value of one field of one of a person's records, named by the record and field. Nothing searches again by itself. A password or hash search counts its breach rows first and runs only when you run it; read the person to see each search and what it found. Send an Idempotency-Key to return the same search after a lost answer, even after it completes. A different request with the same key returns 409. Use a new key for a deliberate new search.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
@@ -3841,8 +3847,8 @@ class Groups(BaseSDK):
         :param person_id:
         :param record_id: One of the person's records: a lookup's, a profile's or one an earlier search found.
         :param field: The name of the record's field whose value to search. Its kind must be email, phone, username, person_name, password, hash, ip or domain, and it must have a value: a field the source masked or that could not be cleaned is not searched.
+        :param idempotency_key: Opaque request key, 16 to 128 characters. Repeating the key and request returns the same resource in its current state while it is retained. A different request with the same key answers 409. Use a new key for a deliberate new operation. Keys are scoped to the environment and operation; person searches also scope them to the group and person.
         :param table: Search only this breach table, as a remaining entry names it, to fetch the rows an earlier search left out. Not for a phone.
-        :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         :param http_headers: Additional headers to set or replace on requests.
@@ -3862,6 +3868,7 @@ class Groups(BaseSDK):
             environment=environment,
             group_id=group_id,
             person_id=person_id,
+            idempotency_key=idempotency_key,
             body=models.shared.SearchRequest(
                 record_id=record_id,
                 field=field,
@@ -3891,18 +3898,6 @@ class Groups(BaseSDK):
             allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-            else:
-                retries = utils.RetryConfig(
-                    "backoff", utils.BackoffStrategy(500, 8000, 2, 30000), True
-                )
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["408", "429", "5XX"])
 
         def _noresponse_parse_response(http_res):
             response_data: Any = None
@@ -3971,7 +3966,6 @@ class Groups(BaseSDK):
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             stream=_noresponse_response_mode == "streaming",
-            retry_config=retry_config,
         )
         if _noresponse_response_mode != "parsed":
             if utils.match_status_codes(["4XX", "5XX"], http_res.status_code):
@@ -4020,15 +4014,15 @@ class Groups(BaseSDK):
         *,
         record_id: str,
         field: str,
+        idempotency_key: Optional[str] = None,
         table: Optional[str] = None,
-        retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.operations.StartSearchResponse:
         r"""Search again on a value of one of a person's records.
 
-        Search again on the value of one field of one of a person's records, named by the record and field. Nothing searches again by itself. A password or hash search counts its breach rows first and runs only when you run it; read the person to see each search and what it found.
+        Search again on the value of one field of one of a person's records, named by the record and field. Nothing searches again by itself. A password or hash search counts its breach rows first and runs only when you run it; read the person to see each search and what it found. Send an Idempotency-Key to return the same search after a lost answer, even after it completes. A different request with the same key returns 409. Use a new key for a deliberate new search.
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
@@ -4036,8 +4030,8 @@ class Groups(BaseSDK):
         :param person_id:
         :param record_id: One of the person's records: a lookup's, a profile's or one an earlier search found.
         :param field: The name of the record's field whose value to search. Its kind must be email, phone, username, person_name, password, hash, ip or domain, and it must have a value: a field the source masked or that could not be cleaned is not searched.
+        :param idempotency_key: Opaque request key, 16 to 128 characters. Repeating the key and request returns the same resource in its current state while it is retained. A different request with the same key answers 409. Use a new key for a deliberate new operation. Keys are scoped to the environment and operation; person searches also scope them to the group and person.
         :param table: Search only this breach table, as a remaining entry names it, to fetch the rows an earlier search left out. Not for a phone.
-        :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         :param http_headers: Additional headers to set or replace on requests.
@@ -4057,6 +4051,7 @@ class Groups(BaseSDK):
             environment=environment,
             group_id=group_id,
             person_id=person_id,
+            idempotency_key=idempotency_key,
             body=models.shared.SearchRequest(
                 record_id=record_id,
                 field=field,
@@ -4086,18 +4081,6 @@ class Groups(BaseSDK):
             allow_empty_value=None,
             timeout_ms=timeout_ms,
         )
-
-        if retries == UNSET:
-            if self.sdk_configuration.retry_config is not UNSET:
-                retries = self.sdk_configuration.retry_config
-            else:
-                retries = utils.RetryConfig(
-                    "backoff", utils.BackoffStrategy(500, 8000, 2, 30000), True
-                )
-
-        retry_config = None
-        if isinstance(retries, utils.RetryConfig):
-            retry_config = (retries, ["408", "429", "5XX"])
 
         async def _noresponse_parse_response(http_res):
             response_data: Any = None
@@ -4166,7 +4149,6 @@ class Groups(BaseSDK):
             request=req,
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             stream=_noresponse_response_mode == "streaming",
-            retry_config=retry_config,
         )
         if _noresponse_response_mode != "parsed":
             if utils.match_status_codes(["4XX", "5XX"], http_res.status_code):
