@@ -1,5 +1,9 @@
 # Changelog
 
+## 12.0.16
+
+No changes detected.
+
 ## 12.0.15
 
 * `sdk.settings.get()`:  `response.refused_sources[].enum(duolingo_email)` **Added**
