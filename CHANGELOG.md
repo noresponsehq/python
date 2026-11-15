@@ -1,5 +1,19 @@
 # Changelog
 
+## 12.0.12
+
+* `sdk.groups.list_people()`:  `response.items[].handles[].platform` **Changed**
+* `sdk.groups.add_people()`: 
+  *  `request.people[].handles[].platform` **Changed**
+* `sdk.groups.get_person()`:  `response.person.handles[].platform` **Changed**
+* `sdk.groups.review_person()`:  `response.handles[].platform` **Changed**
+* `sdk.groups.list_screenings()`:  `response.items[].platforms[]` **Changed**
+* `sdk.groups.start_screening()`: 
+  *  `request.platforms[]` **Changed**
+  *  `response.platforms[]` **Changed**
+* `sdk.groups.get_screening()`:  `response.platforms[]` **Changed**
+* `sdk.groups.cancel_screening()`:  `response.platforms[]` **Changed**
+
 ## 12.0.11
 
 * `sdk.settings.get()`:  `response.refused_sources[]` **Changed**
