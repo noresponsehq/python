@@ -27,7 +27,7 @@ RecordRole = Union[
         "caller_category",
         # How many chargebacks a shop recorded against the account, or whether it has one (`count` or `flag`).
         "chargebacks",
-        # Another account on the same platform the account deals with, such as an opponent it plays most or a follower (`username`). Fields beside it under the same name say how, how often and when last. It names another person, never the account's owner.
+        # Another account on the same platform the account deals with, such as an opponent it plays most, a friend or a follower (`username`). Fields beside it under the same name say how, how often, when last and since when. They also give the contact's own name and location where the platform shows them. It names another person, never the account's owner.
         "contact",
         # The banner picture of the profile (`image`).
         "cover_picture",
