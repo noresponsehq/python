@@ -11,7 +11,7 @@ class SearchRequestTypedDict(TypedDict):
     record_id: str
     r"""One of the person's records: a lookup's, a profile's or one an earlier search found."""
     field: str
-    r"""The name of the record's field whose value to search. Its kind must be email, phone, username, person_name, password, hash or ip."""
+    r"""The name of the record's field whose value to search. Its kind must be email, phone, username, person_name, password, hash, ip or domain, and it must have a value: a field the source masked or that could not be cleaned is not searched."""
     table: NotRequired[str]
     r"""Search only this breach table, as a remaining entry names it, to fetch the rows an earlier search left out. Not for a phone."""
 
@@ -23,7 +23,7 @@ class SearchRequest(BaseModel):
     r"""One of the person's records: a lookup's, a profile's or one an earlier search found."""
 
     field: str
-    r"""The name of the record's field whose value to search. Its kind must be email, phone, username, person_name, password, hash or ip."""
+    r"""The name of the record's field whose value to search. Its kind must be email, phone, username, person_name, password, hash, ip or domain, and it must have a value: a field the source masked or that could not be cleaned is not searched."""
 
     table: Optional[str] = None
     r"""Search only this breach table, as a remaining entry names it, to fetch the rows an earlier search left out. Not for a phone."""
