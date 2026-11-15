@@ -27,6 +27,7 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"bot"`
 - `"caller_category"`
 - `"chargebacks"`
+- `"contact"`
 - `"cover_picture"`
 - `"declines"`
 - `"deleted"`

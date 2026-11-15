@@ -15,7 +15,7 @@ class ScreeningProfileTypedDict(TypedDict):
 
     id: str
     platform: HandlePlatform
-    r"""A platform a screening can cover. github and scratch through flickr are each one read of the public profile a handle names, with no posts. synthetic is the deterministic connector's own platform, for exercising the product end to end with no network."""
+    r"""A platform a screening can cover. github and scratch through flickr are each one read of the public profile a handle names, with no posts; chesscom also reads the profile's stats, clubs and last two months of games, for its activity and contacts. synthetic is the deterministic connector's own platform, for exercising the product end to end with no network."""
     handle: str
     url: str
     access: Access
@@ -47,7 +47,7 @@ class ScreeningProfile(BaseModel):
     id: str
 
     platform: HandlePlatform
-    r"""A platform a screening can cover. github and scratch through flickr are each one read of the public profile a handle names, with no posts. synthetic is the deterministic connector's own platform, for exercising the product end to end with no network."""
+    r"""A platform a screening can cover. github and scratch through flickr are each one read of the public profile a handle names, with no posts; chesscom also reads the profile's stats, clubs and last two months of games, for its activity and contacts. synthetic is the deterministic connector's own platform, for exercising the product end to end with no network."""
 
     handle: str
 
