@@ -3,9 +3,13 @@ from .failurereason import FailureReason
 from .identifiersearchkind import IdentifierSearchKind
 from .lane import Lane
 from .screeninglookupcheckstatus import ScreeningLookupCheckStatus
+from .screeninglookupcheckunanswereditem import (
+    ScreeningLookupCheckUnansweredItem,
+    ScreeningLookupCheckUnansweredItemTypedDict,
+)
 from noresponse.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
-from typing import Optional
+from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
@@ -25,6 +29,8 @@ class ScreeningLookupCheckTypedDict(TypedDict):
     r"""Sources that found the identifier."""
     reason: NotRequired[FailureReason]
     r"""Why a signal or source did not produce a definite found/not_found. timed_out means the source missed the request deadline; a continuation may still settle it. deferred means the (source, identifier) pair is async-only and was not attempted on the synchronous path; a continuation settles it."""
+    unanswered: NotRequired[List[ScreeningLookupCheckUnansweredItemTypedDict]]
+    r"""Each source that did not give a definite answer, by connector, with why: the same connector id a record's source names. A source of the lane that no connector covers is counted in sources and not named here."""
 
 
 class ScreeningLookupCheck(BaseModel):
@@ -50,9 +56,12 @@ class ScreeningLookupCheck(BaseModel):
     reason: Optional[FailureReason] = None
     r"""Why a signal or source did not produce a definite found/not_found. timed_out means the source missed the request deadline; a continuation may still settle it. deferred means the (source, identifier) pair is async-only and was not attempted on the synchronous path; a continuation settles it."""
 
+    unanswered: Optional[List[ScreeningLookupCheckUnansweredItem]] = None
+    r"""Each source that did not give a definite answer, by connector, with why: the same connector id a record's source names. A source of the lane that no connector covers is counted in sources and not named here."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["reason"])
+        optional_fields = set(["reason", "unanswered"])
         serialized = handler(self)
         m = {}
 

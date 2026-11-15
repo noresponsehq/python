@@ -663,6 +663,10 @@ if TYPE_CHECKING:
         ScreeningLookupCheckTypedDict,
     )
     from .screeninglookupcheckstatus import ScreeningLookupCheckStatus
+    from .screeninglookupcheckunanswereditem import (
+        ScreeningLookupCheckUnansweredItem,
+        ScreeningLookupCheckUnansweredItemTypedDict,
+    )
     from .screeningmatch import ScreeningMatch, ScreeningMatchTypedDict
     from .screeningmatchevidence import (
         ScreeningMatchEvidence,
@@ -1430,6 +1434,8 @@ __all__ = [
     "ScreeningLookupCheck",
     "ScreeningLookupCheckStatus",
     "ScreeningLookupCheckTypedDict",
+    "ScreeningLookupCheckUnansweredItem",
+    "ScreeningLookupCheckUnansweredItemTypedDict",
     "ScreeningLookupTypedDict",
     "ScreeningMatch",
     "ScreeningMatchEvidence",
@@ -2229,6 +2235,8 @@ _dynamic_imports: dict[str, str] = {
     "ScreeningLookupCheck": ".screeninglookupcheck",
     "ScreeningLookupCheckTypedDict": ".screeninglookupcheck",
     "ScreeningLookupCheckStatus": ".screeninglookupcheckstatus",
+    "ScreeningLookupCheckUnansweredItem": ".screeninglookupcheckunanswereditem",
+    "ScreeningLookupCheckUnansweredItemTypedDict": ".screeninglookupcheckunanswereditem",
     "ScreeningMatch": ".screeningmatch",
     "ScreeningMatchTypedDict": ".screeningmatch",
     "ScreeningMatchEvidence": ".screeningmatchevidence",
