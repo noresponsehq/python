@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: 23e4a131d26ecec1dab727cc11d26310
+  docChecksum: f671165299a10a504bc0f6c0a159beb9
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 12.0.26
-  configChecksum: 9f57c7c4dcb3f863c6b63ba0b9488779
+  releaseVersion: 12.0.27
+  configChecksum: d4fc3af8031bc3b659707983b1e8ce74
 features:
   python:
     additionalDependencies: 1.1.0
@@ -1145,9 +1145,9 @@ trackedFiles:
   docs/models/shared/recorddistinctive.md:
     last_write_checksum: sha1:0a81fe2b4d28585f7b3985e276e8bd36d5dc8fb0
   docs/models/shared/recordfield.md:
-    last_write_checksum: sha1:2e3291367ce51fa1e3ca3136db1557bf2dc12f92
+    last_write_checksum: sha1:841a79cf0cd8aa5fa70762f76558cbc4b0296a8e
   docs/models/shared/recordkind.md:
-    last_write_checksum: sha1:5e451ab4a187842fc6991aacdc066057b5ab9e29
+    last_write_checksum: sha1:da4c0b99a5571dedd39fe2f0f2402a3bd368aa9a
   docs/models/shared/recordmatch.md:
     last_write_checksum: sha1:f79f55f0bc10d5056c65c4a0f8ae0cc5513f8714
   docs/models/shared/recordremaining.md:
@@ -1437,7 +1437,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:25c1cac7d5027a26675b69ceac136343007329c3
   pyproject.toml:
-    last_write_checksum: sha1:2f034ca58e8cfe3478c50cd4b6e43133f9227413
+    last_write_checksum: sha1:366275cb67f6a9c65343e9bbb2f5bc03e66ac481
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -1453,7 +1453,7 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:fb83dbbe994c906db81635dd4a4c9f52899fdf0d
+    last_write_checksum: sha1:f7615f0aaf843b83e3b8646dc2b110765728d65a
   src/noresponse/accounts.py:
     last_write_checksum: sha1:c09abf6ab3b780a819d1a1ed0af35063bb2625e6
   src/noresponse/assessments.py:
@@ -2345,9 +2345,9 @@ trackedFiles:
   src/noresponse/models/shared/recorddistinctive.py:
     last_write_checksum: sha1:f150144d9acee96a1a3c322ac54d1884d1def85c
   src/noresponse/models/shared/recordfield.py:
-    last_write_checksum: sha1:d88ff544603a8bc8e388faf0638c36541440bd85
+    last_write_checksum: sha1:dc914c96d42e567952ce304265f59aa69d06c8be
   src/noresponse/models/shared/recordkind.py:
-    last_write_checksum: sha1:99dbadf32fe420f17b24fe24262feed4ae17f8ca
+    last_write_checksum: sha1:d5fe285468c997997c82c46e75dddbffa77c8175
   src/noresponse/models/shared/recordmatch.py:
     last_write_checksum: sha1:bd122ce55fab35e31e1b384d27fed5c5e6fb22ab
   src/noresponse/models/shared/recordremaining.py:
