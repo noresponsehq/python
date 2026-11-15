@@ -352,6 +352,7 @@ class Keys(BaseSDK):
         kind: Optional[models.shared.KeyKind] = None,
         expires_at: Optional[str] = None,
         request_id: Optional[str] = None,
+        denied_actions: Optional[Iterable[models.shared.KeyRequestDeniedAction]] = None,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
@@ -368,6 +369,7 @@ class Keys(BaseSDK):
         :param kind:
         :param expires_at: Between one minute and 365 days from now.
         :param request_id: Caller-chosen identifier for one creation attempt, scoped to the issuing actor and environment. Use 1 to 256 printable ASCII characters without spaces. A retry with the same parameters returns the original key metadata with status 200 and no secret; changed parameters return 409.
+        :param denied_actions: Explicit restrictions that override scope grants. An empty list restores the access supplied by the scopes. Rotation preserves these restrictions.
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         :param http_headers: Additional headers to set or replace on requests.
@@ -392,6 +394,9 @@ class Keys(BaseSDK):
                 kind=kind,
                 expires_at=expires_at,
                 request_id=request_id,
+                denied_actions=utils.unmarshal(
+                    denied_actions, Optional[List[models.shared.KeyRequestDeniedAction]]
+                ),
             ),
         )
 
@@ -535,6 +540,7 @@ class Keys(BaseSDK):
         kind: Optional[models.shared.KeyKind] = None,
         expires_at: Optional[str] = None,
         request_id: Optional[str] = None,
+        denied_actions: Optional[Iterable[models.shared.KeyRequestDeniedAction]] = None,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
@@ -551,6 +557,7 @@ class Keys(BaseSDK):
         :param kind:
         :param expires_at: Between one minute and 365 days from now.
         :param request_id: Caller-chosen identifier for one creation attempt, scoped to the issuing actor and environment. Use 1 to 256 printable ASCII characters without spaces. A retry with the same parameters returns the original key metadata with status 200 and no secret; changed parameters return 409.
+        :param denied_actions: Explicit restrictions that override scope grants. An empty list restores the access supplied by the scopes. Rotation preserves these restrictions.
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
         :param http_headers: Additional headers to set or replace on requests.
@@ -575,6 +582,9 @@ class Keys(BaseSDK):
                 kind=kind,
                 expires_at=expires_at,
                 request_id=request_id,
+                denied_actions=utils.unmarshal(
+                    denied_actions, Optional[List[models.shared.KeyRequestDeniedAction]]
+                ),
             ),
         )
 
@@ -1410,6 +1420,379 @@ class Keys(BaseSDK):
                 parse_exc_,
             )
 
+    def update_access(
+        self,
+        workspace_id: str,
+        key_id: str,
+        *,
+        denied_actions: Iterable[models.shared.KeyAccessRequestDeniedAction],
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.operations.UpdateKeyAccessResponse:
+        r"""Restrict an API key.
+
+        Replaces the explicit restrictions on an active key. Restrictions take effect on its next request and survive rotation. The issuer must be able to grant the resulting access in the key environment. A restricted caller cannot remove its own restrictions or grant unrestricted access to another key. Changes are audited without recording the secret.
+
+        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
+        :param key_id: The key's id. A key of another workspace answers 404, as does a key of the other environment to an API key.
+        :param denied_actions: Explicit restrictions that override scope grants. An empty list restores the access supplied by the scopes. Rotation preserves these restrictions.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.operations.UpdateKeyAccessRequest(
+            workspace_id=workspace_id,
+            key_id=key_id,
+            body=models.shared.KeyAccessRequest(
+                denied_actions=utils.unmarshal(
+                    denied_actions, List[models.shared.KeyAccessRequestDeniedAction]
+                ),
+            ),
+        )
+
+        _noresponse_response_mode, http_headers = (
+            response_helpers.consume_response_mode(http_headers)
+        )
+        req = self._build_request(
+            method="PATCH",
+            path="/v1/workspaces/{workspace_id}/keys/{key_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.body, False, False, "json", models.shared.KeyAccessRequest
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 8000, 2, 30000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["408", "429", "5XX"])
+
+        def _noresponse_parse_response(http_res):
+            response_data: Any = None
+            if utils.match_response(http_res, "200", "application/json"):
+                return models.operations.UpdateKeyAccessResponse(
+                    result=unmarshal_json_response(models.shared.Key, http_res),
+                    headers=utils.get_response_headers(http_res.headers),
+                )
+            if utils.match_response(http_res, "400", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.BadRequestErrorData, http_res
+                )
+                raise models.errors.BadRequestError(response_data, http_res)
+            if utils.match_response(http_res, "401", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.AuthenticationErrorData, http_res
+                )
+                raise models.errors.AuthenticationError(response_data, http_res)
+            if utils.match_response(http_res, "403", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.PermissionDeniedErrorData, http_res
+                )
+                raise models.errors.PermissionDeniedError(response_data, http_res)
+            if utils.match_response(http_res, "404", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.NotFoundErrorData, http_res
+                )
+                raise models.errors.NotFoundError(response_data, http_res)
+            if utils.match_response(http_res, "409", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.ConflictErrorData, http_res
+                )
+                raise models.errors.ConflictError(response_data, http_res)
+            if utils.match_response(http_res, "429", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.RateLimitErrorData, http_res
+                )
+                raise models.errors.RateLimitError(response_data, http_res)
+            if utils.match_response(http_res, "4XX", "*"):
+                http_res_text = utils.stream_to_text(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+            if utils.match_response(http_res, "5XX", "*"):
+                http_res_text = utils.stream_to_text(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+
+            raise models.errors.APIStatusError("Unexpected response received", http_res)
+
+        _noresponse_hook_ctx = HookContext(
+            config=self.sdk_configuration,
+            base_url=base_url or "",
+            operation_id="updateKeyAccess",
+            oauth2_scopes=None,
+            security_source=get_security_from_env(
+                self.sdk_configuration.security, models.shared.Security
+            ),
+            tags=["keys"],
+            extensions=None,
+            response=ResponseContext(mode=_noresponse_response_mode, execution="sync"),
+        )
+        http_res = self.do_request(
+            hook_ctx=_noresponse_hook_ctx,
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            stream=_noresponse_response_mode == "streaming",
+            retry_config=retry_config,
+        )
+        if _noresponse_response_mode != "parsed":
+            if utils.match_status_codes(["4XX", "5XX"], http_res.status_code):
+                http_res.read()
+                try:
+                    _noresponse_parse_response(http_res)
+                except Exception as parse_exc_:
+                    response_helpers.raise_parse_error(
+                        self.sdk_configuration.__dict__["_hooks"],
+                        AfterParseErrorContext(_noresponse_hook_ctx),
+                        http_res,
+                        parse_exc_,
+                    )
+            _noresponse_response_cls = (
+                response_helpers.StreamedAPIResponse
+                if _noresponse_response_mode == "streaming"
+                else response_helpers.APIResponse
+            )
+            return cast(
+                Any,
+                _noresponse_response_cls(
+                    raw=http_res,
+                    parser=_noresponse_parse_response,
+                    mode="buffered",
+                    client_ref=self,
+                    hook_ctx=AfterParseErrorContext(_noresponse_hook_ctx),
+                    hooks=self.sdk_configuration.__dict__.get("_hooks"),
+                ),
+            )
+        try:
+            return _noresponse_parse_response(http_res)
+        except Exception as parse_exc_:
+            response_helpers.raise_parse_error(
+                self.sdk_configuration.__dict__["_hooks"],
+                AfterParseErrorContext(_noresponse_hook_ctx),
+                http_res,
+                parse_exc_,
+            )
+
+    async def update_access_async(
+        self,
+        workspace_id: str,
+        key_id: str,
+        *,
+        denied_actions: Iterable[models.shared.KeyAccessRequestDeniedAction],
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.operations.UpdateKeyAccessResponse:
+        r"""Restrict an API key.
+
+        Replaces the explicit restrictions on an active key. Restrictions take effect on its next request and survive rotation. The issuer must be able to grant the resulting access in the key environment. A restricted caller cannot remove its own restrictions or grant unrestricted access to another key. Changes are audited without recording the secret.
+
+        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
+        :param key_id: The key's id. A key of another workspace answers 404, as does a key of the other environment to an API key.
+        :param denied_actions: Explicit restrictions that override scope grants. An empty list restores the access supplied by the scopes. Rotation preserves these restrictions.
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.operations.UpdateKeyAccessRequest(
+            workspace_id=workspace_id,
+            key_id=key_id,
+            body=models.shared.KeyAccessRequest(
+                denied_actions=utils.unmarshal(
+                    denied_actions, List[models.shared.KeyAccessRequestDeniedAction]
+                ),
+            ),
+        )
+
+        _noresponse_response_mode, http_headers = (
+            response_helpers.consume_response_mode(http_headers)
+        )
+        req = self._build_request_async(
+            method="PATCH",
+            path="/v1/workspaces/{workspace_id}/keys/{key_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=True,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            get_serialized_body=lambda: utils.serialize_request_body(
+                request.body, False, False, "json", models.shared.KeyAccessRequest
+            ),
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 8000, 2, 30000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["408", "429", "5XX"])
+
+        async def _noresponse_parse_response(http_res):
+            response_data: Any = None
+            if utils.match_response(http_res, "200", "application/json"):
+                return models.operations.UpdateKeyAccessResponse(
+                    result=unmarshal_json_response(models.shared.Key, http_res),
+                    headers=utils.get_response_headers(http_res.headers),
+                )
+            if utils.match_response(http_res, "400", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.BadRequestErrorData, http_res
+                )
+                raise models.errors.BadRequestError(response_data, http_res)
+            if utils.match_response(http_res, "401", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.AuthenticationErrorData, http_res
+                )
+                raise models.errors.AuthenticationError(response_data, http_res)
+            if utils.match_response(http_res, "403", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.PermissionDeniedErrorData, http_res
+                )
+                raise models.errors.PermissionDeniedError(response_data, http_res)
+            if utils.match_response(http_res, "404", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.NotFoundErrorData, http_res
+                )
+                raise models.errors.NotFoundError(response_data, http_res)
+            if utils.match_response(http_res, "409", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.ConflictErrorData, http_res
+                )
+                raise models.errors.ConflictError(response_data, http_res)
+            if utils.match_response(http_res, "429", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.RateLimitErrorData, http_res
+                )
+                raise models.errors.RateLimitError(response_data, http_res)
+            if utils.match_response(http_res, "4XX", "*"):
+                http_res_text = await utils.stream_to_text_async(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+            if utils.match_response(http_res, "5XX", "*"):
+                http_res_text = await utils.stream_to_text_async(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+
+            raise models.errors.APIStatusError("Unexpected response received", http_res)
+
+        _noresponse_hook_ctx = HookContext(
+            config=self.sdk_configuration,
+            base_url=base_url or "",
+            operation_id="updateKeyAccess",
+            oauth2_scopes=None,
+            security_source=get_security_from_env(
+                self.sdk_configuration.security, models.shared.Security
+            ),
+            tags=["keys"],
+            extensions=None,
+            response=ResponseContext(mode=_noresponse_response_mode, execution="async"),
+        )
+        http_res = await self.do_request_async(
+            hook_ctx=_noresponse_hook_ctx,
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            stream=_noresponse_response_mode == "streaming",
+            retry_config=retry_config,
+        )
+        if _noresponse_response_mode != "parsed":
+            if utils.match_status_codes(["4XX", "5XX"], http_res.status_code):
+                await http_res.aread()
+                try:
+                    await _noresponse_parse_response(http_res)
+                except Exception as parse_exc_:
+                    await response_helpers.raise_parse_error_async(
+                        self.sdk_configuration.__dict__.get("_async_hooks"),
+                        self.sdk_configuration.__dict__.get("_hooks"),
+                        AfterParseErrorContext(_noresponse_hook_ctx),
+                        http_res,
+                        parse_exc_,
+                    )
+            _noresponse_response_cls = (
+                response_helpers.AsyncStreamedAPIResponse
+                if _noresponse_response_mode == "streaming"
+                else response_helpers.AsyncAPIResponse
+            )
+            return cast(
+                Any,
+                _noresponse_response_cls(
+                    raw=http_res,
+                    parser=_noresponse_parse_response,
+                    mode="buffered",
+                    client_ref=self,
+                    hook_ctx=AfterParseErrorContext(_noresponse_hook_ctx),
+                    hooks=self.sdk_configuration.__dict__.get("_hooks"),
+                    async_hooks=self.sdk_configuration.__dict__.get("_async_hooks"),
+                ),
+            )
+        try:
+            return await _noresponse_parse_response(http_res)
+        except Exception as parse_exc_:
+            await response_helpers.raise_parse_error_async(
+                self.sdk_configuration.__dict__.get("_async_hooks"),
+                self.sdk_configuration.__dict__.get("_hooks"),
+                AfterParseErrorContext(_noresponse_hook_ctx),
+                http_res,
+                parse_exc_,
+            )
+
 
 class KeysWithRawResponse:
     def __init__(self, sdk: Keys) -> None:
@@ -1435,6 +1818,12 @@ class KeysWithRawResponse:
         )
         self.revoke_async = response_helpers.async_to_raw_response_wrapper(
             sdk.revoke_async, "http_headers"
+        )
+        self.update_access = response_helpers.to_raw_response_wrapper(
+            sdk.update_access, "http_headers"
+        )
+        self.update_access_async = response_helpers.async_to_raw_response_wrapper(
+            sdk.update_access_async, "http_headers"
         )
 
 
@@ -1464,4 +1853,10 @@ class KeysWithStreamingResponse:
         )
         self.revoke_async = response_helpers.async_to_streamed_response_wrapper(
             sdk.revoke_async, "http_headers"
+        )
+        self.update_access = response_helpers.to_streamed_response_wrapper(
+            sdk.update_access, "http_headers"
+        )
+        self.update_access_async = response_helpers.async_to_streamed_response_wrapper(
+            sdk.update_access_async, "http_headers"
         )

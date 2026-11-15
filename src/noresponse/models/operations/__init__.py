@@ -197,6 +197,12 @@ if TYPE_CHECKING:
         ExportAccountResponse,
         ExportAccountResponseTypedDict,
     )
+    from .exportpeople import (
+        ExportPeopleRequest,
+        ExportPeopleRequestTypedDict,
+        ExportPeopleResponse,
+        ExportPeopleResponseTypedDict,
+    )
     from .exportreview import (
         ExportReviewRequest,
         ExportReviewRequestTypedDict,
@@ -654,6 +660,12 @@ if TYPE_CHECKING:
         UpdateGroupResponse,
         UpdateGroupResponseTypedDict,
     )
+    from .updatekeyaccess import (
+        UpdateKeyAccessRequest,
+        UpdateKeyAccessRequestTypedDict,
+        UpdateKeyAccessResponse,
+        UpdateKeyAccessResponseTypedDict,
+    )
     from .updatemember import (
         UpdateMemberRequest,
         UpdateMemberRequestTypedDict,
@@ -807,6 +819,10 @@ __all__ = [
     "ExportAccountRequestTypedDict",
     "ExportAccountResponse",
     "ExportAccountResponseTypedDict",
+    "ExportPeopleRequest",
+    "ExportPeopleRequestTypedDict",
+    "ExportPeopleResponse",
+    "ExportPeopleResponseTypedDict",
     "ExportReviewRequest",
     "ExportReviewRequestTypedDict",
     "ExportReviewResponse",
@@ -1111,6 +1127,10 @@ __all__ = [
     "UpdateGroupRequestTypedDict",
     "UpdateGroupResponse",
     "UpdateGroupResponseTypedDict",
+    "UpdateKeyAccessRequest",
+    "UpdateKeyAccessRequestTypedDict",
+    "UpdateKeyAccessResponse",
+    "UpdateKeyAccessResponseTypedDict",
     "UpdateMemberRequest",
     "UpdateMemberRequestTypedDict",
     "UpdateMemberResponse",
@@ -1256,6 +1276,10 @@ _dynamic_imports: dict[str, str] = {
     "ExportAccountRequestTypedDict": ".exportaccount",
     "ExportAccountResponse": ".exportaccount",
     "ExportAccountResponseTypedDict": ".exportaccount",
+    "ExportPeopleRequest": ".exportpeople",
+    "ExportPeopleRequestTypedDict": ".exportpeople",
+    "ExportPeopleResponse": ".exportpeople",
+    "ExportPeopleResponseTypedDict": ".exportpeople",
     "ExportReviewRequest": ".exportreview",
     "ExportReviewRequestTypedDict": ".exportreview",
     "ExportReviewResponse": ".exportreview",
@@ -1561,6 +1585,10 @@ _dynamic_imports: dict[str, str] = {
     "UpdateGroupRequestTypedDict": ".updategroup",
     "UpdateGroupResponse": ".updategroup",
     "UpdateGroupResponseTypedDict": ".updategroup",
+    "UpdateKeyAccessRequest": ".updatekeyaccess",
+    "UpdateKeyAccessRequestTypedDict": ".updatekeyaccess",
+    "UpdateKeyAccessResponse": ".updatekeyaccess",
+    "UpdateKeyAccessResponseTypedDict": ".updatekeyaccess",
     "UpdateMemberRequest": ".updatemember",
     "UpdateMemberRequestTypedDict": ".updatemember",
     "UpdateMemberResponse": ".updatemember",

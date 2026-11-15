@@ -1597,6 +1597,7 @@ class Keys(_Keys):
         kind: Optional[models.shared.KeyKind] = None,
         expires_at: Optional[str] = None,
         request_id: Optional[str] = None,
+        denied_actions: Optional[Iterable[str]] = None,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
@@ -1615,6 +1616,7 @@ class Keys(_Keys):
             kind=kind,
             expires_at=expires_at,
             request_id=request_id,
+            denied_actions=cast(Any, list(denied_actions)) if denied_actions is not None else None,
             server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers,
         )
         return _answer(response, as_key)
@@ -1630,6 +1632,7 @@ class Keys(_Keys):
         kind: Optional[models.shared.KeyKind] = None,
         expires_at: Optional[str] = None,
         request_id: Optional[str] = None,
+        denied_actions: Optional[Iterable[str]] = None,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
         http_headers: Optional[Mapping[str, str]] = None,
@@ -1642,6 +1645,7 @@ class Keys(_Keys):
             kind=kind,
             expires_at=expires_at,
             request_id=request_id,
+            denied_actions=cast(Any, list(denied_actions)) if denied_actions is not None else None,
             server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers,
         )
         return _answer(response, as_key)

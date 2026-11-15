@@ -26,6 +26,17 @@ KeyRequestScope = Literal[
     "members",
     "members_manage",
     "groups",
+    "people",
+    "people_write",
+    "investigations",
+    "decisions",
+]
+
+
+KeyRequestDeniedAction = Literal[
+    "evidence.read",
+    "exports.read",
+    "policy.publish",
 ]
 
 
@@ -45,6 +56,8 @@ class KeyRequestTypedDict(TypedDict):
     r"""Between one minute and 365 days from now."""
     request_id: NotRequired[str]
     r"""Caller-chosen identifier for one creation attempt, scoped to the issuing actor and environment. Use 1 to 256 printable ASCII characters without spaces. A retry with the same parameters returns the original key metadata with status 200 and no secret; changed parameters return 409."""
+    denied_actions: NotRequired[List[KeyRequestDeniedAction]]
+    r"""Explicit restrictions that override scope grants. An empty list restores the access supplied by the scopes. Rotation preserves these restrictions."""
 
 
 class KeyRequest(BaseModel):
@@ -70,9 +83,14 @@ class KeyRequest(BaseModel):
     request_id: Optional[str] = None
     r"""Caller-chosen identifier for one creation attempt, scoped to the issuing actor and environment. Use 1 to 256 printable ASCII characters without spaces. A retry with the same parameters returns the original key metadata with status 200 and no secret; changed parameters return 409."""
 
+    denied_actions: Optional[List[KeyRequestDeniedAction]] = None
+    r"""Explicit restrictions that override scope grants. An empty list restores the access supplied by the scopes. Rotation preserves these restrictions."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["name", "purpose", "kind", "expires_at", "request_id"])
+        optional_fields = set(
+            ["name", "purpose", "kind", "expires_at", "request_id", "denied_actions"]
+        )
         serialized = handler(self)
         m = {}
 

@@ -35,6 +35,8 @@ class PersonReportTypedDict(TypedDict):
     r"""What the signup check's lookups found for a person: account presence for the email, phone and usernames (the person's handles), the phone lookup, the email domain's registration and the breach search. Context and coverage for the reviewer, not a finding: nothing here sets a band or a match state."""
     searches: NotRequired[List[SearchTypedDict]]
     r"""The searches people started on this person's values, newest first: each names the value, and the record and field it came from. Absent when nobody searched."""
+    evidence_restricted: NotRequired[bool]
+    r"""True when evidence.read is explicitly denied. Submitted details, coverage, job status and decisions remain available. Collected records, profiles, findings, posts, media, discovered values and free-text decision notes are withheld."""
 
 
 class PersonReport(BaseModel):
@@ -67,9 +69,12 @@ class PersonReport(BaseModel):
     searches: Optional[List[Search]] = None
     r"""The searches people started on this person's values, newest first: each names the value, and the record and field it came from. Absent when nobody searched."""
 
+    evidence_restricted: Optional[bool] = None
+    r"""True when evidence.read is explicitly denied. Submitted details, coverage, job status and decisions remain available. Collected records, profiles, findings, posts, media, discovered values and free-text decision notes are withheld."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["lookup", "searches"])
+        optional_fields = set(["lookup", "searches", "evidence_restricted"])
         serialized = handler(self)
         m = {}
 

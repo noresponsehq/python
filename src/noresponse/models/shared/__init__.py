@@ -337,12 +337,22 @@ if TYPE_CHECKING:
     from .inviteresendrequest import InviteResendRequest, InviteResendRequestTypedDict
     from .ipsummary import IPSummary, IPSummaryTypedDict
     from .ipsummarytype import IPSummaryType
-    from .key import Key, KeyScope, KeyTypedDict
+    from .key import Key, KeyDeniedAction, KeyScope, KeyTypedDict
+    from .keyaccessrequest import (
+        KeyAccessRequest,
+        KeyAccessRequestDeniedAction,
+        KeyAccessRequestTypedDict,
+    )
     from .keyactor import KeyActor, KeyActorTypedDict
     from .keyenvironment import KeyEnvironment
     from .keykind import KeyKind
     from .keylist import KeyList, KeyListTypedDict
-    from .keyrequest import KeyRequest, KeyRequestScope, KeyRequestTypedDict
+    from .keyrequest import (
+        KeyRequest,
+        KeyRequestDeniedAction,
+        KeyRequestScope,
+        KeyRequestTypedDict,
+    )
     from .keyrotation import KeyRotation, KeyRotationScope, KeyRotationTypedDict
     from .keyrotationrequest import KeyRotationRequest, KeyRotationRequestTypedDict
     from .keystatus import KeyStatus
@@ -1112,13 +1122,18 @@ __all__ = [
     "InviteResendRequestTypedDict",
     "InviteTypedDict",
     "Key",
+    "KeyAccessRequest",
+    "KeyAccessRequestDeniedAction",
+    "KeyAccessRequestTypedDict",
     "KeyActor",
     "KeyActorTypedDict",
+    "KeyDeniedAction",
     "KeyEnvironment",
     "KeyKind",
     "KeyList",
     "KeyListTypedDict",
     "KeyRequest",
+    "KeyRequestDeniedAction",
     "KeyRequestScope",
     "KeyRequestTypedDict",
     "KeyRotation",
@@ -1890,8 +1905,12 @@ _dynamic_imports: dict[str, str] = {
     "IPSummaryTypedDict": ".ipsummary",
     "IPSummaryType": ".ipsummarytype",
     "Key": ".key",
+    "KeyDeniedAction": ".key",
     "KeyScope": ".key",
     "KeyTypedDict": ".key",
+    "KeyAccessRequest": ".keyaccessrequest",
+    "KeyAccessRequestDeniedAction": ".keyaccessrequest",
+    "KeyAccessRequestTypedDict": ".keyaccessrequest",
     "KeyActor": ".keyactor",
     "KeyActorTypedDict": ".keyactor",
     "KeyEnvironment": ".keyenvironment",
@@ -1899,6 +1918,7 @@ _dynamic_imports: dict[str, str] = {
     "KeyList": ".keylist",
     "KeyListTypedDict": ".keylist",
     "KeyRequest": ".keyrequest",
+    "KeyRequestDeniedAction": ".keyrequest",
     "KeyRequestScope": ".keyrequest",
     "KeyRequestTypedDict": ".keyrequest",
     "KeyRotation": ".keyrotation",

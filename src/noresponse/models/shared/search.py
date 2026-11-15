@@ -19,7 +19,7 @@ class SearchTypedDict(TypedDict):
     kind: SearchKind
     r"""The kind of the value searched. A domain search finds the leaked rows of every email address at the domain."""
     value: str
-    r"""The value searched: the field's cleaned value, else as the source wrote it."""
+    r"""The searched value. Empty in person reports when evidence.read is denied."""
     status: SearchStatus
     r"""A password or hash search is counting, then counted: rows says how many breach rows hold the value, and nothing runs until a person runs it (POST .../searches/{search_id}/run). Any other search is queued, then running. completed: every source it asked answered. partial: some did not. failed: none answered or none could be asked, which says nothing about whether the value is held anywhere."""
     sources: int
@@ -59,7 +59,7 @@ class Search(BaseModel):
     r"""The kind of the value searched. A domain search finds the leaked rows of every email address at the domain."""
 
     value: str
-    r"""The value searched: the field's cleaned value, else as the source wrote it."""
+    r"""The searched value. Empty in person reports when evidence.read is denied."""
 
     status: SearchStatus
     r"""A password or hash search is counting, then counted: rows says how many breach rows hold the value, and nothing runs until a person runs it (POST .../searches/{search_id}/run). Any other search is queued, then running. completed: every source it asked answered. partial: some did not. failed: none answered or none could be asked, which says nothing about whether the value is held anywhere."""

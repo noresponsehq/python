@@ -28,6 +28,20 @@ KeyScope = Union[
         "members",
         "members_manage",
         "groups",
+        "people",
+        "people_write",
+        "investigations",
+        "decisions",
+    ],
+    UnrecognizedStr,
+]
+
+
+KeyDeniedAction = Union[
+    Literal[
+        "evidence.read",
+        "exports.read",
+        "policy.publish",
     ],
     UnrecognizedStr,
 ]
@@ -69,6 +83,8 @@ class KeyTypedDict(TypedDict):
     r"""Replacement public key identifier, or legacy when the successor predates recorded lineage. This field excludes the secret."""
     last_used_at: NotRequired[str]
     r"""Latest recorded authenticated request observation, updated at most once per minute. Capture is best effort after the response and includes authenticated requests refused by authorization or rate limits. Absence means unknown and does not prove the key was unused. It is independent of diagnostic retention and resets on the replacement key after rotation. This field retains no raw IP or user-agent."""
+    denied_actions: NotRequired[List[KeyDeniedAction]]
+    r"""Explicit restrictions that override scope grants. An empty list restores the access supplied by the scopes. Rotation preserves these restrictions."""
 
 
 class Key(BaseModel):
@@ -125,6 +141,9 @@ class Key(BaseModel):
     last_used_at: Optional[str] = None
     r"""Latest recorded authenticated request observation, updated at most once per minute. Capture is best effort after the response and includes authenticated requests refused by authorization or rate limits. Absence means unknown and does not prove the key was unused. It is independent of diagnostic retention and resets on the replacement key after rotation. This field retains no raw IP or user-agent."""
 
+    denied_actions: Optional[List[KeyDeniedAction]] = None
+    r"""Explicit restrictions that override scope grants. An empty list restores the access supplied by the scopes. Rotation preserves these restrictions."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
@@ -140,6 +159,7 @@ class Key(BaseModel):
                 "owner_user_id",
                 "rotated_to",
                 "last_used_at",
+                "denied_actions",
             ]
         )
         serialized = handler(self)

@@ -32,3 +32,7 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"members"`
 - `"members_manage"`
 - `"groups"`
+- `"people"`
+- `"people_write"`
+- `"investigations"`
+- `"decisions"`

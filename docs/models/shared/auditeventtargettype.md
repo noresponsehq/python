@@ -25,3 +25,5 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"integration"`
 - `"billing"`
 - `"review"`
+- `"person"`
+- `"group"`

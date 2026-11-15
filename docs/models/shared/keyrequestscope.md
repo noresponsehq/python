@@ -28,3 +28,7 @@ value: KeyRequestScope = "assess"
 - `"members"`
 - `"members_manage"`
 - `"groups"`
+- `"people"`
+- `"people_write"`
+- `"investigations"`
+- `"decisions"`

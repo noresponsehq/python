@@ -527,7 +527,8 @@ def test_key_lifecycle_metadata_and_secret_once_replay(asynchronous):
     sdk, seen = make([answer(created, 201), answer(replay, 200)])
     options = {"environment": "live", "scopes": ["assess", "management"],
                "name": created["name"], "purpose": created["purpose"], "kind": "service",
-               "expires_at": "2026-12-31T00:00:00Z", "request_id": "issue-production-worker"}
+               "expires_at": "2026-12-31T00:00:00Z", "request_id": "issue-production-worker",
+               "denied_actions": ["evidence.read"]}
 
     async def scenario():
         async with sdk:

@@ -14,6 +14,8 @@ AuditEventTargetType = Union[
         "integration",
         "billing",
         "review",
+        "person",
+        "group",
     ],
     UnrecognizedStr,
 ]
