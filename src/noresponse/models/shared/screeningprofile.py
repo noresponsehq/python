@@ -1,6 +1,5 @@
 from __future__ import annotations
 from .access import Access
-from .handleplatform import HandlePlatform
 from .postsstopped import PostsStopped
 from .record import Record, RecordTypedDict
 from .screeningmatch import ScreeningMatch, ScreeningMatchTypedDict
@@ -14,8 +13,8 @@ class ScreeningProfileTypedDict(TypedDict):
     r"""An account the screening matched to the person, how it was matched, and how much of it was read."""
 
     id: str
-    platform: HandlePlatform
-    r"""A platform a screening can cover. github and scratch through flickr are each one read of the public profile a handle names, with no posts; chesscom also reads the profile's stats, clubs and last two months of games, for its activity and contacts, and through a signed-in session up to 100 of the player's friends, each a contact with the date the friendship began. synthetic is the deterministic connector's own platform, for exercising the product end to end with no network."""
+    platform: str
+    r"""A platform a screening can cover, such as instagram, x, bluesky, youtube, tiktok or github. The screening registry owns the set: a request that names a platform it does not cover answers 422. A new platform adds an id without changing this contract, so read a platform you do not know in a response as one you have not seen before, not as an error. synthetic is the deterministic connector's own platform, for exercising the product end to end with no network."""
     handle: str
     url: str
     access: Access
@@ -46,8 +45,8 @@ class ScreeningProfile(BaseModel):
 
     id: str
 
-    platform: HandlePlatform
-    r"""A platform a screening can cover. github and scratch through flickr are each one read of the public profile a handle names, with no posts; chesscom also reads the profile's stats, clubs and last two months of games, for its activity and contacts, and through a signed-in session up to 100 of the player's friends, each a contact with the date the friendship began. synthetic is the deterministic connector's own platform, for exercising the product end to end with no network."""
+    platform: str
+    r"""A platform a screening can cover, such as instagram, x, bluesky, youtube, tiktok or github. The screening registry owns the set: a request that names a platform it does not cover answers 422. A new platform adds an id without changing this contract, so read a platform you do not know in a response as one you have not seen before, not as an error. synthetic is the deterministic connector's own platform, for exercising the product end to end with no network."""
 
     handle: str
 

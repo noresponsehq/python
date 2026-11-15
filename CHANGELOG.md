@@ -1,5 +1,26 @@
 # Changelog
 
+## 13.0.0
+
+* `sdk.settings.get()`:  `response.refused_sources[]` **Changed** (Breaking ⚠️)
+* `sdk.settings.update()`: 
+  *  `request.refused_sources[]` **Changed** (Breaking ⚠️)
+  *  `response.refused_sources[]` **Changed** (Breaking ⚠️)
+* `sdk.settings.list_history()`:  `response.items[].settings.refused_sources[]` **Changed** (Breaking ⚠️)
+* `sdk.settings.restore()`:  `response.refused_sources[]` **Changed** (Breaking ⚠️)
+* `sdk.evaluations.publish()`:  `response.refused_sources[]` **Changed** (Breaking ⚠️)
+* `sdk.groups.list_people()`:  `response.items[]` **Changed** (Breaking ⚠️)
+* `sdk.groups.add_people()`: 
+  *  `request.people[].handles[].platform` **Changed** (Breaking ⚠️)
+* `sdk.groups.get_person()`:  `response` **Changed** (Breaking ⚠️)
+* `sdk.groups.review_person()`:  `response` **Changed** (Breaking ⚠️)
+* `sdk.groups.list_screenings()`:  `response.items[].platforms[]` **Changed** (Breaking ⚠️)
+* `sdk.groups.start_screening()`: 
+  *  `request.platforms[]` **Changed** (Breaking ⚠️)
+  *  `response.platforms[]` **Changed** (Breaking ⚠️)
+* `sdk.groups.get_screening()`:  `response.platforms[]` **Changed** (Breaking ⚠️)
+* `sdk.groups.cancel_screening()`:  `response.platforms[]` **Changed** (Breaking ⚠️)
+
 ## 12.0.35
 
 * `sdk.groups.list_people()`:  `response.items[].coverage.items_frame_only` **Added**

@@ -4981,7 +4981,7 @@ class Groups(BaseSDK):
         *,
         idempotency_key: str,
         depth: models.shared.ScreeningDepth,
-        platforms: Iterable[models.shared.HandlePlatform],
+        platforms: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -5019,9 +5019,7 @@ class Groups(BaseSDK):
             idempotency_key=idempotency_key,
             body=models.shared.ScreeningRequest(
                 depth=depth,
-                platforms=utils.unmarshal(
-                    platforms, List[models.shared.HandlePlatform]
-                ),
+                platforms=utils.unmarshal(platforms, List[str]),
             ),
         )
 
@@ -5175,7 +5173,7 @@ class Groups(BaseSDK):
         *,
         idempotency_key: str,
         depth: models.shared.ScreeningDepth,
-        platforms: Iterable[models.shared.HandlePlatform],
+        platforms: Iterable[str],
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -5213,9 +5211,7 @@ class Groups(BaseSDK):
             idempotency_key=idempotency_key,
             body=models.shared.ScreeningRequest(
                 depth=depth,
-                platforms=utils.unmarshal(
-                    platforms, List[models.shared.HandlePlatform]
-                ),
+                platforms=utils.unmarshal(platforms, List[str]),
             ),
         )
 

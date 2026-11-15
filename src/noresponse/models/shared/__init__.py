@@ -282,7 +282,6 @@ if TYPE_CHECKING:
     from .grouprequest import GroupRequest, GroupRequestTypedDict
     from .groupupdate import GroupUpdate, GroupUpdateTypedDict
     from .handle import Handle, HandleTypedDict
-    from .handleplatform import HandlePlatform
     from .highestband import HighestBand
     from .hookpoint import HookPoint
     from .identifier import Identifier
@@ -715,7 +714,6 @@ if TYPE_CHECKING:
     from .signingkey import SigningKey, SigningKeyTypedDict
     from .signingsecret import SigningSecret, SigningSecretTypedDict
     from .source import Source
-    from .sourceid import SourceID
     from .status import Status
     from .thresholds import Thresholds, ThresholdsTypedDict
     from .transport import Transport
@@ -1060,7 +1058,6 @@ __all__ = [
     "GroupUpdate",
     "GroupUpdateTypedDict",
     "Handle",
-    "HandlePlatform",
     "HandleTypedDict",
     "HighestBand",
     "HookPoint",
@@ -1501,7 +1498,6 @@ __all__ = [
     "SocialProfileUnion",
     "SocialProfileUnionTypedDict",
     "Source",
-    "SourceID",
     "Status",
     "Thresholds",
     "ThresholdsTypedDict",
@@ -1841,7 +1837,6 @@ _dynamic_imports: dict[str, str] = {
     "GroupUpdateTypedDict": ".groupupdate",
     "Handle": ".handle",
     "HandleTypedDict": ".handle",
-    "HandlePlatform": ".handleplatform",
     "HighestBand": ".highestband",
     "HookPoint": ".hookpoint",
     "Identifier": ".identifier",
@@ -2297,7 +2292,6 @@ _dynamic_imports: dict[str, str] = {
     "SigningSecret": ".signingsecret",
     "SigningSecretTypedDict": ".signingsecret",
     "Source": ".source",
-    "SourceID": ".sourceid",
     "Status": ".status",
     "Thresholds": ".thresholds",
     "ThresholdsTypedDict": ".thresholds",

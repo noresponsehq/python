@@ -1,7 +1,6 @@
 from __future__ import annotations
 from .keyenvironment import KeyEnvironment
 from .settingsflows import SettingsFlows, SettingsFlowsTypedDict
-from .sourceid import SourceID
 from noresponse.types import BaseModel, Nullable, UNSET_SENTINEL
 from pydantic import model_serializer
 from typing import List, Optional
@@ -20,7 +19,7 @@ class SettingsTypedDict(TypedDict):
     policy_version: int
     r"""The monotonic settings configuration epoch, including retention changes. Zero while defaults apply. Historical assessments keep their frozen policy version; the active version reaches new assessments within a minute."""
     flows: SettingsFlowsTypedDict
-    refused_sources: List[SourceID]
+    refused_sources: List[str]
     r"""The sources this environment refuses, sorted; empty, the default, refuses none. An assessment leaves a refused source out: its coverage is missing (an identifier with no other source lists coverage-unavailable as unavailable) rather than not_found, and a stored result of a refused source is not reused."""
     screening_daily_cap: Nullable[int]
     r"""The most the environment's screenings may spend in one UTC day, in minor units of USD (cents), 0 to 100000000; null is no cap. Default 50000. A screening whose estimated_spend exceeds the cap less the day's recorded spend and what open screenings may still spend answers 409 screening_cap_exceeded."""
@@ -47,7 +46,7 @@ class Settings(BaseModel):
 
     flows: SettingsFlows
 
-    refused_sources: List[SourceID]
+    refused_sources: List[str]
     r"""The sources this environment refuses, sorted; empty, the default, refuses none. An assessment leaves a refused source out: its coverage is missing (an identifier with no other source lists coverage-unavailable as unavailable) rather than not_found, and a stored result of a refused source is not reused."""
 
     screening_daily_cap: Nullable[int]

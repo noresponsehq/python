@@ -1,6 +1,5 @@
 from __future__ import annotations
 from .settingsrequestflows import SettingsRequestFlows, SettingsRequestFlowsTypedDict
-from .sourceid import SourceID
 from noresponse.types import (
     BaseModel,
     Nullable,
@@ -17,7 +16,7 @@ class SettingsRequestTypedDict(TypedDict):
     r"""Changes only named settings, atomically. Every successful write advances policy_version and retains an immutable settings snapshot. expected_policy_version optionally guards against stale edits; restore always requires it."""
 
     retention_days: NotRequired[int]
-    refused_sources: NotRequired[List[SourceID]]
+    refused_sources: NotRequired[List[str]]
     r"""Replaces the refused sources; [] refuses none. A change applies to new assessments within a minute."""
     screening_daily_cap: NotRequired[Nullable[int]]
     r"""Replaces the daily screening cap, in minor units of USD; null removes the cap. Needs settings.write only, like retention_days."""
@@ -33,7 +32,7 @@ class SettingsRequest(BaseModel):
 
     retention_days: Optional[int] = None
 
-    refused_sources: Optional[List[SourceID]] = None
+    refused_sources: Optional[List[str]] = None
     r"""Replaces the refused sources; [] refuses none. A change applies to new assessments within a minute."""
 
     screening_daily_cap: OptionalNullable[int] = UNSET

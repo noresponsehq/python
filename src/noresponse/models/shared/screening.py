@@ -1,6 +1,5 @@
 from __future__ import annotations
 from .auditsettingsenvironment import AuditSettingsEnvironment
-from .handleplatform import HandlePlatform
 from .screeningdepth import ScreeningDepth
 from .screeningspend import ScreeningSpend, ScreeningSpendTypedDict
 from .screeningstatus import ScreeningStatus
@@ -19,7 +18,7 @@ class ScreeningTypedDict(TypedDict):
     status: ScreeningStatus
     r"""partial finished with some people or platforms not covered; people_failed and people_partial count them."""
     depth: ScreeningDepth
-    platforms: List[HandlePlatform]
+    platforms: List[str]
     requested_by: str
     created_at: str
     expires_at: str
@@ -58,7 +57,7 @@ class Screening(BaseModel):
 
     depth: ScreeningDepth
 
-    platforms: List[HandlePlatform]
+    platforms: List[str]
 
     requested_by: str
 

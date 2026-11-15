@@ -377,7 +377,7 @@ class Settings(BaseSDK):
         environment: models.shared.KeyEnvironment,
         *,
         retention_days: Optional[int] = None,
-        refused_sources: Optional[Iterable[models.shared.SourceID]] = None,
+        refused_sources: Optional[Iterable[str]] = None,
         screening_daily_cap: OptionalNullable[int] = UNSET,
         flows: Optional[
             Union[
@@ -424,9 +424,7 @@ class Settings(BaseSDK):
             environment=environment,
             body=models.shared.SettingsRequest(
                 retention_days=retention_days,
-                refused_sources=utils.unmarshal(
-                    refused_sources, Optional[List[models.shared.SourceID]]
-                ),
+                refused_sources=utils.unmarshal(refused_sources, Optional[List[str]]),
                 screening_daily_cap=screening_daily_cap,
                 flows=utils.get_pydantic_model(
                     flows, Optional[models.shared.SettingsRequestFlows]
@@ -584,7 +582,7 @@ class Settings(BaseSDK):
         environment: models.shared.KeyEnvironment,
         *,
         retention_days: Optional[int] = None,
-        refused_sources: Optional[Iterable[models.shared.SourceID]] = None,
+        refused_sources: Optional[Iterable[str]] = None,
         screening_daily_cap: OptionalNullable[int] = UNSET,
         flows: Optional[
             Union[
@@ -631,9 +629,7 @@ class Settings(BaseSDK):
             environment=environment,
             body=models.shared.SettingsRequest(
                 retention_days=retention_days,
-                refused_sources=utils.unmarshal(
-                    refused_sources, Optional[List[models.shared.SourceID]]
-                ),
+                refused_sources=utils.unmarshal(refused_sources, Optional[List[str]]),
                 screening_daily_cap=screening_daily_cap,
                 flows=utils.get_pydantic_model(
                     flows, Optional[models.shared.SettingsRequestFlows]

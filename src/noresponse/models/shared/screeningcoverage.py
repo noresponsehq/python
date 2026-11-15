@@ -1,5 +1,4 @@
 from __future__ import annotations
-from .handleplatform import HandlePlatform
 from .screeningnotanalysedcount import (
     ScreeningNotAnalysedCount,
     ScreeningNotAnalysedCountTypedDict,
@@ -31,7 +30,7 @@ class ScreeningCoverageTypedDict(TypedDict):
     r"""The oldest item read on any platform."""
     period_to: NotRequired[str]
     r"""The newest item read on any platform."""
-    not_searched: NotRequired[List[HandlePlatform]]
+    not_searched: NotRequired[List[str]]
     r"""Requested platforms where the person gave the screening nothing to look up, such as no handle for a platform that reads supplied handles only. Nothing looked and nothing failed: such a platform is not in platforms, is not none_found and does not make the person partial."""
 
 
@@ -61,7 +60,7 @@ class ScreeningCoverage(BaseModel):
     period_to: Optional[str] = None
     r"""The newest item read on any platform."""
 
-    not_searched: Optional[List[HandlePlatform]] = None
+    not_searched: Optional[List[str]] = None
     r"""Requested platforms where the person gave the screening nothing to look up, such as no handle for a platform that reads supplied handles only. Nothing looked and nothing failed: such a platform is not in platforms, is not none_found and does not make the person partial."""
 
     @model_serializer(mode="wrap")
