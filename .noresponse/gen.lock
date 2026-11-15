@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: 1ab2c6ed8628c389e577d8fa1513bb35
+  docChecksum: 887b47f37c8b2d2cfd752fa8ff320b2e
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 12.0.12
-  configChecksum: a4566fe808a4c0026bb5c361126e3235
+  releaseVersion: 12.0.13
+  configChecksum: 66ed631fab847844673a3fb40f0ee20d
 features:
   python:
     additionalDependencies: 1.1.0
@@ -1353,7 +1353,7 @@ trackedFiles:
   docs/models/shared/source.md:
     last_write_checksum: sha1:e33372364279a7379c9581c7320f94cccbec8aee
   docs/models/shared/sourceid.md:
-    last_write_checksum: sha1:610b2e9b8ce342f1c88b79286982e439b496511b
+    last_write_checksum: sha1:40a55ac37742f2044848129db161f012c87b5b9f
   docs/models/shared/status.md:
     last_write_checksum: sha1:e9219276d2033ae3890759030e5c3d34f953c6f2
   docs/models/shared/thresholds.md:
@@ -1437,7 +1437,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:25c1cac7d5027a26675b69ceac136343007329c3
   pyproject.toml:
-    last_write_checksum: sha1:21fd7b9c7b6d45b9adf000705233c36bdb417610
+    last_write_checksum: sha1:168ae2c2c4769dc38b54bc727d785fe56692821b
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -1453,7 +1453,7 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:78a97ba8a279577e5474510188fce22c5e83bf87
+    last_write_checksum: sha1:1167682367583c691229ac1d248bd97b91002993
   src/noresponse/accounts.py:
     last_write_checksum: sha1:c09abf6ab3b780a819d1a1ed0af35063bb2625e6
   src/noresponse/assessments.py:
@@ -2545,7 +2545,7 @@ trackedFiles:
   src/noresponse/models/shared/source.py:
     last_write_checksum: sha1:c6e9bf19b6890e5052fd7c0fb7e034b312bb23e2
   src/noresponse/models/shared/sourceid.py:
-    last_write_checksum: sha1:b5065d2f170639999f6011921c28c0f878814f46
+    last_write_checksum: sha1:011cfadc5076355e59299192360c30b212221dfc
   src/noresponse/models/shared/status.py:
     last_write_checksum: sha1:398b69c40b2cf2cdc591e60bbc2916887551c807
   src/noresponse/models/shared/thresholds.py:
@@ -4119,7 +4119,7 @@ examples:
         application/json: {"version": 157178, "expected_policy_version": 260899, "change_reason": "Adjust thresholds after reviewing retained evidence"}
       responses:
         "200":
-          application/json: {"workspace_id": "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "environment": "live", "retention_days": 450670, "policy_version": 529327, "updated_by": "nrk_live_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "updated_at": "2026-10-23T09:14:12.000Z", "flows": {"account_creation": {"step_up": 477126, "review": 980395, "default_depth": "quick", "inherits_account_creation": false, "admission": "immediate", "hold_seconds": 948838, "on_expiry": "block"}, "login": {"step_up": 867829, "review": 523593, "default_depth": "quick", "inherits_account_creation": false, "admission": "held", "hold_seconds": 363505, "on_expiry": "block"}, "purchase": {"step_up": 374559, "review": 194632, "default_depth": "quick", "inherits_account_creation": true, "admission": "held", "hold_seconds": 365509, "on_expiry": "allow"}}, "refused_sources": ["okru"], "screening_daily_cap": null}
+          application/json: {"workspace_id": "tnt_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "environment": "live", "retention_days": 450670, "policy_version": 529327, "updated_by": "nrk_live_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "updated_at": "2026-10-23T09:14:12.000Z", "flows": {"account_creation": {"step_up": 477126, "review": 980395, "default_depth": "quick", "inherits_account_creation": false, "admission": "immediate", "hold_seconds": 948838, "on_expiry": "block"}, "login": {"step_up": 867829, "review": 523593, "default_depth": "quick", "inherits_account_creation": false, "admission": "held", "hold_seconds": 363505, "on_expiry": "block"}, "purchase": {"step_up": 374559, "review": 194632, "default_depth": "quick", "inherits_account_creation": true, "admission": "held", "hold_seconds": 365509, "on_expiry": "allow"}}, "refused_sources": ["flickr"], "screening_daily_cap": null}
         "400":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 400, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "invalid_idempotency_key", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "401":

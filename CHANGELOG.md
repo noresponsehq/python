@@ -1,5 +1,15 @@
 # Changelog
 
+## 12.0.13
+
+* `sdk.settings.get()`:  `response.refused_sources[].enum(whatsapp)` **Added**
+* `sdk.settings.update()`: 
+  *  `request.refused_sources[].enum(whatsapp)` **Added**
+  *  `response.refused_sources[].enum(whatsapp)` **Added**
+* `sdk.settings.list_history()`:  `response.items[].settings.refused_sources[].enum(whatsapp)` **Added**
+* `sdk.settings.restore()`:  `response.refused_sources[].enum(whatsapp)` **Added**
+* `sdk.evaluations.publish()`:  `response.refused_sources[].enum(whatsapp)` **Added**
+
 ## 12.0.12
 
 * `sdk.groups.list_people()`:  `response.items[].handles[].platform` **Changed**
