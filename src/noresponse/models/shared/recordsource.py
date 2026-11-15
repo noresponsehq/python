@@ -18,7 +18,7 @@ class RecordSourceTypedDict(TypedDict):
     table: NotRequired[str]
     r"""The table a leaked row came from."""
     date_: NotRequired[str]
-    r"""When the source's data dates from, at the precision it is known: YYYY or YYYY-MM for a breach table."""
+    r"""When the source's data dates from, at the precision it is known: YYYY or YYYY-MM for a breach table, and YYYY-MM-DD, the day the computer was infected, for a row of a stealer log."""
 
 
 class RecordSource(BaseModel):
@@ -37,7 +37,7 @@ class RecordSource(BaseModel):
     r"""The table a leaked row came from."""
 
     date_: Annotated[Optional[str], pydantic.Field(alias="date")] = None
-    r"""When the source's data dates from, at the precision it is known: YYYY or YYYY-MM for a breach table."""
+    r"""When the source's data dates from, at the precision it is known: YYYY or YYYY-MM for a breach table, and YYYY-MM-DD, the day the computer was infected, for a row of a stealer log."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):

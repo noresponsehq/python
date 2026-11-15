@@ -9,9 +9,9 @@ RecordKind = Union[
         "email",
         # A phone number. value: in E.164 form, such as +447700900123. A national number is cleaned only when the country of the source's site is known.
         "phone",
-        # A handle a person chose. value: as written. Compare it in lower case.
+        # A handle a person chose. value: as written. Compare it in lower case. A value that is only zeros, or null, nil, none, undefined or n/a, has no value.
         "username",
-        # A platform's own id for an account. value: as written.
+        # A platform's own id for an account. value: as written. A value that is only zeros, or null, nil, none, undefined or n/a, has no value.
         "account_id",
         # A web address. value: the scheme and host in lower case, the path, query and fragment as written.
         "url",
@@ -37,7 +37,7 @@ RecordKind = Union[
         "region",
         # A city or town. value: as written.
         "city",
-        # A street address or one line of it. value: as written.
+        # A street address or one line of it. value: as written. A value that is only zeros, or null, nil, none, undefined or n/a, has no value.
         "address",
         # A postal code. value: in upper case with single spaces.
         "postcode",
@@ -55,7 +55,7 @@ RecordKind = Union[
         "ip",
         # A network card address. value: in lower case with colons.
         "mac_address",
-        # An id of a phone, computer or browser. value: as written.
+        # An id of a phone, computer or browser. value: as written. A value that is only zeros, or null, nil, none, undefined or n/a, has no value.
         "device_id",
         # A browser or app signature. value: as written.
         "user_agent",
@@ -65,7 +65,7 @@ RecordKind = Union[
         "hash",
         # The salt for a hash. value: exactly as written.
         "salt",
-        # A session, reset or API token. value: as written.
+        # A session, reset or API token. value: as written. A value that is only zeros, or null, nil, none, undefined or n/a, has no value.
         "token",
         # A security question or its answer. value: exactly as written.
         "security_answer",
@@ -77,7 +77,7 @@ RecordKind = Union[
         "crypto_address",
         # Money, with its currency when given. value: a plain decimal. detail names the currency, such as USD.
         "amount",
-        # A passport, tax, national or licence number. value: as written.
+        # A passport, tax, national or licence number. value: as written. A value that is only zeros, or null, nil, none, undefined or n/a, has no value.
         "id_number",
         # A number plate or a VIN. value: in upper case with no spaces.
         "vehicle",
