@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: 5ec3e23e09c4c058381075349fc1285e
+  docChecksum: ade2c2a4132e7697dac95349eeb9ab30
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 12.0.21
-  configChecksum: b55755404f4d58965fce748332a2935a
+  releaseVersion: 12.0.22
+  configChecksum: c820dbacd61c340839f0a007442479d2
 features:
   python:
     additionalDependencies: 1.1.0
@@ -1353,7 +1353,7 @@ trackedFiles:
   docs/models/shared/source.md:
     last_write_checksum: sha1:e33372364279a7379c9581c7320f94cccbec8aee
   docs/models/shared/sourceid.md:
-    last_write_checksum: sha1:f1383ab8e3dde58831ff44ef918967478f583ff7
+    last_write_checksum: sha1:3b1392b25593728b6d267ab55a3b8481db98d406
   docs/models/shared/status.md:
     last_write_checksum: sha1:e9219276d2033ae3890759030e5c3d34f953c6f2
   docs/models/shared/thresholds.md:
@@ -1437,7 +1437,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:25c1cac7d5027a26675b69ceac136343007329c3
   pyproject.toml:
-    last_write_checksum: sha1:f4cb22fba337be7a7cfba4a39eb7df15fcaaa7b9
+    last_write_checksum: sha1:f5854bc48b6a7c9ca20d6580d764a148a7c483d4
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -1453,7 +1453,7 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:ef1761c714d917a648f607ecf259fe7c987433a4
+    last_write_checksum: sha1:89d2dd8bf30b472110a45e45171d236c5f1ba516
   src/noresponse/accounts.py:
     last_write_checksum: sha1:c09abf6ab3b780a819d1a1ed0af35063bb2625e6
   src/noresponse/assessments.py:
@@ -2545,7 +2545,7 @@ trackedFiles:
   src/noresponse/models/shared/source.py:
     last_write_checksum: sha1:c6e9bf19b6890e5052fd7c0fb7e034b312bb23e2
   src/noresponse/models/shared/sourceid.py:
-    last_write_checksum: sha1:1879c28d83d8dbd82a1de87e953621c5bd9e00c9
+    last_write_checksum: sha1:1b9318e5e97860379177d62e04d0c003dde04368
   src/noresponse/models/shared/status.py:
     last_write_checksum: sha1:398b69c40b2cf2cdc591e60bbc2916887551c807
   src/noresponse/models/shared/thresholds.py:
