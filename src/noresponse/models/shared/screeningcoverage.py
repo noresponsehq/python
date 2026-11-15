@@ -25,6 +25,8 @@ class ScreeningCoverageTypedDict(TypedDict):
     r"""Items read that the analyser could not analyse. Above zero, the person is partial: a finding may be missing from them."""
     not_analysed_by_reason: NotRequired[List[ScreeningNotAnalysedCountTypedDict]]
     r"""items_not_analysed split by reason, each reason once with at least one item."""
+    items_frame_only: NotRequired[int]
+    r"""Videos the analyser read from their cover frame and caption alone, without their sound or later frames. They count as analysed and do not make the person partial. Left out when none."""
     period_from: NotRequired[str]
     r"""The oldest item read on any platform."""
     period_to: NotRequired[str]
@@ -50,6 +52,9 @@ class ScreeningCoverage(BaseModel):
     not_analysed_by_reason: Optional[List[ScreeningNotAnalysedCount]] = None
     r"""items_not_analysed split by reason, each reason once with at least one item."""
 
+    items_frame_only: Optional[int] = None
+    r"""Videos the analyser read from their cover frame and caption alone, without their sound or later frames. They count as analysed and do not make the person partial. Left out when none."""
+
     period_from: Optional[str] = None
     r"""The oldest item read on any platform."""
 
@@ -65,6 +70,7 @@ class ScreeningCoverage(BaseModel):
             [
                 "items_not_analysed",
                 "not_analysed_by_reason",
+                "items_frame_only",
                 "period_from",
                 "period_to",
                 "not_searched",

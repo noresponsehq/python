@@ -1,5 +1,11 @@
 # Changelog
 
+## 12.0.35
+
+* `sdk.groups.list_people()`:  `response.items[].coverage.items_frame_only` **Added**
+* `sdk.groups.get_person()`:  `response` **Changed**
+* `sdk.groups.review_person()`:  `response.coverage.items_frame_only` **Added**
+
 ## 12.0.34
 
 * `sdk.settings.get()`:  `response.refused_sources[].enum(chesscom_email)` **Added**

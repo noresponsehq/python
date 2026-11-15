@@ -21,6 +21,10 @@ class ScreeningMediaTypedDict(TypedDict):
     posted_at: str
     kind: Literal["media"]
     post_id: NotRequired[str]
+    cover_of: NotRequired[str]
+    r"""For an image that is a video's cover frame, the id of that video's media item."""
+    frame_only: NotRequired[bool]
+    r"""true on a video the analyser read from its cover frame (the image whose cover_of names it) and its caption alone. Left out otherwise."""
     text: NotRequired[str]
     r"""The caption or alt text."""
     screenshot_sha256: NotRequired[str]
@@ -52,6 +56,12 @@ class ScreeningMedia(BaseModel):
 
     post_id: Optional[str] = None
 
+    cover_of: Optional[str] = None
+    r"""For an image that is a video's cover frame, the id of that video's media item."""
+
+    frame_only: Optional[bool] = None
+    r"""true on a video the analyser read from its cover frame (the image whose cover_of names it) and its caption alone. Left out otherwise."""
+
     text: Optional[str] = None
     r"""The caption or alt text."""
 
@@ -63,7 +73,16 @@ class ScreeningMedia(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["post_id", "text", "screenshot_sha256", "captured_at"])
+        optional_fields = set(
+            [
+                "post_id",
+                "cover_of",
+                "frame_only",
+                "text",
+                "screenshot_sha256",
+                "captured_at",
+            ]
+        )
         serialized = handler(self)
         m = {}
 
