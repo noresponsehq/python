@@ -12,7 +12,8 @@ SearchKind = Union[
         "password",
         "hash",
         "ip",
+        "domain",
     ],
     UnrecognizedStr,
 ]
-r"""The kind of the value searched."""
+r"""The kind of the value searched. A domain search finds the leaked rows of every email address at the domain."""

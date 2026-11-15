@@ -17,7 +17,7 @@ class SearchTypedDict(TypedDict):
     field: str
     r"""The field of that record that holds the value."""
     kind: SearchKind
-    r"""The kind of the value searched."""
+    r"""The kind of the value searched. A domain search finds the leaked rows of every email address at the domain."""
     value: str
     r"""The value searched: the field's cleaned value, else as the source wrote it."""
     status: SearchStatus
@@ -56,7 +56,7 @@ class Search(BaseModel):
     r"""The field of that record that holds the value."""
 
     kind: SearchKind
-    r"""The kind of the value searched."""
+    r"""The kind of the value searched. A domain search finds the leaked rows of every email address at the domain."""
 
     value: str
     r"""The value searched: the field's cleaned value, else as the source wrote it."""

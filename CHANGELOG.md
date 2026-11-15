@@ -1,5 +1,11 @@
 # Changelog
 
+## 12.0.19
+
+* `sdk.groups.get_person()`:  `response.searches[].kind.enum(domain)` **Added**
+* `sdk.groups.start_search()`:  `response.kind.enum(domain)` **Added**
+* `sdk.groups.run_search()`:  `response.kind.enum(domain)` **Added**
+
 ## 12.0.18
 
 * `sdk.settings.get()`:  `response.refused_sources[]` **Changed**
