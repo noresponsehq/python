@@ -45,6 +45,12 @@ if TYPE_CHECKING:
         CancelCustomerExportResponse,
         CancelCustomerExportResponseTypedDict,
     )
+    from .cancelinvestigation import (
+        CancelInvestigationRequest,
+        CancelInvestigationRequestTypedDict,
+        CancelInvestigationResponse,
+        CancelInvestigationResponseTypedDict,
+    )
     from .cancelpolicyevaluation import (
         CancelPolicyEvaluationRequest,
         CancelPolicyEvaluationRequestTypedDict,
@@ -97,6 +103,12 @@ if TYPE_CHECKING:
         CreateIntegrationResponse,
         CreateIntegrationResponseTypedDict,
     )
+    from .createinvestigation import (
+        CreateInvestigationRequest,
+        CreateInvestigationRequestTypedDict,
+        CreateInvestigationResponse,
+        CreateInvestigationResponseTypedDict,
+    )
     from .createinvite import (
         CreateInviteRequest,
         CreateInviteRequestTypedDict,
@@ -136,6 +148,12 @@ if TYPE_CHECKING:
     from .createwebhookendpoint import (
         CreateWebhookEndpointResponse,
         CreateWebhookEndpointResponseTypedDict,
+    )
+    from .createworkspaceperson import (
+        CreateWorkspacePersonRequest,
+        CreateWorkspacePersonRequestTypedDict,
+        CreateWorkspacePersonResponse,
+        CreateWorkspacePersonResponseTypedDict,
     )
     from .deleteaccount import (
         DeleteAccountRequest,
@@ -184,6 +202,12 @@ if TYPE_CHECKING:
         DeleteWebhookEndpointRequestTypedDict,
         DeleteWebhookEndpointResponse,
         DeleteWebhookEndpointResponseTypedDict,
+    )
+    from .deleteworkspaceperson import (
+        DeleteWorkspacePersonRequest,
+        DeleteWorkspacePersonRequestTypedDict,
+        DeleteWorkspacePersonResponse,
+        DeleteWorkspacePersonResponseTypedDict,
     )
     from .downloadcustomerexportchunk import (
         DownloadCustomerExportChunkRequest,
@@ -257,6 +281,12 @@ if TYPE_CHECKING:
         GetGroupResponse,
         GetGroupResponseTypedDict,
     )
+    from .getinvestigation import (
+        GetInvestigationRequest,
+        GetInvestigationRequestTypedDict,
+        GetInvestigationResponse,
+        GetInvestigationResponseTypedDict,
+    )
     from .getlistchange import (
         GetListChangeRequest,
         GetListChangeRequestTypedDict,
@@ -304,6 +334,12 @@ if TYPE_CHECKING:
         GetUsageRequestTypedDict,
         GetUsageResponse,
         GetUsageResponseTypedDict,
+    )
+    from .getworkspaceperson import (
+        GetWorkspacePersonRequest,
+        GetWorkspacePersonRequestTypedDict,
+        GetWorkspacePersonResponse,
+        GetWorkspacePersonResponseTypedDict,
     )
     from .judgerecord import (
         JudgeRecordRequest,
@@ -374,6 +410,12 @@ if TYPE_CHECKING:
     from .listintegrations import (
         ListIntegrationsResponse,
         ListIntegrationsResponseTypedDict,
+    )
+    from .listinvestigations import (
+        ListInvestigationsRequest,
+        ListInvestigationsRequestTypedDict,
+        ListInvestigationsResponse,
+        ListInvestigationsResponseTypedDict,
     )
     from .listinvites import (
         ListInvitesRequest,
@@ -475,6 +517,12 @@ if TYPE_CHECKING:
         ListWebhookEndpointsResponse,
         ListWebhookEndpointsResponseTypedDict,
     )
+    from .listworkspacepeople import (
+        ListWorkspacePeopleRequest,
+        ListWorkspacePeopleRequestTypedDict,
+        ListWorkspacePeopleResponse,
+        ListWorkspacePeopleResponseTypedDict,
+    )
     from .previewlist import (
         PreviewListRequest,
         PreviewListRequestTypedDict,
@@ -533,6 +581,12 @@ if TYPE_CHECKING:
         RemoveAuditStreamResponse,
         RemoveAuditStreamResponseTypedDict,
     )
+    from .removegroupperson import (
+        RemoveGroupPersonRequest,
+        RemoveGroupPersonRequestTypedDict,
+        RemoveGroupPersonResponse,
+        RemoveGroupPersonResponseTypedDict,
+    )
     from .removemember import (
         RemoveMemberRequest,
         RemoveMemberRequestTypedDict,
@@ -580,6 +634,12 @@ if TYPE_CHECKING:
         RetryCustomerExportRequestTypedDict,
         RetryCustomerExportResponse,
         RetryCustomerExportResponseTypedDict,
+    )
+    from .reviewinvestigation import (
+        ReviewInvestigationRequest,
+        ReviewInvestigationRequestTypedDict,
+        ReviewInvestigationResponse,
+        ReviewInvestigationResponseTypedDict,
     )
     from .reviewperson import (
         ReviewPersonRequest,
@@ -718,6 +778,10 @@ __all__ = [
     "CancelCustomerExportRequestTypedDict",
     "CancelCustomerExportResponse",
     "CancelCustomerExportResponseTypedDict",
+    "CancelInvestigationRequest",
+    "CancelInvestigationRequestTypedDict",
+    "CancelInvestigationResponse",
+    "CancelInvestigationResponseTypedDict",
     "CancelPolicyEvaluationRequest",
     "CancelPolicyEvaluationRequestTypedDict",
     "CancelPolicyEvaluationResponse",
@@ -752,6 +816,10 @@ __all__ = [
     "CreateGroupResponseTypedDict",
     "CreateIntegrationResponse",
     "CreateIntegrationResponseTypedDict",
+    "CreateInvestigationRequest",
+    "CreateInvestigationRequestTypedDict",
+    "CreateInvestigationResponse",
+    "CreateInvestigationResponseTypedDict",
     "CreateInviteRequest",
     "CreateInviteRequestTypedDict",
     "CreateInviteResponse",
@@ -778,6 +846,10 @@ __all__ = [
     "CreateReviewViewResponseTypedDict",
     "CreateWebhookEndpointResponse",
     "CreateWebhookEndpointResponseTypedDict",
+    "CreateWorkspacePersonRequest",
+    "CreateWorkspacePersonRequestTypedDict",
+    "CreateWorkspacePersonResponse",
+    "CreateWorkspacePersonResponseTypedDict",
     "DeleteAccountRequest",
     "DeleteAccountRequestTypedDict",
     "DeleteAccountResponse",
@@ -810,6 +882,10 @@ __all__ = [
     "DeleteWebhookEndpointRequestTypedDict",
     "DeleteWebhookEndpointResponse",
     "DeleteWebhookEndpointResponseTypedDict",
+    "DeleteWorkspacePersonRequest",
+    "DeleteWorkspacePersonRequestTypedDict",
+    "DeleteWorkspacePersonResponse",
+    "DeleteWorkspacePersonResponseTypedDict",
     "DownloadCustomerExportChunkRequest",
     "DownloadCustomerExportChunkRequestTypedDict",
     "DownloadCustomerExportChunkResponse",
@@ -859,6 +935,10 @@ __all__ = [
     "GetGroupRequestTypedDict",
     "GetGroupResponse",
     "GetGroupResponseTypedDict",
+    "GetInvestigationRequest",
+    "GetInvestigationRequestTypedDict",
+    "GetInvestigationResponse",
+    "GetInvestigationResponseTypedDict",
     "GetListChangeRequest",
     "GetListChangeRequestTypedDict",
     "GetListChangeResponse",
@@ -891,6 +971,10 @@ __all__ = [
     "GetUsageRequestTypedDict",
     "GetUsageResponse",
     "GetUsageResponseTypedDict",
+    "GetWorkspacePersonRequest",
+    "GetWorkspacePersonRequestTypedDict",
+    "GetWorkspacePersonResponse",
+    "GetWorkspacePersonResponseTypedDict",
     "JudgeRecordRequest",
     "JudgeRecordRequestTypedDict",
     "JudgeRecordResponse",
@@ -937,6 +1021,10 @@ __all__ = [
     "ListGroupsResponseTypedDict",
     "ListIntegrationsResponse",
     "ListIntegrationsResponseTypedDict",
+    "ListInvestigationsRequest",
+    "ListInvestigationsRequestTypedDict",
+    "ListInvestigationsResponse",
+    "ListInvestigationsResponseTypedDict",
     "ListInvitesRequest",
     "ListInvitesRequestTypedDict",
     "ListInvitesResponse",
@@ -1003,6 +1091,10 @@ __all__ = [
     "ListWebhookDeliveriesResponseTypedDict",
     "ListWebhookEndpointsResponse",
     "ListWebhookEndpointsResponseTypedDict",
+    "ListWorkspacePeopleRequest",
+    "ListWorkspacePeopleRequestTypedDict",
+    "ListWorkspacePeopleResponse",
+    "ListWorkspacePeopleResponseTypedDict",
     "PreviewListRequest",
     "PreviewListRequestTypedDict",
     "PreviewListResponse",
@@ -1041,6 +1133,10 @@ __all__ = [
     "RemoveAuditStreamRequestTypedDict",
     "RemoveAuditStreamResponse",
     "RemoveAuditStreamResponseTypedDict",
+    "RemoveGroupPersonRequest",
+    "RemoveGroupPersonRequestTypedDict",
+    "RemoveGroupPersonResponse",
+    "RemoveGroupPersonResponseTypedDict",
     "RemoveMemberRequest",
     "RemoveMemberRequestTypedDict",
     "RemoveMemberResponse",
@@ -1073,6 +1169,10 @@ __all__ = [
     "RetryCustomerExportRequestTypedDict",
     "RetryCustomerExportResponse",
     "RetryCustomerExportResponseTypedDict",
+    "ReviewInvestigationRequest",
+    "ReviewInvestigationRequestTypedDict",
+    "ReviewInvestigationResponse",
+    "ReviewInvestigationResponseTypedDict",
     "ReviewPersonRequest",
     "ReviewPersonRequestTypedDict",
     "ReviewPersonResponse",
@@ -1176,6 +1276,10 @@ _dynamic_imports: dict[str, str] = {
     "CancelCustomerExportRequestTypedDict": ".cancelcustomerexport",
     "CancelCustomerExportResponse": ".cancelcustomerexport",
     "CancelCustomerExportResponseTypedDict": ".cancelcustomerexport",
+    "CancelInvestigationRequest": ".cancelinvestigation",
+    "CancelInvestigationRequestTypedDict": ".cancelinvestigation",
+    "CancelInvestigationResponse": ".cancelinvestigation",
+    "CancelInvestigationResponseTypedDict": ".cancelinvestigation",
     "CancelPolicyEvaluationRequest": ".cancelpolicyevaluation",
     "CancelPolicyEvaluationRequestTypedDict": ".cancelpolicyevaluation",
     "CancelPolicyEvaluationResponse": ".cancelpolicyevaluation",
@@ -1210,6 +1314,10 @@ _dynamic_imports: dict[str, str] = {
     "CreateGroupResponseTypedDict": ".creategroup",
     "CreateIntegrationResponse": ".createintegration",
     "CreateIntegrationResponseTypedDict": ".createintegration",
+    "CreateInvestigationRequest": ".createinvestigation",
+    "CreateInvestigationRequestTypedDict": ".createinvestigation",
+    "CreateInvestigationResponse": ".createinvestigation",
+    "CreateInvestigationResponseTypedDict": ".createinvestigation",
     "CreateInviteRequest": ".createinvite",
     "CreateInviteRequestTypedDict": ".createinvite",
     "CreateInviteResponse": ".createinvite",
@@ -1236,6 +1344,10 @@ _dynamic_imports: dict[str, str] = {
     "CreateReviewViewResponseTypedDict": ".createreviewview",
     "CreateWebhookEndpointResponse": ".createwebhookendpoint",
     "CreateWebhookEndpointResponseTypedDict": ".createwebhookendpoint",
+    "CreateWorkspacePersonRequest": ".createworkspaceperson",
+    "CreateWorkspacePersonRequestTypedDict": ".createworkspaceperson",
+    "CreateWorkspacePersonResponse": ".createworkspaceperson",
+    "CreateWorkspacePersonResponseTypedDict": ".createworkspaceperson",
     "DeleteAccountRequest": ".deleteaccount",
     "DeleteAccountRequestTypedDict": ".deleteaccount",
     "DeleteAccountResponse": ".deleteaccount",
@@ -1268,6 +1380,10 @@ _dynamic_imports: dict[str, str] = {
     "DeleteWebhookEndpointRequestTypedDict": ".deletewebhookendpoint",
     "DeleteWebhookEndpointResponse": ".deletewebhookendpoint",
     "DeleteWebhookEndpointResponseTypedDict": ".deletewebhookendpoint",
+    "DeleteWorkspacePersonRequest": ".deleteworkspaceperson",
+    "DeleteWorkspacePersonRequestTypedDict": ".deleteworkspaceperson",
+    "DeleteWorkspacePersonResponse": ".deleteworkspaceperson",
+    "DeleteWorkspacePersonResponseTypedDict": ".deleteworkspaceperson",
     "DownloadCustomerExportChunkRequest": ".downloadcustomerexportchunk",
     "DownloadCustomerExportChunkRequestTypedDict": ".downloadcustomerexportchunk",
     "DownloadCustomerExportChunkResponse": ".downloadcustomerexportchunk",
@@ -1316,6 +1432,10 @@ _dynamic_imports: dict[str, str] = {
     "GetGroupRequestTypedDict": ".getgroup",
     "GetGroupResponse": ".getgroup",
     "GetGroupResponseTypedDict": ".getgroup",
+    "GetInvestigationRequest": ".getinvestigation",
+    "GetInvestigationRequestTypedDict": ".getinvestigation",
+    "GetInvestigationResponse": ".getinvestigation",
+    "GetInvestigationResponseTypedDict": ".getinvestigation",
     "GetListChangeRequest": ".getlistchange",
     "GetListChangeRequestTypedDict": ".getlistchange",
     "GetListChangeResponse": ".getlistchange",
@@ -1348,6 +1468,10 @@ _dynamic_imports: dict[str, str] = {
     "GetUsageRequestTypedDict": ".getusage",
     "GetUsageResponse": ".getusage",
     "GetUsageResponseTypedDict": ".getusage",
+    "GetWorkspacePersonRequest": ".getworkspaceperson",
+    "GetWorkspacePersonRequestTypedDict": ".getworkspaceperson",
+    "GetWorkspacePersonResponse": ".getworkspaceperson",
+    "GetWorkspacePersonResponseTypedDict": ".getworkspaceperson",
     "JudgeRecordRequest": ".judgerecord",
     "JudgeRecordRequestTypedDict": ".judgerecord",
     "JudgeRecordResponse": ".judgerecord",
@@ -1394,6 +1518,10 @@ _dynamic_imports: dict[str, str] = {
     "ListGroupsResponseTypedDict": ".listgroups",
     "ListIntegrationsResponse": ".listintegrations",
     "ListIntegrationsResponseTypedDict": ".listintegrations",
+    "ListInvestigationsRequest": ".listinvestigations",
+    "ListInvestigationsRequestTypedDict": ".listinvestigations",
+    "ListInvestigationsResponse": ".listinvestigations",
+    "ListInvestigationsResponseTypedDict": ".listinvestigations",
     "ListInvitesRequest": ".listinvites",
     "ListInvitesRequestTypedDict": ".listinvites",
     "ListInvitesResponse": ".listinvites",
@@ -1460,6 +1588,10 @@ _dynamic_imports: dict[str, str] = {
     "ListWebhookDeliveriesResponseTypedDict": ".listwebhookdeliveries",
     "ListWebhookEndpointsResponse": ".listwebhookendpoints",
     "ListWebhookEndpointsResponseTypedDict": ".listwebhookendpoints",
+    "ListWorkspacePeopleRequest": ".listworkspacepeople",
+    "ListWorkspacePeopleRequestTypedDict": ".listworkspacepeople",
+    "ListWorkspacePeopleResponse": ".listworkspacepeople",
+    "ListWorkspacePeopleResponseTypedDict": ".listworkspacepeople",
     "PreviewListRequest": ".previewlist",
     "PreviewListRequestTypedDict": ".previewlist",
     "PreviewListResponse": ".previewlist",
@@ -1498,6 +1630,10 @@ _dynamic_imports: dict[str, str] = {
     "RemoveAuditStreamRequestTypedDict": ".removeauditstream",
     "RemoveAuditStreamResponse": ".removeauditstream",
     "RemoveAuditStreamResponseTypedDict": ".removeauditstream",
+    "RemoveGroupPersonRequest": ".removegroupperson",
+    "RemoveGroupPersonRequestTypedDict": ".removegroupperson",
+    "RemoveGroupPersonResponse": ".removegroupperson",
+    "RemoveGroupPersonResponseTypedDict": ".removegroupperson",
     "RemoveMemberRequest": ".removemember",
     "RemoveMemberRequestTypedDict": ".removemember",
     "RemoveMemberResponse": ".removemember",
@@ -1530,6 +1666,10 @@ _dynamic_imports: dict[str, str] = {
     "RetryCustomerExportRequestTypedDict": ".retrycustomerexport",
     "RetryCustomerExportResponse": ".retrycustomerexport",
     "RetryCustomerExportResponseTypedDict": ".retrycustomerexport",
+    "ReviewInvestigationRequest": ".reviewinvestigation",
+    "ReviewInvestigationRequestTypedDict": ".reviewinvestigation",
+    "ReviewInvestigationResponse": ".reviewinvestigation",
+    "ReviewInvestigationResponseTypedDict": ".reviewinvestigation",
     "ReviewPersonRequest": ".reviewperson",
     "ReviewPersonRequestTypedDict": ".reviewperson",
     "ReviewPersonResponse": ".reviewperson",

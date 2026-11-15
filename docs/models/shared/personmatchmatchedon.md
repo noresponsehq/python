@@ -1,12 +1,12 @@
-# MatchedOn
+# PersonMatchMatchedOn
 
 ## Example Usage
 
 ```python
-from noresponse.models.shared import MatchedOn
+from noresponse.models.shared import PersonMatchMatchedOn
 
 # Open enum: unrecognized values are captured as UnrecognizedStr
-value: MatchedOn = "email"
+value: PersonMatchMatchedOn = "email"
 ```
 
 
@@ -16,4 +16,3 @@ This is an open enum. Unrecognized values will not fail type checks.
 
 - `"email"`
 - `"phone"`
-- `"external_id"`

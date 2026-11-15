@@ -21,12 +21,14 @@ if TYPE_CHECKING:
     from noresponse.exports import Exports
     from noresponse.groups import Groups
     from noresponse.integrations import Integrations
+    from noresponse.investigations import Investigations
     from noresponse.invites import Invites
     from noresponse.keys import Keys
     from noresponse.keyusage import KeyUsage
     from noresponse.lists import Lists
     from noresponse.members import Members
     from noresponse.operations import Operations
+    from noresponse.people import People
     from noresponse.requests import Requests
     from noresponse.reviews import Reviews
     from noresponse.settings import Settings
@@ -35,9 +37,9 @@ if TYPE_CHECKING:
 
 
 class NoResponse(BaseSDK):
-    r"""NoResponse API: Server-side risk assessment of account creation, login and purchase: a recommendation, polling and signed webhooks.
+    r"""NoResponse API: Workspace people, source-grounded investigations, group screening and signup assessment recommendations.
 
-    Assess an account creation, login or purchase and get back the account's one current risk, poll a pending assessment, page through an account's history, record what you later learned, report usage of the API keys you issue to your accounts, rotate your API key, manage your webhook endpoints, and register hosted endpoints that answer your WorkOS, Auth0 or Supabase sign-up and sign-in hooks. Every response carries X-Request-ID; every error is an RFC 9457 problem document. Keep the API key on your server.
+    NoResponse is an identity and people risk engine. Retain workspace people, investigate their identifiers, read complete source evidence and preserve investigation history. Groups organize people for screening and context-specific decisions. Account creation, login and purchase assessments use the same engine. People-read access includes evidence by default; explicit evidence restrictions retain submitted details, job status, coverage and decision summaries. Keep the API key on your server.
     """
 
     @property
@@ -86,6 +88,10 @@ class NoResponse(BaseSDK):
     r"""Retained outcomes, enforcement reports and review populations."""
     groups: "Groups"
     r"""Groups, lists of people, screenings and reviewer decisions."""
+    people: "People"
+    r"""Workspace people, submitted identity, source evidence and expiry."""
+    investigations: "Investigations"
+    r"""Person investigation jobs, retained results and contextual decisions."""
     _sub_sdk_map = {
         "assessments": ("noresponse.assessments", "Assessments"),
         "accounts": ("noresponse.accounts", "Accounts"),
@@ -106,6 +112,8 @@ class NoResponse(BaseSDK):
         "evaluations": ("noresponse.evaluations", "Evaluations"),
         "operations": ("noresponse.operations", "Operations"),
         "groups": ("noresponse.groups", "Groups"),
+        "people": ("noresponse.people", "People"),
+        "investigations": ("noresponse.investigations", "Investigations"),
     }
 
     def __init__(
@@ -343,6 +351,14 @@ class NoResponseWithRawResponse:
     def groups(self):
         return self._sdk.groups.with_raw_response
 
+    @property
+    def people(self):
+        return self._sdk.people.with_raw_response
+
+    @property
+    def investigations(self):
+        return self._sdk.investigations.with_raw_response
+
 
 class NoResponseWithStreamingResponse:
     def __init__(self, sdk: NoResponse) -> None:
@@ -423,3 +439,11 @@ class NoResponseWithStreamingResponse:
     @property
     def groups(self):
         return self._sdk.groups.with_streaming_response
+
+    @property
+    def people(self):
+        return self._sdk.people.with_streaming_response
+
+    @property
+    def investigations(self):
+        return self._sdk.investigations.with_streaming_response

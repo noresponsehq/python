@@ -20,8 +20,6 @@ class Groups(BaseSDK):
 
     def list(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         *,
         limit: Optional[int] = 20,
         before: Optional[str] = None,
@@ -32,10 +30,8 @@ class Groups(BaseSDK):
     ) -> models.operations.ListGroupsResponse:
         r"""List an environment's groups.
 
-        Groups, newest first. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Groups, newest first. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param limit: At most this many items.
         :param before: Read groups older than this one.
         :param retries: Override the default retry configuration for this method
@@ -54,8 +50,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.ListGroupsRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             limit=limit,
             before=before,
         )
@@ -65,12 +59,12 @@ class Groups(BaseSDK):
         )
         req = self._build_request(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}",
+            path="/v1/groups",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
             request_body_required=False,
-            request_has_path_params=True,
+            request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
@@ -201,8 +195,6 @@ class Groups(BaseSDK):
 
     async def list_async(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         *,
         limit: Optional[int] = 20,
         before: Optional[str] = None,
@@ -213,10 +205,8 @@ class Groups(BaseSDK):
     ) -> models.operations.ListGroupsResponse:
         r"""List an environment's groups.
 
-        Groups, newest first. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Groups, newest first. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param limit: At most this many items.
         :param before: Read groups older than this one.
         :param retries: Override the default retry configuration for this method
@@ -235,8 +225,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.ListGroupsRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             limit=limit,
             before=before,
         )
@@ -246,12 +234,12 @@ class Groups(BaseSDK):
         )
         req = self._build_request_async(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}",
+            path="/v1/groups",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
             request_body_required=False,
-            request_has_path_params=True,
+            request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
@@ -385,8 +373,6 @@ class Groups(BaseSDK):
 
     def create(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         *,
         name: str,
         starts_at: str,
@@ -407,10 +393,8 @@ class Groups(BaseSDK):
     ) -> models.operations.CreateGroupResponse:
         r"""Create a group to screen.
 
-        Creates a group with its name, start, venue, host, the principals it protects and the sensitive topics its screening reads posts against. An environment holds at most 1000 groups. Send an Idempotency-Key to retry safely: the same key and request return the same resource in its current state while it is retained, even after work completes. Reusing the key with different input answers 409 idempotency_key_reused. Use a new key for a deliberate new operation. The people_write scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Creates a group with its name, start, venue, host, the principals it protects and the sensitive topics its screening reads posts against. An environment holds at most 1000 groups. Send an Idempotency-Key to retry safely: the same key and request return the same resource in its current state while it is retained, even after work completes. Reusing the key with different input answers 409 idempotency_key_reused. Use a new key for a deliberate new operation. The people_write scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param name: The group's name.
         :param starts_at: When the group starts.
         :param idempotency_key: Opaque request key, 16 to 128 characters. Repeating the key and request returns the same resource in its current state while it is retained. A different request with the same key answers 409. Use a new key for a deliberate new operation. Keys are scoped to the environment and operation; person searches also scope them to the group and person.
@@ -434,8 +418,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.CreateGroupRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             idempotency_key=idempotency_key,
             body=models.shared.GroupRequest(
                 name=name,
@@ -455,12 +437,12 @@ class Groups(BaseSDK):
         )
         req = self._build_request(
             method="POST",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}",
+            path="/v1/groups",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
             request_body_required=True,
-            request_has_path_params=True,
+            request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
@@ -581,8 +563,6 @@ class Groups(BaseSDK):
 
     async def create_async(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         *,
         name: str,
         starts_at: str,
@@ -603,10 +583,8 @@ class Groups(BaseSDK):
     ) -> models.operations.CreateGroupResponse:
         r"""Create a group to screen.
 
-        Creates a group with its name, start, venue, host, the principals it protects and the sensitive topics its screening reads posts against. An environment holds at most 1000 groups. Send an Idempotency-Key to retry safely: the same key and request return the same resource in its current state while it is retained, even after work completes. Reusing the key with different input answers 409 idempotency_key_reused. Use a new key for a deliberate new operation. The people_write scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Creates a group with its name, start, venue, host, the principals it protects and the sensitive topics its screening reads posts against. An environment holds at most 1000 groups. Send an Idempotency-Key to retry safely: the same key and request return the same resource in its current state while it is retained, even after work completes. Reusing the key with different input answers 409 idempotency_key_reused. Use a new key for a deliberate new operation. The people_write scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param name: The group's name.
         :param starts_at: When the group starts.
         :param idempotency_key: Opaque request key, 16 to 128 characters. Repeating the key and request returns the same resource in its current state while it is retained. A different request with the same key answers 409. Use a new key for a deliberate new operation. Keys are scoped to the environment and operation; person searches also scope them to the group and person.
@@ -630,8 +608,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.CreateGroupRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             idempotency_key=idempotency_key,
             body=models.shared.GroupRequest(
                 name=name,
@@ -651,12 +627,12 @@ class Groups(BaseSDK):
         )
         req = self._build_request_async(
             method="POST",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}",
+            path="/v1/groups",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
             request_body_required=True,
-            request_has_path_params=True,
+            request_has_path_params=False,
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
@@ -780,8 +756,6 @@ class Groups(BaseSDK):
 
     def get(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         *,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -791,10 +765,8 @@ class Groups(BaseSDK):
     ) -> models.operations.GetGroupResponse:
         r"""Read a group.
 
-        The group and how many people it holds. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        The group and how many people it holds. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -812,8 +784,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.GetGroupRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
         )
 
@@ -822,7 +792,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}",
+            path="/v1/groups/{group_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -958,8 +928,6 @@ class Groups(BaseSDK):
 
     async def get_async(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         *,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -969,10 +937,8 @@ class Groups(BaseSDK):
     ) -> models.operations.GetGroupResponse:
         r"""Read a group.
 
-        The group and how many people it holds. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        The group and how many people it holds. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -990,8 +956,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.GetGroupRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
         )
 
@@ -1000,7 +964,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request_async(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}",
+            path="/v1/groups/{group_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1139,8 +1103,6 @@ class Groups(BaseSDK):
 
     def update(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         *,
         name: Optional[str] = None,
@@ -1163,10 +1125,8 @@ class Groups(BaseSDK):
     ) -> models.operations.UpdateGroupResponse:
         r"""Change a group.
 
-        Changes the fields the body names. With expected_version, the change applies only to that version (409 group_conflict otherwise). The people_write scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Changes the fields the body names. With expected_version, the change applies only to that version (409 group_conflict otherwise). The people_write scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param name: The group's name.
         :param starts_at: When the group starts.
@@ -1192,8 +1152,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.UpdateGroupRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             body=models.shared.GroupUpdate(
                 name=name,
@@ -1214,7 +1172,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request(
             method="PATCH",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}",
+            path="/v1/groups/{group_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1353,8 +1311,6 @@ class Groups(BaseSDK):
 
     async def update_async(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         *,
         name: Optional[str] = None,
@@ -1377,10 +1333,8 @@ class Groups(BaseSDK):
     ) -> models.operations.UpdateGroupResponse:
         r"""Change a group.
 
-        Changes the fields the body names. With expected_version, the change applies only to that version (409 group_conflict otherwise). The people_write scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Changes the fields the body names. With expected_version, the change applies only to that version (409 group_conflict otherwise). The people_write scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param name: The group's name.
         :param starts_at: When the group starts.
@@ -1406,8 +1360,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.UpdateGroupRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             body=models.shared.GroupUpdate(
                 name=name,
@@ -1428,7 +1380,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request_async(
             method="PATCH",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}",
+            path="/v1/groups/{group_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1570,8 +1522,6 @@ class Groups(BaseSDK):
 
     def delete(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         *,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1581,10 +1531,8 @@ class Groups(BaseSDK):
     ) -> models.operations.DeleteGroupResponse:
         r"""Erase a group.
 
-        Erases the group with its people, their reviews and its screenings, and stops any screening still running. The delete scope is required; group read, write, investigation and review access do not grant deletion.
+        Deletes the group, its memberships and its review context, and cancels unfinished group work. Workspace people, source evidence and completed investigations remain available. Retained investigations no longer name the deleted group. The delete scope is required; group read, write, investigation and review access do not grant deletion. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -1602,8 +1550,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.DeleteGroupRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
         )
 
@@ -1612,7 +1558,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request(
             method="DELETE",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}",
+            path="/v1/groups/{group_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1747,8 +1693,6 @@ class Groups(BaseSDK):
 
     async def delete_async(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         *,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
@@ -1758,10 +1702,8 @@ class Groups(BaseSDK):
     ) -> models.operations.DeleteGroupResponse:
         r"""Erase a group.
 
-        Erases the group with its people, their reviews and its screenings, and stops any screening still running. The delete scope is required; group read, write, investigation and review access do not grant deletion.
+        Deletes the group, its memberships and its review context, and cancels unfinished group work. Workspace people, source evidence and completed investigations remain available. Retained investigations no longer name the deleted group. The delete scope is required; group read, write, investigation and review access do not grant deletion. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -1779,8 +1721,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.DeleteGroupRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
         )
 
@@ -1789,7 +1729,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request_async(
             method="DELETE",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}",
+            path="/v1/groups/{group_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -1927,8 +1867,6 @@ class Groups(BaseSDK):
 
     def list_people(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         *,
         limit: Optional[int] = 100,
@@ -1943,10 +1881,8 @@ class Groups(BaseSDK):
     ) -> models.operations.ListPeopleResponse:
         r"""List a group's people.
 
-        The roster in upload order, with each person's role, match state, highest finding band and decision. Filter by band (or none), decision (or undecided) and role (or unstated). The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        The roster in upload order, with each person's role, match state, highest finding band and decision. Filter by band (or none), decision (or undecided) and role (or unstated). The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param limit: At most this many people.
         :param after: Read people after this one.
@@ -1969,8 +1905,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.ListPeopleRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             limit=limit,
             after=after,
@@ -1984,7 +1918,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people",
+            path="/v1/groups/{group_id}/people",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -2120,8 +2054,6 @@ class Groups(BaseSDK):
 
     async def list_people_async(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         *,
         limit: Optional[int] = 100,
@@ -2136,10 +2068,8 @@ class Groups(BaseSDK):
     ) -> models.operations.ListPeopleResponse:
         r"""List a group's people.
 
-        The roster in upload order, with each person's role, match state, highest finding band and decision. Filter by band (or none), decision (or undecided) and role (or unstated). The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        The roster in upload order, with each person's role, match state, highest finding band and decision. Filter by band (or none), decision (or undecided) and role (or unstated). The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param limit: At most this many people.
         :param after: Read people after this one.
@@ -2162,8 +2092,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.ListPeopleRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             limit=limit,
             after=after,
@@ -2177,7 +2105,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request_async(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people",
+            path="/v1/groups/{group_id}/people",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -2316,8 +2244,6 @@ class Groups(BaseSDK):
 
     def add_people(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         *,
         idempotency_key: str,
@@ -2332,10 +2258,8 @@ class Groups(BaseSDK):
     ) -> models.operations.AddPeopleResponse:
         r"""Add or update a batch of people.
 
-        Adds 1 to 500 people, at most 512 KiB. A row naming an existing person in the group (the same external_id, else the same email, else the same phone) updates it; a changed identity is screened afresh by the next screening. Identities are stored encrypted under the workspace's key. Idempotency-Key is required: a retry with the same key and body within 24 hours answers the first result with Idempotent-Replayed: true, and the same key with another body answers 409 idempotency_key_reused. A group holds at most 20000 people. The people_write scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Adds 1 to 500 workspace people to this group, at most 512 KiB. An explicit person_id or external_id reuses the named workspace person. A reference-only row keeps submitted details; an identity supplied with that reference replaces those details. A shared email or phone only suggests matches and does not merge people. A changed identity clears current group screening summaries; prior investigation history remains available. Identities are encrypted under the workspace key. Idempotency-Key is required: the same key and body return the original import result while it is retained, with Idempotent-Replayed: true. A different body answers 409 idempotency_key_reused. A group holds at most 20000 people. The people_write scope grants this operation; groups is also accepted. Suggested matches require people-read access. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param idempotency_key: Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the workspace principal and bound to the canonical body for 24 hours.
         :param people:
@@ -2355,8 +2279,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.AddPeopleRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             idempotency_key=idempotency_key,
             body=models.shared.PersonBatchRequest(
@@ -2371,7 +2293,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request(
             method="POST",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people",
+            path="/v1/groups/{group_id}/people",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -2510,8 +2432,6 @@ class Groups(BaseSDK):
 
     async def add_people_async(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         *,
         idempotency_key: str,
@@ -2526,10 +2446,8 @@ class Groups(BaseSDK):
     ) -> models.operations.AddPeopleResponse:
         r"""Add or update a batch of people.
 
-        Adds 1 to 500 people, at most 512 KiB. A row naming an existing person in the group (the same external_id, else the same email, else the same phone) updates it; a changed identity is screened afresh by the next screening. Identities are stored encrypted under the workspace's key. Idempotency-Key is required: a retry with the same key and body within 24 hours answers the first result with Idempotent-Replayed: true, and the same key with another body answers 409 idempotency_key_reused. A group holds at most 20000 people. The people_write scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Adds 1 to 500 workspace people to this group, at most 512 KiB. An explicit person_id or external_id reuses the named workspace person. A reference-only row keeps submitted details; an identity supplied with that reference replaces those details. A shared email or phone only suggests matches and does not merge people. A changed identity clears current group screening summaries; prior investigation history remains available. Identities are encrypted under the workspace key. Idempotency-Key is required: the same key and body return the original import result while it is retained, with Idempotent-Replayed: true. A different body answers 409 idempotency_key_reused. A group holds at most 20000 people. The people_write scope grants this operation; groups is also accepted. Suggested matches require people-read access. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param idempotency_key: Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the workspace principal and bound to the canonical body for 24 hours.
         :param people:
@@ -2549,8 +2467,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.AddPeopleRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             idempotency_key=idempotency_key,
             body=models.shared.PersonBatchRequest(
@@ -2565,7 +2481,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request_async(
             method="POST",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people",
+            path="/v1/groups/{group_id}/people",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -2707,8 +2623,6 @@ class Groups(BaseSDK):
 
     def get_person(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         person_id: str,
         *,
@@ -2719,10 +2633,8 @@ class Groups(BaseSDK):
     ) -> models.operations.GetPersonResponse:
         r"""Read a person's report.
 
-        The person, the profiles the screening matched with how each was matched, its findings with their evidence, every recorded decision, and the other groups in the environment where a person with the same email or phone appears, with the decision recorded there. Profiles and findings fill in as the screening pipeline ships. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. Each successful read is durably audited as person.viewed. Restricted responses keep submitted details, coverage, job status and decision summaries and set evidence_restricted to true.
+        Returns submitted details, this group's latest screening evidence and contextual decisions, and the other groups that explicitly include the same workspace person. Membership requires an explicit person or customer reference. The people scope grants this operation; groups is also accepted. Each successful read is durably audited as person.viewed. Full source records, posts and media are returned by default. Explicit evidence.read denial keeps submitted details, coverage, job status and decision summaries, hides collected evidence and free-text notes, and sets evidence_restricted to true. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param person_id:
         :param retries: Override the default retry configuration for this method
@@ -2741,8 +2653,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.GetPersonRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             person_id=person_id,
         )
@@ -2752,7 +2662,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people/{person_id}",
+            path="/v1/groups/{group_id}/people/{person_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -2890,8 +2800,6 @@ class Groups(BaseSDK):
 
     async def get_person_async(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         person_id: str,
         *,
@@ -2902,10 +2810,8 @@ class Groups(BaseSDK):
     ) -> models.operations.GetPersonResponse:
         r"""Read a person's report.
 
-        The person, the profiles the screening matched with how each was matched, its findings with their evidence, every recorded decision, and the other groups in the environment where a person with the same email or phone appears, with the decision recorded there. Profiles and findings fill in as the screening pipeline ships. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. Each successful read is durably audited as person.viewed. Restricted responses keep submitted details, coverage, job status and decision summaries and set evidence_restricted to true.
+        Returns submitted details, this group's latest screening evidence and contextual decisions, and the other groups that explicitly include the same workspace person. Membership requires an explicit person or customer reference. The people scope grants this operation; groups is also accepted. Each successful read is durably audited as person.viewed. Full source records, posts and media are returned by default. Explicit evidence.read denial keeps submitted details, coverage, job status and decision summaries, hides collected evidence and free-text notes, and sets evidence_restricted to true. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param person_id:
         :param retries: Override the default retry configuration for this method
@@ -2924,8 +2830,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.GetPersonRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             person_id=person_id,
         )
@@ -2935,7 +2839,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request_async(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people/{person_id}",
+            path="/v1/groups/{group_id}/people/{person_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -3074,10 +2978,359 @@ class Groups(BaseSDK):
                 parse_exc_,
             )
 
+    def remove_person(
+        self,
+        group_id: str,
+        person_id: str,
+        *,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.operations.RemoveGroupPersonResponse:
+        r"""Remove a person from a group
+
+        Removes this membership and its group review history. Keeps the workspace person, source evidence and completed investigations. Needs delete access. The API key selects the workspace and environment.
+
+        :param group_id:
+        :param person_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.operations.RemoveGroupPersonRequest(
+            group_id=group_id,
+            person_id=person_id,
+        )
+
+        _noresponse_response_mode, http_headers = (
+            response_helpers.consume_response_mode(http_headers)
+        )
+        req = self._build_request(
+            method="DELETE",
+            path="/v1/groups/{group_id}/people/{person_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/problem+json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 8000, 2, 30000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["408", "429", "5XX"])
+
+        def _noresponse_parse_response(http_res):
+            response_data: Any = None
+            if utils.match_response(http_res, "204", "*"):
+                return models.operations.RemoveGroupPersonResponse(
+                    headers=utils.get_response_headers(http_res.headers)
+                )
+            if utils.match_response(http_res, "400", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.BadRequestErrorData, http_res
+                )
+                raise models.errors.BadRequestError(response_data, http_res)
+            if utils.match_response(http_res, "401", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.AuthenticationErrorData, http_res
+                )
+                raise models.errors.AuthenticationError(response_data, http_res)
+            if utils.match_response(http_res, "403", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.PermissionDeniedErrorData, http_res
+                )
+                raise models.errors.PermissionDeniedError(response_data, http_res)
+            if utils.match_response(http_res, "404", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.NotFoundErrorData, http_res
+                )
+                raise models.errors.NotFoundError(response_data, http_res)
+            if utils.match_response(http_res, "409", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.ConflictErrorData, http_res
+                )
+                raise models.errors.ConflictError(response_data, http_res)
+            if utils.match_response(http_res, "429", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.RateLimitErrorData, http_res
+                )
+                raise models.errors.RateLimitError(response_data, http_res)
+            if utils.match_response(http_res, "4XX", "*"):
+                http_res_text = utils.stream_to_text(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+            if utils.match_response(http_res, "5XX", "*"):
+                http_res_text = utils.stream_to_text(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+
+            raise models.errors.APIStatusError("Unexpected response received", http_res)
+
+        _noresponse_hook_ctx = HookContext(
+            config=self.sdk_configuration,
+            base_url=base_url or "",
+            operation_id="removeGroupPerson",
+            oauth2_scopes=None,
+            security_source=get_security_from_env(
+                self.sdk_configuration.security, models.shared.Security
+            ),
+            tags=["groups"],
+            extensions=None,
+            response=ResponseContext(mode=_noresponse_response_mode, execution="sync"),
+        )
+        http_res = self.do_request(
+            hook_ctx=_noresponse_hook_ctx,
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            stream=_noresponse_response_mode == "streaming",
+            retry_config=retry_config,
+        )
+        if _noresponse_response_mode != "parsed":
+            if utils.match_status_codes(["4XX", "5XX"], http_res.status_code):
+                http_res.read()
+                try:
+                    _noresponse_parse_response(http_res)
+                except Exception as parse_exc_:
+                    response_helpers.raise_parse_error(
+                        self.sdk_configuration.__dict__["_hooks"],
+                        AfterParseErrorContext(_noresponse_hook_ctx),
+                        http_res,
+                        parse_exc_,
+                    )
+            _noresponse_response_cls = (
+                response_helpers.StreamedAPIResponse
+                if _noresponse_response_mode == "streaming"
+                else response_helpers.APIResponse
+            )
+            return cast(
+                Any,
+                _noresponse_response_cls(
+                    raw=http_res,
+                    parser=_noresponse_parse_response,
+                    mode="buffered",
+                    client_ref=self,
+                    hook_ctx=AfterParseErrorContext(_noresponse_hook_ctx),
+                    hooks=self.sdk_configuration.__dict__.get("_hooks"),
+                ),
+            )
+        try:
+            return _noresponse_parse_response(http_res)
+        except Exception as parse_exc_:
+            response_helpers.raise_parse_error(
+                self.sdk_configuration.__dict__["_hooks"],
+                AfterParseErrorContext(_noresponse_hook_ctx),
+                http_res,
+                parse_exc_,
+            )
+
+    async def remove_person_async(
+        self,
+        group_id: str,
+        person_id: str,
+        *,
+        retries: OptionalNullable[utils.RetryConfig] = UNSET,
+        server_url: Optional[str] = None,
+        timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
+    ) -> models.operations.RemoveGroupPersonResponse:
+        r"""Remove a person from a group
+
+        Removes this membership and its group review history. Keeps the workspace person, source evidence and completed investigations. Needs delete access. The API key selects the workspace and environment.
+
+        :param group_id:
+        :param person_id:
+        :param retries: Override the default retry configuration for this method
+        :param server_url: Override the default server URL for this method
+        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
+        """
+        base_url = None
+        url_variables = None
+        if timeout_ms is None:
+            timeout_ms = self.sdk_configuration.timeout_ms
+
+        if server_url is not None:
+            base_url = server_url
+        else:
+            base_url = self._get_url(base_url, url_variables)
+
+        request = models.operations.RemoveGroupPersonRequest(
+            group_id=group_id,
+            person_id=person_id,
+        )
+
+        _noresponse_response_mode, http_headers = (
+            response_helpers.consume_response_mode(http_headers)
+        )
+        req = self._build_request_async(
+            method="DELETE",
+            path="/v1/groups/{group_id}/people/{person_id}",
+            base_url=base_url,
+            url_variables=url_variables,
+            request=request,
+            request_body_required=False,
+            request_has_path_params=True,
+            request_has_query_params=True,
+            user_agent_header="user-agent",
+            accept_header_value="application/problem+json",
+            http_headers=http_headers,
+            security=self.sdk_configuration.security,
+            allow_empty_value=None,
+            timeout_ms=timeout_ms,
+        )
+
+        if retries == UNSET:
+            if self.sdk_configuration.retry_config is not UNSET:
+                retries = self.sdk_configuration.retry_config
+            else:
+                retries = utils.RetryConfig(
+                    "backoff", utils.BackoffStrategy(500, 8000, 2, 30000), True
+                )
+
+        retry_config = None
+        if isinstance(retries, utils.RetryConfig):
+            retry_config = (retries, ["408", "429", "5XX"])
+
+        async def _noresponse_parse_response(http_res):
+            response_data: Any = None
+            if utils.match_response(http_res, "204", "*"):
+                return models.operations.RemoveGroupPersonResponse(
+                    headers=utils.get_response_headers(http_res.headers)
+                )
+            if utils.match_response(http_res, "400", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.BadRequestErrorData, http_res
+                )
+                raise models.errors.BadRequestError(response_data, http_res)
+            if utils.match_response(http_res, "401", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.AuthenticationErrorData, http_res
+                )
+                raise models.errors.AuthenticationError(response_data, http_res)
+            if utils.match_response(http_res, "403", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.PermissionDeniedErrorData, http_res
+                )
+                raise models.errors.PermissionDeniedError(response_data, http_res)
+            if utils.match_response(http_res, "404", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.NotFoundErrorData, http_res
+                )
+                raise models.errors.NotFoundError(response_data, http_res)
+            if utils.match_response(http_res, "409", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.ConflictErrorData, http_res
+                )
+                raise models.errors.ConflictError(response_data, http_res)
+            if utils.match_response(http_res, "429", "application/problem+json"):
+                response_data = unmarshal_json_response(
+                    models.errors.RateLimitErrorData, http_res
+                )
+                raise models.errors.RateLimitError(response_data, http_res)
+            if utils.match_response(http_res, "4XX", "*"):
+                http_res_text = await utils.stream_to_text_async(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+            if utils.match_response(http_res, "5XX", "*"):
+                http_res_text = await utils.stream_to_text_async(http_res)
+                raise models.errors.APIStatusError(
+                    "API error occurred", http_res, http_res_text
+                )
+
+            raise models.errors.APIStatusError("Unexpected response received", http_res)
+
+        _noresponse_hook_ctx = HookContext(
+            config=self.sdk_configuration,
+            base_url=base_url or "",
+            operation_id="removeGroupPerson",
+            oauth2_scopes=None,
+            security_source=get_security_from_env(
+                self.sdk_configuration.security, models.shared.Security
+            ),
+            tags=["groups"],
+            extensions=None,
+            response=ResponseContext(mode=_noresponse_response_mode, execution="async"),
+        )
+        http_res = await self.do_request_async(
+            hook_ctx=_noresponse_hook_ctx,
+            request=req,
+            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
+            stream=_noresponse_response_mode == "streaming",
+            retry_config=retry_config,
+        )
+        if _noresponse_response_mode != "parsed":
+            if utils.match_status_codes(["4XX", "5XX"], http_res.status_code):
+                await http_res.aread()
+                try:
+                    await _noresponse_parse_response(http_res)
+                except Exception as parse_exc_:
+                    await response_helpers.raise_parse_error_async(
+                        self.sdk_configuration.__dict__.get("_async_hooks"),
+                        self.sdk_configuration.__dict__.get("_hooks"),
+                        AfterParseErrorContext(_noresponse_hook_ctx),
+                        http_res,
+                        parse_exc_,
+                    )
+            _noresponse_response_cls = (
+                response_helpers.AsyncStreamedAPIResponse
+                if _noresponse_response_mode == "streaming"
+                else response_helpers.AsyncAPIResponse
+            )
+            return cast(
+                Any,
+                _noresponse_response_cls(
+                    raw=http_res,
+                    parser=_noresponse_parse_response,
+                    mode="buffered",
+                    client_ref=self,
+                    hook_ctx=AfterParseErrorContext(_noresponse_hook_ctx),
+                    hooks=self.sdk_configuration.__dict__.get("_hooks"),
+                    async_hooks=self.sdk_configuration.__dict__.get("_async_hooks"),
+                ),
+            )
+        try:
+            return await _noresponse_parse_response(http_res)
+        except Exception as parse_exc_:
+            await response_helpers.raise_parse_error_async(
+                self.sdk_configuration.__dict__.get("_async_hooks"),
+                self.sdk_configuration.__dict__.get("_hooks"),
+                AfterParseErrorContext(_noresponse_hook_ctx),
+                http_res,
+                parse_exc_,
+            )
+
     def review_person(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         person_id: str,
         *,
@@ -3089,10 +3342,8 @@ class Groups(BaseSDK):
     ) -> models.operations.ReviewPersonResponse:
         r"""Record a decision on a person.
 
-        Marks the person cleared, watch or escalated with a note. Decisions are kept in order; the latest is the person's. The next screening refreshes everyone on watch or escalated. The decisions scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Marks the person cleared, watch or escalated with a note. Decisions are kept in order; the latest is the person's. The next screening refreshes everyone on watch or escalated. The decisions scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param person_id:
         :param decision:
@@ -3112,8 +3363,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.ReviewPersonRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             person_id=person_id,
             body=models.shared.PersonReviewRequest(
@@ -3127,7 +3376,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request(
             method="POST",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people/{person_id}/review",
+            path="/v1/groups/{group_id}/people/{person_id}/review",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -3253,8 +3502,6 @@ class Groups(BaseSDK):
 
     async def review_person_async(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         person_id: str,
         *,
@@ -3266,10 +3513,8 @@ class Groups(BaseSDK):
     ) -> models.operations.ReviewPersonResponse:
         r"""Record a decision on a person.
 
-        Marks the person cleared, watch or escalated with a note. Decisions are kept in order; the latest is the person's. The next screening refreshes everyone on watch or escalated. The decisions scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Marks the person cleared, watch or escalated with a note. Decisions are kept in order; the latest is the person's. The next screening refreshes everyone on watch or escalated. The decisions scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param person_id:
         :param decision:
@@ -3289,8 +3534,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.ReviewPersonRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             person_id=person_id,
             body=models.shared.PersonReviewRequest(
@@ -3304,7 +3547,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request_async(
             method="POST",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people/{person_id}/review",
+            path="/v1/groups/{group_id}/people/{person_id}/review",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -3433,8 +3676,6 @@ class Groups(BaseSDK):
 
     def judge_record(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         person_id: str,
         *,
@@ -3447,10 +3688,8 @@ class Groups(BaseSDK):
     ) -> models.operations.JudgeRecordResponse:
         r"""Join one of a person's records to them, or reject it.
 
-        Records a verdict on one of the records the person's latest lookups found: joined makes the record the person's whatever its likelihood, and rejected keeps it a lead. The verdict sticks for as long as a lookup finds the same record, and a later verdict on the same record replaces it. A record the person's latest lookup does not hold answers 404. Each verdict is audited as person.record_judged. The decisions scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Records a verdict on one of the records the person's latest lookups found: joined makes the record the person's whatever its likelihood, and rejected keeps it a lead. The verdict sticks for as long as a lookup finds the same record, and a later verdict on the same record replaces it. A record the person's latest lookup does not hold answers 404. Each verdict is audited as person.record_judged. The decisions scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param person_id:
         :param record_id: One of the person's lookup records.
@@ -3471,8 +3710,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.JudgeRecordRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             person_id=person_id,
             body=models.shared.RecordVerdictRequest(
@@ -3486,7 +3723,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request(
             method="POST",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people/{person_id}/records",
+            path="/v1/groups/{group_id}/people/{person_id}/records",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -3627,8 +3864,6 @@ class Groups(BaseSDK):
 
     async def judge_record_async(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         person_id: str,
         *,
@@ -3641,10 +3876,8 @@ class Groups(BaseSDK):
     ) -> models.operations.JudgeRecordResponse:
         r"""Join one of a person's records to them, or reject it.
 
-        Records a verdict on one of the records the person's latest lookups found: joined makes the record the person's whatever its likelihood, and rejected keeps it a lead. The verdict sticks for as long as a lookup finds the same record, and a later verdict on the same record replaces it. A record the person's latest lookup does not hold answers 404. Each verdict is audited as person.record_judged. The decisions scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Records a verdict on one of the records the person's latest lookups found: joined makes the record the person's whatever its likelihood, and rejected keeps it a lead. The verdict sticks for as long as a lookup finds the same record, and a later verdict on the same record replaces it. A record the person's latest lookup does not hold answers 404. Each verdict is audited as person.record_judged. The decisions scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param person_id:
         :param record_id: One of the person's lookup records.
@@ -3665,8 +3898,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.JudgeRecordRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             person_id=person_id,
             body=models.shared.RecordVerdictRequest(
@@ -3680,7 +3911,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request_async(
             method="POST",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people/{person_id}/records",
+            path="/v1/groups/{group_id}/people/{person_id}/records",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -3824,8 +4055,6 @@ class Groups(BaseSDK):
 
     def start_search(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         person_id: str,
         *,
@@ -3839,10 +4068,8 @@ class Groups(BaseSDK):
     ) -> models.operations.StartSearchResponse:
         r"""Search again on a value of one of a person's records.
 
-        Starts a new search on the value of one field of one of the person's records: a lookup's, a profile's or one an earlier search found. Name the record and the field; the value itself is not sent. The field's kind must be email, phone, username, person_name, password, hash, ip or domain. A domain search finds the breach rows of every email address at the domain, which must be a registrable domain or a host under one; any other domain answers 400. Nothing ever searches again by itself: a search starts only when a person asks. The search runs the breach search and the account and phone lookups that take the value's kind, under the environment's source controls, and finishes seconds later. A password or hash search counts first: it stops at counted with rows, how many breach rows hold the value, and runs only when a person runs it. Name a table, as a lookup remaining entry names it, to fetch the rows an earlier search left out, up to 100. What the search finds joins the person's lookup records as leads, each match naming the search; the person report lists the searches, each with the value and the record and field it came from, and its records are scored like the rest. Without an Idempotency-Key, starting the same open search returns it. Its estimate counts against the environment's screening_daily_cap, and one the cap cannot hold answers 409 screening_cap_exceeded. A record or field the person does not hold answers 404. Each search is audited as person.search_started. Send an Idempotency-Key to retry safely: the same key and request return the same resource in its current state while it is retained, even after work completes. Reusing the key with different input answers 409 idempotency_key_reused. Use a new key for a deliberate new operation. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Starts a new search on the value of one field of one of the person's records: a lookup's, a profile's or one an earlier search found. Name the record and the field; the value itself is not sent. The field's kind must be email, phone, username, person_name, password, hash, ip or domain. A domain search finds the breach rows of every email address at the domain, which must be a registrable domain or a host under one; any other domain answers 400. Nothing ever searches again by itself: a search starts only when a person asks. The search runs the breach search and the account and phone lookups that take the value's kind, under the environment's source controls, and finishes seconds later. A password or hash search counts first: it stops at counted with rows, how many breach rows hold the value, and runs only when a person runs it. Name a table, as a lookup remaining entry names it, to fetch the rows an earlier search left out, up to 100. What the search finds joins the person's lookup records as leads, each match naming the search; the person report lists the searches, each with the value and the record and field it came from, and its records are scored like the rest. Without an Idempotency-Key, starting the same open search returns it. Its estimate counts against the environment's screening_daily_cap, and one the cap cannot hold answers 409 screening_cap_exceeded. A record or field the person does not hold answers 404. Each search is audited as person.search_started. Send an Idempotency-Key to retry safely: the same key and request return the same resource in its current state while it is retained, even after work completes. Reusing the key with different input answers 409 idempotency_key_reused. Use a new key for a deliberate new operation. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param person_id:
         :param record_id: One of the person's records: a lookup's, a profile's or one an earlier search found.
@@ -3864,8 +4091,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.StartSearchRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             person_id=person_id,
             idempotency_key=idempotency_key,
@@ -3881,7 +4106,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request(
             method="POST",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people/{person_id}/searches",
+            path="/v1/groups/{group_id}/people/{person_id}/searches",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -4007,8 +4232,6 @@ class Groups(BaseSDK):
 
     async def start_search_async(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         person_id: str,
         *,
@@ -4022,10 +4245,8 @@ class Groups(BaseSDK):
     ) -> models.operations.StartSearchResponse:
         r"""Search again on a value of one of a person's records.
 
-        Starts a new search on the value of one field of one of the person's records: a lookup's, a profile's or one an earlier search found. Name the record and the field; the value itself is not sent. The field's kind must be email, phone, username, person_name, password, hash, ip or domain. A domain search finds the breach rows of every email address at the domain, which must be a registrable domain or a host under one; any other domain answers 400. Nothing ever searches again by itself: a search starts only when a person asks. The search runs the breach search and the account and phone lookups that take the value's kind, under the environment's source controls, and finishes seconds later. A password or hash search counts first: it stops at counted with rows, how many breach rows hold the value, and runs only when a person runs it. Name a table, as a lookup remaining entry names it, to fetch the rows an earlier search left out, up to 100. What the search finds joins the person's lookup records as leads, each match naming the search; the person report lists the searches, each with the value and the record and field it came from, and its records are scored like the rest. Without an Idempotency-Key, starting the same open search returns it. Its estimate counts against the environment's screening_daily_cap, and one the cap cannot hold answers 409 screening_cap_exceeded. A record or field the person does not hold answers 404. Each search is audited as person.search_started. Send an Idempotency-Key to retry safely: the same key and request return the same resource in its current state while it is retained, even after work completes. Reusing the key with different input answers 409 idempotency_key_reused. Use a new key for a deliberate new operation. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Starts a new search on the value of one field of one of the person's records: a lookup's, a profile's or one an earlier search found. Name the record and the field; the value itself is not sent. The field's kind must be email, phone, username, person_name, password, hash, ip or domain. A domain search finds the breach rows of every email address at the domain, which must be a registrable domain or a host under one; any other domain answers 400. Nothing ever searches again by itself: a search starts only when a person asks. The search runs the breach search and the account and phone lookups that take the value's kind, under the environment's source controls, and finishes seconds later. A password or hash search counts first: it stops at counted with rows, how many breach rows hold the value, and runs only when a person runs it. Name a table, as a lookup remaining entry names it, to fetch the rows an earlier search left out, up to 100. What the search finds joins the person's lookup records as leads, each match naming the search; the person report lists the searches, each with the value and the record and field it came from, and its records are scored like the rest. Without an Idempotency-Key, starting the same open search returns it. Its estimate counts against the environment's screening_daily_cap, and one the cap cannot hold answers 409 screening_cap_exceeded. A record or field the person does not hold answers 404. Each search is audited as person.search_started. Send an Idempotency-Key to retry safely: the same key and request return the same resource in its current state while it is retained, even after work completes. Reusing the key with different input answers 409 idempotency_key_reused. Use a new key for a deliberate new operation. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param person_id:
         :param record_id: One of the person's records: a lookup's, a profile's or one an earlier search found.
@@ -4047,8 +4268,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.StartSearchRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             person_id=person_id,
             idempotency_key=idempotency_key,
@@ -4064,7 +4283,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request_async(
             method="POST",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people/{person_id}/searches",
+            path="/v1/groups/{group_id}/people/{person_id}/searches",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -4193,8 +4412,6 @@ class Groups(BaseSDK):
 
     def run_search(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         person_id: str,
         search_id: str,
@@ -4210,10 +4427,8 @@ class Groups(BaseSDK):
     ) -> models.operations.RunSearchResponse:
         r"""Run a counted password or hash search.
 
-        Runs a password or hash search once a person has seen its count. A search still counting answers 409 group_conflict; one already queued, running or finished answers as it is. The body is an empty object. Its estimate counts against the environment's screening_daily_cap. Each run is audited as person.search_run. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Runs a password or hash search once a person has seen its count. A search still counting answers 409 group_conflict; one already queued, running or finished answers as it is. The body is an empty object. Its estimate counts against the environment's screening_daily_cap. Each run is audited as person.search_run. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param person_id:
         :param search_id:
@@ -4234,8 +4449,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.RunSearchRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             person_id=person_id,
             search_id=search_id,
@@ -4247,7 +4460,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request(
             method="POST",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people/{person_id}/searches/{search_id}/run",
+            path="/v1/groups/{group_id}/people/{person_id}/searches/{search_id}/run",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -4386,8 +4599,6 @@ class Groups(BaseSDK):
 
     async def run_search_async(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         person_id: str,
         search_id: str,
@@ -4403,10 +4614,8 @@ class Groups(BaseSDK):
     ) -> models.operations.RunSearchResponse:
         r"""Run a counted password or hash search.
 
-        Runs a password or hash search once a person has seen its count. A search still counting answers 409 group_conflict; one already queued, running or finished answers as it is. The body is an empty object. Its estimate counts against the environment's screening_daily_cap. Each run is audited as person.search_run. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Runs a password or hash search once a person has seen its count. A search still counting answers 409 group_conflict; one already queued, running or finished answers as it is. The body is an empty object. Its estimate counts against the environment's screening_daily_cap. Each run is audited as person.search_run. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param person_id:
         :param search_id:
@@ -4427,8 +4636,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.RunSearchRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             person_id=person_id,
             search_id=search_id,
@@ -4440,7 +4647,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request_async(
             method="POST",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people/{person_id}/searches/{search_id}/run",
+            path="/v1/groups/{group_id}/people/{person_id}/searches/{search_id}/run",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -4582,8 +4789,6 @@ class Groups(BaseSDK):
 
     def list_screenings(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         *,
         limit: Optional[int] = 20,
@@ -4595,10 +4800,8 @@ class Groups(BaseSDK):
     ) -> models.operations.ListScreeningsResponse:
         r"""List a group's screenings.
 
-        Screenings, newest first. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Screenings, newest first. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param limit: At most this many items.
         :param before: Read screenings older than this one.
@@ -4618,8 +4821,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.ListScreeningsRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             limit=limit,
             before=before,
@@ -4630,7 +4831,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/screenings",
+            path="/v1/groups/{group_id}/screenings",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -4768,8 +4969,6 @@ class Groups(BaseSDK):
 
     async def list_screenings_async(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         *,
         limit: Optional[int] = 20,
@@ -4781,10 +4980,8 @@ class Groups(BaseSDK):
     ) -> models.operations.ListScreeningsResponse:
         r"""List a group's screenings.
 
-        Screenings, newest first. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Screenings, newest first. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param limit: At most this many items.
         :param before: Read screenings older than this one.
@@ -4804,8 +5001,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.ListScreeningsRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             limit=limit,
             before=before,
@@ -4816,7 +5011,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request_async(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/screenings",
+            path="/v1/groups/{group_id}/screenings",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -4957,8 +5152,6 @@ class Groups(BaseSDK):
 
     def start_screening(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         *,
         idempotency_key: str,
@@ -4971,10 +5164,8 @@ class Groups(BaseSDK):
     ) -> models.operations.StartScreeningResponse:
         r"""Start a screening.
 
-        Queues a screening of every person no screening has reached and everyone on watch or escalated. One screening of a group runs at a time; it finishes completed, partial (some people not covered, counted in people_failed) or failed, and fails with error_code expired after 24 hours. Idempotency-Key is required and binds the body for the screening's life. The 202 body carries estimated_spend, what the selected people would cost at the depth and platforms. A screening whose estimate exceeds the environment's screening_daily_cap, less the day's recorded spend and what open screenings may still spend, answers 409 screening_cap_exceeded and queues nothing. The test environment screens with a deterministic simulator that contacts no source. A platform that no connector serves in the environment answers 409 screening_unavailable. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Queues a screening of every person no screening has reached and everyone on watch or escalated. One screening of a group runs at a time; it finishes completed, partial (some people not covered, counted in people_failed) or failed, and fails with error_code expired after 24 hours. Idempotency-Key is required and binds the body for the screening's life. The 202 body carries estimated_spend, what the selected people would cost at the depth and platforms. A screening whose estimate exceeds the environment's screening_daily_cap, less the day's recorded spend and what open screenings may still spend, answers 409 screening_cap_exceeded and queues nothing. The test environment screens with a deterministic simulator that contacts no source. A platform that no connector serves in the environment answers 409 screening_unavailable. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param idempotency_key: Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the workspace principal and bound to the canonical body for 24 hours.
         :param depth:
@@ -4995,8 +5186,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.StartScreeningRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             idempotency_key=idempotency_key,
             body=models.shared.ScreeningRequest(
@@ -5010,7 +5199,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request(
             method="POST",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/screenings",
+            path="/v1/groups/{group_id}/screenings",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -5149,8 +5338,6 @@ class Groups(BaseSDK):
 
     async def start_screening_async(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         *,
         idempotency_key: str,
@@ -5163,10 +5350,8 @@ class Groups(BaseSDK):
     ) -> models.operations.StartScreeningResponse:
         r"""Start a screening.
 
-        Queues a screening of every person no screening has reached and everyone on watch or escalated. One screening of a group runs at a time; it finishes completed, partial (some people not covered, counted in people_failed) or failed, and fails with error_code expired after 24 hours. Idempotency-Key is required and binds the body for the screening's life. The 202 body carries estimated_spend, what the selected people would cost at the depth and platforms. A screening whose estimate exceeds the environment's screening_daily_cap, less the day's recorded spend and what open screenings may still spend, answers 409 screening_cap_exceeded and queues nothing. The test environment screens with a deterministic simulator that contacts no source. A platform that no connector serves in the environment answers 409 screening_unavailable. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Queues a screening of every person no screening has reached and everyone on watch or escalated. One screening of a group runs at a time; it finishes completed, partial (some people not covered, counted in people_failed) or failed, and fails with error_code expired after 24 hours. Idempotency-Key is required and binds the body for the screening's life. The 202 body carries estimated_spend, what the selected people would cost at the depth and platforms. A screening whose estimate exceeds the environment's screening_daily_cap, less the day's recorded spend and what open screenings may still spend, answers 409 screening_cap_exceeded and queues nothing. The test environment screens with a deterministic simulator that contacts no source. A platform that no connector serves in the environment answers 409 screening_unavailable. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param idempotency_key: Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the workspace principal and bound to the canonical body for 24 hours.
         :param depth:
@@ -5187,8 +5372,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.StartScreeningRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             idempotency_key=idempotency_key,
             body=models.shared.ScreeningRequest(
@@ -5202,7 +5385,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request_async(
             method="POST",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/screenings",
+            path="/v1/groups/{group_id}/screenings",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -5344,8 +5527,6 @@ class Groups(BaseSDK):
 
     def get_screening(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         screening_id: str,
         *,
@@ -5356,10 +5537,8 @@ class Groups(BaseSDK):
     ) -> models.operations.GetScreeningResponse:
         r"""Read a screening.
 
-        The screening's status and progress. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        The screening's status and progress. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param screening_id:
         :param retries: Override the default retry configuration for this method
@@ -5378,8 +5557,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.GetScreeningRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             screening_id=screening_id,
         )
@@ -5389,7 +5566,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/screenings/{screening_id}",
+            path="/v1/groups/{group_id}/screenings/{screening_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -5525,8 +5702,6 @@ class Groups(BaseSDK):
 
     async def get_screening_async(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         screening_id: str,
         *,
@@ -5537,10 +5712,8 @@ class Groups(BaseSDK):
     ) -> models.operations.GetScreeningResponse:
         r"""Read a screening.
 
-        The screening's status and progress. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        The screening's status and progress. The people scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param screening_id:
         :param retries: Override the default retry configuration for this method
@@ -5559,8 +5732,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.GetScreeningRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             screening_id=screening_id,
         )
@@ -5570,7 +5741,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request_async(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/screenings/{screening_id}",
+            path="/v1/groups/{group_id}/screenings/{screening_id}",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -5709,8 +5880,6 @@ class Groups(BaseSDK):
 
     def cancel_screening(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         screening_id: str,
         *,
@@ -5725,10 +5894,8 @@ class Groups(BaseSDK):
     ) -> models.operations.CancelScreeningResponse:
         r"""Cancel a screening.
 
-        Stops a queued or running screening. People it already screened keep their results. Cancelling a finished screening answers it unchanged. The body is an empty object. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Stops a queued or running screening. People it already screened keep their results. Cancelling a finished screening answers it unchanged. The body is an empty object. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param screening_id:
         :param body:
@@ -5748,8 +5915,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.CancelScreeningRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             screening_id=screening_id,
             body=utils.get_pydantic_model(body, models.shared.ScreeningCancelRequest),
@@ -5760,7 +5925,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request(
             method="POST",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/screenings/{screening_id}/cancel",
+            path="/v1/groups/{group_id}/screenings/{screening_id}/cancel",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -5899,8 +6064,6 @@ class Groups(BaseSDK):
 
     async def cancel_screening_async(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         screening_id: str,
         *,
@@ -5915,10 +6078,8 @@ class Groups(BaseSDK):
     ) -> models.operations.CancelScreeningResponse:
         r"""Cancel a screening.
 
-        Stops a queued or running screening. People it already screened keep their results. Cancelling a finished screening answers it unchanged. The body is an empty object. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations.
+        Stops a queued or running screening. People it already screened keep their results. Cancelling a finished screening answers it unchanged. The body is an empty object. The investigations scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param screening_id:
         :param body:
@@ -5938,8 +6099,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.CancelScreeningRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             screening_id=screening_id,
             body=utils.get_pydantic_model(body, models.shared.ScreeningCancelRequest),
@@ -5950,7 +6109,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request_async(
             method="POST",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/screenings/{screening_id}/cancel",
+            path="/v1/groups/{group_id}/screenings/{screening_id}/cancel",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -6092,8 +6251,6 @@ class Groups(BaseSDK):
 
     def export_people(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         *,
         limit: Optional[int] = 100,
@@ -6108,10 +6265,8 @@ class Groups(BaseSDK):
     ) -> models.operations.ExportPeopleResponse:
         r"""Export the people in a group.
 
-        Returns one page for export. Each returned person is durably audited as person.exported with the actor, group, person ID and request ID. Requires both people read access and exports. Explicit evidence restrictions also hide free-text decision notes. No raw evidence enters audit logs. Follow next_after until absent for a complete export.
+        Returns one page for export. Each returned person is durably audited as person.exported with the actor, group, person ID and request ID. Requires both people read access and exports. Explicit evidence restrictions also hide free-text decision notes. No raw evidence enters audit logs. Follow next_after until absent for a complete export. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param limit: At most this many people.
         :param after: Read people after this one.
@@ -6134,8 +6289,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.ExportPeopleRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             limit=limit,
             after=after,
@@ -6149,7 +6302,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/export",
+            path="/v1/groups/{group_id}/export",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -6285,8 +6438,6 @@ class Groups(BaseSDK):
 
     async def export_people_async(
         self,
-        workspace_id: str,
-        environment: models.shared.KeyEnvironment,
         group_id: str,
         *,
         limit: Optional[int] = 100,
@@ -6301,10 +6452,8 @@ class Groups(BaseSDK):
     ) -> models.operations.ExportPeopleResponse:
         r"""Export the people in a group.
 
-        Returns one page for export. Each returned person is durably audited as person.exported with the actor, group, person ID and request ID. Requires both people read access and exports. Explicit evidence restrictions also hide free-text decision notes. No raw evidence enters audit logs. Follow next_after until absent for a complete export.
+        Returns one page for export. Each returned person is durably audited as person.exported with the actor, group, person ID and request ID. Requires both people read access and exports. Explicit evidence restrictions also hide free-text decision notes. No raw evidence enters audit logs. Follow next_after until absent for a complete export. The API key selects the workspace and environment.
 
-        :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
-        :param environment: The environment: live or test. Each has its own settings. Any other value answers 400. An API key reads and changes only its own environment's; the other answers 404.
         :param group_id:
         :param limit: At most this many people.
         :param after: Read people after this one.
@@ -6327,8 +6476,6 @@ class Groups(BaseSDK):
             base_url = self._get_url(base_url, url_variables)
 
         request = models.operations.ExportPeopleRequest(
-            workspace_id=workspace_id,
-            environment=environment,
             group_id=group_id,
             limit=limit,
             after=after,
@@ -6342,7 +6489,7 @@ class Groups(BaseSDK):
         )
         req = self._build_request_async(
             method="GET",
-            path="/v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/export",
+            path="/v1/groups/{group_id}/export",
             base_url=base_url,
             url_variables=url_variables,
             request=request,
@@ -6527,6 +6674,12 @@ class GroupsWithRawResponse:
         self.get_person_async = response_helpers.async_to_raw_response_wrapper(
             sdk.get_person_async, "http_headers"
         )
+        self.remove_person = response_helpers.to_raw_response_wrapper(
+            sdk.remove_person, "http_headers"
+        )
+        self.remove_person_async = response_helpers.async_to_raw_response_wrapper(
+            sdk.remove_person_async, "http_headers"
+        )
         self.review_person = response_helpers.to_raw_response_wrapper(
             sdk.review_person, "http_headers"
         )
@@ -6633,6 +6786,12 @@ class GroupsWithStreamingResponse:
         )
         self.get_person_async = response_helpers.async_to_streamed_response_wrapper(
             sdk.get_person_async, "http_headers"
+        )
+        self.remove_person = response_helpers.to_streamed_response_wrapper(
+            sdk.remove_person, "http_headers"
+        )
+        self.remove_person_async = response_helpers.async_to_streamed_response_wrapper(
+            sdk.remove_person_async, "http_headers"
         )
         self.review_person = response_helpers.to_streamed_response_wrapper(
             sdk.review_person, "http_headers"

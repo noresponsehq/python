@@ -20,13 +20,13 @@ class PersonReportTypedDict(TypedDict):
     person: PersonTypedDict
     r"""A person and where their screening and review stand."""
     profiles: List[ScreeningProfileTypedDict]
-    r"""The accounts the latest screening matched, with how each was matched."""
+    r"""The accounts this result matched, with how each was matched."""
     findings: List[ScreeningFindingTypedDict]
-    r"""What the latest screening flagged, most severe first, each citing its evidence."""
+    r"""What this result flagged, most severe first, each citing its evidence."""
     posts: List[ScreeningPostTypedDict]
-    r"""The posts the findings cite."""
+    r"""All posts retained for this result, including posts that no finding cites."""
     media: List[ScreeningMediaTypedDict]
-    r"""The images and videos the findings cite."""
+    r"""All images and videos retained for this result, including media that no finding cites."""
     reviews: List[PersonReviewTypedDict]
     r"""Every recorded decision, oldest first."""
     other_groups: OtherGroupsTypedDict
@@ -46,16 +46,16 @@ class PersonReport(BaseModel):
     r"""A person and where their screening and review stand."""
 
     profiles: List[ScreeningProfile]
-    r"""The accounts the latest screening matched, with how each was matched."""
+    r"""The accounts this result matched, with how each was matched."""
 
     findings: List[ScreeningFinding]
-    r"""What the latest screening flagged, most severe first, each citing its evidence."""
+    r"""What this result flagged, most severe first, each citing its evidence."""
 
     posts: List[ScreeningPost]
-    r"""The posts the findings cite."""
+    r"""All posts retained for this result, including posts that no finding cites."""
 
     media: List[ScreeningMedia]
-    r"""The images and videos the findings cite."""
+    r"""All images and videos retained for this result, including media that no finding cites."""
 
     reviews: List[PersonReview]
     r"""Every recorded decision, oldest first."""

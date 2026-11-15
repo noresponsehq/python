@@ -8,14 +8,7 @@ from typing import List, Literal, Optional, Union
 from typing_extensions import NotRequired, TypedDict
 
 
-MatchedOn = Union[
-    Literal[
-        "email",
-        "phone",
-        "external_id",
-    ],
-    UnrecognizedStr,
-]
+OtherGroupMatchedOn = Union[Literal["person_id",], UnrecognizedStr]
 
 
 class OtherGroupTypedDict(TypedDict):
@@ -26,8 +19,8 @@ class OtherGroupTypedDict(TypedDict):
     group_starts_at: str
     person_id: str
     r"""The person on that group's list."""
-    matched_on: List[MatchedOn]
-    r"""Which identifiers match, in this order. external_id appears only beside email or phone: the same external id alone is not a match, since ticket numbers may be reused across groups."""
+    matched_on: List[OtherGroupMatchedOn]
+    r"""The same workspace person explicitly belongs to this group. Membership requires an explicit person or customer reference."""
     match_state: MatchState
     r"""How sure the latest screening is that it found the person's accounts. unscreened until a screening reaches the person, and after one that had no profile to check (no_profile_to_check)."""
     highest_band: Nullable[HighestBand]
@@ -54,8 +47,8 @@ class OtherGroup(BaseModel):
     person_id: str
     r"""The person on that group's list."""
 
-    matched_on: List[MatchedOn]
-    r"""Which identifiers match, in this order. external_id appears only beside email or phone: the same external id alone is not a match, since ticket numbers may be reused across groups."""
+    matched_on: List[OtherGroupMatchedOn]
+    r"""The same workspace person explicitly belongs to this group. Membership requires an explicit person or customer reference."""
 
     match_state: MatchState
     r"""How sure the latest screening is that it found the person's accounts. unscreened until a screening reaches the person, and after one that had no profile to check (no_profile_to_check)."""

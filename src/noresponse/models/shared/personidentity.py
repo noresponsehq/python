@@ -8,12 +8,10 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class PersonIdentityTypedDict(TypedDict):
-    r"""What you know about a person. Stored encrypted under the workspace's key."""
-
-    name: str
-    r"""The person's full name."""
     external_id: NotRequired[str]
-    r"""Your own id for the person, unique within the group. A later row with the same external id updates this person."""
+    r"""Your reference for this person within the workspace environment. Only an explicit reference or person_id can reuse an existing person."""
+    name: NotRequired[str]
+    r"""The person's full name."""
     email: NotRequired[str]
     r"""The person's email."""
     phone: NotRequired[str]
@@ -23,19 +21,17 @@ class PersonIdentityTypedDict(TypedDict):
     city: NotRequired[str]
     r"""Where the person lives."""
     handles: NotRequired[List[HandleTypedDict]]
-    r"""Accounts the person is known to hold, at most 20."""
+    person_id: NotRequired[str]
     role: NotRequired[PersonRole]
     r"""The person's role in the group: guest (a ticket holder), crew, vendor or press. Leave it out when you do not know it: a person without one has no role, not guest. A later row naming the same person replaces it, and a change of role alone keeps the person's screening results."""
 
 
 class PersonIdentity(BaseModel):
-    r"""What you know about a person. Stored encrypted under the workspace's key."""
-
-    name: str
-    r"""The person's full name."""
-
     external_id: Optional[str] = None
-    r"""Your own id for the person, unique within the group. A later row with the same external id updates this person."""
+    r"""Your reference for this person within the workspace environment. Only an explicit reference or person_id can reuse an existing person."""
+
+    name: Optional[str] = None
+    r"""The person's full name."""
 
     email: Optional[str] = None
     r"""The person's email."""
@@ -50,7 +46,8 @@ class PersonIdentity(BaseModel):
     r"""Where the person lives."""
 
     handles: Optional[List[Handle]] = None
-    r"""Accounts the person is known to hold, at most 20."""
+
+    person_id: Optional[str] = None
 
     role: Optional[PersonRole] = None
     r"""The person's role in the group: guest (a ticket holder), crew, vendor or press. Leave it out when you do not know it: a person without one has no role, not guest. A later row naming the same person replaces it, and a change of role alone keeps the person's screening results."""
@@ -58,7 +55,17 @@ class PersonIdentity(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["external_id", "email", "phone", "company", "city", "handles", "role"]
+            [
+                "external_id",
+                "name",
+                "email",
+                "phone",
+                "company",
+                "city",
+                "handles",
+                "person_id",
+                "role",
+            ]
         )
         serialized = handler(self)
         m = {}

@@ -35,6 +35,7 @@ ConflictErrorCode = Union[
         "group_limit_reached",
         "screening_cap_exceeded",
         "screening_unavailable",
+        "person_reference_conflict",
     ],
     UnrecognizedStr,
 ]

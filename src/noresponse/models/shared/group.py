@@ -26,8 +26,6 @@ class GroupTypedDict(TypedDict):
     r"""How many people the group holds."""
     version: int
     r"""Goes up by one with every change."""
-    purge_after: str
-    r"""When raw collected items and unmatched candidate profiles are purged: 30 days after the group ends."""
     created_by: str
     r"""The member or key label that created the group."""
     created_at: str
@@ -65,9 +63,6 @@ class Group(BaseModel):
 
     version: int
     r"""Goes up by one with every change."""
-
-    purge_after: str
-    r"""When raw collected items and unmatched candidate profiles are purged: 30 days after the group ends."""
 
     created_by: str
     r"""The member or key label that created the group."""

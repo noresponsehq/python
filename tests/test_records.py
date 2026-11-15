@@ -6,14 +6,13 @@ from noresponse.models.shared import PersonReport, Record
 from test_client import answer, fixture, make
 
 REPORT = fixture("valid/person-report-records.json")
-WORKSPACE = "tnt_01JC8Y0A2B4C6D8E0F2G4H6J8K"
 GROUP, PERSON = REPORT["person"]["group_id"], REPORT["person"]["id"]
 
 
 def check(report, seen):
     assert isinstance(report, PersonReport)
     assert seen[0].method == "GET"
-    assert seen[0].url.path == f"/v1/workspaces/{WORKSPACE}/groups/test/{GROUP}/people/{PERSON}"
+    assert seen[0].url.path == f"/v1/groups/{GROUP}/people/{PERSON}"
 
     account, row = report.lookup.records
     assert isinstance(account, Record)
@@ -45,11 +44,11 @@ def check(report, seen):
 
 def test_a_persons_report_returns_typed_records():
     nr, seen = make([answer(REPORT)])
-    response = nr.groups.get_person(workspace_id=WORKSPACE, environment="test", group_id=GROUP, person_id=PERSON)
+    response = nr.groups.get_person(group_id=GROUP, person_id=PERSON)
     check(response.result, seen)
 
 
 def test_a_persons_report_returns_typed_records_async():
     nr, seen = make([answer(REPORT)])
-    response = asyncio.run(nr.groups.get_person_async(workspace_id=WORKSPACE, environment="test", group_id=GROUP, person_id=PERSON))
+    response = asyncio.run(nr.groups.get_person_async(group_id=GROUP, person_id=PERSON))
     check(response.result, seen)

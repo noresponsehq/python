@@ -65,3 +65,9 @@ value: shared.PersonFlaggedEvent = /* values here */
 value: shared.PersonDecidedEvent = /* values here */
 ```
 
+### `shared.InvestigationCompletedEvent`
+
+```python
+value: shared.InvestigationCompletedEvent = /* values here */
+```
+

@@ -31,8 +31,10 @@ class PersonTypedDict(TypedDict):
     updated_at: str
     spend: ScreeningSpendTypedDict
     r"""What screening cost, in US cents, in total and per implementation."""
+    expires_at: str
+    r"""When workspace retention removes the person and their investigation history."""
     external_id: NotRequired[str]
-    r"""Your own id for the person, unique within the group. A later row with the same external id updates this person."""
+    r"""Your reference for the person in this workspace environment."""
     email: NotRequired[str]
     r"""The person's email."""
     phone: NotRequired[str]
@@ -83,8 +85,11 @@ class Person(BaseModel):
     spend: ScreeningSpend
     r"""What screening cost, in US cents, in total and per implementation."""
 
+    expires_at: str
+    r"""When workspace retention removes the person and their investigation history."""
+
     external_id: Optional[str] = None
-    r"""Your own id for the person, unique within the group. A later row with the same external id updates this person."""
+    r"""Your reference for the person in this workspace environment."""
 
     email: Optional[str] = None
     r"""The person's email."""

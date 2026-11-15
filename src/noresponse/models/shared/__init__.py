@@ -326,6 +326,23 @@ if TYPE_CHECKING:
         IntegrationRotationRequest,
         IntegrationRotationRequestTypedDict,
     )
+    from .investigation import Investigation, InvestigationTypedDict
+    from .investigationcompleted import (
+        InvestigationCompleted,
+        InvestigationCompletedTypedDict,
+    )
+    from .investigationcompletedevent import (
+        InvestigationCompletedEvent,
+        InvestigationCompletedEventTypedDict,
+    )
+    from .investigationcompletedstatus import InvestigationCompletedStatus
+    from .investigationreport import InvestigationReport, InvestigationReportTypedDict
+    from .investigationrequest import (
+        InvestigationRequest,
+        InvestigationRequestTypedDict,
+    )
+    from .investigationslist import InvestigationsList, InvestigationsListTypedDict
+    from .investigationstatus import InvestigationStatus
     from .invite import Invite, InviteDeniedAction, InviteEnvironment, InviteTypedDict
     from .invitelist import InviteList, InviteListTypedDict
     from .inviterequest import (
@@ -420,7 +437,7 @@ if TYPE_CHECKING:
         OperationalAggregateTotalsTypedDict,
     )
     from .origin import Origin
-    from .othergroup import MatchedOn, OtherGroup, OtherGroupTypedDict
+    from .othergroup import OtherGroup, OtherGroupMatchedOn, OtherGroupTypedDict
     from .othergroups import OtherGroups, OtherGroupsTypedDict
     from .outcome import Outcome
     from .outcomes import Outcomes, OutcomesTypedDict
@@ -440,6 +457,7 @@ if TYPE_CHECKING:
     from .personflaggedmatchstate import PersonFlaggedMatchState
     from .personidentity import PersonIdentity, PersonIdentityTypedDict
     from .personlist import PersonList, PersonListTypedDict
+    from .personmatch import PersonMatch, PersonMatchMatchedOn, PersonMatchTypedDict
     from .personreport import PersonReport, PersonReportTypedDict
     from .personreview import PersonReview, PersonReviewTypedDict
     from .personreviewrequest import PersonReviewRequest, PersonReviewRequestTypedDict
@@ -793,6 +811,20 @@ if TYPE_CHECKING:
         WorkspaceOperationsSummaryRequest,
         WorkspaceOperationsSummaryRequestTypedDict,
     )
+    from .workspacepeoplelist import WorkspacePeopleList, WorkspacePeopleListTypedDict
+    from .workspaceperson import WorkspacePerson, WorkspacePersonTypedDict
+    from .workspacepersonreport import (
+        WorkspacePersonReport,
+        WorkspacePersonReportTypedDict,
+    )
+    from .workspacepersonrequest import (
+        WorkspacePersonRequest,
+        WorkspacePersonRequestTypedDict,
+    )
+    from .workspacepersonresult import (
+        WorkspacePersonResult,
+        WorkspacePersonResultTypedDict,
+    )
 
 __all__ = [
     "Access",
@@ -1109,6 +1141,20 @@ __all__ = [
     "IntegrationRotationRequest",
     "IntegrationRotationRequestTypedDict",
     "IntegrationTypedDict",
+    "Investigation",
+    "InvestigationCompleted",
+    "InvestigationCompletedEvent",
+    "InvestigationCompletedEventTypedDict",
+    "InvestigationCompletedStatus",
+    "InvestigationCompletedTypedDict",
+    "InvestigationReport",
+    "InvestigationReportTypedDict",
+    "InvestigationRequest",
+    "InvestigationRequestTypedDict",
+    "InvestigationStatus",
+    "InvestigationTypedDict",
+    "InvestigationsList",
+    "InvestigationsListTypedDict",
     "Invite",
     "InviteDeniedAction",
     "InviteEnvironment",
@@ -1187,7 +1233,6 @@ __all__ = [
     "LocationUnionTypedDict",
     "Match",
     "MatchState",
-    "MatchedOn",
     "MediaType",
     "Member",
     "MemberDeniedAction",
@@ -1220,6 +1265,7 @@ __all__ = [
     "OperationalAggregateTypedDict",
     "Origin",
     "OtherGroup",
+    "OtherGroupMatchedOn",
     "OtherGroupTypedDict",
     "OtherGroups",
     "OtherGroupsTypedDict",
@@ -1252,6 +1298,9 @@ __all__ = [
     "PersonIdentityTypedDict",
     "PersonList",
     "PersonListTypedDict",
+    "PersonMatch",
+    "PersonMatchMatchedOn",
+    "PersonMatchTypedDict",
     "PersonReport",
     "PersonReportTypedDict",
     "PersonReview",
@@ -1581,6 +1630,16 @@ __all__ = [
     "WorkspaceOperationsSummaryRequest",
     "WorkspaceOperationsSummaryRequestTypedDict",
     "WorkspaceOperationsSummaryTypedDict",
+    "WorkspacePeopleList",
+    "WorkspacePeopleListTypedDict",
+    "WorkspacePerson",
+    "WorkspacePersonReport",
+    "WorkspacePersonReportTypedDict",
+    "WorkspacePersonRequest",
+    "WorkspacePersonRequestTypedDict",
+    "WorkspacePersonResult",
+    "WorkspacePersonResultTypedDict",
+    "WorkspacePersonTypedDict",
 ]
 
 _dynamic_imports: dict[str, str] = {
@@ -1889,6 +1948,20 @@ _dynamic_imports: dict[str, str] = {
     "IntegrationRequestTypedDict": ".integrationrequest",
     "IntegrationRotationRequest": ".integrationrotationrequest",
     "IntegrationRotationRequestTypedDict": ".integrationrotationrequest",
+    "Investigation": ".investigation",
+    "InvestigationTypedDict": ".investigation",
+    "InvestigationCompleted": ".investigationcompleted",
+    "InvestigationCompletedTypedDict": ".investigationcompleted",
+    "InvestigationCompletedEvent": ".investigationcompletedevent",
+    "InvestigationCompletedEventTypedDict": ".investigationcompletedevent",
+    "InvestigationCompletedStatus": ".investigationcompletedstatus",
+    "InvestigationReport": ".investigationreport",
+    "InvestigationReportTypedDict": ".investigationreport",
+    "InvestigationRequest": ".investigationrequest",
+    "InvestigationRequestTypedDict": ".investigationrequest",
+    "InvestigationsList": ".investigationslist",
+    "InvestigationsListTypedDict": ".investigationslist",
+    "InvestigationStatus": ".investigationstatus",
     "Invite": ".invite",
     "InviteDeniedAction": ".invite",
     "InviteEnvironment": ".invite",
@@ -1994,8 +2067,8 @@ _dynamic_imports: dict[str, str] = {
     "OperationalAggregateTotals": ".operationalaggregatetotals",
     "OperationalAggregateTotalsTypedDict": ".operationalaggregatetotals",
     "Origin": ".origin",
-    "MatchedOn": ".othergroup",
     "OtherGroup": ".othergroup",
+    "OtherGroupMatchedOn": ".othergroup",
     "OtherGroupTypedDict": ".othergroup",
     "OtherGroups": ".othergroups",
     "OtherGroupsTypedDict": ".othergroups",
@@ -2029,6 +2102,9 @@ _dynamic_imports: dict[str, str] = {
     "PersonIdentityTypedDict": ".personidentity",
     "PersonList": ".personlist",
     "PersonListTypedDict": ".personlist",
+    "PersonMatch": ".personmatch",
+    "PersonMatchMatchedOn": ".personmatch",
+    "PersonMatchTypedDict": ".personmatch",
     "PersonReport": ".personreport",
     "PersonReportTypedDict": ".personreport",
     "PersonReview": ".personreview",
@@ -2370,6 +2446,16 @@ _dynamic_imports: dict[str, str] = {
     "WorkspaceOperationsSummaryTypedDict": ".workspaceoperationssummary",
     "WorkspaceOperationsSummaryRequest": ".workspaceoperationssummaryrequest",
     "WorkspaceOperationsSummaryRequestTypedDict": ".workspaceoperationssummaryrequest",
+    "WorkspacePeopleList": ".workspacepeoplelist",
+    "WorkspacePeopleListTypedDict": ".workspacepeoplelist",
+    "WorkspacePerson": ".workspaceperson",
+    "WorkspacePersonTypedDict": ".workspaceperson",
+    "WorkspacePersonReport": ".workspacepersonreport",
+    "WorkspacePersonReportTypedDict": ".workspacepersonreport",
+    "WorkspacePersonRequest": ".workspacepersonrequest",
+    "WorkspacePersonRequestTypedDict": ".workspacepersonrequest",
+    "WorkspacePersonResult": ".workspacepersonresult",
+    "WorkspacePersonResultTypedDict": ".workspacepersonresult",
 }
 
 
