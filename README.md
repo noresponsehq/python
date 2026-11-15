@@ -2,7 +2,7 @@
 
 # NoResponse for Python
 
-Assess sign-ups, logins and purchases with the NoResponse Identity Intelligence API.
+Investigate everyone, everywhere, all at once. Find the accounts and leaked rows behind an email, phone, username or name, screen groups of people, and assess sign-ups with the NoResponse API.
 
 Python 3.10+ · Sync and asyncio · Fully typed.
 
@@ -14,7 +14,45 @@ Python 3.10+ · Sync and asyncio · Fully typed.
 pip install noresponse
 ```
 
-## Quick start
+## Investigate a person
+
+```python
+import os
+
+from noresponse import NoResponse
+from noresponse.models.shared import PersonIdentityTypedDict
+
+nr = NoResponse()  # reads NORESPONSE_API_KEY; the key needs the groups scope
+workspace_id = os.environ["NORESPONSE_WORKSPACE"]
+
+group = nr.groups.create(
+    workspace_id=workspace_id, environment="test", name="Case 2026-114", starts_at="2026-12-03T09:30:00Z"
+).result
+person: PersonIdentityTypedDict = {
+    "name": "Jordan Ellis",
+    "email": "jordan.ellis@example.com",
+    "handles": [{"platform": "x", "handle": "jordanellis"}],
+}
+added = nr.groups.add_people(
+    workspace_id=workspace_id, environment="test", group_id=group.id,
+    idempotency_key="case-2026-114-people-1", people=[person],
+).result
+nr.groups.start_screening(
+    workspace_id=workspace_id, environment="test", group_id=group.id,
+    idempotency_key="case-2026-114-screening-1", depth="standard", platforms=["x"],
+)
+
+# Once the screening.completed webhook arrives (or get_screening is no longer queued or running):
+report = nr.groups.get_person(
+    workspace_id=workspace_id, environment="test", group_id=group.id, person_id=added.items[0].id
+).result
+for record in (report.lookup.records or []) if report.lookup else []:
+    print(record.source.kind, record.source.site or record.source.table, record.likelihood)
+```
+
+Every account and leaked row comes back as a record that names its source. See the [quickstart](https://docs.noresponse.org/quickstart) and [records](https://docs.noresponse.org/guides/records).
+
+## Assess a signup
 
 ```python
 from noresponse import NoResponse

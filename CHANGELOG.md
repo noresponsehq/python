@@ -1,5 +1,9 @@
 # Changelog
 
+## 12.0.23
+
+No changes detected.
+
 ## 12.0.22
 
 * `sdk.settings.get()`:  `response.refused_sources[].enum(life360_phone)` **Added**
