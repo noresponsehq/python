@@ -17,7 +17,7 @@ RecordKind = Union[
         "url",
         # A host name with no path. value: in lower case, also when the source wrote a URL.
         "domain",
-        # A picture, as a link or a file. value: the link, cleaned as a `url`.
+        # A picture, as a link or a file. value: the link, cleaned as a `url`, else the file as written. A value that is only zeros, or null, nil, none, undefined or n/a, has no value.
         "image",
         # A whole name or a part of one. value: with each run of spaces made one space.
         "person_name",
@@ -85,7 +85,7 @@ RecordKind = Union[
         "label",
         # Free writing, such as a bio or signature. value: as written.
         "long_text",
-        # A whole number of things. value: a whole number with no thousands separators.
+        # A whole number of things. value: a whole number of 0 or more, with no thousands separators.
         "count",
         # A rating, rank or points. value: a plain decimal.
         "score",
