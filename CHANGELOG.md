@@ -1,5 +1,9 @@
 # Changelog
 
+## 12.0.20
+
+No changes detected.
+
 ## 12.0.19
 
 * `sdk.groups.get_person()`:  `response.searches[].kind.enum(domain)` **Added**
