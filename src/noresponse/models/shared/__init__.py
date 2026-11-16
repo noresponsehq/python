@@ -180,6 +180,7 @@ if TYPE_CHECKING:
     from .authenticationerrorcode import AuthenticationErrorCode
     from .badrequesterrorcode import BadRequestErrorCode
     from .band import Band
+    from .basis import Basis
     from .breach import Breach, BreachTypedDict
     from .breachconduct import BreachConduct
     from .breachexposed import BreachExposed
@@ -187,6 +188,7 @@ if TYPE_CHECKING:
     from .breachselector import BreachSelector
     from .breachsummary import BreachSummary, BreachSummaryTypedDict
     from .bucket import Bucket
+    from .certainty import Certainty
     from .conclusion import Conclusion
     from .confidence import Confidence
     from .conflicterrorcode import ConflictErrorCode
@@ -567,7 +569,11 @@ if TYPE_CHECKING:
     from .principal import Principal, PrincipalTypedDict
     from .priority import Priority
     from .probleminvalidparam import ProblemInvalidParam, ProblemInvalidParamTypedDict
+    from .profilecitation import ProfileCitation, ProfileCitationTypedDict
+    from .profilecitationkind import ProfileCitationKind
+    from .profilelead import ProfileLead, ProfileLeadTypedDict
     from .profilematchstate import ProfileMatchState
+    from .profilestatement import ProfileStatement, ProfileStatementTypedDict
     from .provenance import Provenance
     from .publication import Publication, PublicationTypedDict
     from .ratelimiterrorcode import RateLimitErrorCode
@@ -744,6 +750,7 @@ if TYPE_CHECKING:
     from .source import Source
     from .status import Status
     from .thresholds import Thresholds, ThresholdsTypedDict
+    from .topic import Topic
     from .transport import Transport
     from .usage import Usage, UsageTypedDict
     from .usagecount import UsageCount, UsageCountTypedDict
@@ -825,6 +832,9 @@ if TYPE_CHECKING:
         WorkspacePersonResult,
         WorkspacePersonResultTypedDict,
     )
+    from .writtenprofile import WrittenProfile, WrittenProfileTypedDict
+    from .writtenprofileerrorcode import WrittenProfileErrorCode
+    from .writtenprofilestatus import WrittenProfileStatus
 
 __all__ = [
     "Access",
@@ -986,6 +996,7 @@ __all__ = [
     "AuthenticationErrorCode",
     "BadRequestErrorCode",
     "Band",
+    "Basis",
     "Breach",
     "BreachConduct",
     "BreachExposed",
@@ -995,6 +1006,7 @@ __all__ = [
     "BreachSummaryTypedDict",
     "BreachTypedDict",
     "Bucket",
+    "Certainty",
     "Conclusion",
     "Confidence",
     "ConflictErrorCode",
@@ -1362,7 +1374,14 @@ __all__ = [
     "Priority",
     "ProblemInvalidParam",
     "ProblemInvalidParamTypedDict",
+    "ProfileCitation",
+    "ProfileCitationKind",
+    "ProfileCitationTypedDict",
+    "ProfileLead",
+    "ProfileLeadTypedDict",
     "ProfileMatchState",
+    "ProfileStatement",
+    "ProfileStatementTypedDict",
     "Provenance",
     "Publication",
     "PublicationTypedDict",
@@ -1569,6 +1588,7 @@ __all__ = [
     "TimezoneTypedDict",
     "TimezoneUnion",
     "TimezoneUnionTypedDict",
+    "Topic",
     "Transport",
     "UnknownActor",
     "Usage",
@@ -1640,6 +1660,10 @@ __all__ = [
     "WorkspacePersonResult",
     "WorkspacePersonResultTypedDict",
     "WorkspacePersonTypedDict",
+    "WrittenProfile",
+    "WrittenProfileErrorCode",
+    "WrittenProfileStatus",
+    "WrittenProfileTypedDict",
 ]
 
 _dynamic_imports: dict[str, str] = {
@@ -1801,6 +1825,7 @@ _dynamic_imports: dict[str, str] = {
     "AuthenticationErrorCode": ".authenticationerrorcode",
     "BadRequestErrorCode": ".badrequesterrorcode",
     "Band": ".band",
+    "Basis": ".basis",
     "Breach": ".breach",
     "BreachTypedDict": ".breach",
     "BreachConduct": ".breachconduct",
@@ -1810,6 +1835,7 @@ _dynamic_imports: dict[str, str] = {
     "BreachSummary": ".breachsummary",
     "BreachSummaryTypedDict": ".breachsummary",
     "Bucket": ".bucket",
+    "Certainty": ".certainty",
     "Conclusion": ".conclusion",
     "Confidence": ".confidence",
     "ConflictErrorCode": ".conflicterrorcode",
@@ -2193,7 +2219,14 @@ _dynamic_imports: dict[str, str] = {
     "Priority": ".priority",
     "ProblemInvalidParam": ".probleminvalidparam",
     "ProblemInvalidParamTypedDict": ".probleminvalidparam",
+    "ProfileCitation": ".profilecitation",
+    "ProfileCitationTypedDict": ".profilecitation",
+    "ProfileCitationKind": ".profilecitationkind",
+    "ProfileLead": ".profilelead",
+    "ProfileLeadTypedDict": ".profilelead",
     "ProfileMatchState": ".profilematchstate",
+    "ProfileStatement": ".profilestatement",
+    "ProfileStatementTypedDict": ".profilestatement",
     "Provenance": ".provenance",
     "Publication": ".publication",
     "PublicationTypedDict": ".publication",
@@ -2391,6 +2424,7 @@ _dynamic_imports: dict[str, str] = {
     "Status": ".status",
     "Thresholds": ".thresholds",
     "ThresholdsTypedDict": ".thresholds",
+    "Topic": ".topic",
     "Transport": ".transport",
     "Usage": ".usage",
     "UsageTypedDict": ".usage",
@@ -2456,6 +2490,10 @@ _dynamic_imports: dict[str, str] = {
     "WorkspacePersonRequestTypedDict": ".workspacepersonrequest",
     "WorkspacePersonResult": ".workspacepersonresult",
     "WorkspacePersonResultTypedDict": ".workspacepersonresult",
+    "WrittenProfile": ".writtenprofile",
+    "WrittenProfileTypedDict": ".writtenprofile",
+    "WrittenProfileErrorCode": ".writtenprofileerrorcode",
+    "WrittenProfileStatus": ".writtenprofilestatus",
 }
 
 

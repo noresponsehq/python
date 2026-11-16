@@ -6,6 +6,7 @@ from .screeninglookup import ScreeningLookup, ScreeningLookupTypedDict
 from .screeningmedia import ScreeningMedia, ScreeningMediaTypedDict
 from .screeningpost import ScreeningPost, ScreeningPostTypedDict
 from .screeningprofile import ScreeningProfile, ScreeningProfileTypedDict
+from .writtenprofile import WrittenProfile, WrittenProfileTypedDict
 from noresponse.types import BaseModel, Nullable, UNSET_SENTINEL
 from pydantic import model_serializer
 from typing import List, Optional
@@ -30,6 +31,8 @@ class WorkspacePersonReportTypedDict(TypedDict):
     r"""All images and videos retained for this result, including media that no finding cites."""
     evidence_investigation: Nullable[InvestigationTypedDict]
     r"""The most recent retained completed or partial investigation, or a migrated result whose original per-person status is unknown. The evidence below belongs to this investigation. Read investigation history for earlier results and pending jobs."""
+    written_profile: Nullable[WrittenProfileTypedDict]
+    r"""An investigator's profile of this person, written from the evidence of a settled investigation. Null until an investigation completes or partially completes, and null when evidence.read is denied."""
     external_id: NotRequired[str]
     r"""Your reference for this person within the workspace environment. Only an explicit reference or person_id can reuse an existing person."""
     name: NotRequired[str]
@@ -76,6 +79,9 @@ class WorkspacePersonReport(BaseModel):
     evidence_investigation: Nullable[Investigation]
     r"""The most recent retained completed or partial investigation, or a migrated result whose original per-person status is unknown. The evidence below belongs to this investigation. Read investigation history for earlier results and pending jobs."""
 
+    written_profile: Nullable[WrittenProfile]
+    r"""An investigator's profile of this person, written from the evidence of a settled investigation. Null until an investigation completes or partially completes, and null when evidence.read is denied."""
+
     external_id: Optional[str] = None
     r"""Your reference for this person within the workspace environment. Only an explicit reference or person_id can reuse an existing person."""
 
@@ -117,7 +123,7 @@ class WorkspacePersonReport(BaseModel):
                 "evidence_restricted",
             ]
         )
-        nullable_fields = set(["evidence_investigation"])
+        nullable_fields = set(["evidence_investigation", "written_profile"])
         serialized = handler(self)
         m = {}
 

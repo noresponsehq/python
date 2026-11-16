@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: 6968c76b817401323b3158bcf1d6fe3a
+  docChecksum: 144ec405e9428ddad51328135302d658
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 15.0.0
-  configChecksum: 3f5f7bcc814943dc108693498b8a4482
+  releaseVersion: 15.0.1
+  configChecksum: 66666cd4d0f1dfd34ebd38e09cb616e0
 features:
   python:
     additionalDependencies: 1.1.0
@@ -724,6 +724,8 @@ trackedFiles:
     last_write_checksum: sha1:b4fa6452822e116842d7ef6c542f2c57ed91a22e
   docs/models/shared/band.md:
     last_write_checksum: sha1:92d38803be43e9861fdd07ea7bf4d9ac2e1586f1
+  docs/models/shared/basis.md:
+    last_write_checksum: sha1:499d447842b6033cbbc9a1e92ff29cdb035216c5
   docs/models/shared/breach.md:
     last_write_checksum: sha1:53945d852f7a268bf6be5e002a29b840fbb35b89
   docs/models/shared/breachconduct.md:
@@ -738,6 +740,8 @@ trackedFiles:
     last_write_checksum: sha1:ce8d2de00acb8cef78a4dd1d84278bde03c2edd2
   docs/models/shared/bucket.md:
     last_write_checksum: sha1:ad1079cf7f5f1f4c066b9df45c67ded1d5690a99
+  docs/models/shared/certainty.md:
+    last_write_checksum: sha1:a71ccbcd6dca095a7b870c4f338ed108e822ab49
   docs/models/shared/conclusion.md:
     last_write_checksum: sha1:114c24f12d7b6ebf1347f9d59c9be2eecb195e34
   docs/models/shared/confidence.md:
@@ -1198,8 +1202,16 @@ trackedFiles:
     last_write_checksum: sha1:c33341323ed5746f82e50db6091116cd7aa722d3
   docs/models/shared/probleminvalidparam.md:
     last_write_checksum: sha1:3c4459e2b6575b9db9768ec3185db9de8c662166
+  docs/models/shared/profilecitation.md:
+    last_write_checksum: sha1:149ea3062792fb07c8500acefa441e7eb1358fa0
+  docs/models/shared/profilecitationkind.md:
+    last_write_checksum: sha1:dc46c4705a2520631dfbad54983198ab327baf34
+  docs/models/shared/profilelead.md:
+    last_write_checksum: sha1:7334b7de12468bc1525a6143251d6bf758f442db
   docs/models/shared/profilematchstate.md:
     last_write_checksum: sha1:a2fd6e3daa51d7e74941fcdbd310e425b4630580
+  docs/models/shared/profilestatement.md:
+    last_write_checksum: sha1:14869a1b901565488535f458f959e2e8c70a981b
   docs/models/shared/provenance.md:
     last_write_checksum: sha1:aaf20962d07a463e1b874c5c1763af9c2430a69b
   docs/models/shared/publication.md:
@@ -1438,6 +1450,8 @@ trackedFiles:
     last_write_checksum: sha1:2c0a61da09d505a62515cfbf236b6f98616dc13a
   docs/models/shared/timezoneunion.md:
     last_write_checksum: sha1:d19ea35c262eddb3a53c50911cebdeceef9d3e1b
+  docs/models/shared/topic.md:
+    last_write_checksum: sha1:60d54295b21de2bc85dc492a2aee81f6bc11f3e3
   docs/models/shared/transport.md:
     last_write_checksum: sha1:ea41299bcbe262cf1b869cfedc9d91fd41fcea30
   docs/models/shared/usage.md:
@@ -1511,11 +1525,17 @@ trackedFiles:
   docs/models/shared/workspaceperson.md:
     last_write_checksum: sha1:51412433451eeabc10171b1f9c91036bc00c73e8
   docs/models/shared/workspacepersonreport.md:
-    last_write_checksum: sha1:98290b169b5e376e876a400336cb0f456ff05189
+    last_write_checksum: sha1:3d3c3d6f05915970913c120f3957f1170270118b
   docs/models/shared/workspacepersonrequest.md:
     last_write_checksum: sha1:27e1aa3523e28592f0fbe6767f9802f7c43717a0
   docs/models/shared/workspacepersonresult.md:
     last_write_checksum: sha1:667500d01fd22d34ccb301dc5aa05b5e6f054e14
+  docs/models/shared/writtenprofile.md:
+    last_write_checksum: sha1:706783ebc43bfc636d05b16dccb7ed152de45c30
+  docs/models/shared/writtenprofileerrorcode.md:
+    last_write_checksum: sha1:14126d7e6c712cb8d7a37fdf6d726cdb8881b2ae
+  docs/models/shared/writtenprofilestatus.md:
+    last_write_checksum: sha1:45868b082fd08d1fc6a90ba8b825211f333af236
   docs/models/utils/retryconfig.md:
     last_write_checksum: sha1:562c0f21e308ad10c27f85f75704c15592c6929d
   py.typed:
@@ -1523,7 +1543,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:25c1cac7d5027a26675b69ceac136343007329c3
   pyproject.toml:
-    last_write_checksum: sha1:9c13bbe3678bca3f81a0ac2f764ca70988ee405c
+    last_write_checksum: sha1:31cf7c11b29560f99914be81af5036847b212737
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -1539,7 +1559,7 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:32ed01b4cec4c6744627a42bca57f664bf969b48
+    last_write_checksum: sha1:db5cc6ea3ed6a6a6809f4c49a3699397f34d8ad5
   src/noresponse/accounts.py:
     last_write_checksum: sha1:c09abf6ab3b780a819d1a1ed0af35063bb2625e6
   src/noresponse/assessments.py:
@@ -1857,7 +1877,7 @@ trackedFiles:
   src/noresponse/models/operations/updatesettings.py:
     last_write_checksum: sha1:a1c4d3af6ff0780cafd90d92347319266b0a4a5b
   src/noresponse/models/shared/__init__.py:
-    last_write_checksum: sha1:20780c323142e0ff1b49e69547c7017ff83de14d
+    last_write_checksum: sha1:6c1410938cd15e576bcb8c710a0f23966db4283f
   src/noresponse/models/shared/access.py:
     last_write_checksum: sha1:f264705d0b86ae7628d29e4b8122e7d76b1d50b4
   src/noresponse/models/shared/account.py:
@@ -2026,6 +2046,8 @@ trackedFiles:
     last_write_checksum: sha1:651f3f28cfb4022d7fd9924c8a5443231cd868a3
   src/noresponse/models/shared/band.py:
     last_write_checksum: sha1:a08db88346465402194425c82522172064ee7155
+  src/noresponse/models/shared/basis.py:
+    last_write_checksum: sha1:4c0eb211217e872888d9cf7d728331f61435bbec
   src/noresponse/models/shared/breach.py:
     last_write_checksum: sha1:46f85e1ef8b61a0dbfc81b8b0b41503090d6bbf4
   src/noresponse/models/shared/breachconduct.py:
@@ -2040,6 +2062,8 @@ trackedFiles:
     last_write_checksum: sha1:940b3331495b982831df41c61b131722df332828
   src/noresponse/models/shared/bucket.py:
     last_write_checksum: sha1:054918745e4ad91d2eb319753050ca728c507661
+  src/noresponse/models/shared/certainty.py:
+    last_write_checksum: sha1:a5ad991331a0242532a5ad26597f13393e81a436
   src/noresponse/models/shared/conclusion.py:
     last_write_checksum: sha1:7c22fa6b5a0cdcbf6a1ba473fd8d2cda049cc1df
   src/noresponse/models/shared/confidence.py:
@@ -2454,8 +2478,16 @@ trackedFiles:
     last_write_checksum: sha1:f0246836474baef9b06248b45411f87deb06e627
   src/noresponse/models/shared/probleminvalidparam.py:
     last_write_checksum: sha1:022569aa7183c6e106da13b76184b06d413cb86d
+  src/noresponse/models/shared/profilecitation.py:
+    last_write_checksum: sha1:9c2e7d2be41114f39d1f7f99f550da5cf24aaee2
+  src/noresponse/models/shared/profilecitationkind.py:
+    last_write_checksum: sha1:00597fee1536ae241506e50d3ad8dac377859293
+  src/noresponse/models/shared/profilelead.py:
+    last_write_checksum: sha1:839393a3af7b5b18ed2c79c281275fcce3fd9951
   src/noresponse/models/shared/profilematchstate.py:
     last_write_checksum: sha1:885ae39a01df528159f5f72cb4dc2c62cac2e6bd
+  src/noresponse/models/shared/profilestatement.py:
+    last_write_checksum: sha1:cea7dbaf6799aece99045350bb941876ebd7c68d
   src/noresponse/models/shared/provenance.py:
     last_write_checksum: sha1:968dce852347b2a2f65e2449f841c806a109a12b
   src/noresponse/models/shared/publication.py:
@@ -2682,6 +2714,8 @@ trackedFiles:
     last_write_checksum: sha1:398b69c40b2cf2cdc591e60bbc2916887551c807
   src/noresponse/models/shared/thresholds.py:
     last_write_checksum: sha1:e5cc8f470005f56e1c5e74d2aff9840872c92377
+  src/noresponse/models/shared/topic.py:
+    last_write_checksum: sha1:def6d022a9fa03a41f5775446c7c21588c716ff2
   src/noresponse/models/shared/transport.py:
     last_write_checksum: sha1:34f89da47042749db18d2a1691909b16d0892b14
   src/noresponse/models/shared/usage.py:
@@ -2749,11 +2783,17 @@ trackedFiles:
   src/noresponse/models/shared/workspaceperson.py:
     last_write_checksum: sha1:34c763323e824c073b66e99d2a50af0ce535bf07
   src/noresponse/models/shared/workspacepersonreport.py:
-    last_write_checksum: sha1:4a4ef1642e67a954c80c26ba63f73db8cd2c38ae
+    last_write_checksum: sha1:01ed36f38fbdb1f32f71fb466921837dddabb540
   src/noresponse/models/shared/workspacepersonrequest.py:
     last_write_checksum: sha1:6aa9e6fcd60b7e188e51a1372f1e4a3f4a24862e
   src/noresponse/models/shared/workspacepersonresult.py:
     last_write_checksum: sha1:f381cd5790e880bde25575e86633235cd6576e89
+  src/noresponse/models/shared/writtenprofile.py:
+    last_write_checksum: sha1:4b06a189ec04360ff4aaf7b239798dc26623a117
+  src/noresponse/models/shared/writtenprofileerrorcode.py:
+    last_write_checksum: sha1:ec71c38fb8e8296555a7c227cd18eee51d170859
+  src/noresponse/models/shared/writtenprofilestatus.py:
+    last_write_checksum: sha1:50219fc9e84e2eff6eac2e8916f6f04f48633a62
   src/noresponse/operations.py:
     last_write_checksum: sha1:43161abc6a60a79656e6cdfa144425c67cfc6609
   src/noresponse/people.py:
@@ -5592,19 +5632,19 @@ examples:
           person_id: "per_01JA2Z8K6Q4V7W9XBCDEFGHJKM"
       responses:
         "200":
-          application/json: {"external_id": "case-person-1042", "name": "Jordan Example", "email": "jordan@example.com", "phone": "+14155550100", "company": "Example Ltd", "city": "Melbourne", "handles": [{"platform": "bluesky", "handle": "jordan_example"}], "id": "per_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z", "expires_at": "2026-02-01T00:00:00Z", "profiles": [], "findings": [], "posts": [], "media": [{"id": "itm_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "kind": "media", "post_id": "itm_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "media_type": "image", "media_url": "https://synthetic.invalid/media/jordanexample42/p1.jpg", "cover_of": "itm_01JA2Z8K6Q4V7W9XBCDEFGHJKN", "text": "A photo", "profile_id": "prf_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "permalink": "https://synthetic.invalid/synthetic/jordanexample42/p1", "posted_at": "2026-01-01T00:00:00Z", "screenshot_sha256": "9c56cc51b374c3ba189210d5b6d4bf57790d351c96c47c02190ecf1e430635ab", "captured_at": "2026-01-01T00:00:00Z"}], "lookup": {"checks": [{"identifier": "email", "lane": "domain", "status": "found", "sources": 683338, "answered": 68335, "found": 986588, "unanswered": [{"connector": "github", "reason": "source_error"}]}], "summary": {"phone": {"country": "AU", "carrier": "Telstra"}, "ip": {"country": "AU"}}, "details": {"phone_names": [{"value": "Alex Example", "seen_by": 628182}], "breaches": [{"name": "Example Forum", "domain": "forum.example.com", "category": "forum", "kind": "hacking_forum", "matched_on": "username"}], "breach_names": [{"value": "Alex Example", "seen_in": 861011, "sites": ["forum.example.com"]}], "events": [{"year": 430207, "kind": "created", "site": "example.com", "category": "site_breach", "family": "code_hosting", "identifier": "email"}], "accounts": [{"name": "Wix", "domain": "wix.com", "identifier": "username", "outcome": "found", "first_name_prefix": "Al"}], "attribute_conflicts": [{"attribute": "gender", "sites": ["forum.example.com"]}]}, "records": [{"id": "rec_3f9a1c22d4e5b6a73f9a1c22d4e5b6a7", "source": {"connector": "bluesky", "kind": "platform", "site": "bsky.app", "table": "users", "date": "2019-03"}, "matched": [{"by": "handle", "field": "username", "search": "srh_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}], "fields": [], "observed_at": "2026-01-02T00:00:00Z", "agreed": ["lastip"], "clashed": ["dob"]}], "remaining": [{"source": {"connector": "bluesky", "kind": "platform", "site": "bsky.app", "table": "users", "date": "2019-03"}, "by": "email", "search": "srh_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "rows": 616919}], "looked_at": "2026-01-01T00:00:00Z"}, "evidence_investigation": null}
+          application/json: {"external_id": "case-person-1042", "name": "Jordan Example", "email": "jordan@example.com", "phone": "+14155550100", "company": "Example Ltd", "city": "Melbourne", "handles": [{"platform": "bluesky", "handle": "jordan_example"}], "id": "per_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "created_at": "2026-01-01T00:00:00Z", "updated_at": "2026-01-01T00:00:00Z", "expires_at": "2026-02-01T00:00:00Z", "profiles": [], "findings": [], "posts": [], "media": [{"id": "itm_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "kind": "media", "post_id": "itm_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "media_type": "image", "media_url": "https://synthetic.invalid/media/jordanexample42/p1.jpg", "cover_of": "itm_01JA2Z8K6Q4V7W9XBCDEFGHJKN", "text": "A photo", "profile_id": "prf_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "permalink": "https://synthetic.invalid/synthetic/jordanexample42/p1", "posted_at": "2026-01-01T00:00:00Z", "screenshot_sha256": "9c56cc51b374c3ba189210d5b6d4bf57790d351c96c47c02190ecf1e430635ab", "captured_at": "2026-01-01T00:00:00Z"}], "lookup": {"checks": [{"identifier": "email", "lane": "domain", "status": "found", "sources": 683338, "answered": 68335, "found": 986588, "unanswered": [{"connector": "github", "reason": "source_error"}]}], "summary": {"phone": {"country": "AU", "carrier": "Telstra"}, "ip": {"country": "AU"}}, "details": {"phone_names": [{"value": "Alex Example", "seen_by": 628182}], "breaches": [{"name": "Example Forum", "domain": "forum.example.com", "category": "forum", "kind": "hacking_forum", "matched_on": "username"}], "breach_names": [{"value": "Alex Example", "seen_in": 861011, "sites": ["forum.example.com"]}], "events": [{"year": 430207, "kind": "created", "site": "example.com", "category": "site_breach", "family": "code_hosting", "identifier": "email"}], "accounts": [{"name": "Wix", "domain": "wix.com", "identifier": "username", "outcome": "found", "first_name_prefix": "Al"}], "attribute_conflicts": [{"attribute": "gender", "sites": ["forum.example.com"]}]}, "records": [{"id": "rec_3f9a1c22d4e5b6a73f9a1c22d4e5b6a7", "source": {"connector": "bluesky", "kind": "platform", "site": "bsky.app", "table": "users", "date": "2019-03"}, "matched": [{"by": "handle", "field": "username", "search": "srh_01JA2Z8K6Q4V7W9XBCDEFGHJKM"}], "fields": [], "observed_at": "2026-01-02T00:00:00Z", "agreed": ["lastip"], "clashed": ["dob"]}], "remaining": [{"source": {"connector": "bluesky", "kind": "platform", "site": "bsky.app", "table": "users", "date": "2019-03"}, "by": "email", "search": "srh_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "rows": 616919}], "looked_at": "2026-01-01T00:00:00Z"}, "evidence_investigation": null, "written_profile": {"status": "failed", "investigation_id": "inv_01JA2Z8K6Q4V7W9XBCDEFGHJKM", "queued_at": "2026-01-01T00:00:00Z", "finished_at": "2026-01-01T00:00:11Z", "summary": "Likely lives in Lisbon and uses one username across sites.", "statements": [{"topic": "location", "text": "Lived in Lisbon in 2019.", "certainty": "likely", "basis": "inferred", "alternatives": ["A holiday address."], "evidence": []}], "leads": []}}
         "400":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 400, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "invalid_cursor", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "401":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 401, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "unauthorized", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "403":
-          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 403, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "onboarding_refused", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
+          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 403, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "email_unverified", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "404":
           application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 404, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "not_found", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "409":
-          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 409, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "group_conflict", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
+          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 409, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "idempotency_key_reused", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
         "429":
-          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 429, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "rate_limited", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
+          application/problem+json: {"type": "https://docs.noresponse.org/errors/invalid_request", "title": "Invalid request", "status": 429, "detail": "identifiers: at least one of email, username or phone is required.", "instance": "/v1/assessments", "code": "export_limit_reached", "request_id": "9f2c4b7a1d3e4f5a8b6c0d1e2f3a4b5c", "invalid_params": [{"field": "identifiers", "reason": "at least one of email, username or phone is required", "example": "new.user@example.com"}]}
   deleteWorkspacePerson:
     noresponse-default-delete-workspace-person:
       parameters:
