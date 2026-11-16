@@ -16,7 +16,8 @@ class OtherGroupTypedDict(TypedDict):
 
     group_id: str
     group_name: str
-    group_starts_at: str
+    group_starts_at: Nullable[str]
+    r"""The other group's optional event start; null for an ongoing group."""
     person_id: str
     r"""The person on that group's list."""
     matched_on: List[OtherGroupMatchedOn]
@@ -42,7 +43,8 @@ class OtherGroup(BaseModel):
 
     group_name: str
 
-    group_starts_at: str
+    group_starts_at: Nullable[str]
+    r"""The other group's optional event start; null for an ongoing group."""
 
     person_id: str
     r"""The person on that group's list."""
@@ -71,7 +73,7 @@ class OtherGroup(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(["no_profile_to_check", "decided_by", "decided_at"])
-        nullable_fields = set(["highest_band", "decision"])
+        nullable_fields = set(["group_starts_at", "highest_band", "decision"])
         serialized = handler(self)
         m = {}
 

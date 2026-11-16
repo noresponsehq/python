@@ -375,9 +375,9 @@ class Groups(BaseSDK):
         self,
         *,
         name: str,
-        starts_at: str,
         idempotency_key: Optional[str] = None,
-        ends_at: Optional[str] = None,
+        starts_at: OptionalNullable[str] = UNSET,
+        ends_at: OptionalNullable[str] = UNSET,
         venue: Optional[str] = None,
         host: Optional[str] = None,
         principals: Optional[
@@ -396,9 +396,9 @@ class Groups(BaseSDK):
         Creates a group with its name, start, venue, host, the principals it protects and the sensitive topics its screening reads posts against. An environment holds at most 1000 groups. Send an Idempotency-Key to retry safely: the same key and request return the same resource in its current state while it is retained, even after work completes. Reusing the key with different input answers 409 idempotency_key_reused. Use a new key for a deliberate new operation. The people_write scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
         :param name: The group's name.
-        :param starts_at: When the group starts.
         :param idempotency_key: Opaque request key, 16 to 128 characters. Repeating the key and request returns the same resource in its current state while it is retained. A different request with the same key answers 409. Use a new key for a deliberate new operation. Keys are scoped to the environment and operation; person searches also scope them to the group and person.
-        :param ends_at: When the group ends, at or after its start; the start when omitted.
+        :param starts_at: Optional event start; null for an ongoing group.
+        :param ends_at: Optional event end; requires starts_at and must be at or after it. Null when no end is set.
         :param venue: Where the group is held.
         :param host: The organisation hosting the group.
         :param principals: The people the group protects, at most 20.
@@ -565,9 +565,9 @@ class Groups(BaseSDK):
         self,
         *,
         name: str,
-        starts_at: str,
         idempotency_key: Optional[str] = None,
-        ends_at: Optional[str] = None,
+        starts_at: OptionalNullable[str] = UNSET,
+        ends_at: OptionalNullable[str] = UNSET,
         venue: Optional[str] = None,
         host: Optional[str] = None,
         principals: Optional[
@@ -586,9 +586,9 @@ class Groups(BaseSDK):
         Creates a group with its name, start, venue, host, the principals it protects and the sensitive topics its screening reads posts against. An environment holds at most 1000 groups. Send an Idempotency-Key to retry safely: the same key and request return the same resource in its current state while it is retained, even after work completes. Reusing the key with different input answers 409 idempotency_key_reused. Use a new key for a deliberate new operation. The people_write scope grants this operation. Explicit evidence.read restrictions override default evidence access. The groups scope is also accepted for existing integrations. The API key selects the workspace and environment.
 
         :param name: The group's name.
-        :param starts_at: When the group starts.
         :param idempotency_key: Opaque request key, 16 to 128 characters. Repeating the key and request returns the same resource in its current state while it is retained. A different request with the same key answers 409. Use a new key for a deliberate new operation. Keys are scoped to the environment and operation; person searches also scope them to the group and person.
-        :param ends_at: When the group ends, at or after its start; the start when omitted.
+        :param starts_at: Optional event start; null for an ongoing group.
+        :param ends_at: Optional event end; requires starts_at and must be at or after it. Null when no end is set.
         :param venue: Where the group is held.
         :param host: The organisation hosting the group.
         :param principals: The people the group protects, at most 20.
@@ -1106,8 +1106,8 @@ class Groups(BaseSDK):
         group_id: str,
         *,
         name: Optional[str] = None,
-        starts_at: Optional[str] = None,
-        ends_at: Optional[str] = None,
+        starts_at: OptionalNullable[str] = UNSET,
+        ends_at: OptionalNullable[str] = UNSET,
         venue: Optional[str] = None,
         host: Optional[str] = None,
         principals: Optional[
@@ -1129,8 +1129,8 @@ class Groups(BaseSDK):
 
         :param group_id:
         :param name: The group's name.
-        :param starts_at: When the group starts.
-        :param ends_at: When the group ends, at or after its start; the start when omitted.
+        :param starts_at: Optional event start; null for an ongoing group. Omit to keep the current value; send null to clear it.
+        :param ends_at: Optional event end; requires starts_at and must be at or after it. Null when no end is set. Omit to keep the current value; send null to clear it.
         :param venue: Where the group is held.
         :param host: The organisation hosting the group.
         :param principals: The people the group protects, at most 20.
@@ -1314,8 +1314,8 @@ class Groups(BaseSDK):
         group_id: str,
         *,
         name: Optional[str] = None,
-        starts_at: Optional[str] = None,
-        ends_at: Optional[str] = None,
+        starts_at: OptionalNullable[str] = UNSET,
+        ends_at: OptionalNullable[str] = UNSET,
         venue: Optional[str] = None,
         host: Optional[str] = None,
         principals: Optional[
@@ -1337,8 +1337,8 @@ class Groups(BaseSDK):
 
         :param group_id:
         :param name: The group's name.
-        :param starts_at: When the group starts.
-        :param ends_at: When the group ends, at or after its start; the start when omitted.
+        :param starts_at: Optional event start; null for an ongoing group. Omit to keep the current value; send null to clear it.
+        :param ends_at: Optional event end; requires starts_at and must be at or after it. Null when no end is set. Omit to keep the current value; send null to clear it.
         :param venue: Where the group is held.
         :param host: The organisation hosting the group.
         :param principals: The people the group protects, at most 20.

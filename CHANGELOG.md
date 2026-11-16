@@ -1,5 +1,17 @@
 # Changelog
 
+## 15.0.0
+
+* `sdk.groups.list()`:  `response.items[]` **Changed** (Breaking ⚠️)
+* `sdk.groups.create()`: 
+  *  `request` **Changed**
+  *  `response` **Changed** (Breaking ⚠️)
+* `sdk.groups.get()`:  `response` **Changed** (Breaking ⚠️)
+* `sdk.groups.update()`: 
+  *  `request` **Changed**
+  *  `response` **Changed** (Breaking ⚠️)
+* `sdk.groups.get_person()`:  `response.other_groups.items[].group_starts_at` **Changed** (Breaking ⚠️)
+
 ## 14.0.1
 
 No changes detected.

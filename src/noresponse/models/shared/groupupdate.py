@@ -1,20 +1,26 @@
 from __future__ import annotations
 from .principal import Principal, PrincipalTypedDict
-from noresponse.types import BaseModel, UNSET_SENTINEL
+from noresponse.types import (
+    BaseModel,
+    Nullable,
+    OptionalNullable,
+    UNSET,
+    UNSET_SENTINEL,
+)
 from pydantic import model_serializer
 from typing import List, Optional
 from typing_extensions import NotRequired, TypedDict
 
 
 class GroupUpdateTypedDict(TypedDict):
-    r"""Changes the fields it names; at least one besides expected_version."""
+    r"""Updates a group. Dates describe an optional event and do not control person retention."""
 
     name: NotRequired[str]
     r"""The group's name."""
-    starts_at: NotRequired[str]
-    r"""When the group starts."""
-    ends_at: NotRequired[str]
-    r"""When the group ends, at or after its start; the start when omitted."""
+    starts_at: NotRequired[Nullable[str]]
+    r"""Optional event start; null for an ongoing group. Omit to keep the current value; send null to clear it."""
+    ends_at: NotRequired[Nullable[str]]
+    r"""Optional event end; requires starts_at and must be at or after it. Null when no end is set. Omit to keep the current value; send null to clear it."""
     venue: NotRequired[str]
     r"""Where the group is held."""
     host: NotRequired[str]
@@ -28,16 +34,16 @@ class GroupUpdateTypedDict(TypedDict):
 
 
 class GroupUpdate(BaseModel):
-    r"""Changes the fields it names; at least one besides expected_version."""
+    r"""Updates a group. Dates describe an optional event and do not control person retention."""
 
     name: Optional[str] = None
     r"""The group's name."""
 
-    starts_at: Optional[str] = None
-    r"""When the group starts."""
+    starts_at: OptionalNullable[str] = UNSET
+    r"""Optional event start; null for an ongoing group. Omit to keep the current value; send null to clear it."""
 
-    ends_at: Optional[str] = None
-    r"""When the group ends, at or after its start; the start when omitted."""
+    ends_at: OptionalNullable[str] = UNSET
+    r"""Optional event end; requires starts_at and must be at or after it. Null when no end is set. Omit to keep the current value; send null to clear it."""
 
     venue: Optional[str] = None
     r"""Where the group is held."""
@@ -68,15 +74,24 @@ class GroupUpdate(BaseModel):
                 "expected_version",
             ]
         )
+        nullable_fields = set(["starts_at", "ends_at"])
         serialized = handler(self)
         m = {}
 
         for n, f in type(self).model_fields.items():
             k = f.alias or n
             val = serialized.get(k, serialized.get(n))
+            is_nullable_and_explicitly_set = (
+                k in nullable_fields
+                and (self.__pydantic_fields_set__.intersection({n}))  # pylint: disable=no-member
+            )
 
             if val != UNSET_SENTINEL:
-                if val is not None or k not in optional_fields:
+                if (
+                    val is not None
+                    or k not in optional_fields
+                    or is_nullable_and_explicitly_set
+                ):
                     m[k] = val
 
         return m

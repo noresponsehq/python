@@ -452,3 +452,14 @@ for the expression shape, scope differences, permissions and pagination.
 Keep API keys and personal data out of issues.
 
 [Apache-2.0](LICENSE).
+
+### Ongoing groups and event dates
+
+```python
+building = nr.groups.create(name="Harbour building").result
+meeting = nr.groups.create(name="Annual meeting", starts_at="2026-12-03T09:00:00Z", ends_at="2026-12-03T17:00:00Z").result
+nr.groups.update(meeting.id, starts_at=None, ends_at=None)
+```
+
+Dates are optional event context. Omitted PATCH fields stay unchanged; explicit `None` clears them.
+Both response date keys can be null. Person retention follows the workspace TTL independently.
