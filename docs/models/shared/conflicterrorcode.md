@@ -38,6 +38,7 @@ This is an open enum. Unrecognized values will not fail type checks.
 - `"evaluation_conflict"`
 - `"evaluation_no_proposal"`
 - `"evaluation_limit_reached"`
+- `"evaluation_unavailable"`
 - `"already_member"`
 - `"member_limit_reached"`
 - `"owner_invite_pending"`
