@@ -9,7 +9,7 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class SearchTypedDict(TypedDict):
-    r"""One search a person started on a value of one of a person's records. Nothing searches again by itself."""
+    r"""One search on a value of one of a person's records, started by a person or by enrichment."""
 
     search_id: str
     record_id: str
@@ -33,7 +33,7 @@ class SearchTypedDict(TypedDict):
     spent: int
     r"""What the search spent, in US cents, metered as screening work."""
     requested_by: str
-    r"""Who started the search."""
+    r"""Who started the search: the member or key, or enrichment when the engine started it on a value an earlier result showed."""
     created_at: str
     table: NotRequired[str]
     r"""The one breach table searched, when the search was of one table."""
@@ -41,11 +41,15 @@ class SearchTypedDict(TypedDict):
     r"""How many breach rows hold the password or hash, counted before the search runs."""
     error_code: NotRequired[ErrorCode]
     r"""Why a failed search found nothing: its sources did not answer, none could be asked, or it could not run before its attempts were spent."""
+    parent_search_id: NotRequired[str]
+    r"""The search that found the record this value came from. Absent when the record came from the person's investigation."""
+    depth: NotRequired[int]
+    r"""How many searches lie between the person's investigation and this one, this one included: 1 for a value of a record the investigation found, 2 for a value of a record a depth-1 search found, and so on."""
     finished_at: NotRequired[str]
 
 
 class Search(BaseModel):
-    r"""One search a person started on a value of one of a person's records. Nothing searches again by itself."""
+    r"""One search on a value of one of a person's records, started by a person or by enrichment."""
 
     search_id: str
 
@@ -80,7 +84,7 @@ class Search(BaseModel):
     r"""What the search spent, in US cents, metered as screening work."""
 
     requested_by: str
-    r"""Who started the search."""
+    r"""Who started the search: the member or key, or enrichment when the engine started it on a value an earlier result showed."""
 
     created_at: str
 
@@ -93,11 +97,19 @@ class Search(BaseModel):
     error_code: Optional[ErrorCode] = None
     r"""Why a failed search found nothing: its sources did not answer, none could be asked, or it could not run before its attempts were spent."""
 
+    parent_search_id: Optional[str] = None
+    r"""The search that found the record this value came from. Absent when the record came from the person's investigation."""
+
+    depth: Optional[int] = None
+    r"""How many searches lie between the person's investigation and this one, this one included: 1 for a value of a record the investigation found, 2 for a value of a record a depth-1 search found, and so on."""
+
     finished_at: Optional[str] = None
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["table", "rows", "error_code", "finished_at"])
+        optional_fields = set(
+            ["table", "rows", "error_code", "parent_search_id", "depth", "finished_at"]
+        )
         serialized = handler(self)
         m = {}
 
