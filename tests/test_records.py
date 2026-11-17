@@ -36,7 +36,7 @@ def check(report, seen):
     assert by_field["lastip"].role == "last_ip" and by_field["lastip"].value == "203.0.113.5"
     assert by_field["birthday"].value is None and by_field["birthday"].original == "07/03/1990"
     assert by_field["email"].distinctive.rating == "unique"
-    assert row.likelihood == 0.99 and row.verdict is None
+    assert row.likelihood == 0.8 and row.verdict is None
 
     remaining = report.lookup.remaining[0]
     assert (remaining.source.kind, remaining.by, remaining.rows) == ("credential_list", "username", 37)

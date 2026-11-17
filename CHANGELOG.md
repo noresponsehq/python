@@ -1,5 +1,9 @@
 # Changelog
 
+## 15.0.8
+
+No changes detected.
+
 ## 15.0.7
 
 * `sdk.groups.get_person()`:  `response.profiles[].record.fields[].distinctive` **Changed**
