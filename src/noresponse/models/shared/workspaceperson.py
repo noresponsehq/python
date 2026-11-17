@@ -23,6 +23,8 @@ class WorkspacePersonTypedDict(TypedDict):
     r"""Where the person works."""
     city: NotRequired[str]
     r"""Where the person lives."""
+    username: NotRequired[str]
+    r"""A username the person uses, with no platform. A search looks it up on every platform that finds accounts by username."""
     handles: NotRequired[List[HandleTypedDict]]
     r"""Accounts the person is known to hold, at most 20."""
 
@@ -54,13 +56,25 @@ class WorkspacePerson(BaseModel):
     city: Optional[str] = None
     r"""Where the person lives."""
 
+    username: Optional[str] = None
+    r"""A username the person uses, with no platform. A search looks it up on every platform that finds accounts by username."""
+
     handles: Optional[List[Handle]] = None
     r"""Accounts the person is known to hold, at most 20."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["external_id", "name", "email", "phone", "company", "city", "handles"]
+            [
+                "external_id",
+                "name",
+                "email",
+                "phone",
+                "company",
+                "city",
+                "username",
+                "handles",
+            ]
         )
         serialized = handler(self)
         m = {}

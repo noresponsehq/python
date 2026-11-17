@@ -23,6 +23,8 @@ class People(BaseSDK):
         *,
         limit: Optional[int] = 100,
         after: Optional[str] = None,
+        email: Optional[str] = None,
+        phone: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -30,10 +32,12 @@ class People(BaseSDK):
     ) -> models.operations.ListWorkspacePeopleResponse:
         r"""List workspace people.
 
-        Lists retained people in the key workspace and environment, including people in no group. Each returned person records a person.viewed audit event. Expired people are excluded before background deletion.
+        Lists retained people in the key workspace and environment, including people in no group. Each returned person records a person.viewed audit event. Expired people are excluded before background deletion. email and phone narrow the list to people holding that exact address or number, so a client can open the person it already has instead of adding a duplicate.
 
         :param limit:
         :param after: Pass next_cursor from the prior page.
+        :param email: Return only people whose email is this address, compared without case or surrounding spaces.
+        :param phone: Return only people whose phone is this number, compared without surrounding spaces.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -52,6 +56,8 @@ class People(BaseSDK):
         request = models.operations.ListWorkspacePeopleRequest(
             limit=limit,
             after=after,
+            email=email,
+            phone=phone,
         )
 
         _noresponse_response_mode, http_headers = (
@@ -200,6 +206,8 @@ class People(BaseSDK):
         *,
         limit: Optional[int] = 100,
         after: Optional[str] = None,
+        email: Optional[str] = None,
+        phone: Optional[str] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -207,10 +215,12 @@ class People(BaseSDK):
     ) -> models.operations.ListWorkspacePeopleResponse:
         r"""List workspace people.
 
-        Lists retained people in the key workspace and environment, including people in no group. Each returned person records a person.viewed audit event. Expired people are excluded before background deletion.
+        Lists retained people in the key workspace and environment, including people in no group. Each returned person records a person.viewed audit event. Expired people are excluded before background deletion. email and phone narrow the list to people holding that exact address or number, so a client can open the person it already has instead of adding a duplicate.
 
         :param limit:
         :param after: Pass next_cursor from the prior page.
+        :param email: Return only people whose email is this address, compared without case or surrounding spaces.
+        :param phone: Return only people whose phone is this number, compared without surrounding spaces.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -229,6 +239,8 @@ class People(BaseSDK):
         request = models.operations.ListWorkspacePeopleRequest(
             limit=limit,
             after=after,
+            email=email,
+            phone=phone,
         )
 
         _noresponse_response_mode, http_headers = (
@@ -385,6 +397,7 @@ class People(BaseSDK):
         phone: Optional[str] = None,
         company: Optional[str] = None,
         city: Optional[str] = None,
+        username: Optional[str] = None,
         handles: Optional[
             Union[
                 Iterable[models.shared.Handle], Iterable[models.shared.HandleTypedDict]
@@ -406,6 +419,7 @@ class People(BaseSDK):
         :param phone: The person's phone in E.164 form.
         :param company: Where the person works.
         :param city: Where the person lives.
+        :param username: A username the person uses, with no platform. A search looks it up on every platform that finds accounts by username.
         :param handles:
         :param person_id:
         :param server_url: Override the default server URL for this method
@@ -431,6 +445,7 @@ class People(BaseSDK):
                 phone=phone,
                 company=company,
                 city=city,
+                username=username,
                 handles=utils.get_pydantic_model(
                     handles, Optional[List[models.shared.Handle]]
                 ),
@@ -579,6 +594,7 @@ class People(BaseSDK):
         phone: Optional[str] = None,
         company: Optional[str] = None,
         city: Optional[str] = None,
+        username: Optional[str] = None,
         handles: Optional[
             Union[
                 Iterable[models.shared.Handle], Iterable[models.shared.HandleTypedDict]
@@ -600,6 +616,7 @@ class People(BaseSDK):
         :param phone: The person's phone in E.164 form.
         :param company: Where the person works.
         :param city: Where the person lives.
+        :param username: A username the person uses, with no platform. A search looks it up on every platform that finds accounts by username.
         :param handles:
         :param person_id:
         :param server_url: Override the default server URL for this method
@@ -625,6 +642,7 @@ class People(BaseSDK):
                 phone=phone,
                 company=company,
                 city=city,
+                username=username,
                 handles=utils.get_pydantic_model(
                     handles, Optional[List[models.shared.Handle]]
                 ),

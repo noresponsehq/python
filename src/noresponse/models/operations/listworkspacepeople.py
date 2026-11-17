@@ -11,6 +11,10 @@ class ListWorkspacePeopleRequestTypedDict(TypedDict):
     limit: NotRequired[int]
     after: NotRequired[str]
     r"""Pass next_cursor from the prior page."""
+    email: NotRequired[str]
+    r"""Return only people whose email is this address, compared without case or surrounding spaces."""
+    phone: NotRequired[str]
+    r"""Return only people whose phone is this number, compared without surrounding spaces."""
 
 
 class ListWorkspacePeopleRequest(BaseModel):
@@ -25,9 +29,21 @@ class ListWorkspacePeopleRequest(BaseModel):
     ] = None
     r"""Pass next_cursor from the prior page."""
 
+    email: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Return only people whose email is this address, compared without case or surrounding spaces."""
+
+    phone: Annotated[
+        Optional[str],
+        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
+    ] = None
+    r"""Return only people whose phone is this number, compared without surrounding spaces."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["limit", "after"])
+        optional_fields = set(["limit", "after", "email", "phone"])
         serialized = handler(self)
         m = {}
 

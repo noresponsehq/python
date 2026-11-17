@@ -19,6 +19,8 @@ class WorkspacePersonRequestTypedDict(TypedDict):
     r"""Where the person works."""
     city: NotRequired[str]
     r"""Where the person lives."""
+    username: NotRequired[str]
+    r"""A username the person uses, with no platform. A search looks it up on every platform that finds accounts by username."""
     handles: NotRequired[List[HandleTypedDict]]
     person_id: NotRequired[str]
 
@@ -42,6 +44,9 @@ class WorkspacePersonRequest(BaseModel):
     city: Optional[str] = None
     r"""Where the person lives."""
 
+    username: Optional[str] = None
+    r"""A username the person uses, with no platform. A search looks it up on every platform that finds accounts by username."""
+
     handles: Optional[List[Handle]] = None
 
     person_id: Optional[str] = None
@@ -56,6 +61,7 @@ class WorkspacePersonRequest(BaseModel):
                 "phone",
                 "company",
                 "city",
+                "username",
                 "handles",
                 "person_id",
             ]
