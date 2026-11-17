@@ -23,7 +23,7 @@ class EnrichmentChangeTypedDict(TypedDict):
     r"""A change to enrichment. A field left out keeps the value in force; max_spend or deadline null removes the bound."""
 
     mode: NotRequired[EnrichmentMode]
-    r"""off: enrichment starts no search. suggest: enrichment starts no search by itself. automatic: after a workspace person's own investigation, and each time a search on that person finishes, enrichment starts searches by itself."""
+    r"""off: enrichment starts no search and suggests none. suggest: enrichment starts no search by itself, and the person report lists the searches it would start in suggested_searches. automatic: after a workspace person's own investigation or a group's screening, and each time a search on that person finishes, enrichment starts searches by itself. A group takes suggest while the workspace has not set a mode."""
     min_likelihood: NotRequired[float]
     r"""Enrichment searches values only from records more likely than this to be the person's, 0 to 0.99."""
     kinds: NotRequired[List[EnrichmentChangeKind]]
@@ -38,7 +38,7 @@ class EnrichmentChange(BaseModel):
     r"""A change to enrichment. A field left out keeps the value in force; max_spend or deadline null removes the bound."""
 
     mode: Optional[EnrichmentMode] = None
-    r"""off: enrichment starts no search. suggest: enrichment starts no search by itself. automatic: after a workspace person's own investigation, and each time a search on that person finishes, enrichment starts searches by itself."""
+    r"""off: enrichment starts no search and suggests none. suggest: enrichment starts no search by itself, and the person report lists the searches it would start in suggested_searches. automatic: after a workspace person's own investigation or a group's screening, and each time a search on that person finishes, enrichment starts searches by itself. A group takes suggest while the workspace has not set a mode."""
 
     min_likelihood: Optional[float] = None
     r"""Enrichment searches values only from records more likely than this to be the person's, 0 to 0.99."""

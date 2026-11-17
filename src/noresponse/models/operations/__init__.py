@@ -684,6 +684,12 @@ if TYPE_CHECKING:
         RunSearchResponse,
         RunSearchResponseTypedDict,
     )
+    from .runworkspacepersonsearch import (
+        RunWorkspacePersonSearchRequest,
+        RunWorkspacePersonSearchRequestTypedDict,
+        RunWorkspacePersonSearchResponse,
+        RunWorkspacePersonSearchResponseTypedDict,
+    )
     from .searchaccounts import SearchAccountsResponse, SearchAccountsResponseTypedDict
     from .searchassessments import (
         SearchAssessmentsResponse,
@@ -706,6 +712,12 @@ if TYPE_CHECKING:
         StartSearchRequestTypedDict,
         StartSearchResponse,
         StartSearchResponseTypedDict,
+    )
+    from .startworkspacepersonsearch import (
+        StartWorkspacePersonSearchRequest,
+        StartWorkspacePersonSearchRequestTypedDict,
+        StartWorkspacePersonSearchResponse,
+        StartWorkspacePersonSearchResponseTypedDict,
     )
     from .summarizeworkspaceoperations import (
         SummarizeWorkspaceOperationsRequest,
@@ -1209,6 +1221,10 @@ __all__ = [
     "RunSearchRequestTypedDict",
     "RunSearchResponse",
     "RunSearchResponseTypedDict",
+    "RunWorkspacePersonSearchRequest",
+    "RunWorkspacePersonSearchRequestTypedDict",
+    "RunWorkspacePersonSearchResponse",
+    "RunWorkspacePersonSearchResponseTypedDict",
     "SearchAccountsResponse",
     "SearchAccountsResponseTypedDict",
     "SearchAssessmentsResponse",
@@ -1225,6 +1241,10 @@ __all__ = [
     "StartSearchRequestTypedDict",
     "StartSearchResponse",
     "StartSearchResponseTypedDict",
+    "StartWorkspacePersonSearchRequest",
+    "StartWorkspacePersonSearchRequestTypedDict",
+    "StartWorkspacePersonSearchResponse",
+    "StartWorkspacePersonSearchResponseTypedDict",
     "SummarizeWorkspaceOperationsRequest",
     "SummarizeWorkspaceOperationsRequestTypedDict",
     "SummarizeWorkspaceOperationsResponse",
@@ -1710,6 +1730,10 @@ _dynamic_imports: dict[str, str] = {
     "RunSearchRequestTypedDict": ".runsearch",
     "RunSearchResponse": ".runsearch",
     "RunSearchResponseTypedDict": ".runsearch",
+    "RunWorkspacePersonSearchRequest": ".runworkspacepersonsearch",
+    "RunWorkspacePersonSearchRequestTypedDict": ".runworkspacepersonsearch",
+    "RunWorkspacePersonSearchResponse": ".runworkspacepersonsearch",
+    "RunWorkspacePersonSearchResponseTypedDict": ".runworkspacepersonsearch",
     "SearchAccountsResponse": ".searchaccounts",
     "SearchAccountsResponseTypedDict": ".searchaccounts",
     "SearchAssessmentsResponse": ".searchassessments",
@@ -1726,6 +1750,10 @@ _dynamic_imports: dict[str, str] = {
     "StartSearchRequestTypedDict": ".startsearch",
     "StartSearchResponse": ".startsearch",
     "StartSearchResponseTypedDict": ".startsearch",
+    "StartWorkspacePersonSearchRequest": ".startworkspacepersonsearch",
+    "StartWorkspacePersonSearchRequestTypedDict": ".startworkspacepersonsearch",
+    "StartWorkspacePersonSearchResponse": ".startworkspacepersonsearch",
+    "StartWorkspacePersonSearchResponseTypedDict": ".startworkspacepersonsearch",
     "SummarizeWorkspaceOperationsRequest": ".summarizeworkspaceoperations",
     "SummarizeWorkspaceOperationsRequestTypedDict": ".summarizeworkspaceoperations",
     "SummarizeWorkspaceOperationsResponse": ".summarizeworkspaceoperations",

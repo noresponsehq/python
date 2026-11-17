@@ -1,5 +1,12 @@
 # Changelog
 
+## 15.0.9
+
+* `sdk.people.start_search()`: **Added**
+* `sdk.people.run_search()`: **Added**
+* `sdk.groups.get_person()`:  `response.suggested_searches` **Added**
+* `sdk.people.get()`:  `response.suggested_searches` **Added**
+
 ## 15.0.8
 
 No changes detected.

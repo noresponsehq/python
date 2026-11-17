@@ -756,6 +756,8 @@ if TYPE_CHECKING:
     from .signingsecret import SigningSecret, SigningSecretTypedDict
     from .source import Source
     from .status import Status
+    from .suggestedsearch import SuggestedSearch, SuggestedSearchTypedDict
+    from .suggestedsearchkind import SuggestedSearchKind
     from .thresholds import Thresholds, ThresholdsTypedDict
     from .topic import Topic
     from .transport import Transport
@@ -1596,6 +1598,9 @@ __all__ = [
     "SocialProfileUnionTypedDict",
     "Source",
     "Status",
+    "SuggestedSearch",
+    "SuggestedSearchKind",
+    "SuggestedSearchTypedDict",
     "Thresholds",
     "ThresholdsTypedDict",
     "Timezone",
@@ -2443,6 +2448,9 @@ _dynamic_imports: dict[str, str] = {
     "SigningSecretTypedDict": ".signingsecret",
     "Source": ".source",
     "Status": ".status",
+    "SuggestedSearch": ".suggestedsearch",
+    "SuggestedSearchTypedDict": ".suggestedsearch",
+    "SuggestedSearchKind": ".suggestedsearchkind",
     "Thresholds": ".thresholds",
     "ThresholdsTypedDict": ".thresholds",
     "Topic": ".topic",

@@ -8,6 +8,7 @@ from .screeningmedia import ScreeningMedia, ScreeningMediaTypedDict
 from .screeningpost import ScreeningPost, ScreeningPostTypedDict
 from .screeningprofile import ScreeningProfile, ScreeningProfileTypedDict
 from .search import Search, SearchTypedDict
+from .suggestedsearch import SuggestedSearch, SuggestedSearchTypedDict
 from noresponse.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
 from typing import List, Optional
@@ -29,6 +30,8 @@ class PersonReportTypedDict(TypedDict):
     r"""All images and videos retained for this result, including media that no finding cites."""
     reviews: List[PersonReviewTypedDict]
     r"""Every recorded decision, oldest first."""
+    suggested_searches: List[SuggestedSearchTypedDict]
+    r"""The searches enrichment would start on this person in this group, likeliest record first. Group screening follows the environment's enrichment setting, with suggest as its mode while the workspace has not set one. In off mode the list is empty. In suggest mode enrichment starts none of them by itself; in automatic mode it starts them as its limits allow. Empty when evidence.read is denied."""
     other_groups: OtherGroupsTypedDict
     r"""Where else in the environment the person appears, read live from those groups: deleting one removes it here."""
     lookup: NotRequired[ScreeningLookupTypedDict]
@@ -59,6 +62,9 @@ class PersonReport(BaseModel):
 
     reviews: List[PersonReview]
     r"""Every recorded decision, oldest first."""
+
+    suggested_searches: List[SuggestedSearch]
+    r"""The searches enrichment would start on this person in this group, likeliest record first. Group screening follows the environment's enrichment setting, with suggest as its mode while the workspace has not set one. In off mode the list is empty. In suggest mode enrichment starts none of them by itself; in automatic mode it starts them as its limits allow. Empty when evidence.read is denied."""
 
     other_groups: OtherGroups
     r"""Where else in the environment the person appears, read live from those groups: deleting one removes it here."""
