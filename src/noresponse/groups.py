@@ -5156,7 +5156,7 @@ class Groups(BaseSDK):
         *,
         idempotency_key: str,
         depth: models.shared.ScreeningDepth,
-        platforms: Iterable[str],
+        platforms: Optional[Iterable[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -5169,7 +5169,7 @@ class Groups(BaseSDK):
         :param group_id:
         :param idempotency_key: Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the workspace principal and bound to the canonical body for 24 hours.
         :param depth:
-        :param platforms:
+        :param platforms: The platforms to search. Leave it out for a full search: every platform a connector serves in the environment when the screening starts, which the screening then lists.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -5190,7 +5190,7 @@ class Groups(BaseSDK):
             idempotency_key=idempotency_key,
             body=models.shared.ScreeningRequest(
                 depth=depth,
-                platforms=utils.unmarshal(platforms, List[str]),
+                platforms=utils.unmarshal(platforms, Optional[List[str]]),
             ),
         )
 
@@ -5342,7 +5342,7 @@ class Groups(BaseSDK):
         *,
         idempotency_key: str,
         depth: models.shared.ScreeningDepth,
-        platforms: Iterable[str],
+        platforms: Optional[Iterable[str]] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -5355,7 +5355,7 @@ class Groups(BaseSDK):
         :param group_id:
         :param idempotency_key: Opaque client key, 16 to 128 characters of [A-Za-z0-9._:-] (a UUID or ULID fits). Scoped to the workspace principal and bound to the canonical body for 24 hours.
         :param depth:
-        :param platforms:
+        :param platforms: The platforms to search. Leave it out for a full search: every platform a connector serves in the environment when the screening starts, which the screening then lists.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -5376,7 +5376,7 @@ class Groups(BaseSDK):
             idempotency_key=idempotency_key,
             body=models.shared.ScreeningRequest(
                 depth=depth,
-                platforms=utils.unmarshal(platforms, List[str]),
+                platforms=utils.unmarshal(platforms, Optional[List[str]]),
             ),
         )
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## 15.0.12
+
+* `sdk.groups.start_screening()`:  `request.platforms` **Changed**
+* `sdk.investigations.create()`:  `request.platforms` **Changed**
+
 ## 15.0.11
 
 No changes detected.

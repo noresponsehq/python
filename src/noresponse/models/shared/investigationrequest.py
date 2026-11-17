@@ -11,8 +11,9 @@ class InvestigationRequestTypedDict(TypedDict):
     r"""Runs a new investigation against one retained workspace person."""
 
     depth: ScreeningDepth
-    platforms: List[str]
     person_id: str
+    platforms: NotRequired[List[str]]
+    r"""The platforms to search. Leave it out for a full search: every platform a connector serves in the environment when the investigation starts, which the investigation then lists."""
     enrichment: NotRequired[EnrichmentChangeTypedDict]
     r"""A change to enrichment. A field left out keeps the value in force; max_spend or deadline null removes the bound."""
 
@@ -22,16 +23,17 @@ class InvestigationRequest(BaseModel):
 
     depth: ScreeningDepth
 
-    platforms: List[str]
-
     person_id: str
+
+    platforms: Optional[List[str]] = None
+    r"""The platforms to search. Leave it out for a full search: every platform a connector serves in the environment when the investigation starts, which the investigation then lists."""
 
     enrichment: Optional[EnrichmentChange] = None
     r"""A change to enrichment. A field left out keeps the value in force; max_spend or deadline null removes the bound."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["enrichment"])
+        optional_fields = set(["platforms", "enrichment"])
         serialized = handler(self)
         m = {}
 
