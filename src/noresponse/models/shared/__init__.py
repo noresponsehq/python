@@ -250,6 +250,13 @@ if TYPE_CHECKING:
     from .enforcements import Enforcements, EnforcementsTypedDict
     from .enforcementstate import EnforcementState
     from .enforcementstatus import EnforcementStatus
+    from .enrichment import Enrichment, EnrichmentKind, EnrichmentTypedDict
+    from .enrichmentchange import (
+        EnrichmentChange,
+        EnrichmentChangeKind,
+        EnrichmentChangeTypedDict,
+    )
+    from .enrichmentmode import EnrichmentMode
     from .environment import Environment
     from .erasurereceipt import ErasureReceipt, ErasureReceiptTypedDict
     from .erasurereceiptkind import ErasureReceiptKind
@@ -1069,6 +1076,13 @@ __all__ = [
     "EnforcementTypedDict",
     "Enforcements",
     "EnforcementsTypedDict",
+    "Enrichment",
+    "EnrichmentChange",
+    "EnrichmentChangeKind",
+    "EnrichmentChangeTypedDict",
+    "EnrichmentKind",
+    "EnrichmentMode",
+    "EnrichmentTypedDict",
     "Environment",
     "ErasureReceipt",
     "ErasureReceiptKind",
@@ -1894,6 +1908,13 @@ _dynamic_imports: dict[str, str] = {
     "EnforcementsTypedDict": ".enforcements",
     "EnforcementState": ".enforcementstate",
     "EnforcementStatus": ".enforcementstatus",
+    "Enrichment": ".enrichment",
+    "EnrichmentKind": ".enrichment",
+    "EnrichmentTypedDict": ".enrichment",
+    "EnrichmentChange": ".enrichmentchange",
+    "EnrichmentChangeKind": ".enrichmentchange",
+    "EnrichmentChangeTypedDict": ".enrichmentchange",
+    "EnrichmentMode": ".enrichmentmode",
     "Environment": ".environment",
     "ErasureReceipt": ".erasurereceipt",
     "ErasureReceiptTypedDict": ".erasurereceipt",

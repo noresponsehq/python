@@ -1,4 +1,5 @@
 from __future__ import annotations
+from .enrichmentchange import EnrichmentChange, EnrichmentChangeTypedDict
 from .settingsrequestflows import SettingsRequestFlows, SettingsRequestFlowsTypedDict
 from noresponse.types import (
     BaseModel,
@@ -20,6 +21,8 @@ class SettingsRequestTypedDict(TypedDict):
     r"""Replaces the refused sources; [] refuses none. A change applies to new assessments within a minute."""
     screening_daily_cap: NotRequired[Nullable[int]]
     r"""Replaces the daily screening cap, in minor units of USD; null removes the cap. Needs settings.write only, like retention_days."""
+    enrichment: NotRequired[EnrichmentChangeTypedDict]
+    r"""A change to enrichment. A field left out keeps the value in force; max_spend or deadline null removes the bound."""
     flows: NotRequired[SettingsRequestFlowsTypedDict]
     r"""Use account_creation or its deprecated alias signup, not both."""
     expected_policy_version: NotRequired[int]
@@ -38,6 +41,9 @@ class SettingsRequest(BaseModel):
     screening_daily_cap: OptionalNullable[int] = UNSET
     r"""Replaces the daily screening cap, in minor units of USD; null removes the cap. Needs settings.write only, like retention_days."""
 
+    enrichment: Optional[EnrichmentChange] = None
+    r"""A change to enrichment. A field left out keeps the value in force; max_spend or deadline null removes the bound."""
+
     flows: Optional[SettingsRequestFlows] = None
     r"""Use account_creation or its deprecated alias signup, not both."""
 
@@ -53,6 +59,7 @@ class SettingsRequest(BaseModel):
                 "retention_days",
                 "refused_sources",
                 "screening_daily_cap",
+                "enrichment",
                 "flows",
                 "expected_policy_version",
                 "change_reason",

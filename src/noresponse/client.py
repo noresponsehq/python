@@ -1759,6 +1759,7 @@ class Settings(_Settings):
         refused_sources: Optional[Iterable[str]] = None,
         screening_daily_cap: OptionalNullable[int] = UNSET,
         flows: Optional[Union[models.shared.SettingsRequestFlows, models.shared.SettingsRequestFlowsTypedDict]] = None,
+        enrichment: Optional[Union[models.shared.EnrichmentChange, models.shared.EnrichmentChangeTypedDict]] = None,
         expected_policy_version: Optional[int] = None,
         change_reason: Optional[str] = None,
         retries: OptionalNullable[RetryConfig] = UNSET,
@@ -1770,7 +1771,7 @@ class Settings(_Settings):
         response = _sync(super().update)(
             workspace_id, cast(Any, environment), retention_days=retention_days,
             refused_sources=cast(Any, None if refused_sources is None else list(refused_sources)),
-            screening_daily_cap=screening_daily_cap, flows=flows,
+            screening_daily_cap=screening_daily_cap, flows=flows, enrichment=enrichment,
             expected_policy_version=expected_policy_version,
             change_reason=change_reason,
             retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers,
@@ -1786,6 +1787,7 @@ class Settings(_Settings):
         refused_sources: Optional[Iterable[str]] = None,
         screening_daily_cap: OptionalNullable[int] = UNSET,
         flows: Optional[Union[models.shared.SettingsRequestFlows, models.shared.SettingsRequestFlowsTypedDict]] = None,
+        enrichment: Optional[Union[models.shared.EnrichmentChange, models.shared.EnrichmentChangeTypedDict]] = None,
         expected_policy_version: Optional[int] = None,
         change_reason: Optional[str] = None,
         retries: OptionalNullable[RetryConfig] = UNSET,
@@ -1797,7 +1799,7 @@ class Settings(_Settings):
         response = await _async(super().update_async)(
             workspace_id, cast(Any, environment), retention_days=retention_days,
             refused_sources=cast(Any, None if refused_sources is None else list(refused_sources)),
-            screening_daily_cap=screening_daily_cap, flows=flows,
+            screening_daily_cap=screening_daily_cap, flows=flows, enrichment=enrichment,
             expected_policy_version=expected_policy_version,
             change_reason=change_reason,
             retries=retries, server_url=server_url, timeout_ms=timeout_ms, http_headers=http_headers,

@@ -388,6 +388,11 @@ class Investigations(BaseSDK):
         depth: models.shared.ScreeningDepth,
         platforms: Iterable[str],
         person_id: str,
+        enrichment: Optional[
+            Union[
+                models.shared.EnrichmentChange, models.shared.EnrichmentChangeTypedDict
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -395,12 +400,13 @@ class Investigations(BaseSDK):
     ) -> models.operations.CreateInvestigationResponse:
         r"""Start an investigation for a person.
 
-        Starts an investigation against a retained workspace person, independently of group membership. Idempotency-Key is required: the same key and input return the same retained job in its current state without repeating billable work. Different input with that key answers 409 idempotency_key_reused; a deliberate new investigation uses a new key. The response includes Location and Retry-After. The person's retention expiry limits both execution and retained history. The API key selects the workspace and environment.
+        Starts an investigation against a retained workspace person, independently of group membership. enrichment overrides, field by field, how the environment's enrichment setting runs after this investigation; the person's latest investigation decides the enrichment that runs on them. Idempotency-Key is required: the same key and input return the same retained job in its current state without repeating billable work. Different input with that key answers 409 idempotency_key_reused; a deliberate new investigation uses a new key. The response includes Location and Retry-After. The person's retention expiry limits both execution and retained history. The API key selects the workspace and environment.
 
         :param idempotency_key: Opaque request key, 16 to 128 characters. Repeating the key and request returns the same resource in its current state while it is retained. A different request with the same key answers 409. Use a new key for a deliberate new operation. Keys are scoped to the environment and operation; person searches also scope them to the group and person.
         :param depth:
         :param platforms:
         :param person_id:
+        :param enrichment: A change to enrichment. A field left out keeps the value in force; max_spend or deadline null removes the bound.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -422,6 +428,9 @@ class Investigations(BaseSDK):
                 depth=depth,
                 platforms=utils.unmarshal(platforms, List[str]),
                 person_id=person_id,
+                enrichment=utils.get_pydantic_model(
+                    enrichment, Optional[models.shared.EnrichmentChange]
+                ),
             ),
         )
 
@@ -576,6 +585,11 @@ class Investigations(BaseSDK):
         depth: models.shared.ScreeningDepth,
         platforms: Iterable[str],
         person_id: str,
+        enrichment: Optional[
+            Union[
+                models.shared.EnrichmentChange, models.shared.EnrichmentChangeTypedDict
+            ]
+        ] = None,
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
@@ -583,12 +597,13 @@ class Investigations(BaseSDK):
     ) -> models.operations.CreateInvestigationResponse:
         r"""Start an investigation for a person.
 
-        Starts an investigation against a retained workspace person, independently of group membership. Idempotency-Key is required: the same key and input return the same retained job in its current state without repeating billable work. Different input with that key answers 409 idempotency_key_reused; a deliberate new investigation uses a new key. The response includes Location and Retry-After. The person's retention expiry limits both execution and retained history. The API key selects the workspace and environment.
+        Starts an investigation against a retained workspace person, independently of group membership. enrichment overrides, field by field, how the environment's enrichment setting runs after this investigation; the person's latest investigation decides the enrichment that runs on them. Idempotency-Key is required: the same key and input return the same retained job in its current state without repeating billable work. Different input with that key answers 409 idempotency_key_reused; a deliberate new investigation uses a new key. The response includes Location and Retry-After. The person's retention expiry limits both execution and retained history. The API key selects the workspace and environment.
 
         :param idempotency_key: Opaque request key, 16 to 128 characters. Repeating the key and request returns the same resource in its current state while it is retained. A different request with the same key answers 409. Use a new key for a deliberate new operation. Keys are scoped to the environment and operation; person searches also scope them to the group and person.
         :param depth:
         :param platforms:
         :param person_id:
+        :param enrichment: A change to enrichment. A field left out keeps the value in force; max_spend or deadline null removes the bound.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
@@ -610,6 +625,9 @@ class Investigations(BaseSDK):
                 depth=depth,
                 platforms=utils.unmarshal(platforms, List[str]),
                 person_id=person_id,
+                enrichment=utils.get_pydantic_model(
+                    enrichment, Optional[models.shared.EnrichmentChange]
+                ),
             ),
         )
 

@@ -379,6 +379,11 @@ class Settings(BaseSDK):
         retention_days: Optional[int] = None,
         refused_sources: Optional[Iterable[str]] = None,
         screening_daily_cap: OptionalNullable[int] = UNSET,
+        enrichment: Optional[
+            Union[
+                models.shared.EnrichmentChange, models.shared.EnrichmentChangeTypedDict
+            ]
+        ] = None,
         flows: Optional[
             Union[
                 models.shared.SettingsRequestFlows,
@@ -401,6 +406,7 @@ class Settings(BaseSDK):
         :param retention_days:
         :param refused_sources: Replaces the refused sources; [] refuses none. A change applies to new assessments within a minute.
         :param screening_daily_cap: Replaces the daily screening cap, in minor units of USD; null removes the cap. Needs settings.write only, like retention_days.
+        :param enrichment: A change to enrichment. A field left out keeps the value in force; max_spend or deadline null removes the bound.
         :param flows: Use account_creation or its deprecated alias signup, not both.
         :param expected_policy_version: Compare-and-set guard. A stale version returns 409 policy_version_conflict before any change; every settings write including retention advances the version.
         :param change_reason:
@@ -426,6 +432,9 @@ class Settings(BaseSDK):
                 retention_days=retention_days,
                 refused_sources=utils.unmarshal(refused_sources, Optional[List[str]]),
                 screening_daily_cap=screening_daily_cap,
+                enrichment=utils.get_pydantic_model(
+                    enrichment, Optional[models.shared.EnrichmentChange]
+                ),
                 flows=utils.get_pydantic_model(
                     flows, Optional[models.shared.SettingsRequestFlows]
                 ),
@@ -584,6 +593,11 @@ class Settings(BaseSDK):
         retention_days: Optional[int] = None,
         refused_sources: Optional[Iterable[str]] = None,
         screening_daily_cap: OptionalNullable[int] = UNSET,
+        enrichment: Optional[
+            Union[
+                models.shared.EnrichmentChange, models.shared.EnrichmentChangeTypedDict
+            ]
+        ] = None,
         flows: Optional[
             Union[
                 models.shared.SettingsRequestFlows,
@@ -606,6 +620,7 @@ class Settings(BaseSDK):
         :param retention_days:
         :param refused_sources: Replaces the refused sources; [] refuses none. A change applies to new assessments within a minute.
         :param screening_daily_cap: Replaces the daily screening cap, in minor units of USD; null removes the cap. Needs settings.write only, like retention_days.
+        :param enrichment: A change to enrichment. A field left out keeps the value in force; max_spend or deadline null removes the bound.
         :param flows: Use account_creation or its deprecated alias signup, not both.
         :param expected_policy_version: Compare-and-set guard. A stale version returns 409 policy_version_conflict before any change; every settings write including retention advances the version.
         :param change_reason:
@@ -631,6 +646,9 @@ class Settings(BaseSDK):
                 retention_days=retention_days,
                 refused_sources=utils.unmarshal(refused_sources, Optional[List[str]]),
                 screening_daily_cap=screening_daily_cap,
+                enrichment=utils.get_pydantic_model(
+                    enrichment, Optional[models.shared.EnrichmentChange]
+                ),
                 flows=utils.get_pydantic_model(
                     flows, Optional[models.shared.SettingsRequestFlows]
                 ),
