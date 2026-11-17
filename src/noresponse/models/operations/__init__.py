@@ -347,6 +347,12 @@ if TYPE_CHECKING:
         JudgeRecordResponse,
         JudgeRecordResponseTypedDict,
     )
+    from .judgeworkspacepersonrecord import (
+        JudgeWorkspacePersonRecordRequest,
+        JudgeWorkspacePersonRecordRequestTypedDict,
+        JudgeWorkspacePersonRecordResponse,
+        JudgeWorkspacePersonRecordResponseTypedDict,
+    )
     from .listaccountassessments import (
         ListAccountAssessmentsRequest,
         ListAccountAssessmentsRequestTypedDict,
@@ -979,6 +985,10 @@ __all__ = [
     "JudgeRecordRequestTypedDict",
     "JudgeRecordResponse",
     "JudgeRecordResponseTypedDict",
+    "JudgeWorkspacePersonRecordRequest",
+    "JudgeWorkspacePersonRecordRequestTypedDict",
+    "JudgeWorkspacePersonRecordResponse",
+    "JudgeWorkspacePersonRecordResponseTypedDict",
     "ListAccountAssessmentsRequest",
     "ListAccountAssessmentsRequestTypedDict",
     "ListAccountAssessmentsResponse",
@@ -1476,6 +1486,10 @@ _dynamic_imports: dict[str, str] = {
     "JudgeRecordRequestTypedDict": ".judgerecord",
     "JudgeRecordResponse": ".judgerecord",
     "JudgeRecordResponseTypedDict": ".judgerecord",
+    "JudgeWorkspacePersonRecordRequest": ".judgeworkspacepersonrecord",
+    "JudgeWorkspacePersonRecordRequestTypedDict": ".judgeworkspacepersonrecord",
+    "JudgeWorkspacePersonRecordResponse": ".judgeworkspacepersonrecord",
+    "JudgeWorkspacePersonRecordResponseTypedDict": ".judgeworkspacepersonrecord",
     "ListAccountAssessmentsRequest": ".listaccountassessments",
     "ListAccountAssessmentsRequestTypedDict": ".listaccountassessments",
     "ListAccountAssessmentsResponse": ".listaccountassessments",
