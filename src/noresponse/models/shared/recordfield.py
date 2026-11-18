@@ -25,6 +25,8 @@ class RecordFieldTypedDict(TypedDict):
     r"""What the value shows of itself beyond its kind: the likely algorithm of a hash, the likely coin of a crypto address or the currency of an amount."""
     distinctive: NotRequired[RecordDistinctiveTypedDict]
     r"""How distinctive a searchable value is: an email, phone, username, password, hash, person name or IP. Absent for other values, for a field with no value, and when its rating could not be worked out, such as when a count failed. Linkage weighs a password, hash or username by these numbers: the rarer the value, the more a shared one counts."""
+    noise: NotRequired[bool]
+    r"""True when the value tells an investigator nothing on its own: a setting flag, a zero count, a bare number or a value with no letter or digit, in a field with no role. A field with a role is not noise. Investigation views hide noise by default; the field is still returned in full."""
 
 
 class RecordField(BaseModel):
@@ -51,9 +53,14 @@ class RecordField(BaseModel):
     distinctive: Optional[RecordDistinctive] = None
     r"""How distinctive a searchable value is: an email, phone, username, password, hash, person name or IP. Absent for other values, for a field with no value, and when its rating could not be worked out, such as when a count failed. Linkage weighs a password, hash or username by these numbers: the rarer the value, the more a shared one counts."""
 
+    noise: Optional[bool] = None
+    r"""True when the value tells an investigator nothing on its own: a setting flag, a zero count, a bare number or a value with no letter or digit, in a field with no role. A field with a role is not noise. Investigation views hide noise by default; the field is still returned in full."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["kind", "role", "value", "detail", "distinctive"])
+        optional_fields = set(
+            ["kind", "role", "value", "detail", "distinctive", "noise"]
+        )
         serialized = handler(self)
         m = {}
 
