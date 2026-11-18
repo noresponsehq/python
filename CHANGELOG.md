@@ -1,5 +1,18 @@
 # Changelog
 
+## 15.0.18
+
+* `sdk.groups.list_people()`:  `response.items[].coverage.not_analysed_by_reason[].reason.enum(analysis_off)` **Added**
+* `sdk.groups.get_person()`:  `response.person.coverage.not_analysed_by_reason[].reason.enum(analysis_off)` **Added**
+* `sdk.groups.review_person()`:  `response.coverage.not_analysed_by_reason[].reason.enum(analysis_off)` **Added**
+* `sdk.groups.export_people()`:  `response.items[].coverage.not_analysed_by_reason[].reason.enum(analysis_off)` **Added**
+* `sdk.people.get()`:  `response.evidence_investigation.coverage.not_analysed_by_reason[].reason.enum(analysis_off)` **Added**
+* `sdk.investigations.list()`:  `response.items[].coverage.not_analysed_by_reason[].reason.enum(analysis_off)` **Added**
+* `sdk.investigations.create()`:  `response.coverage.not_analysed_by_reason[].reason.enum(analysis_off)` **Added**
+* `sdk.investigations.get()`:  `response.investigation.coverage.not_analysed_by_reason[].reason.enum(analysis_off)` **Added**
+* `sdk.investigations.review()`:  `response.coverage.not_analysed_by_reason[].reason.enum(analysis_off)` **Added**
+* `sdk.investigations.cancel()`:  `response.coverage.not_analysed_by_reason[].reason.enum(analysis_off)` **Added**
+
 ## 15.0.17
 
 No changes detected.
