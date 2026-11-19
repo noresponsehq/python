@@ -22,7 +22,7 @@ class ScreeningProfileTypedDict(TypedDict):
     match: ScreeningMatchTypedDict
     r"""How a profile was matched to the person: the state its evidence earns, and the evidence."""
     collector: str
-    r"""The resolver, collector or analyser that produced a record, by its catalogue name."""
+    r"""The resolver or collector that produced a record, by its catalogue name."""
     items_read: int
     collected_at: str
     display_name: NotRequired[str]
@@ -59,7 +59,7 @@ class ScreeningProfile(BaseModel):
     r"""How a profile was matched to the person: the state its evidence earns, and the evidence."""
 
     collector: str
-    r"""The resolver, collector or analyser that produced a record, by its catalogue name."""
+    r"""The resolver or collector that produced a record, by its catalogue name."""
 
     items_read: int
 

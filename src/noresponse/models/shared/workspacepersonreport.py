@@ -4,14 +4,12 @@ from .investigation import Investigation, InvestigationTypedDict
 from .personchange import PersonChange, PersonChangeTypedDict
 from .persongroup import PersonGroup, PersonGroupTypedDict
 from .personschedule import PersonSchedule, PersonScheduleTypedDict
-from .screeningfinding import ScreeningFinding, ScreeningFindingTypedDict
 from .screeninglookup import ScreeningLookup, ScreeningLookupTypedDict
 from .screeningmedia import ScreeningMedia, ScreeningMediaTypedDict
 from .screeningpost import ScreeningPost, ScreeningPostTypedDict
 from .screeningprofile import ScreeningProfile, ScreeningProfileTypedDict
 from .search import Search, SearchTypedDict
 from .suggestedsearch import SuggestedSearch, SuggestedSearchTypedDict
-from .writtenprofile import WrittenProfile, WrittenProfileTypedDict
 from noresponse.types import BaseModel, Nullable, UNSET_SENTINEL
 from pydantic import model_serializer
 from typing import List, Optional
@@ -30,18 +28,14 @@ class WorkspacePersonReportTypedDict(TypedDict):
     r"""Every group this person belongs to in this environment, most recently added first, with their role in each. A person can belong to any number of groups; removing them from a group or deleting the group removes it here."""
     profiles: List[ScreeningProfileTypedDict]
     r"""The accounts this result matched, with how each was matched."""
-    findings: List[ScreeningFindingTypedDict]
-    r"""What this result flagged, most severe first, each citing its evidence."""
     posts: List[ScreeningPostTypedDict]
-    r"""All posts retained for this result, including posts that no finding cites."""
+    r"""All posts retained for this result."""
     media: List[ScreeningMediaTypedDict]
-    r"""All images and videos retained for this result, including media that no finding cites."""
+    r"""All images and videos retained for this result."""
     suggested_searches: List[SuggestedSearchTypedDict]
     r"""The searches enrichment would start on this person, likeliest record first, under the environment's enrichment setting for a person's own investigation. In off mode the list is empty. In suggest mode enrichment starts none of them by itself; in automatic mode it starts them as its limits allow. Empty when evidence.read is denied."""
     evidence_investigation: Nullable[InvestigationTypedDict]
     r"""The most recent retained completed or partial investigation, or a migrated result whose original per-person status is unknown. The evidence below belongs to this investigation. Read investigation history for earlier results and pending jobs."""
-    written_profile: Nullable[WrittenProfileTypedDict]
-    r"""An investigator's profile of this person, written from the evidence of a settled investigation. Null until an investigation completes or partially completes, and null when evidence.read is denied."""
     changes: List[PersonChangeTypedDict]
     r"""What changed between each settled investigation of this person and the one before it, unreviewed first, then most significant, then newest. The first investigation records no changes. When evidence.read is denied, before and after are withheld."""
     schedule: PersonScheduleTypedDict
@@ -62,11 +56,11 @@ class WorkspacePersonReportTypedDict(TypedDict):
     handles: NotRequired[List[HandleTypedDict]]
     r"""Accounts the person is known to hold, at most 20."""
     lookup: NotRequired[ScreeningLookupTypedDict]
-    r"""What the signup check's lookups found for a person: account presence for the email, phone and usernames (the person's handles), the phone lookup, the email domain's registration and the breach search. Context and coverage for the reviewer, not a finding: nothing here sets a band or a match state."""
+    r"""What the signup check's lookups found for a person: account presence for the email, phone and usernames (the person's handles), the phone lookup, the email domain's registration and the breach search. Nothing here sets a match state."""
     searches: NotRequired[List[SearchTypedDict]]
     r"""Every search on this person's values, newest first, whether a person started it or enrichment did: each names the value, the record and field it came from, and the search that found that record. Absent when nothing was searched."""
     evidence_restricted: NotRequired[bool]
-    r"""True when evidence.read is explicitly denied. Submitted details, coverage, job status and decisions remain available. Collected records, profiles, findings, posts, media, discovered values and free-text decision notes are withheld."""
+    r"""True when evidence.read is explicitly denied. Submitted details, coverage, job status and decisions remain available. Collected records, profiles, posts, media, discovered values and free-text decision notes are withheld."""
 
 
 class WorkspacePersonReport(BaseModel):
@@ -87,23 +81,17 @@ class WorkspacePersonReport(BaseModel):
     profiles: List[ScreeningProfile]
     r"""The accounts this result matched, with how each was matched."""
 
-    findings: List[ScreeningFinding]
-    r"""What this result flagged, most severe first, each citing its evidence."""
-
     posts: List[ScreeningPost]
-    r"""All posts retained for this result, including posts that no finding cites."""
+    r"""All posts retained for this result."""
 
     media: List[ScreeningMedia]
-    r"""All images and videos retained for this result, including media that no finding cites."""
+    r"""All images and videos retained for this result."""
 
     suggested_searches: List[SuggestedSearch]
     r"""The searches enrichment would start on this person, likeliest record first, under the environment's enrichment setting for a person's own investigation. In off mode the list is empty. In suggest mode enrichment starts none of them by itself; in automatic mode it starts them as its limits allow. Empty when evidence.read is denied."""
 
     evidence_investigation: Nullable[Investigation]
     r"""The most recent retained completed or partial investigation, or a migrated result whose original per-person status is unknown. The evidence below belongs to this investigation. Read investigation history for earlier results and pending jobs."""
-
-    written_profile: Nullable[WrittenProfile]
-    r"""An investigator's profile of this person, written from the evidence of a settled investigation. Null until an investigation completes or partially completes, and null when evidence.read is denied."""
 
     changes: List[PersonChange]
     r"""What changed between each settled investigation of this person and the one before it, unreviewed first, then most significant, then newest. The first investigation records no changes. When evidence.read is denied, before and after are withheld."""
@@ -135,13 +123,13 @@ class WorkspacePersonReport(BaseModel):
     r"""Accounts the person is known to hold, at most 20."""
 
     lookup: Optional[ScreeningLookup] = None
-    r"""What the signup check's lookups found for a person: account presence for the email, phone and usernames (the person's handles), the phone lookup, the email domain's registration and the breach search. Context and coverage for the reviewer, not a finding: nothing here sets a band or a match state."""
+    r"""What the signup check's lookups found for a person: account presence for the email, phone and usernames (the person's handles), the phone lookup, the email domain's registration and the breach search. Nothing here sets a match state."""
 
     searches: Optional[List[Search]] = None
     r"""Every search on this person's values, newest first, whether a person started it or enrichment did: each names the value, the record and field it came from, and the search that found that record. Absent when nothing was searched."""
 
     evidence_restricted: Optional[bool] = None
-    r"""True when evidence.read is explicitly denied. Submitted details, coverage, job status and decisions remain available. Collected records, profiles, findings, posts, media, discovered values and free-text decision notes are withheld."""
+    r"""True when evidence.read is explicitly denied. Submitted details, coverage, job status and decisions remain available. Collected records, profiles, posts, media, discovered values and free-text decision notes are withheld."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
@@ -160,7 +148,7 @@ class WorkspacePersonReport(BaseModel):
                 "evidence_restricted",
             ]
         )
-        nullable_fields = set(["evidence_investigation", "written_profile"])
+        nullable_fields = set(["evidence_investigation"])
         serialized = handler(self)
         m = {}
 

@@ -1,5 +1,4 @@
 from __future__ import annotations
-from .highestband import HighestBand
 from .investigationstatus import InvestigationStatus
 from .matchstate import MatchState
 from .persondecision import PersonDecision
@@ -13,8 +12,6 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class InvestigationTypedDict(TypedDict):
-    highest_band: Nullable[HighestBand]
-    r"""The most severe finding's band, or null when nothing was flagged."""
     coverage: ScreeningCoverageTypedDict
     r"""The denominator of a screening: accounts found, how many could be read, items read and the period they span, so a clean result is distinct from a person nobody could see."""
     spend: ScreeningSpendTypedDict
@@ -40,9 +37,6 @@ class InvestigationTypedDict(TypedDict):
 
 
 class Investigation(BaseModel):
-    highest_band: Nullable[HighestBand]
-    r"""The most severe finding's band, or null when nothing was flagged."""
-
     coverage: ScreeningCoverage
     r"""The denominator of a screening: accounts found, how many could be read, items read and the period they span, so a clean result is distinct from a person nobody could see."""
 
@@ -96,7 +90,7 @@ class Investigation(BaseModel):
                 "finished_at",
             ]
         )
-        nullable_fields = set(["highest_band", "decision", "group_id", "match_state"])
+        nullable_fields = set(["decision", "group_id", "match_state"])
         serialized = handler(self)
         m = {}
 

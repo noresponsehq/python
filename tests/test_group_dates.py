@@ -21,5 +21,5 @@ def test_group_dates_distinguish_omission_null_and_dates():
 
 def test_related_ongoing_group_decodes_null_start():
     from noresponse.models.shared.othergroup import OtherGroup
-    group = OtherGroup.model_validate_json('{"group_id":"grp_building","group_name":"Harbour building","group_starts_at":null,"person_id":"per_example","matched_on":["person_id"],"match_state":"unscreened","highest_band":null,"decision":null}')
+    group = OtherGroup.model_validate_json('{"group_id":"grp_building","group_name":"Harbour building","group_starts_at":null,"person_id":"per_example","matched_on":["person_id"],"match_state":"unscreened","decision":null}')
     assert group.group_starts_at is None

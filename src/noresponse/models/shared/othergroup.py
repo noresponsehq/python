@@ -1,5 +1,4 @@
 from __future__ import annotations
-from .highestband import HighestBand
 from .matchstate import MatchState
 from .persondecision import PersonDecision
 from noresponse.types import BaseModel, Nullable, UNSET_SENTINEL, UnrecognizedStr
@@ -24,8 +23,6 @@ class OtherGroupTypedDict(TypedDict):
     r"""The same workspace person explicitly belongs to this group. Membership requires an explicit person or customer reference."""
     match_state: MatchState
     r"""How sure the latest screening is that it found the person's accounts. unscreened until a screening reaches the person, and after one that had no profile to check (no_profile_to_check)."""
-    highest_band: Nullable[HighestBand]
-    r"""That person's most severe band in that group, or null."""
     decision: Nullable[PersonDecision]
     r"""The latest reviewer decision in that group, or null before any."""
     no_profile_to_check: NotRequired[bool]
@@ -55,9 +52,6 @@ class OtherGroup(BaseModel):
     match_state: MatchState
     r"""How sure the latest screening is that it found the person's accounts. unscreened until a screening reaches the person, and after one that had no profile to check (no_profile_to_check)."""
 
-    highest_band: Nullable[HighestBand]
-    r"""That person's most severe band in that group, or null."""
-
     decision: Nullable[PersonDecision]
     r"""The latest reviewer decision in that group, or null before any."""
 
@@ -73,7 +67,7 @@ class OtherGroup(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(["no_profile_to_check", "decided_by", "decided_at"])
-        nullable_fields = set(["group_starts_at", "highest_band", "decision"])
+        nullable_fields = set(["group_starts_at", "decision"])
         serialized = handler(self)
         m = {}
 

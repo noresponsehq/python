@@ -1,5 +1,27 @@
 # Changelog
 
+## 18.0.0
+
+* `sdk.groups.list_people()`: 
+  *  `request.band` **Removed** (Breaking ⚠️)
+  *  `response.items[]` **Changed** (Breaking ⚠️)
+* `sdk.groups.get_person()`:  `response` **Changed** (Breaking ⚠️)
+* `sdk.groups.review_person()`:  `response` **Changed** (Breaking ⚠️)
+* `sdk.groups.list_screenings()`:  `response.items[].people_flagged` **Removed** (Breaking ⚠️)
+* `sdk.groups.start_screening()`:  `response.people_flagged` **Removed** (Breaking ⚠️)
+* `sdk.groups.get_screening()`:  `response.people_flagged` **Removed** (Breaking ⚠️)
+* `sdk.groups.cancel_screening()`:  `response.people_flagged` **Removed** (Breaking ⚠️)
+* `sdk.groups.export_people()`: 
+  *  `request.band` **Removed** (Breaking ⚠️)
+  *  `response.items[]` **Changed** (Breaking ⚠️)
+* `sdk.people.get()`:  `response` **Changed** (Breaking ⚠️)
+* `sdk.people.review_change()`:  `response.kind.enum(finding_added)` **Removed** (Breaking ⚠️)
+* `sdk.investigations.list()`:  `response.items[]` **Changed** (Breaking ⚠️)
+* `sdk.investigations.create()`:  `response` **Changed** (Breaking ⚠️)
+* `sdk.investigations.get()`:  `response` **Changed** (Breaking ⚠️)
+* `sdk.investigations.review()`:  `response` **Changed** (Breaking ⚠️)
+* `sdk.investigations.cancel()`:  `response` **Changed** (Breaking ⚠️)
+
 ## 17.0.3
 
 * `sdk.settings.get()`:  `response.enrichment.kinds[].enum(person_name)` **Added**

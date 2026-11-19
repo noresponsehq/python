@@ -1,6 +1,5 @@
 from __future__ import annotations
 from noresponse.models.shared import (
-    listpeopleband as shared_listpeopleband,
     listpeopledecision as shared_listpeopledecision,
     listpeoplerole as shared_listpeoplerole,
     personlist as shared_personlist,
@@ -18,8 +17,6 @@ class ExportPeopleRequestTypedDict(TypedDict):
     r"""At most this many people."""
     after: NotRequired[str]
     r"""Read people after this one."""
-    band: NotRequired[shared_listpeopleband.ListPeopleBand]
-    r"""Only people whose highest finding has this band; none for people with no finding."""
     decision: NotRequired[shared_listpeopledecision.ListPeopleDecision]
     r"""Only people with this decision; undecided for none yet."""
     role: NotRequired[shared_listpeoplerole.ListPeopleRole]
@@ -43,12 +40,6 @@ class ExportPeopleRequest(BaseModel):
     ] = None
     r"""Read people after this one."""
 
-    band: Annotated[
-        Optional[shared_listpeopleband.ListPeopleBand],
-        FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
-    ] = None
-    r"""Only people whose highest finding has this band; none for people with no finding."""
-
     decision: Annotated[
         Optional[shared_listpeopledecision.ListPeopleDecision],
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
@@ -63,7 +54,7 @@ class ExportPeopleRequest(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["limit", "after", "band", "decision", "role"])
+        optional_fields = set(["limit", "after", "decision", "role"])
         serialized = handler(self)
         m = {}
 

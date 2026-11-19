@@ -1,6 +1,5 @@
 from __future__ import annotations
 from .handle import Handle, HandleTypedDict
-from .highestband import HighestBand
 from .matchstate import MatchState
 from .persondecision import PersonDecision
 from .personrole import PersonRole
@@ -21,8 +20,6 @@ class PersonTypedDict(TypedDict):
     r"""The person's full name."""
     match_state: MatchState
     r"""How sure the latest screening is that it found the person's accounts. unscreened until a screening reaches the person, and after one that had no profile to check (no_profile_to_check)."""
-    highest_band: Nullable[HighestBand]
-    r"""The most severe finding's band, or null when nothing was flagged."""
     decision: Nullable[PersonDecision]
     r"""The latest reviewer decision, or null before any."""
     coverage: ScreeningCoverageTypedDict
@@ -68,9 +65,6 @@ class Person(BaseModel):
 
     match_state: MatchState
     r"""How sure the latest screening is that it found the person's accounts. unscreened until a screening reaches the person, and after one that had no profile to check (no_profile_to_check)."""
-
-    highest_band: Nullable[HighestBand]
-    r"""The most severe finding's band, or null when nothing was flagged."""
 
     decision: Nullable[PersonDecision]
     r"""The latest reviewer decision, or null before any."""
@@ -141,7 +135,7 @@ class Person(BaseModel):
                 "screened_at",
             ]
         )
-        nullable_fields = set(["highest_band", "decision"])
+        nullable_fields = set(["decision"])
         serialized = handler(self)
         m = {}
 

@@ -27,7 +27,6 @@ class ScreeningTypedDict(TypedDict):
     r"""People selected when the screening started."""
     people_done: int
     r"""People screened so far, failed ones included."""
-    people_flagged: int
     people_failed: int
     people_partial: int
     r"""People screened with some requested platform not covered; their coverage names which."""
@@ -71,8 +70,6 @@ class Screening(BaseModel):
 
     people_done: int
     r"""People screened so far, failed ones included."""
-
-    people_flagged: int
 
     people_failed: int
 

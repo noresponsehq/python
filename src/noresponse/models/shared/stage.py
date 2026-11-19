@@ -17,3 +17,4 @@ Stage = Union[
     ],
     UnrecognizedStr,
 ]
+r"""ai_typing and analysis appear only on searches recorded before the engine stopped analysing results."""

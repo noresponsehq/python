@@ -15,7 +15,6 @@ from noresponse.models.shared import (
     AuditEventEvent,
     EndpointVerificationEvent,
     PersonDecidedEvent,
-    PersonFlaggedEvent,
     ScreeningCompletedEvent,
     InvestigationCompletedEvent,
     WebhookEndpointDisabledEvent,
@@ -36,7 +35,6 @@ EVENT_MODELS = {
     "audit.event": AuditEventEvent,
     "screening.completed": ScreeningCompletedEvent,
     "investigation.completed": InvestigationCompletedEvent,
-    "person.flagged": PersonFlaggedEvent,
     "person.decided": PersonDecidedEvent,
 }
 

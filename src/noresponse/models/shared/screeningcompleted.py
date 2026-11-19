@@ -1,8 +1,4 @@
 from __future__ import annotations
-from .screeningcompletedbyband import (
-    ScreeningCompletedByBand,
-    ScreeningCompletedByBandTypedDict,
-)
 from .screeningcompletedstatus import ScreeningCompletedStatus
 from noresponse.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
@@ -11,7 +7,7 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class ScreeningCompletedTypedDict(TypedDict):
-    r"""A screening of a group finished. It counts only the people this screening set out to reach, not who they are: read the roster with GET /v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people, filtered by band, to act on them. people_screened + partial_coverage = people_total, people_flagged is the sum of by_band, no_footprint counts screened people with no flag whose accounts were not found, and no_profile_to_check those the screening had nothing to look up for on any requested platform. A cancelled screening sends no event."""
+    r"""A screening of a group finished. It counts only the people this screening set out to reach, not who they are: read the roster with GET /v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people to act on them. people_screened + partial_coverage = people_total, no_footprint counts screened people whose accounts were not found, and no_profile_to_check those the screening had nothing to look up for on any requested platform. A cancelled screening sends no event."""
 
     screening_id: str
     r"""The screening that finished."""
@@ -22,13 +18,9 @@ class ScreeningCompletedTypedDict(TypedDict):
     people_total: int
     r"""Every person the screening set out to reach: those no screening had reached."""
     people_screened: int
-    r"""People the screening covered, flagged or not."""
-    people_flagged: int
-    r"""Screened people with a finding: the sum of by_band."""
-    by_band: ScreeningCompletedByBandTypedDict
-    r"""Screened people by the band of their most severe finding."""
+    r"""People the screening covered."""
     no_footprint: int
-    r"""Screened people with no finding whose accounts were not found (match_state none_found). A clean result for someone with no visible accounts is not the same as a clean result for someone whose accounts were read."""
+    r"""Screened people whose accounts were not found (match_state none_found). A clean result for someone with no visible accounts is not the same as a clean result for someone whose accounts were read."""
     partial_coverage: int
     r"""People the screening did not fully cover. Read each one's coverage on its person."""
     finished_at: str
@@ -40,7 +32,7 @@ class ScreeningCompletedTypedDict(TypedDict):
 
 
 class ScreeningCompleted(BaseModel):
-    r"""A screening of a group finished. It counts only the people this screening set out to reach, not who they are: read the roster with GET /v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people, filtered by band, to act on them. people_screened + partial_coverage = people_total, people_flagged is the sum of by_band, no_footprint counts screened people with no flag whose accounts were not found, and no_profile_to_check those the screening had nothing to look up for on any requested platform. A cancelled screening sends no event."""
+    r"""A screening of a group finished. It counts only the people this screening set out to reach, not who they are: read the roster with GET /v1/workspaces/{workspace_id}/groups/{environment}/{group_id}/people to act on them. people_screened + partial_coverage = people_total, no_footprint counts screened people whose accounts were not found, and no_profile_to_check those the screening had nothing to look up for on any requested platform. A cancelled screening sends no event."""
 
     screening_id: str
     r"""The screening that finished."""
@@ -55,16 +47,10 @@ class ScreeningCompleted(BaseModel):
     r"""Every person the screening set out to reach: those no screening had reached."""
 
     people_screened: int
-    r"""People the screening covered, flagged or not."""
-
-    people_flagged: int
-    r"""Screened people with a finding: the sum of by_band."""
-
-    by_band: ScreeningCompletedByBand
-    r"""Screened people by the band of their most severe finding."""
+    r"""People the screening covered."""
 
     no_footprint: int
-    r"""Screened people with no finding whose accounts were not found (match_state none_found). A clean result for someone with no visible accounts is not the same as a clean result for someone whose accounts were read."""
+    r"""Screened people whose accounts were not found (match_state none_found). A clean result for someone with no visible accounts is not the same as a clean result for someone whose accounts were read."""
 
     partial_coverage: int
     r"""People the screening did not fully cover. Read each one's coverage on its person."""

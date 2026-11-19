@@ -18,7 +18,6 @@ from .investigationcompletedevent import (
     InvestigationCompletedEventTypedDict,
 )
 from .persondecidedevent import PersonDecidedEvent, PersonDecidedEventTypedDict
-from .personflaggedevent import PersonFlaggedEvent, PersonFlaggedEventTypedDict
 from .screeningcompletedevent import (
     ScreeningCompletedEvent,
     ScreeningCompletedEventTypedDict,
@@ -44,7 +43,6 @@ WebhookEventTypedDict = TypeAliasType(
         AccountRiskChangedEventTypedDict,
         AuditEventEventTypedDict,
         ScreeningCompletedEventTypedDict,
-        PersonFlaggedEventTypedDict,
         PersonDecidedEventTypedDict,
         InvestigationCompletedEventTypedDict,
     ],
@@ -62,7 +60,6 @@ WebhookEvent = Annotated[
         AccountRiskChangedEvent,
         AuditEventEvent,
         ScreeningCompletedEvent,
-        PersonFlaggedEvent,
         PersonDecidedEvent,
         InvestigationCompletedEvent,
     ],
