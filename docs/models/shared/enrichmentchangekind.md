@@ -13,3 +13,4 @@ value: EnrichmentChangeKind = "username"
 - `"username"`
 - `"email"`
 - `"phone"`
+- `"person_name"`

@@ -1,6 +1,6 @@
 from __future__ import annotations
 from .failurereason import FailureReason
-from .identifiersearchkind import IdentifierSearchKind
+from .identifier import Identifier
 from .lane import Lane
 from .screeninglookupcheckstatus import ScreeningLookupCheckStatus
 from .screeninglookupcheckunanswereditem import (
@@ -16,7 +16,7 @@ from typing_extensions import NotRequired, TypedDict
 class ScreeningLookupCheckTypedDict(TypedDict):
     r"""What came of one lane of the lookups for one identifier."""
 
-    identifier: IdentifierSearchKind
+    identifier: Identifier
     lane: Lane
     r"""An evidence lane: accounts (account presence for email and username), phone, breach, domain (the email domain's registration) and ip."""
     status: ScreeningLookupCheckStatus
@@ -36,7 +36,7 @@ class ScreeningLookupCheckTypedDict(TypedDict):
 class ScreeningLookupCheck(BaseModel):
     r"""What came of one lane of the lookups for one identifier."""
 
-    identifier: IdentifierSearchKind
+    identifier: Identifier
 
     lane: Lane
     r"""An evidence lane: accounts (account presence for email and username), phone, breach, domain (the email domain's registration) and ip."""

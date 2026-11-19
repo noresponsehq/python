@@ -11,6 +11,7 @@ EnrichmentKind = Union[
         "username",
         "email",
         "phone",
+        "person_name",
     ],
     UnrecognizedStr,
 ]
@@ -24,7 +25,7 @@ class EnrichmentTypedDict(TypedDict):
     min_likelihood: float
     r"""Enrichment searches values only from records more likely than this to be the person's, 0 to 0.99."""
     kinds: List[EnrichmentKind]
-    r"""The kinds of value enrichment searches: distinctive usernames, and email addresses and phone numbers, which belong to one person each."""
+    r"""The kinds of value enrichment searches: distinctive usernames, email addresses and phone numbers, which belong to one person each, and distinctive person names, searched in the breach data."""
     max_spend: Nullable[int]
     r"""The most enrichment may spend on a person from one investigation, in minor units of USD (cents): each search it started after that investigation started counts its estimate or what it spent, whichever is more. At the bound enrichment starts nothing more for that investigation. null: only the environment's screening_daily_cap bounds it."""
     deadline: Nullable[int]
@@ -41,7 +42,7 @@ class Enrichment(BaseModel):
     r"""Enrichment searches values only from records more likely than this to be the person's, 0 to 0.99."""
 
     kinds: List[EnrichmentKind]
-    r"""The kinds of value enrichment searches: distinctive usernames, and email addresses and phone numbers, which belong to one person each."""
+    r"""The kinds of value enrichment searches: distinctive usernames, email addresses and phone numbers, which belong to one person each, and distinctive person names, searched in the breach data."""
 
     max_spend: Nullable[int]
     r"""The most enrichment may spend on a person from one investigation, in minor units of USD (cents): each search it started after that investigation started counts its estimate or what it spent, whichever is more. At the bound enrichment starts nothing more for that investigation. null: only the environment's screening_daily_cap bounds it."""
