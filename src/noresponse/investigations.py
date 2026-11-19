@@ -405,7 +405,7 @@ class Investigations(BaseSDK):
         :param idempotency_key: Opaque request key, 16 to 128 characters. Repeating the key and request returns the same resource in its current state while it is retained. A different request with the same key answers 409. Use a new key for a deliberate new operation. Keys are scoped to the environment and operation; person searches also scope them to the group and person.
         :param depth:
         :param person_id:
-        :param platforms: The platforms to search. Leave it out for a full search: every platform a connector serves in the environment when the investigation starts, which the investigation then lists.
+        :param platforms: Deprecated: leave it out. Without it the investigation is a full search: every platform a connector serves in the environment when the investigation starts, which the investigation then lists, each searched only with the identifiers its connector takes. A list sent here still limits the investigation until a later contract release removes the field.
         :param enrichment: A change to enrichment. A field left out keeps the value in force; max_spend or deadline null removes the bound.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -602,7 +602,7 @@ class Investigations(BaseSDK):
         :param idempotency_key: Opaque request key, 16 to 128 characters. Repeating the key and request returns the same resource in its current state while it is retained. A different request with the same key answers 409. Use a new key for a deliberate new operation. Keys are scoped to the environment and operation; person searches also scope them to the group and person.
         :param depth:
         :param person_id:
-        :param platforms: The platforms to search. Leave it out for a full search: every platform a connector serves in the environment when the investigation starts, which the investigation then lists.
+        :param platforms: Deprecated: leave it out. Without it the investigation is a full search: every platform a connector serves in the environment when the investigation starts, which the investigation then lists, each searched only with the identifiers its connector takes. A list sent here still limits the investigation until a later contract release removes the field.
         :param enrichment: A change to enrichment. A field left out keeps the value in force; max_spend or deadline null removes the bound.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method

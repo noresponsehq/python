@@ -1,9 +1,10 @@
 from __future__ import annotations
 from .screeningdepth import ScreeningDepth
 from noresponse.types import BaseModel, UNSET_SENTINEL
+import pydantic
 from pydantic import model_serializer
 from typing import List, Optional
-from typing_extensions import NotRequired, TypedDict
+from typing_extensions import Annotated, NotRequired, TypedDict
 
 
 class ScreeningRequestTypedDict(TypedDict):
@@ -11,7 +12,7 @@ class ScreeningRequestTypedDict(TypedDict):
 
     depth: ScreeningDepth
     platforms: NotRequired[List[str]]
-    r"""The platforms to search. Leave it out for a full search: every platform a connector serves in the environment when the screening starts, which the screening then lists."""
+    r"""Deprecated: leave it out. Without it the screening is a full search: every platform a connector serves in the environment when the screening starts, which the screening then lists, each searched only with the identifiers its connector takes. A list sent here still limits the screening until a later contract release removes the field."""
 
 
 class ScreeningRequest(BaseModel):
@@ -19,8 +20,13 @@ class ScreeningRequest(BaseModel):
 
     depth: ScreeningDepth
 
-    platforms: Optional[List[str]] = None
-    r"""The platforms to search. Leave it out for a full search: every platform a connector serves in the environment when the screening starts, which the screening then lists."""
+    platforms: Annotated[
+        Optional[List[str]],
+        pydantic.Field(
+            deprecated="warning: ** DEPRECATED ** - This will be removed in a future release, please migrate away from it as soon as possible."
+        ),
+    ] = None
+    r"""Deprecated: leave it out. Without it the screening is a full search: every platform a connector serves in the environment when the screening starts, which the screening then lists, each searched only with the identifiers its connector takes. A list sent here still limits the screening until a later contract release removes the field."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
