@@ -694,6 +694,14 @@ if TYPE_CHECKING:
     )
     from .screeningcompletedstatus import ScreeningCompletedStatus
     from .screeningcoverage import ScreeningCoverage, ScreeningCoverageTypedDict
+    from .screeningcoveragesources import (
+        ScreeningCoverageSources,
+        ScreeningCoverageSourcesTypedDict,
+    )
+    from .screeningcoveragetiming import (
+        ScreeningCoverageTiming,
+        ScreeningCoverageTimingTypedDict,
+    )
     from .screeningdepth import ScreeningDepth
     from .screeningfinding import ScreeningFinding, ScreeningFindingTypedDict
     from .screeninglist import ScreeningList, ScreeningListTypedDict
@@ -755,6 +763,9 @@ if TYPE_CHECKING:
     from .signingkey import SigningKey, SigningKeyTypedDict
     from .signingsecret import SigningSecret, SigningSecretTypedDict
     from .source import Source
+    from .sourcecount import SourceCount, SourceCountTypedDict
+    from .stage import Stage
+    from .stagetime import StageTime, StageTimeTypedDict
     from .status import Status
     from .suggestedsearch import SuggestedSearch, SuggestedSearchTypedDict
     from .suggestedsearchkind import SuggestedSearchKind
@@ -1521,6 +1532,10 @@ __all__ = [
     "ScreeningCompletedStatus",
     "ScreeningCompletedTypedDict",
     "ScreeningCoverage",
+    "ScreeningCoverageSources",
+    "ScreeningCoverageSourcesTypedDict",
+    "ScreeningCoverageTiming",
+    "ScreeningCoverageTimingTypedDict",
     "ScreeningCoverageTypedDict",
     "ScreeningDepth",
     "ScreeningFinding",
@@ -1597,6 +1612,11 @@ __all__ = [
     "SocialProfileUnion",
     "SocialProfileUnionTypedDict",
     "Source",
+    "SourceCount",
+    "SourceCountTypedDict",
+    "Stage",
+    "StageTime",
+    "StageTimeTypedDict",
     "Status",
     "SuggestedSearch",
     "SuggestedSearchKind",
@@ -2378,6 +2398,10 @@ _dynamic_imports: dict[str, str] = {
     "ScreeningCompletedStatus": ".screeningcompletedstatus",
     "ScreeningCoverage": ".screeningcoverage",
     "ScreeningCoverageTypedDict": ".screeningcoverage",
+    "ScreeningCoverageSources": ".screeningcoveragesources",
+    "ScreeningCoverageSourcesTypedDict": ".screeningcoveragesources",
+    "ScreeningCoverageTiming": ".screeningcoveragetiming",
+    "ScreeningCoverageTimingTypedDict": ".screeningcoveragetiming",
     "ScreeningDepth": ".screeningdepth",
     "ScreeningFinding": ".screeningfinding",
     "ScreeningFindingTypedDict": ".screeningfinding",
@@ -2447,6 +2471,11 @@ _dynamic_imports: dict[str, str] = {
     "SigningSecret": ".signingsecret",
     "SigningSecretTypedDict": ".signingsecret",
     "Source": ".source",
+    "SourceCount": ".sourcecount",
+    "SourceCountTypedDict": ".sourcecount",
+    "Stage": ".stage",
+    "StageTime": ".stagetime",
+    "StageTimeTypedDict": ".stagetime",
     "Status": ".status",
     "SuggestedSearch": ".suggestedsearch",
     "SuggestedSearchTypedDict": ".suggestedsearch",

@@ -191,6 +191,7 @@ good-names=i,
            by,
            id,
            ip,
+           ms,
            to
 
 # Good variable names regexes, separated by a comma. If names match any regex,
