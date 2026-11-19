@@ -16,5 +16,3 @@ This is an open enum. Unrecognized values will not fail type checks.
 
 - `"serving"`
 - `"outbox"`
-- `"cache"`
-- `"downstream_projection"`

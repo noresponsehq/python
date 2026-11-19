@@ -7,8 +7,6 @@ ErasureReceiptTargetName = Union[
     Literal[
         "serving",
         "outbox",
-        "cache",
-        "downstream_projection",
     ],
     UnrecognizedStr,
 ]

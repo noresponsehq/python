@@ -1,5 +1,9 @@
 # Changelog
 
+## 16.0.0
+
+* `sdk.erasures.get()`:  `response.targets[].name` **Changed** (Breaking ⚠️)
+
 ## 15.0.19
 
 * `sdk.groups.get_person()`:  `response.profiles[].record.fields[].noise` **Added**
