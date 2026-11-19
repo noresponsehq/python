@@ -458,6 +458,8 @@ if TYPE_CHECKING:
     from .personbatchitem import PersonBatchItem, PersonBatchItemTypedDict
     from .personbatchitemoutcome import PersonBatchItemOutcome
     from .personbatchrequest import PersonBatchRequest, PersonBatchRequestTypedDict
+    from .personchange import PersonChange, PersonChangeTypedDict
+    from .personchangekind import PersonChangeKind
     from .persondecided import PersonDecided, PersonDecidedTypedDict
     from .persondecidedevent import PersonDecidedEvent, PersonDecidedEventTypedDict
     from .persondecision import PersonDecision
@@ -760,6 +762,7 @@ if TYPE_CHECKING:
     from .sharedidentifier import SharedIdentifier, SharedIdentifierTypedDict
     from .signal import Signal, SignalTypedDict
     from .signaloutcome import SignalOutcome
+    from .significance import Significance
     from .signingkey import SigningKey, SigningKeyTypedDict
     from .signingsecret import SigningSecret, SigningSecretTypedDict
     from .source import Source
@@ -1323,6 +1326,9 @@ __all__ = [
     "PersonBatchRequest",
     "PersonBatchRequestTypedDict",
     "PersonBatchTypedDict",
+    "PersonChange",
+    "PersonChangeKind",
+    "PersonChangeTypedDict",
     "PersonDecided",
     "PersonDecidedEvent",
     "PersonDecidedEventTypedDict",
@@ -1603,6 +1609,7 @@ __all__ = [
     "Signal",
     "SignalOutcome",
     "SignalTypedDict",
+    "Significance",
     "SigningKey",
     "SigningKeyTypedDict",
     "SigningSecret",
@@ -2160,6 +2167,9 @@ _dynamic_imports: dict[str, str] = {
     "PersonBatchItemOutcome": ".personbatchitemoutcome",
     "PersonBatchRequest": ".personbatchrequest",
     "PersonBatchRequestTypedDict": ".personbatchrequest",
+    "PersonChange": ".personchange",
+    "PersonChangeTypedDict": ".personchange",
+    "PersonChangeKind": ".personchangekind",
     "PersonDecided": ".persondecided",
     "PersonDecidedTypedDict": ".persondecided",
     "PersonDecidedEvent": ".persondecidedevent",
@@ -2466,6 +2476,7 @@ _dynamic_imports: dict[str, str] = {
     "Signal": ".signal",
     "SignalTypedDict": ".signal",
     "SignalOutcome": ".signaloutcome",
+    "Significance": ".significance",
     "SigningKey": ".signingkey",
     "SigningKeyTypedDict": ".signingkey",
     "SigningSecret": ".signingsecret",

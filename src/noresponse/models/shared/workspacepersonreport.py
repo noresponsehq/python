@@ -1,6 +1,7 @@
 from __future__ import annotations
 from .handle import Handle, HandleTypedDict
 from .investigation import Investigation, InvestigationTypedDict
+from .personchange import PersonChange, PersonChangeTypedDict
 from .screeningfinding import ScreeningFinding, ScreeningFindingTypedDict
 from .screeninglookup import ScreeningLookup, ScreeningLookupTypedDict
 from .screeningmedia import ScreeningMedia, ScreeningMediaTypedDict
@@ -37,6 +38,8 @@ class WorkspacePersonReportTypedDict(TypedDict):
     r"""The most recent retained completed or partial investigation, or a migrated result whose original per-person status is unknown. The evidence below belongs to this investigation. Read investigation history for earlier results and pending jobs."""
     written_profile: Nullable[WrittenProfileTypedDict]
     r"""An investigator's profile of this person, written from the evidence of a settled investigation. Null until an investigation completes or partially completes, and null when evidence.read is denied."""
+    changes: List[PersonChangeTypedDict]
+    r"""What changed between each settled investigation of this person and the one before it, unreviewed first, then most significant, then newest. The first investigation records no changes. When evidence.read is denied, before and after are withheld."""
     external_id: NotRequired[str]
     r"""Your reference for this person within the workspace environment. Only an explicit reference or person_id can reuse an existing person."""
     name: NotRequired[str]
@@ -92,6 +95,9 @@ class WorkspacePersonReport(BaseModel):
 
     written_profile: Nullable[WrittenProfile]
     r"""An investigator's profile of this person, written from the evidence of a settled investigation. Null until an investigation completes or partially completes, and null when evidence.read is denied."""
+
+    changes: List[PersonChange]
+    r"""What changed between each settled investigation of this person and the one before it, unreviewed first, then most significant, then newest. The first investigation records no changes. When evidence.read is denied, before and after are withheld."""
 
     external_id: Optional[str] = None
     r"""Your reference for this person within the workspace environment. Only an explicit reference or person_id can reuse an existing person."""

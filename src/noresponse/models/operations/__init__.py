@@ -653,6 +653,12 @@ if TYPE_CHECKING:
         ReviewPersonResponse,
         ReviewPersonResponseTypedDict,
     )
+    from .reviewworkspacepersonchange import (
+        ReviewWorkspacePersonChangeRequest,
+        ReviewWorkspacePersonChangeRequestTypedDict,
+        ReviewWorkspacePersonChangeResponse,
+        ReviewWorkspacePersonChangeResponseTypedDict,
+    )
     from .revokeinvite import (
         RevokeInviteRequest,
         RevokeInviteRequestTypedDict,
@@ -1199,6 +1205,10 @@ __all__ = [
     "ReviewPersonRequestTypedDict",
     "ReviewPersonResponse",
     "ReviewPersonResponseTypedDict",
+    "ReviewWorkspacePersonChangeRequest",
+    "ReviewWorkspacePersonChangeRequestTypedDict",
+    "ReviewWorkspacePersonChangeResponse",
+    "ReviewWorkspacePersonChangeResponseTypedDict",
     "RevokeInviteRequest",
     "RevokeInviteRequestTypedDict",
     "RevokeInviteResponse",
@@ -1708,6 +1718,10 @@ _dynamic_imports: dict[str, str] = {
     "ReviewPersonRequestTypedDict": ".reviewperson",
     "ReviewPersonResponse": ".reviewperson",
     "ReviewPersonResponseTypedDict": ".reviewperson",
+    "ReviewWorkspacePersonChangeRequest": ".reviewworkspacepersonchange",
+    "ReviewWorkspacePersonChangeRequestTypedDict": ".reviewworkspacepersonchange",
+    "ReviewWorkspacePersonChangeResponse": ".reviewworkspacepersonchange",
+    "ReviewWorkspacePersonChangeResponseTypedDict": ".reviewworkspacepersonchange",
     "RevokeInviteRequest": ".revokeinvite",
     "RevokeInviteRequestTypedDict": ".revokeinvite",
     "RevokeInviteResponse": ".revokeinvite",
