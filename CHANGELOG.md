@@ -1,5 +1,11 @@
 # Changelog
 
+## 19.0.1
+
+* `sdk.groups.get_person()`:  `response` **Changed**
+* `sdk.people.get()`:  `response` **Changed**
+* `sdk.investigations.get()`:  `response` **Changed**
+
 ## 19.0.0
 
 * `sdk.groups.start_screening()`:  `request.platforms` **Removed** (Breaking ⚠️)

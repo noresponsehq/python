@@ -37,6 +37,8 @@ class RecordTypedDict(TypedDict):
     r"""Why the record has its likelihood, as the items that make it up: what found it and each value it agrees or clashes with, each with its weight in bits. The bits add up to the likelihood before rounding: likelihood = 1 / (1 + 2^-sum). Only the strongest agreement of each kind counts, and a place counts once however many of its city, region, country and address agree. Present on a person's lookup records that have any such item."""
     path: NotRequired[List[str]]
     r"""How the record connects to what the investigator gave: given first, then the ids of the joined records it reached the person through, nearest last. Each step follows what found the record before the strongest agreement. A record with no link to the person has no path."""
+    other_person: NotRequired[int]
+    r"""For a record that is not the person's, the other person it belongs with: records that share this number share strong values, such as an email or a full name with a phone, and score as one person against each other. Absent on the person's own records and on a record that matches nobody else. A value that more than 20 strangers hold groups nobody."""
 
 
 class Record(BaseModel):
@@ -78,10 +80,22 @@ class Record(BaseModel):
     path: Optional[List[str]] = None
     r"""How the record connects to what the investigator gave: given first, then the ids of the joined records it reached the person through, nearest last. Each step follows what found the record before the strongest agreement. A record with no link to the person has no path."""
 
+    other_person: Optional[int] = None
+    r"""For a record that is not the person's, the other person it belongs with: records that share this number share strong values, such as an email or a full name with a phone, and score as one person against each other. Absent on the person's own records and on a record that matches nobody else. A value that more than 20 strangers hold groups nobody."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["likelihood", "agreed", "clashed", "joined", "verdict", "evidence", "path"]
+            [
+                "likelihood",
+                "agreed",
+                "clashed",
+                "joined",
+                "verdict",
+                "evidence",
+                "path",
+                "other_person",
+            ]
         )
         serialized = handler(self)
         m = {}

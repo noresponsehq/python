@@ -585,6 +585,8 @@ if TYPE_CHECKING:
     from .reasonidentifier import ReasonIdentifier
     from .recommendation import Recommendation
     from .record import Record, RecordTypedDict
+    from .recordconflict import Between, RecordConflict, RecordConflictTypedDict
+    from .recordconflictsignal import RecordConflictSignal
     from .recorddistinctive import RecordDistinctive, RecordDistinctiveTypedDict
     from .recordevidence import RecordEvidence, RecordEvidenceTypedDict
     from .recordevidencesignal import RecordEvidenceSignal
@@ -1003,6 +1005,7 @@ __all__ = [
     "AuthenticationErrorCode",
     "BadRequestErrorCode",
     "Band",
+    "Between",
     "Breach",
     "BreachConduct",
     "BreachExposed",
@@ -1397,6 +1400,9 @@ __all__ = [
     "ReasonIdentifier",
     "Recommendation",
     "Record",
+    "RecordConflict",
+    "RecordConflictSignal",
+    "RecordConflictTypedDict",
     "RecordDistinctive",
     "RecordDistinctiveTypedDict",
     "RecordEvidence",
@@ -2248,6 +2254,10 @@ _dynamic_imports: dict[str, str] = {
     "Recommendation": ".recommendation",
     "Record": ".record",
     "RecordTypedDict": ".record",
+    "Between": ".recordconflict",
+    "RecordConflict": ".recordconflict",
+    "RecordConflictTypedDict": ".recordconflict",
+    "RecordConflictSignal": ".recordconflictsignal",
     "RecordDistinctive": ".recorddistinctive",
     "RecordDistinctiveTypedDict": ".recorddistinctive",
     "RecordEvidence": ".recordevidence",
