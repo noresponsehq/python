@@ -1,8 +1,6 @@
 from __future__ import annotations
 from .record import Record, RecordTypedDict
 from .recordremaining import RecordRemaining, RecordRemainingTypedDict
-from .riskdetails import RiskDetails, RiskDetailsTypedDict
-from .risksummary import RiskSummary, RiskSummaryTypedDict
 from .screeninglookupanswer import ScreeningLookupAnswer, ScreeningLookupAnswerTypedDict
 from .screeninglookupcheck import ScreeningLookupCheck, ScreeningLookupCheckTypedDict
 from noresponse.types import BaseModel, UNSET_SENTINEL
@@ -20,10 +18,6 @@ class ScreeningLookupTypedDict(TypedDict):
     r"""When the lookups ran."""
     answers: NotRequired[List[ScreeningLookupAnswerTypedDict]]
     r"""Each source asked, with what it answered and when. answered_at is absent while the source has not answered."""
-    summary: NotRequired[RiskSummaryTypedDict]
-    r"""A few typed facts per identifier: an assessment's risk.summary, and a screened person's lookup summary. Every fact is optional: absent means the evidence did not answer and makes no claim, while false or 0 is a definite answer."""
-    details: NotRequired[RiskDetailsTypedDict]
-    r"""Merged observations behind the summary, served only to a caller who may read evidence: no provider, source, origin, raw breach record or score."""
     records: NotRequired[List[RecordTypedDict]]
     r"""What each source answered, whole, each answer once: every field of each account a connector found, and every column of each breach row the person's email or usernames matched, under the source's own names, and what each search a person started found, each match naming its search. Anyone who may read the person reads them: no extra permission applies, breach passwords and hashes included."""
     remaining: NotRequired[List[RecordRemainingTypedDict]]
@@ -42,12 +36,6 @@ class ScreeningLookup(BaseModel):
     answers: Optional[List[ScreeningLookupAnswer]] = None
     r"""Each source asked, with what it answered and when. answered_at is absent while the source has not answered."""
 
-    summary: Optional[RiskSummary] = None
-    r"""A few typed facts per identifier: an assessment's risk.summary, and a screened person's lookup summary. Every fact is optional: absent means the evidence did not answer and makes no claim, while false or 0 is a definite answer."""
-
-    details: Optional[RiskDetails] = None
-    r"""Merged observations behind the summary, served only to a caller who may read evidence: no provider, source, origin, raw breach record or score."""
-
     records: Optional[List[Record]] = None
     r"""What each source answered, whole, each answer once: every field of each account a connector found, and every column of each breach row the person's email or usernames matched, under the source's own names, and what each search a person started found, each match naming its search. Anyone who may read the person reads them: no extra permission applies, breach passwords and hashes included."""
 
@@ -56,7 +44,7 @@ class ScreeningLookup(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["answers", "summary", "details", "records", "remaining"])
+        optional_fields = set(["answers", "records", "remaining"])
         serialized = handler(self)
         m = {}
 
