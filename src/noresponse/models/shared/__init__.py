@@ -466,6 +466,7 @@ if TYPE_CHECKING:
     from .personflagged import PersonFlagged, PersonFlaggedTypedDict
     from .personflaggedevent import PersonFlaggedEvent, PersonFlaggedEventTypedDict
     from .personflaggedmatchstate import PersonFlaggedMatchState
+    from .persongroup import PersonGroup, PersonGroupTypedDict
     from .personidentity import PersonIdentity, PersonIdentityTypedDict
     from .personlist import PersonList, PersonListTypedDict
     from .personmatch import PersonMatch, PersonMatchMatchedOn, PersonMatchTypedDict
@@ -1344,6 +1345,8 @@ __all__ = [
     "PersonFlaggedEventTypedDict",
     "PersonFlaggedMatchState",
     "PersonFlaggedTypedDict",
+    "PersonGroup",
+    "PersonGroupTypedDict",
     "PersonIdentity",
     "PersonIdentityTypedDict",
     "PersonList",
@@ -2188,6 +2191,8 @@ _dynamic_imports: dict[str, str] = {
     "PersonFlaggedEvent": ".personflaggedevent",
     "PersonFlaggedEventTypedDict": ".personflaggedevent",
     "PersonFlaggedMatchState": ".personflaggedmatchstate",
+    "PersonGroup": ".persongroup",
+    "PersonGroupTypedDict": ".persongroup",
     "PersonIdentity": ".personidentity",
     "PersonIdentityTypedDict": ".personidentity",
     "PersonList": ".personlist",

@@ -2,6 +2,7 @@ from __future__ import annotations
 from .handle import Handle, HandleTypedDict
 from .investigation import Investigation, InvestigationTypedDict
 from .personchange import PersonChange, PersonChangeTypedDict
+from .persongroup import PersonGroup, PersonGroupTypedDict
 from .screeningfinding import ScreeningFinding, ScreeningFindingTypedDict
 from .screeninglookup import ScreeningLookup, ScreeningLookupTypedDict
 from .screeningmedia import ScreeningMedia, ScreeningMediaTypedDict
@@ -24,6 +25,8 @@ class WorkspacePersonReportTypedDict(TypedDict):
     updated_at: str
     expires_at: str
     r"""The time the workspace retention policy removes this person, their evidence and investigation history. Shortening workspace retention can move this time earlier."""
+    groups: List[PersonGroupTypedDict]
+    r"""Every group this person belongs to in this environment, most recently added first, with their role in each. A person can belong to any number of groups; removing them from a group or deleting the group removes it here."""
     profiles: List[ScreeningProfileTypedDict]
     r"""The accounts this result matched, with how each was matched."""
     findings: List[ScreeningFindingTypedDict]
@@ -74,6 +77,9 @@ class WorkspacePersonReport(BaseModel):
 
     expires_at: str
     r"""The time the workspace retention policy removes this person, their evidence and investigation history. Shortening workspace retention can move this time earlier."""
+
+    groups: List[PersonGroup]
+    r"""Every group this person belongs to in this environment, most recently added first, with their role in each. A person can belong to any number of groups; removing them from a group or deleting the group removes it here."""
 
     profiles: List[ScreeningProfile]
     r"""The accounts this result matched, with how each was matched."""

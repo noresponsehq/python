@@ -1,5 +1,9 @@
 # Changelog
 
+## 16.0.9
+
+* `sdk.people.get()`:  `response.groups` **Added**
+
 ## 16.0.8
 
 No changes detected.
