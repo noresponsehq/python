@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: 63676ca5915b06a253deed8a25211afd
+  docChecksum: 640e6890d71c46ef0a5a2f3c0fb76946
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 18.0.0
-  configChecksum: d47251e67561655ffc5797aa2117c8bc
+  releaseVersion: 18.0.1
+  configChecksum: babd42f2f87c41466d576e1d0979fbbd
 features:
   python:
     additionalDependencies: 1.1.0
@@ -1567,7 +1567,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:f4ed9df97846f83012839cedbfb375993e2e606f
   pyproject.toml:
-    last_write_checksum: sha1:fcf85be5b5e32cf2931e3da9b071783491745e23
+    last_write_checksum: sha1:ec4727be36312bbf7a6d628b8eb501a85218731f
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -1583,7 +1583,7 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:7bc1f9fb48b4f61475f8b61f8aa9d8e4aaaa059f
+    last_write_checksum: sha1:cb28a915d4615035d55669ae063ac84d8e7e7cbc
   src/noresponse/accounts.py:
     last_write_checksum: sha1:c09abf6ab3b780a819d1a1ed0af35063bb2625e6
   src/noresponse/assessments.py:
@@ -1599,7 +1599,7 @@ trackedFiles:
   src/noresponse/exports.py:
     last_write_checksum: sha1:602d0081cdf57b27c1132a03c65baa4cdfbfdcca
   src/noresponse/groups.py:
-    last_write_checksum: sha1:6dd3f0dd4fd4f72300ddb1ae33bb769779ca3e48
+    last_write_checksum: sha1:ba76c526e3e664a910778a9b221db8a1df0ac3e3
   src/noresponse/httpclient.py:
     last_write_checksum: sha1:42d9390943af968eaec153f168b526f4634382f3
   src/noresponse/integrations.py:
