@@ -1,5 +1,9 @@
 # Changelog
 
+## 19.0.2
+
+No changes detected.
+
 ## 19.0.1
 
 * `sdk.groups.get_person()`:  `response` **Changed**
