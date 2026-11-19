@@ -4,7 +4,7 @@ from noresponse._hooks import AfterParseErrorContext, HookContext, ResponseConte
 from noresponse.types import OptionalNullable, UNSET
 from noresponse.utils import get_security_from_env, response_helpers
 from noresponse.utils.unmarshal_json_response import unmarshal_json_response
-from typing import Any, Iterable, List, Mapping, Optional, Union, cast
+from typing import Any, Mapping, Optional, Union, cast
 
 
 class Investigations(BaseSDK):
@@ -387,7 +387,6 @@ class Investigations(BaseSDK):
         idempotency_key: str,
         depth: models.shared.ScreeningDepth,
         person_id: str,
-        platforms: Optional[Iterable[str]] = None,
         enrichment: Optional[
             Union[
                 models.shared.EnrichmentChange, models.shared.EnrichmentChangeTypedDict
@@ -405,7 +404,6 @@ class Investigations(BaseSDK):
         :param idempotency_key: Opaque request key, 16 to 128 characters. Repeating the key and request returns the same resource in its current state while it is retained. A different request with the same key answers 409. Use a new key for a deliberate new operation. Keys are scoped to the environment and operation; person searches also scope them to the group and person.
         :param depth:
         :param person_id:
-        :param platforms: Deprecated: leave it out. Without it the investigation is a full search: every platform a connector serves in the environment when the investigation starts, which the investigation then lists, each searched only with the identifiers its connector takes. A list sent here still limits the investigation until a later contract release removes the field.
         :param enrichment: A change to enrichment. A field left out keeps the value in force; max_spend or deadline null removes the bound.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -426,7 +424,6 @@ class Investigations(BaseSDK):
             idempotency_key=idempotency_key,
             body=models.shared.InvestigationRequest(
                 depth=depth,
-                platforms=utils.unmarshal(platforms, Optional[List[str]]),
                 person_id=person_id,
                 enrichment=utils.get_pydantic_model(
                     enrichment, Optional[models.shared.EnrichmentChange]
@@ -584,7 +581,6 @@ class Investigations(BaseSDK):
         idempotency_key: str,
         depth: models.shared.ScreeningDepth,
         person_id: str,
-        platforms: Optional[Iterable[str]] = None,
         enrichment: Optional[
             Union[
                 models.shared.EnrichmentChange, models.shared.EnrichmentChangeTypedDict
@@ -602,7 +598,6 @@ class Investigations(BaseSDK):
         :param idempotency_key: Opaque request key, 16 to 128 characters. Repeating the key and request returns the same resource in its current state while it is retained. A different request with the same key answers 409. Use a new key for a deliberate new operation. Keys are scoped to the environment and operation; person searches also scope them to the group and person.
         :param depth:
         :param person_id:
-        :param platforms: Deprecated: leave it out. Without it the investigation is a full search: every platform a connector serves in the environment when the investigation starts, which the investigation then lists, each searched only with the identifiers its connector takes. A list sent here still limits the investigation until a later contract release removes the field.
         :param enrichment: A change to enrichment. A field left out keeps the value in force; max_spend or deadline null removes the bound.
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
@@ -623,7 +618,6 @@ class Investigations(BaseSDK):
             idempotency_key=idempotency_key,
             body=models.shared.InvestigationRequest(
                 depth=depth,
-                platforms=utils.unmarshal(platforms, Optional[List[str]]),
                 person_id=person_id,
                 enrichment=utils.get_pydantic_model(
                     enrichment, Optional[models.shared.EnrichmentChange]

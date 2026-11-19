@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: 640e6890d71c46ef0a5a2f3c0fb76946
+  docChecksum: b2db3ee472712c1613bd8e4784a5e910
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 18.0.1
-  configChecksum: babd42f2f87c41466d576e1d0979fbbd
+  releaseVersion: 19.0.0
+  configChecksum: 50db8a20b33dfcca5b54f8dc671b1131
 features:
   python:
     additionalDependencies: 1.1.0
@@ -955,7 +955,7 @@ trackedFiles:
   docs/models/shared/investigationreport.md:
     last_write_checksum: sha1:f10e2ad8ff65a2217b359fae30bae74daf9ae0c7
   docs/models/shared/investigationrequest.md:
-    last_write_checksum: sha1:37a2e7d16f35267397b795049d8a4ee4c50a6c77
+    last_write_checksum: sha1:c9213c5fb3105889e683ca34d2103af1f6f06060
   docs/models/shared/investigationslist.md:
     last_write_checksum: sha1:bc8648eee579cdc57a63065d4ab5529186e67274
   docs/models/shared/investigationstatus.md:
@@ -1165,7 +1165,7 @@ trackedFiles:
   docs/models/shared/personrole.md:
     last_write_checksum: sha1:5cf9a00ade835098a5ee242d78a6e75a9eacfcf3
   docs/models/shared/personschedule.md:
-    last_write_checksum: sha1:96ff7a5a40174f62d738a9a83e519f99745464a2
+    last_write_checksum: sha1:9d8b7625f7bc8d12256b680be04d8e47f426b3be
   docs/models/shared/personschedulerequest.md:
     last_write_checksum: sha1:c870f5ff340667e2b29ae5a980521fe897c79638
   docs/models/shared/phoneenrichment.md:
@@ -1413,7 +1413,7 @@ trackedFiles:
   docs/models/shared/screeningprofile.md:
     last_write_checksum: sha1:44ffd71f9bfff321bc38468ae074f62d50f531c6
   docs/models/shared/screeningrequest.md:
-    last_write_checksum: sha1:2a5d640a6e85d91fae429cf29dbbaece77db3c21
+    last_write_checksum: sha1:b81f73c0f9318cc7ef15b3178bc303ef8482f49a
   docs/models/shared/screeningspend.md:
     last_write_checksum: sha1:d9a72e7a3c84be68c0fb0a04385cfd66b55d6213
   docs/models/shared/screeningspendline.md:
@@ -1555,7 +1555,7 @@ trackedFiles:
   docs/models/shared/workspaceperson.md:
     last_write_checksum: sha1:c0499b9ed4d80ddf2ba063a6e923e1d5c575f808
   docs/models/shared/workspacepersonreport.md:
-    last_write_checksum: sha1:dec4a36eb65931d734d9714313c48ca8e76aeb85
+    last_write_checksum: sha1:52382affcf99461ff675a90f2bdd56f6bd94131d
   docs/models/shared/workspacepersonrequest.md:
     last_write_checksum: sha1:965a0459cb2db591e9f6135e02effa9b81814b41
   docs/models/shared/workspacepersonresult.md:
@@ -1567,7 +1567,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:f4ed9df97846f83012839cedbfb375993e2e606f
   pyproject.toml:
-    last_write_checksum: sha1:ec4727be36312bbf7a6d628b8eb501a85218731f
+    last_write_checksum: sha1:507cfc720099c4b117d11ab9ffc52f12a80b63c4
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -1583,7 +1583,7 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:cb28a915d4615035d55669ae063ac84d8e7e7cbc
+    last_write_checksum: sha1:a6cabf4e9b1edadb791cab0d115e235b58a2dde2
   src/noresponse/accounts.py:
     last_write_checksum: sha1:c09abf6ab3b780a819d1a1ed0af35063bb2625e6
   src/noresponse/assessments.py:
@@ -1599,13 +1599,13 @@ trackedFiles:
   src/noresponse/exports.py:
     last_write_checksum: sha1:602d0081cdf57b27c1132a03c65baa4cdfbfdcca
   src/noresponse/groups.py:
-    last_write_checksum: sha1:ba76c526e3e664a910778a9b221db8a1df0ac3e3
+    last_write_checksum: sha1:490147fafd78b00e43d831d24cf8f6ef484b1f8e
   src/noresponse/httpclient.py:
     last_write_checksum: sha1:42d9390943af968eaec153f168b526f4634382f3
   src/noresponse/integrations.py:
     last_write_checksum: sha1:024c7ca3b2bc787df24a11d42dff177b60fbf206
   src/noresponse/investigations.py:
-    last_write_checksum: sha1:a72659c567783ada74c59c1b0109a7aa26dc8b38
+    last_write_checksum: sha1:7273eeb6e16aa5f6da82d484c38661a77e2c7388
   src/noresponse/invites.py:
     last_write_checksum: sha1:658ce915cb4a5e0119debee79e2869272949a93f
   src/noresponse/keys.py:
@@ -2281,7 +2281,7 @@ trackedFiles:
   src/noresponse/models/shared/investigationreport.py:
     last_write_checksum: sha1:3ee6c2fe9d565e1a49117923337e5a030f8f82c0
   src/noresponse/models/shared/investigationrequest.py:
-    last_write_checksum: sha1:9b9e87e9ce0b44d06a3effe602a7f990b08f090d
+    last_write_checksum: sha1:827dfe952d00977a8869bd33ca040b28e299134a
   src/noresponse/models/shared/investigationslist.py:
     last_write_checksum: sha1:17b52a6a1e49387ca791acb2b1afbe381690bbd8
   src/noresponse/models/shared/investigationstatus.py:
@@ -2451,7 +2451,7 @@ trackedFiles:
   src/noresponse/models/shared/personrole.py:
     last_write_checksum: sha1:73124bdc321749f2862cfc1134f234aeca457870
   src/noresponse/models/shared/personschedule.py:
-    last_write_checksum: sha1:000cb040e98a5ede43700a62f9f48767d9b07288
+    last_write_checksum: sha1:1c378c6f34e87716b8e8b786e64ef5543030eece
   src/noresponse/models/shared/personschedulerequest.py:
     last_write_checksum: sha1:fe9338a46e9cd358cb93298448de9e1d431b3412
   src/noresponse/models/shared/phoneenrichment.py:
@@ -2697,7 +2697,7 @@ trackedFiles:
   src/noresponse/models/shared/screeningprofile.py:
     last_write_checksum: sha1:abebac0ec6e15d7e1af7c0ad4c8a1dbd7903ced2
   src/noresponse/models/shared/screeningrequest.py:
-    last_write_checksum: sha1:06b91e7175bb9b6b83ef9a0db347bf463b92b234
+    last_write_checksum: sha1:877bfdffa7fdfc939c741700ceb5de427db94406
   src/noresponse/models/shared/screeningspend.py:
     last_write_checksum: sha1:5e91f720426a5d0642eb479e9450d6e686fe1c0d
   src/noresponse/models/shared/screeningspendline.py:
@@ -2823,7 +2823,7 @@ trackedFiles:
   src/noresponse/models/shared/workspaceperson.py:
     last_write_checksum: sha1:9d76e2d7d19c2c1fc258612d1fd363e5cfa6314b
   src/noresponse/models/shared/workspacepersonreport.py:
-    last_write_checksum: sha1:bbe096799a7d396b74d242ef62672a7dd00c339b
+    last_write_checksum: sha1:8c1a50a49f607b501383dc826e6289b387dda9d9
   src/noresponse/models/shared/workspacepersonrequest.py:
     last_write_checksum: sha1:c034fa813a1f0a472d1824487c71bfa0cc745cc5
   src/noresponse/models/shared/workspacepersonresult.py:

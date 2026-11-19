@@ -39,7 +39,7 @@ class WorkspacePersonReportTypedDict(TypedDict):
     changes: List[PersonChangeTypedDict]
     r"""What changed between each settled investigation of this person and the one before it, unreviewed first, then most significant, then newest. The first investigation records no changes. When evidence.read is denied, before and after are withheld."""
     schedule: PersonScheduleTypedDict
-    r"""The person's rerun schedule. Each due run starts a full investigation of the person, as POST /v1/investigations with no platforms does, and its changes are stored as changes. The schedule lives in the database and the worker runs it, so it survives restarts and releases; each due run starts exactly one investigation."""
+    r"""The person's rerun schedule. Each due run starts a full investigation of the person, as POST /v1/investigations does, and its changes are stored as changes. The schedule lives in the database and the worker runs it, so it survives restarts and releases; each due run starts exactly one investigation."""
     external_id: NotRequired[str]
     r"""Your reference for this person within the workspace environment. Only an explicit reference or person_id can reuse an existing person."""
     name: NotRequired[str]
@@ -97,7 +97,7 @@ class WorkspacePersonReport(BaseModel):
     r"""What changed between each settled investigation of this person and the one before it, unreviewed first, then most significant, then newest. The first investigation records no changes. When evidence.read is denied, before and after are withheld."""
 
     schedule: PersonSchedule
-    r"""The person's rerun schedule. Each due run starts a full investigation of the person, as POST /v1/investigations with no platforms does, and its changes are stored as changes. The schedule lives in the database and the worker runs it, so it survives restarts and releases; each due run starts exactly one investigation."""
+    r"""The person's rerun schedule. Each due run starts a full investigation of the person, as POST /v1/investigations does, and its changes are stored as changes. The schedule lives in the database and the worker runs it, so it survives restarts and releases; each due run starts exactly one investigation."""
 
     external_id: Optional[str] = None
     r"""Your reference for this person within the workspace environment. Only an explicit reference or person_id can reuse an existing person."""

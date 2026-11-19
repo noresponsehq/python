@@ -26,7 +26,7 @@ created = nr.people.create(
 ).result
 job = nr.investigations.create(
     idempotency_key="case-1042-investigation-1",
-    person_id=created.person.id, depth="standard", platforms=["x"],
+    person_id=created.person.id, depth="standard",
 ).result
 print(job.id, job.status, created.person.expires_at)
 ```
