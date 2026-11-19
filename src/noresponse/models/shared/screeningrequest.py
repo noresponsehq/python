@@ -7,7 +7,7 @@ from typing_extensions import NotRequired, TypedDict
 
 
 class ScreeningRequestTypedDict(TypedDict):
-    r"""Screens the group's people no screening has reached and everyone on watch or escalated."""
+    r"""Screens the group's people no screening has reached."""
 
     depth: ScreeningDepth
     platforms: NotRequired[List[str]]
@@ -15,7 +15,7 @@ class ScreeningRequestTypedDict(TypedDict):
 
 
 class ScreeningRequest(BaseModel):
-    r"""Screens the group's people no screening has reached and everyone on watch or escalated."""
+    r"""Screens the group's people no screening has reached."""
 
     depth: ScreeningDepth
 

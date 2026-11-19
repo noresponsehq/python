@@ -20,7 +20,7 @@ class ScreeningCompletedTypedDict(TypedDict):
     status: ScreeningCompletedStatus
     r"""completed reached every person; partial left some not fully covered (partial_coverage); failed covered nobody."""
     people_total: int
-    r"""Every person the screening set out to reach: those no screening had reached and those on watch or escalated."""
+    r"""Every person the screening set out to reach: those no screening had reached."""
     people_screened: int
     r"""People the screening covered, flagged or not."""
     people_flagged: int
@@ -52,7 +52,7 @@ class ScreeningCompleted(BaseModel):
     r"""completed reached every person; partial left some not fully covered (partial_coverage); failed covered nobody."""
 
     people_total: int
-    r"""Every person the screening set out to reach: those no screening had reached and those on watch or escalated."""
+    r"""Every person the screening set out to reach: those no screening had reached."""
 
     people_screened: int
     r"""People the screening covered, flagged or not."""
