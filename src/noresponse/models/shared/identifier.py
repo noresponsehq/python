@@ -6,7 +6,9 @@ from typing import Literal, Union
 Identifier = Union[
     Literal[
         "email",
+        "phone",
         "username",
+        "name",
     ],
     UnrecognizedStr,
 ]

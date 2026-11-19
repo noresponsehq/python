@@ -1,7 +1,7 @@
 from __future__ import annotations
 from .accounttype import AccountType
 from .failurereason import FailureReason
-from .identifier import Identifier
+from .riskdetailseventidentifier import RiskDetailsEventIdentifier
 from .signaloutcome import SignalOutcome
 from noresponse.types import BaseModel, UNSET_SENTINEL, UnrecognizedStr
 from pydantic import model_serializer
@@ -30,7 +30,7 @@ class OnlineAccountTypedDict(TypedDict):
     r"""The platform's name, such as Adobe or GitHub."""
     domain: str
     r"""The platform's domain, lower case: the host its logo is fetched for."""
-    identifier: Identifier
+    identifier: RiskDetailsEventIdentifier
     outcome: SignalOutcome
     r"""Per-signal outcome. A source that timed out, was blocked or errored reports blocked, unavailable or inconclusive with a reason and is listed in incomplete_sources; not_found is a definite absence."""
     reason: NotRequired[FailureReason]
@@ -58,7 +58,7 @@ class OnlineAccount(BaseModel):
     domain: str
     r"""The platform's domain, lower case: the host its logo is fetched for."""
 
-    identifier: Identifier
+    identifier: RiskDetailsEventIdentifier
 
     outcome: SignalOutcome
     r"""Per-signal outcome. A source that timed out, was blocked or errored reports blocked, unavailable or inconclusive with a reason and is listed in incomplete_sources; not_found is a definite absence."""

@@ -1,6 +1,6 @@
 from __future__ import annotations
 from .footprintfamily import FootprintFamily
-from .identifier import Identifier
+from .riskdetailseventidentifier import RiskDetailsEventIdentifier
 from .riskdetailseventkind import RiskDetailsEventKind
 from noresponse.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
@@ -15,7 +15,7 @@ class RiskDetailsEventTypedDict(TypedDict):
     category: str
     family: FootprintFamily
     r"""The source-neutral kind of evidence: account_presence (an account found on a site), auth_provider (the account at your auth provider), breach (breach and credential tables), breach_abuse (abuse and fraud communities' tables) and code_hosting (a code hosting profile)."""
-    identifier: Identifier
+    identifier: RiskDetailsEventIdentifier
     month: NotRequired[int]
 
 
@@ -31,7 +31,7 @@ class RiskDetailsEvent(BaseModel):
     family: FootprintFamily
     r"""The source-neutral kind of evidence: account_presence (an account found on a site), auth_provider (the account at your auth provider), breach (breach and credential tables), breach_abuse (abuse and fraud communities' tables) and code_hosting (a code hosting profile)."""
 
-    identifier: Identifier
+    identifier: RiskDetailsEventIdentifier
 
     month: Optional[int] = None
 

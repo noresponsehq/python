@@ -3,6 +3,7 @@ from .record import Record, RecordTypedDict
 from .recordremaining import RecordRemaining, RecordRemainingTypedDict
 from .riskdetails import RiskDetails, RiskDetailsTypedDict
 from .risksummary import RiskSummary, RiskSummaryTypedDict
+from .screeninglookupanswer import ScreeningLookupAnswer, ScreeningLookupAnswerTypedDict
 from .screeninglookupcheck import ScreeningLookupCheck, ScreeningLookupCheckTypedDict
 from noresponse.types import BaseModel, UNSET_SENTINEL
 from pydantic import model_serializer
@@ -17,6 +18,8 @@ class ScreeningLookupTypedDict(TypedDict):
     r"""Each lane each identifier was looked up in, identifiers in the order email, phone, username and lanes in the order accounts, phone, breach, domain. Every lane the person's identifiers are looked up in is listed: one that no source answered, or that no source could be asked in, is not_covered. Empty when the person has no email, phone or handle to look up."""
     looked_at: str
     r"""When the lookups ran."""
+    answers: NotRequired[List[ScreeningLookupAnswerTypedDict]]
+    r"""Each source asked, with what it answered and when. answered_at is absent while the source has not answered."""
     summary: NotRequired[RiskSummaryTypedDict]
     r"""A few typed facts per identifier: an assessment's risk.summary, and a screened person's lookup summary. Every fact is optional: absent means the evidence did not answer and makes no claim, while false or 0 is a definite answer."""
     details: NotRequired[RiskDetailsTypedDict]
@@ -36,6 +39,9 @@ class ScreeningLookup(BaseModel):
     looked_at: str
     r"""When the lookups ran."""
 
+    answers: Optional[List[ScreeningLookupAnswer]] = None
+    r"""Each source asked, with what it answered and when. answered_at is absent while the source has not answered."""
+
     summary: Optional[RiskSummary] = None
     r"""A few typed facts per identifier: an assessment's risk.summary, and a screened person's lookup summary. Every fact is optional: absent means the evidence did not answer and makes no claim, while false or 0 is a definite answer."""
 
@@ -50,7 +56,7 @@ class ScreeningLookup(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["summary", "details", "records", "remaining"])
+        optional_fields = set(["answers", "summary", "details", "records", "remaining"])
         serialized = handler(self)
         m = {}
 

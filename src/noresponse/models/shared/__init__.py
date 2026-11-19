@@ -668,6 +668,7 @@ if TYPE_CHECKING:
         RiskDetailsBreachNameTypedDict,
     )
     from .riskdetailsevent import RiskDetailsEvent, RiskDetailsEventTypedDict
+    from .riskdetailseventidentifier import RiskDetailsEventIdentifier
     from .riskdetailseventkind import RiskDetailsEventKind
     from .riskdetailsphonename import (
         RiskDetailsPhoneName,
@@ -708,6 +709,10 @@ if TYPE_CHECKING:
     from .screeningfinding import ScreeningFinding, ScreeningFindingTypedDict
     from .screeninglist import ScreeningList, ScreeningListTypedDict
     from .screeninglookup import ScreeningLookup, ScreeningLookupTypedDict
+    from .screeninglookupanswer import (
+        ScreeningLookupAnswer,
+        ScreeningLookupAnswerTypedDict,
+    )
     from .screeninglookupcheck import (
         ScreeningLookupCheck,
         ScreeningLookupCheckTypedDict,
@@ -1509,6 +1514,7 @@ __all__ = [
     "RiskDetailsBreachName",
     "RiskDetailsBreachNameTypedDict",
     "RiskDetailsEvent",
+    "RiskDetailsEventIdentifier",
     "RiskDetailsEventKind",
     "RiskDetailsEventTypedDict",
     "RiskDetailsPhoneName",
@@ -1549,6 +1555,8 @@ __all__ = [
     "ScreeningList",
     "ScreeningListTypedDict",
     "ScreeningLookup",
+    "ScreeningLookupAnswer",
+    "ScreeningLookupAnswerTypedDict",
     "ScreeningLookupCheck",
     "ScreeningLookupCheckStatus",
     "ScreeningLookupCheckTypedDict",
@@ -2380,6 +2388,7 @@ _dynamic_imports: dict[str, str] = {
     "RiskDetailsBreachNameTypedDict": ".riskdetailsbreachname",
     "RiskDetailsEvent": ".riskdetailsevent",
     "RiskDetailsEventTypedDict": ".riskdetailsevent",
+    "RiskDetailsEventIdentifier": ".riskdetailseventidentifier",
     "RiskDetailsEventKind": ".riskdetailseventkind",
     "RiskDetailsPhoneName": ".riskdetailsphonename",
     "RiskDetailsPhoneNameTypedDict": ".riskdetailsphonename",
@@ -2419,6 +2428,8 @@ _dynamic_imports: dict[str, str] = {
     "ScreeningListTypedDict": ".screeninglist",
     "ScreeningLookup": ".screeninglookup",
     "ScreeningLookupTypedDict": ".screeninglookup",
+    "ScreeningLookupAnswer": ".screeninglookupanswer",
+    "ScreeningLookupAnswerTypedDict": ".screeninglookupanswer",
     "ScreeningLookupCheck": ".screeninglookupcheck",
     "ScreeningLookupCheckTypedDict": ".screeninglookupcheck",
     "ScreeningLookupCheckStatus": ".screeninglookupcheckstatus",

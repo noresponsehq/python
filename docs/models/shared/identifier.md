@@ -15,4 +15,6 @@ value: Identifier = "email"
 This is an open enum. Unrecognized values will not fail type checks.
 
 - `"email"`
+- `"phone"`
 - `"username"`
+- `"name"`
