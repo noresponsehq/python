@@ -593,6 +593,8 @@ if TYPE_CHECKING:
     from .recommendation import Recommendation
     from .record import Record, RecordTypedDict
     from .recorddistinctive import RecordDistinctive, RecordDistinctiveTypedDict
+    from .recordevidence import RecordEvidence, RecordEvidenceTypedDict
+    from .recordevidencesignal import RecordEvidenceSignal
     from .recordfield import RecordField, RecordFieldTypedDict
     from .recordkind import RecordKind
     from .recordmatch import RecordMatch, RecordMatchTypedDict
@@ -1434,6 +1436,9 @@ __all__ = [
     "Record",
     "RecordDistinctive",
     "RecordDistinctiveTypedDict",
+    "RecordEvidence",
+    "RecordEvidenceSignal",
+    "RecordEvidenceTypedDict",
     "RecordField",
     "RecordFieldTypedDict",
     "RecordKind",
@@ -2308,6 +2313,9 @@ _dynamic_imports: dict[str, str] = {
     "RecordTypedDict": ".record",
     "RecordDistinctive": ".recorddistinctive",
     "RecordDistinctiveTypedDict": ".recorddistinctive",
+    "RecordEvidence": ".recordevidence",
+    "RecordEvidenceTypedDict": ".recordevidence",
+    "RecordEvidenceSignal": ".recordevidencesignal",
     "RecordField": ".recordfield",
     "RecordFieldTypedDict": ".recordfield",
     "RecordKind": ".recordkind",

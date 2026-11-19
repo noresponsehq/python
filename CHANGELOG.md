@@ -1,5 +1,11 @@
 # Changelog
 
+## 17.0.1
+
+* `sdk.groups.get_person()`:  `response.profiles[].record` **Changed**
+* `sdk.people.get()`:  `response.profiles[].record` **Changed**
+* `sdk.investigations.get()`:  `response.profiles[].record` **Changed**
+
 ## 17.0.0
 
 * `sdk.groups.get_person()`:  `response.lookup` **Changed** (Breaking ⚠️)

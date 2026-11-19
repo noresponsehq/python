@@ -1,4 +1,5 @@
 from __future__ import annotations
+from .recordevidence import RecordEvidence, RecordEvidenceTypedDict
 from .recordfield import RecordField, RecordFieldTypedDict
 from .recordmatch import RecordMatch, RecordMatchTypedDict
 from .recordsource import RecordSource, RecordSourceTypedDict
@@ -32,6 +33,10 @@ class RecordTypedDict(TypedDict):
     r"""Whether the record joins the person: its likelihood reached 0.9 or a reviewer joined it, and no reviewer rejected it. A record that does not join stays a lead."""
     verdict: NotRequired[Verdict]
     r"""A reviewer's overrule (POST .../people/{person_id}/records), which decides joined whatever the likelihood and sticks for as long as a lookup finds the same record. Absent when nobody overruled it."""
+    evidence: NotRequired[List[RecordEvidenceTypedDict]]
+    r"""Why the record has its likelihood, as the items that make it up: what found it and each value it agrees or clashes with, each with its weight in bits. The bits add up to the likelihood before rounding: likelihood = 1 / (1 + 2^-sum). Only the strongest agreement of each kind counts, and a place counts once however many of its city, region, country and address agree. Present on a person's lookup records that have any such item."""
+    path: NotRequired[List[str]]
+    r"""How the record connects to what the investigator gave: given first, then the ids of the joined records it reached the person through, nearest last. Each step follows what found the record before the strongest agreement. A record with no link to the person has no path."""
 
 
 class Record(BaseModel):
@@ -67,9 +72,17 @@ class Record(BaseModel):
     verdict: Optional[Verdict] = None
     r"""A reviewer's overrule (POST .../people/{person_id}/records), which decides joined whatever the likelihood and sticks for as long as a lookup finds the same record. Absent when nobody overruled it."""
 
+    evidence: Optional[List[RecordEvidence]] = None
+    r"""Why the record has its likelihood, as the items that make it up: what found it and each value it agrees or clashes with, each with its weight in bits. The bits add up to the likelihood before rounding: likelihood = 1 / (1 + 2^-sum). Only the strongest agreement of each kind counts, and a place counts once however many of its city, region, country and address agree. Present on a person's lookup records that have any such item."""
+
+    path: Optional[List[str]] = None
+    r"""How the record connects to what the investigator gave: given first, then the ids of the joined records it reached the person through, nearest last. Each step follows what found the record before the strongest agreement. A record with no link to the person has no path."""
+
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(["likelihood", "agreed", "clashed", "joined", "verdict"])
+        optional_fields = set(
+            ["likelihood", "agreed", "clashed", "joined", "verdict", "evidence", "path"]
+        )
         serialized = handler(self)
         m = {}
 
