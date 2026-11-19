@@ -1,5 +1,10 @@
 # Changelog
 
+## 17.0.2
+
+* `sdk.people.schedule()`: **Added**
+* `sdk.people.get()`:  `response.schedule` **Added**
+
 ## 17.0.1
 
 * `sdk.groups.get_person()`:  `response.profiles[].record` **Changed**

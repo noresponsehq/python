@@ -389,6 +389,7 @@ if TYPE_CHECKING:
     )
     from .keyusageevent import KeyUsageEvent, KeyUsageEventTypedDict
     from .lane import Lane
+    from .lasterror import LastError
     from .linetype import LineType
     from .linkedaccount import LinkedAccount, LinkedAccountTypedDict
     from .linkedaccountpage import LinkedAccountPage, LinkedAccountPageTypedDict
@@ -474,6 +475,11 @@ if TYPE_CHECKING:
     from .personreview import PersonReview, PersonReviewTypedDict
     from .personreviewrequest import PersonReviewRequest, PersonReviewRequestTypedDict
     from .personrole import PersonRole
+    from .personschedule import PersonSchedule, PersonScheduleTypedDict
+    from .personschedulerequest import (
+        PersonScheduleRequest,
+        PersonScheduleRequestTypedDict,
+    )
     from .phoneenrichment import PhoneEnrichment, PhoneEnrichmentTypedDict
     from .phoneenrichmentfields import (
         AlternateName,
@@ -683,6 +689,7 @@ if TYPE_CHECKING:
     from .risksummaryphone import RiskSummaryPhone, RiskSummaryPhoneTypedDict
     from .risksummaryusername import RiskSummaryUsername, RiskSummaryUsernameTypedDict
     from .role import Role
+    from .scheduleperiod import SchedulePeriod
     from .scope_enum import ScopeEnum
     from .screening import Screening, ScreeningTypedDict
     from .screeningcancelrequest import (
@@ -1247,6 +1254,7 @@ __all__ = [
     "KeyUsageEvent",
     "KeyUsageEventTypedDict",
     "Lane",
+    "LastError",
     "LineType",
     "LinkedAccount",
     "LinkedAccountPage",
@@ -1363,6 +1371,10 @@ __all__ = [
     "PersonReviewRequestTypedDict",
     "PersonReviewTypedDict",
     "PersonRole",
+    "PersonSchedule",
+    "PersonScheduleRequest",
+    "PersonScheduleRequestTypedDict",
+    "PersonScheduleTypedDict",
     "PersonTypedDict",
     "PhoneEnrichment",
     "PhoneEnrichmentFields",
@@ -1540,6 +1552,7 @@ __all__ = [
     "RiskSummaryUsernameTypedDict",
     "RiskTypedDict",
     "Role",
+    "SchedulePeriod",
     "ScopeEnum",
     "Screening",
     "ScreeningCancelRequest",
@@ -2102,6 +2115,7 @@ _dynamic_imports: dict[str, str] = {
     "KeyUsageEvent": ".keyusageevent",
     "KeyUsageEventTypedDict": ".keyusageevent",
     "Lane": ".lane",
+    "LastError": ".lasterror",
     "LineType": ".linetype",
     "LinkedAccount": ".linkedaccount",
     "LinkedAccountTypedDict": ".linkedaccount",
@@ -2212,6 +2226,10 @@ _dynamic_imports: dict[str, str] = {
     "PersonReviewRequest": ".personreviewrequest",
     "PersonReviewRequestTypedDict": ".personreviewrequest",
     "PersonRole": ".personrole",
+    "PersonSchedule": ".personschedule",
+    "PersonScheduleTypedDict": ".personschedule",
+    "PersonScheduleRequest": ".personschedulerequest",
+    "PersonScheduleRequestTypedDict": ".personschedulerequest",
     "PhoneEnrichment": ".phoneenrichment",
     "PhoneEnrichmentTypedDict": ".phoneenrichment",
     "AlternateName": ".phoneenrichmentfields",
@@ -2416,6 +2434,7 @@ _dynamic_imports: dict[str, str] = {
     "RiskSummaryUsername": ".risksummaryusername",
     "RiskSummaryUsernameTypedDict": ".risksummaryusername",
     "Role": ".role",
+    "SchedulePeriod": ".scheduleperiod",
     "ScopeEnum": ".scope_enum",
     "Screening": ".screening",
     "ScreeningTypedDict": ".screening",

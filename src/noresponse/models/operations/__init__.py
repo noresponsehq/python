@@ -696,6 +696,12 @@ if TYPE_CHECKING:
         RunWorkspacePersonSearchResponse,
         RunWorkspacePersonSearchResponseTypedDict,
     )
+    from .scheduleworkspaceperson import (
+        ScheduleWorkspacePersonRequest,
+        ScheduleWorkspacePersonRequestTypedDict,
+        ScheduleWorkspacePersonResponse,
+        ScheduleWorkspacePersonResponseTypedDict,
+    )
     from .searchaccounts import SearchAccountsResponse, SearchAccountsResponseTypedDict
     from .searchassessments import (
         SearchAssessmentsResponse,
@@ -1235,6 +1241,10 @@ __all__ = [
     "RunWorkspacePersonSearchRequestTypedDict",
     "RunWorkspacePersonSearchResponse",
     "RunWorkspacePersonSearchResponseTypedDict",
+    "ScheduleWorkspacePersonRequest",
+    "ScheduleWorkspacePersonRequestTypedDict",
+    "ScheduleWorkspacePersonResponse",
+    "ScheduleWorkspacePersonResponseTypedDict",
     "SearchAccountsResponse",
     "SearchAccountsResponseTypedDict",
     "SearchAssessmentsResponse",
@@ -1748,6 +1758,10 @@ _dynamic_imports: dict[str, str] = {
     "RunWorkspacePersonSearchRequestTypedDict": ".runworkspacepersonsearch",
     "RunWorkspacePersonSearchResponse": ".runworkspacepersonsearch",
     "RunWorkspacePersonSearchResponseTypedDict": ".runworkspacepersonsearch",
+    "ScheduleWorkspacePersonRequest": ".scheduleworkspaceperson",
+    "ScheduleWorkspacePersonRequestTypedDict": ".scheduleworkspaceperson",
+    "ScheduleWorkspacePersonResponse": ".scheduleworkspaceperson",
+    "ScheduleWorkspacePersonResponseTypedDict": ".scheduleworkspaceperson",
     "SearchAccountsResponse": ".searchaccounts",
     "SearchAccountsResponseTypedDict": ".searchaccounts",
     "SearchAssessmentsResponse": ".searchassessments",
