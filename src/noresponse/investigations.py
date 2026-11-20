@@ -8,7 +8,7 @@ from typing import Any, Mapping, Optional, Union, cast
 
 
 class Investigations(BaseSDK):
-    r"""Person investigation jobs, retained results and contextual decisions."""
+    r"""Person investigation jobs and retained results."""
 
     @property
     def with_raw_response(self):
@@ -783,7 +783,7 @@ class Investigations(BaseSDK):
     ) -> models.operations.GetInvestigationResponse:
         r"""Read an investigation and its evidence.
 
-        Returns this investigation's status, coverage, source records, posts, media and contextual review history. Full evidence is returned by default; explicit evidence.read denial keeps submitted person details, status, coverage and decision summaries and hides collected evidence and free-text notes. The read is durably audited as person.viewed. The API key selects the workspace and environment. Missing, foreign or expired results answer 404.
+        Returns this investigation's status, coverage, source records, posts and media. Full evidence is returned by default; explicit evidence.read denial keeps submitted person details, status and coverage, and hides collected evidence. The read is durably audited as person.viewed. The API key selects the workspace and environment. Missing, foreign or expired results answer 404.
 
         :param investigation_id:
         :param retries: Override the default retry configuration for this method
@@ -957,7 +957,7 @@ class Investigations(BaseSDK):
     ) -> models.operations.GetInvestigationResponse:
         r"""Read an investigation and its evidence.
 
-        Returns this investigation's status, coverage, source records, posts, media and contextual review history. Full evidence is returned by default; explicit evidence.read denial keeps submitted person details, status, coverage and decision summaries and hides collected evidence and free-text notes. The read is durably audited as person.viewed. The API key selects the workspace and environment. Missing, foreign or expired results answer 404.
+        Returns this investigation's status, coverage, source records, posts and media. Full evidence is returned by default; explicit evidence.read denial keeps submitted person details, status and coverage, and hides collected evidence. The read is durably audited as person.viewed. The API key selects the workspace and environment. Missing, foreign or expired results answer 404.
 
         :param investigation_id:
         :param retries: Override the default retry configuration for this method
@@ -1081,349 +1081,6 @@ class Investigations(BaseSDK):
             is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
             stream=_noresponse_response_mode == "streaming",
             retry_config=retry_config,
-        )
-        if _noresponse_response_mode != "parsed":
-            if utils.match_status_codes(["4XX", "5XX"], http_res.status_code):
-                await http_res.aread()
-                try:
-                    await _noresponse_parse_response(http_res)
-                except Exception as parse_exc_:
-                    await response_helpers.raise_parse_error_async(
-                        self.sdk_configuration.__dict__.get("_async_hooks"),
-                        self.sdk_configuration.__dict__.get("_hooks"),
-                        AfterParseErrorContext(_noresponse_hook_ctx),
-                        http_res,
-                        parse_exc_,
-                    )
-            _noresponse_response_cls = (
-                response_helpers.AsyncStreamedAPIResponse
-                if _noresponse_response_mode == "streaming"
-                else response_helpers.AsyncAPIResponse
-            )
-            return cast(
-                Any,
-                _noresponse_response_cls(
-                    raw=http_res,
-                    parser=_noresponse_parse_response,
-                    mode="buffered",
-                    client_ref=self,
-                    hook_ctx=AfterParseErrorContext(_noresponse_hook_ctx),
-                    hooks=self.sdk_configuration.__dict__.get("_hooks"),
-                    async_hooks=self.sdk_configuration.__dict__.get("_async_hooks"),
-                ),
-            )
-        try:
-            return await _noresponse_parse_response(http_res)
-        except Exception as parse_exc_:
-            await response_helpers.raise_parse_error_async(
-                self.sdk_configuration.__dict__.get("_async_hooks"),
-                self.sdk_configuration.__dict__.get("_hooks"),
-                AfterParseErrorContext(_noresponse_hook_ctx),
-                http_res,
-                parse_exc_,
-            )
-
-    def review(
-        self,
-        investigation_id: str,
-        *,
-        decision: models.shared.PersonDecision,
-        note: Optional[str] = None,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.operations.ReviewInvestigationResponse:
-        r"""Record an investigation decision.
-
-        Record an investigation decision. Deprecated: decisions are leaving people and groups. The console no longer records them and no screening reads them. This route is removed in the next contract release; stop calling it. The API key determines the workspace and environment.
-
-        :param investigation_id:
-        :param decision:
-        :param note: Why, for the venue team and later reviewers.
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.operations.ReviewInvestigationRequest(
-            investigation_id=investigation_id,
-            body=models.shared.PersonReviewRequest(
-                decision=decision,
-                note=note,
-            ),
-        )
-
-        _noresponse_response_mode, http_headers = (
-            response_helpers.consume_response_mode(http_headers)
-        )
-        req = self._build_request(
-            method="POST",
-            path="/v1/investigations/{investigation_id}/reviews",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.body, False, False, "json", models.shared.PersonReviewRequest
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        def _noresponse_parse_response(http_res):
-            response_data: Any = None
-            if utils.match_response(http_res, "200", "application/json"):
-                return models.operations.ReviewInvestigationResponse(
-                    result=unmarshal_json_response(
-                        models.shared.Investigation, http_res
-                    ),
-                    headers=utils.get_response_headers(http_res.headers),
-                )
-            if utils.match_response(http_res, "400", "application/problem+json"):
-                response_data = unmarshal_json_response(
-                    models.errors.BadRequestErrorData, http_res
-                )
-                raise models.errors.BadRequestError(response_data, http_res)
-            if utils.match_response(http_res, "401", "application/problem+json"):
-                response_data = unmarshal_json_response(
-                    models.errors.AuthenticationErrorData, http_res
-                )
-                raise models.errors.AuthenticationError(response_data, http_res)
-            if utils.match_response(http_res, "403", "application/problem+json"):
-                response_data = unmarshal_json_response(
-                    models.errors.PermissionDeniedErrorData, http_res
-                )
-                raise models.errors.PermissionDeniedError(response_data, http_res)
-            if utils.match_response(http_res, "404", "application/problem+json"):
-                response_data = unmarshal_json_response(
-                    models.errors.NotFoundErrorData, http_res
-                )
-                raise models.errors.NotFoundError(response_data, http_res)
-            if utils.match_response(http_res, "409", "application/problem+json"):
-                response_data = unmarshal_json_response(
-                    models.errors.ConflictErrorData, http_res
-                )
-                raise models.errors.ConflictError(response_data, http_res)
-            if utils.match_response(http_res, "429", "application/problem+json"):
-                response_data = unmarshal_json_response(
-                    models.errors.RateLimitErrorData, http_res
-                )
-                raise models.errors.RateLimitError(response_data, http_res)
-            if utils.match_response(http_res, "4XX", "*"):
-                http_res_text = utils.stream_to_text(http_res)
-                raise models.errors.APIStatusError(
-                    "API error occurred", http_res, http_res_text
-                )
-            if utils.match_response(http_res, "5XX", "*"):
-                http_res_text = utils.stream_to_text(http_res)
-                raise models.errors.APIStatusError(
-                    "API error occurred", http_res, http_res_text
-                )
-
-            raise models.errors.APIStatusError("Unexpected response received", http_res)
-
-        _noresponse_hook_ctx = HookContext(
-            config=self.sdk_configuration,
-            base_url=base_url or "",
-            operation_id="reviewInvestigation",
-            oauth2_scopes=None,
-            security_source=get_security_from_env(
-                self.sdk_configuration.security, models.shared.Security
-            ),
-            tags=["investigations"],
-            extensions=None,
-            response=ResponseContext(mode=_noresponse_response_mode, execution="sync"),
-        )
-        http_res = self.do_request(
-            hook_ctx=_noresponse_hook_ctx,
-            request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
-            stream=_noresponse_response_mode == "streaming",
-        )
-        if _noresponse_response_mode != "parsed":
-            if utils.match_status_codes(["4XX", "5XX"], http_res.status_code):
-                http_res.read()
-                try:
-                    _noresponse_parse_response(http_res)
-                except Exception as parse_exc_:
-                    response_helpers.raise_parse_error(
-                        self.sdk_configuration.__dict__["_hooks"],
-                        AfterParseErrorContext(_noresponse_hook_ctx),
-                        http_res,
-                        parse_exc_,
-                    )
-            _noresponse_response_cls = (
-                response_helpers.StreamedAPIResponse
-                if _noresponse_response_mode == "streaming"
-                else response_helpers.APIResponse
-            )
-            return cast(
-                Any,
-                _noresponse_response_cls(
-                    raw=http_res,
-                    parser=_noresponse_parse_response,
-                    mode="buffered",
-                    client_ref=self,
-                    hook_ctx=AfterParseErrorContext(_noresponse_hook_ctx),
-                    hooks=self.sdk_configuration.__dict__.get("_hooks"),
-                ),
-            )
-        try:
-            return _noresponse_parse_response(http_res)
-        except Exception as parse_exc_:
-            response_helpers.raise_parse_error(
-                self.sdk_configuration.__dict__["_hooks"],
-                AfterParseErrorContext(_noresponse_hook_ctx),
-                http_res,
-                parse_exc_,
-            )
-
-    async def review_async(
-        self,
-        investigation_id: str,
-        *,
-        decision: models.shared.PersonDecision,
-        note: Optional[str] = None,
-        server_url: Optional[str] = None,
-        timeout_ms: Optional[int] = None,
-        http_headers: Optional[Mapping[str, str]] = None,
-    ) -> models.operations.ReviewInvestigationResponse:
-        r"""Record an investigation decision.
-
-        Record an investigation decision. Deprecated: decisions are leaving people and groups. The console no longer records them and no screening reads them. This route is removed in the next contract release; stop calling it. The API key determines the workspace and environment.
-
-        :param investigation_id:
-        :param decision:
-        :param note: Why, for the venue team and later reviewers.
-        :param server_url: Override the default server URL for this method
-        :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
-        :param http_headers: Additional headers to set or replace on requests.
-        """
-        base_url = None
-        url_variables = None
-        if timeout_ms is None:
-            timeout_ms = self.sdk_configuration.timeout_ms
-
-        if server_url is not None:
-            base_url = server_url
-        else:
-            base_url = self._get_url(base_url, url_variables)
-
-        request = models.operations.ReviewInvestigationRequest(
-            investigation_id=investigation_id,
-            body=models.shared.PersonReviewRequest(
-                decision=decision,
-                note=note,
-            ),
-        )
-
-        _noresponse_response_mode, http_headers = (
-            response_helpers.consume_response_mode(http_headers)
-        )
-        req = self._build_request_async(
-            method="POST",
-            path="/v1/investigations/{investigation_id}/reviews",
-            base_url=base_url,
-            url_variables=url_variables,
-            request=request,
-            request_body_required=True,
-            request_has_path_params=True,
-            request_has_query_params=True,
-            user_agent_header="user-agent",
-            accept_header_value="application/json",
-            http_headers=http_headers,
-            security=self.sdk_configuration.security,
-            get_serialized_body=lambda: utils.serialize_request_body(
-                request.body, False, False, "json", models.shared.PersonReviewRequest
-            ),
-            allow_empty_value=None,
-            timeout_ms=timeout_ms,
-        )
-
-        async def _noresponse_parse_response(http_res):
-            response_data: Any = None
-            if utils.match_response(http_res, "200", "application/json"):
-                return models.operations.ReviewInvestigationResponse(
-                    result=unmarshal_json_response(
-                        models.shared.Investigation, http_res
-                    ),
-                    headers=utils.get_response_headers(http_res.headers),
-                )
-            if utils.match_response(http_res, "400", "application/problem+json"):
-                response_data = unmarshal_json_response(
-                    models.errors.BadRequestErrorData, http_res
-                )
-                raise models.errors.BadRequestError(response_data, http_res)
-            if utils.match_response(http_res, "401", "application/problem+json"):
-                response_data = unmarshal_json_response(
-                    models.errors.AuthenticationErrorData, http_res
-                )
-                raise models.errors.AuthenticationError(response_data, http_res)
-            if utils.match_response(http_res, "403", "application/problem+json"):
-                response_data = unmarshal_json_response(
-                    models.errors.PermissionDeniedErrorData, http_res
-                )
-                raise models.errors.PermissionDeniedError(response_data, http_res)
-            if utils.match_response(http_res, "404", "application/problem+json"):
-                response_data = unmarshal_json_response(
-                    models.errors.NotFoundErrorData, http_res
-                )
-                raise models.errors.NotFoundError(response_data, http_res)
-            if utils.match_response(http_res, "409", "application/problem+json"):
-                response_data = unmarshal_json_response(
-                    models.errors.ConflictErrorData, http_res
-                )
-                raise models.errors.ConflictError(response_data, http_res)
-            if utils.match_response(http_res, "429", "application/problem+json"):
-                response_data = unmarshal_json_response(
-                    models.errors.RateLimitErrorData, http_res
-                )
-                raise models.errors.RateLimitError(response_data, http_res)
-            if utils.match_response(http_res, "4XX", "*"):
-                http_res_text = await utils.stream_to_text_async(http_res)
-                raise models.errors.APIStatusError(
-                    "API error occurred", http_res, http_res_text
-                )
-            if utils.match_response(http_res, "5XX", "*"):
-                http_res_text = await utils.stream_to_text_async(http_res)
-                raise models.errors.APIStatusError(
-                    "API error occurred", http_res, http_res_text
-                )
-
-            raise models.errors.APIStatusError("Unexpected response received", http_res)
-
-        _noresponse_hook_ctx = HookContext(
-            config=self.sdk_configuration,
-            base_url=base_url or "",
-            operation_id="reviewInvestigation",
-            oauth2_scopes=None,
-            security_source=get_security_from_env(
-                self.sdk_configuration.security, models.shared.Security
-            ),
-            tags=["investigations"],
-            extensions=None,
-            response=ResponseContext(mode=_noresponse_response_mode, execution="async"),
-        )
-        http_res = await self.do_request_async(
-            hook_ctx=_noresponse_hook_ctx,
-            request=req,
-            is_error_status_code=lambda c: utils.match_status_codes(["4XX", "5XX"], c),
-            stream=_noresponse_response_mode == "streaming",
         )
         if _noresponse_response_mode != "parsed":
             if utils.match_status_codes(["4XX", "5XX"], http_res.status_code):
@@ -1853,12 +1510,6 @@ class InvestigationsWithRawResponse:
         self.get_async = response_helpers.async_to_raw_response_wrapper(
             sdk.get_async, "http_headers"
         )
-        self.review = response_helpers.to_raw_response_wrapper(
-            sdk.review, "http_headers"
-        )
-        self.review_async = response_helpers.async_to_raw_response_wrapper(
-            sdk.review_async, "http_headers"
-        )
         self.cancel = response_helpers.to_raw_response_wrapper(
             sdk.cancel, "http_headers"
         )
@@ -1887,12 +1538,6 @@ class InvestigationsWithStreamingResponse:
         )
         self.get_async = response_helpers.async_to_streamed_response_wrapper(
             sdk.get_async, "http_headers"
-        )
-        self.review = response_helpers.to_streamed_response_wrapper(
-            sdk.review, "http_headers"
-        )
-        self.review_async = response_helpers.async_to_streamed_response_wrapper(
-            sdk.review_async, "http_headers"
         )
         self.cancel = response_helpers.to_streamed_response_wrapper(
             sdk.cancel, "http_headers"

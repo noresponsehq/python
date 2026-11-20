@@ -39,7 +39,7 @@ if TYPE_CHECKING:
 class NoResponse(BaseSDK):
     r"""NoResponse API: Workspace people, source-grounded investigations, group screening and signup assessment recommendations.
 
-    NoResponse is an identity and people risk engine. Retain workspace people, investigate their identifiers, read complete source evidence and preserve investigation history. Groups organize people for screening and context-specific decisions. Account creation, login and purchase assessments use the same engine. People-read access includes evidence by default; explicit evidence restrictions retain submitted details, job status, coverage and decision summaries. Keep the API key on your server.
+    NoResponse is an identity and people risk engine. Retain workspace people, investigate their identifiers, read complete source evidence and preserve investigation history. Groups organize people for screening and context-specific decisions. Account creation, login and purchase assessments use the same engine. People-read access includes evidence by default; explicit evidence restrictions retain submitted details, job status and coverage. Keep the API key on your server.
     """
 
     @property
@@ -91,7 +91,7 @@ class NoResponse(BaseSDK):
     people: "People"
     r"""Workspace people, submitted identity, source evidence and expiry."""
     investigations: "Investigations"
-    r"""Person investigation jobs, retained results and contextual decisions."""
+    r"""Person investigation jobs and retained results."""
     _sub_sdk_map = {
         "assessments": ("noresponse.assessments", "Assessments"),
         "accounts": ("noresponse.accounts", "Accounts"),

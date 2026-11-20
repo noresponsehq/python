@@ -641,12 +641,6 @@ if TYPE_CHECKING:
         RetryCustomerExportResponse,
         RetryCustomerExportResponseTypedDict,
     )
-    from .reviewinvestigation import (
-        ReviewInvestigationRequest,
-        ReviewInvestigationRequestTypedDict,
-        ReviewInvestigationResponse,
-        ReviewInvestigationResponseTypedDict,
-    )
     from .reviewperson import (
         ReviewPersonRequest,
         ReviewPersonRequestTypedDict,
@@ -1203,10 +1197,6 @@ __all__ = [
     "RetryCustomerExportRequestTypedDict",
     "RetryCustomerExportResponse",
     "RetryCustomerExportResponseTypedDict",
-    "ReviewInvestigationRequest",
-    "ReviewInvestigationRequestTypedDict",
-    "ReviewInvestigationResponse",
-    "ReviewInvestigationResponseTypedDict",
     "ReviewPersonRequest",
     "ReviewPersonRequestTypedDict",
     "ReviewPersonResponse",
@@ -1720,10 +1710,6 @@ _dynamic_imports: dict[str, str] = {
     "RetryCustomerExportRequestTypedDict": ".retrycustomerexport",
     "RetryCustomerExportResponse": ".retrycustomerexport",
     "RetryCustomerExportResponseTypedDict": ".retrycustomerexport",
-    "ReviewInvestigationRequest": ".reviewinvestigation",
-    "ReviewInvestigationRequestTypedDict": ".reviewinvestigation",
-    "ReviewInvestigationResponse": ".reviewinvestigation",
-    "ReviewInvestigationResponseTypedDict": ".reviewinvestigation",
     "ReviewPersonRequest": ".reviewperson",
     "ReviewPersonRequestTypedDict": ".reviewperson",
     "ReviewPersonResponse": ".reviewperson",

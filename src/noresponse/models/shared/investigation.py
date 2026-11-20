@@ -1,7 +1,6 @@
 from __future__ import annotations
 from .investigationstatus import InvestigationStatus
 from .matchstate import MatchState
-from .persondecision import PersonDecision
 from .screeningcoverage import ScreeningCoverage, ScreeningCoverageTypedDict
 from .screeningdepth import ScreeningDepth
 from .screeningspend import ScreeningSpend, ScreeningSpendTypedDict
@@ -16,8 +15,6 @@ class InvestigationTypedDict(TypedDict):
     r"""The denominator of a screening: accounts found, how many could be read, items read and the period they span, so a clean result is distinct from a person nobody could see."""
     spend: ScreeningSpendTypedDict
     r"""What screening cost, in US cents, in total and per implementation."""
-    decision: Nullable[PersonDecision]
-    r"""The latest reviewer decision, or null before any."""
     id: str
     person_id: str
     group_id: Nullable[str]
@@ -28,9 +25,6 @@ class InvestigationTypedDict(TypedDict):
     created_at: str
     expires_at: str
     deadline_at: str
-    decision_note: NotRequired[str]
-    decided_by: NotRequired[str]
-    decided_at: NotRequired[str]
     error_code: NotRequired[str]
     started_at: NotRequired[str]
     finished_at: NotRequired[str]
@@ -43,9 +37,6 @@ class Investigation(BaseModel):
     spend: ScreeningSpend
     r"""What screening cost, in US cents, in total and per implementation."""
 
-    decision: Nullable[PersonDecision]
-    r"""The latest reviewer decision, or null before any."""
-
     id: str
 
     person_id: str
@@ -66,12 +57,6 @@ class Investigation(BaseModel):
 
     deadline_at: str
 
-    decision_note: Optional[str] = None
-
-    decided_by: Optional[str] = None
-
-    decided_at: Optional[str] = None
-
     error_code: Optional[str] = None
 
     started_at: Optional[str] = None
@@ -80,17 +65,8 @@ class Investigation(BaseModel):
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
-        optional_fields = set(
-            [
-                "decision_note",
-                "decided_by",
-                "decided_at",
-                "error_code",
-                "started_at",
-                "finished_at",
-            ]
-        )
-        nullable_fields = set(["decision", "group_id", "match_state"])
+        optional_fields = set(["error_code", "started_at", "finished_at"])
+        nullable_fields = set(["group_id", "match_state"])
         serialized = handler(self)
         m = {}
 

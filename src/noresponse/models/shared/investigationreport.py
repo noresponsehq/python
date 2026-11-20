@@ -1,6 +1,5 @@
 from __future__ import annotations
 from .investigation import Investigation, InvestigationTypedDict
-from .personreview import PersonReview, PersonReviewTypedDict
 from .screeninglookup import ScreeningLookup, ScreeningLookupTypedDict
 from .screeningmedia import ScreeningMedia, ScreeningMediaTypedDict
 from .screeningpost import ScreeningPost, ScreeningPostTypedDict
@@ -21,14 +20,12 @@ class InvestigationReportTypedDict(TypedDict):
     r"""All posts retained for this result."""
     media: List[ScreeningMediaTypedDict]
     r"""All images and videos retained for this result."""
-    reviews: List[PersonReviewTypedDict]
-    r"""Every recorded decision, oldest first."""
     person: WorkspacePersonTypedDict
     investigation: InvestigationTypedDict
     lookup: NotRequired[ScreeningLookupTypedDict]
     r"""What the signup check's lookups found for a person: account presence for the email, phone and usernames (the person's handles), the phone lookup, the email domain's registration and the breach search. Nothing here sets a match state."""
     evidence_restricted: NotRequired[bool]
-    r"""True when evidence.read is explicitly denied. Submitted details, coverage, job status and decisions remain available. Collected records, profiles, posts, media, discovered values and free-text decision notes are withheld."""
+    r"""True when evidence.read is explicitly denied. Submitted details, coverage and job status remain available. Collected records, profiles, posts, media and discovered values are withheld."""
 
 
 class InvestigationReport(BaseModel):
@@ -43,9 +40,6 @@ class InvestigationReport(BaseModel):
     media: List[ScreeningMedia]
     r"""All images and videos retained for this result."""
 
-    reviews: List[PersonReview]
-    r"""Every recorded decision, oldest first."""
-
     person: WorkspacePerson
 
     investigation: Investigation
@@ -54,7 +48,7 @@ class InvestigationReport(BaseModel):
     r"""What the signup check's lookups found for a person: account presence for the email, phone and usernames (the person's handles), the phone lookup, the email domain's registration and the breach search. Nothing here sets a match state."""
 
     evidence_restricted: Optional[bool] = None
-    r"""True when evidence.read is explicitly denied. Submitted details, coverage, job status and decisions remain available. Collected records, profiles, posts, media, discovered values and free-text decision notes are withheld."""
+    r"""True when evidence.read is explicitly denied. Submitted details, coverage and job status remain available. Collected records, profiles, posts, media and discovered values are withheld."""
 
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
