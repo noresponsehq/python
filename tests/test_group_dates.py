@@ -4,7 +4,7 @@ from test_client import answer, make
 
 
 def test_group_dates_distinguish_omission_null_and_dates():
-    group = dict(id="grp_example", environment="test", name="Harbour building", starts_at=None, ends_at=None, principals=[], topics=[], people=0, version=1, created_by="test", created_at="2026-11-15T10:00:00Z", updated_at="2026-11-15T10:00:00Z")
+    group = dict(id="grp_example", environment="test", name="Harbour building", type="event", attribute="", starts_at=None, ends_at=None, principals=[], topics=[], people=0, version=1, created_by="test", created_at="2026-11-15T10:00:00Z", updated_at="2026-11-15T10:00:00Z")
     sdk, seen = make([answer(group, 201), answer(group)])
     created = sdk.groups.create(name=group["name"]).result
     assert created.starts_at is None

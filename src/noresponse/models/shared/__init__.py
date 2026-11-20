@@ -285,6 +285,7 @@ if TYPE_CHECKING:
     from .group import Group, GroupTypedDict
     from .grouplist import GroupList, GroupListTypedDict
     from .grouprequest import GroupRequest, GroupRequestTypedDict
+    from .grouptype import GroupType
     from .groupupdate import GroupUpdate, GroupUpdateTypedDict
     from .handle import Handle, HandleTypedDict
     from .hookpoint import HookPoint
@@ -1121,6 +1122,7 @@ __all__ = [
     "GroupListTypedDict",
     "GroupRequest",
     "GroupRequestTypedDict",
+    "GroupType",
     "GroupTypedDict",
     "GroupUpdate",
     "GroupUpdateTypedDict",
@@ -1954,6 +1956,7 @@ _dynamic_imports: dict[str, str] = {
     "GroupListTypedDict": ".grouplist",
     "GroupRequest": ".grouprequest",
     "GroupRequestTypedDict": ".grouprequest",
+    "GroupType": ".grouptype",
     "GroupUpdate": ".groupupdate",
     "GroupUpdateTypedDict": ".groupupdate",
     "Handle": ".handle",

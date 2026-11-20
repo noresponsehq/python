@@ -1,5 +1,6 @@
 from __future__ import annotations
 from .auditsettingsenvironment import AuditSettingsEnvironment
+from .grouptype import GroupType
 from .principal import Principal, PrincipalTypedDict
 from noresponse.types import BaseModel, Nullable, UNSET_SENTINEL
 from pydantic import model_serializer
@@ -14,6 +15,10 @@ class GroupTypedDict(TypedDict):
     environment: AuditSettingsEnvironment
     name: str
     r"""The group's name."""
+    type: GroupType
+    r"""What the group's people share: an event, an organisation, a place or another attribute."""
+    attribute: str
+    r"""The attribute its people share. Empty when none was given."""
     starts_at: Nullable[str]
     r"""Optional event start; null for an ongoing group."""
     ends_at: Nullable[str]
@@ -45,6 +50,12 @@ class Group(BaseModel):
 
     name: str
     r"""The group's name."""
+
+    type: GroupType
+    r"""What the group's people share: an event, an organisation, a place or another attribute."""
+
+    attribute: str
+    r"""The attribute its people share. Empty when none was given."""
 
     starts_at: Nullable[str]
     r"""Optional event start; null for an ongoing group."""

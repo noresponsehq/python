@@ -1,4 +1,5 @@
 from __future__ import annotations
+from .grouptype import GroupType
 from .principal import Principal, PrincipalTypedDict
 from noresponse.types import (
     BaseModel,
@@ -17,6 +18,10 @@ class GroupRequestTypedDict(TypedDict):
 
     name: str
     r"""The group's name."""
+    type: NotRequired[GroupType]
+    r"""What the group's people share: an event, an organisation, a place or another attribute."""
+    attribute: NotRequired[str]
+    r"""The attribute its people share, such as the employer's or the place's name."""
     starts_at: NotRequired[Nullable[str]]
     r"""Optional event start; null for an ongoing group."""
     ends_at: NotRequired[Nullable[str]]
@@ -36,6 +41,12 @@ class GroupRequest(BaseModel):
 
     name: str
     r"""The group's name."""
+
+    type: Optional[GroupType] = None
+    r"""What the group's people share: an event, an organisation, a place or another attribute."""
+
+    attribute: Optional[str] = None
+    r"""The attribute its people share, such as the employer's or the place's name."""
 
     starts_at: OptionalNullable[str] = UNSET
     r"""Optional event start; null for an ongoing group."""
@@ -58,7 +69,16 @@ class GroupRequest(BaseModel):
     @model_serializer(mode="wrap")
     def serialize_model(self, handler):
         optional_fields = set(
-            ["starts_at", "ends_at", "venue", "host", "principals", "topics"]
+            [
+                "type",
+                "attribute",
+                "starts_at",
+                "ends_at",
+                "venue",
+                "host",
+                "principals",
+                "topics",
+            ]
         )
         nullable_fields = set(["starts_at", "ends_at"])
         serialized = handler(self)

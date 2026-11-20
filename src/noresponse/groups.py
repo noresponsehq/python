@@ -376,6 +376,8 @@ class Groups(BaseSDK):
         *,
         name: str,
         idempotency_key: Optional[str] = None,
+        type_: Optional[models.shared.GroupType] = None,
+        attribute: Optional[str] = None,
         starts_at: OptionalNullable[str] = UNSET,
         ends_at: OptionalNullable[str] = UNSET,
         venue: Optional[str] = None,
@@ -397,6 +399,8 @@ class Groups(BaseSDK):
 
         :param name: The group's name.
         :param idempotency_key: Opaque request key, 16 to 128 characters. Repeating the key and request returns the same resource in its current state while it is retained. A different request with the same key answers 409. Use a new key for a deliberate new operation. Keys are scoped to the environment and operation; person searches also scope them to the group and person.
+        :param type: What the group's people share: an event, an organisation, a place or another attribute.
+        :param attribute: The attribute its people share, such as the employer's or the place's name.
         :param starts_at: Optional event start; null for an ongoing group.
         :param ends_at: Optional event end; requires starts_at and must be at or after it. Null when no end is set.
         :param venue: Where the group is held.
@@ -421,6 +425,8 @@ class Groups(BaseSDK):
             idempotency_key=idempotency_key,
             body=models.shared.GroupRequest(
                 name=name,
+                type=type_,
+                attribute=attribute,
                 starts_at=starts_at,
                 ends_at=ends_at,
                 venue=venue,
@@ -566,6 +572,8 @@ class Groups(BaseSDK):
         *,
         name: str,
         idempotency_key: Optional[str] = None,
+        type_: Optional[models.shared.GroupType] = None,
+        attribute: Optional[str] = None,
         starts_at: OptionalNullable[str] = UNSET,
         ends_at: OptionalNullable[str] = UNSET,
         venue: Optional[str] = None,
@@ -587,6 +595,8 @@ class Groups(BaseSDK):
 
         :param name: The group's name.
         :param idempotency_key: Opaque request key, 16 to 128 characters. Repeating the key and request returns the same resource in its current state while it is retained. A different request with the same key answers 409. Use a new key for a deliberate new operation. Keys are scoped to the environment and operation; person searches also scope them to the group and person.
+        :param type: What the group's people share: an event, an organisation, a place or another attribute.
+        :param attribute: The attribute its people share, such as the employer's or the place's name.
         :param starts_at: Optional event start; null for an ongoing group.
         :param ends_at: Optional event end; requires starts_at and must be at or after it. Null when no end is set.
         :param venue: Where the group is held.
@@ -611,6 +621,8 @@ class Groups(BaseSDK):
             idempotency_key=idempotency_key,
             body=models.shared.GroupRequest(
                 name=name,
+                type=type_,
+                attribute=attribute,
                 starts_at=starts_at,
                 ends_at=ends_at,
                 venue=venue,
@@ -1106,6 +1118,7 @@ class Groups(BaseSDK):
         group_id: str,
         *,
         name: Optional[str] = None,
+        attribute: Optional[str] = None,
         starts_at: OptionalNullable[str] = UNSET,
         ends_at: OptionalNullable[str] = UNSET,
         venue: Optional[str] = None,
@@ -1129,6 +1142,7 @@ class Groups(BaseSDK):
 
         :param group_id:
         :param name: The group's name.
+        :param attribute: The attribute its people share. Omit to keep the current value.
         :param starts_at: Optional event start; null for an ongoing group. Omit to keep the current value; send null to clear it.
         :param ends_at: Optional event end; requires starts_at and must be at or after it. Null when no end is set. Omit to keep the current value; send null to clear it.
         :param venue: Where the group is held.
@@ -1155,6 +1169,7 @@ class Groups(BaseSDK):
             group_id=group_id,
             body=models.shared.GroupUpdate(
                 name=name,
+                attribute=attribute,
                 starts_at=starts_at,
                 ends_at=ends_at,
                 venue=venue,
@@ -1314,6 +1329,7 @@ class Groups(BaseSDK):
         group_id: str,
         *,
         name: Optional[str] = None,
+        attribute: Optional[str] = None,
         starts_at: OptionalNullable[str] = UNSET,
         ends_at: OptionalNullable[str] = UNSET,
         venue: Optional[str] = None,
@@ -1337,6 +1353,7 @@ class Groups(BaseSDK):
 
         :param group_id:
         :param name: The group's name.
+        :param attribute: The attribute its people share. Omit to keep the current value.
         :param starts_at: Optional event start; null for an ongoing group. Omit to keep the current value; send null to clear it.
         :param ends_at: Optional event end; requires starts_at and must be at or after it. Null when no end is set. Omit to keep the current value; send null to clear it.
         :param venue: Where the group is held.
@@ -1363,6 +1380,7 @@ class Groups(BaseSDK):
             group_id=group_id,
             body=models.shared.GroupUpdate(
                 name=name,
+                attribute=attribute,
                 starts_at=starts_at,
                 ends_at=ends_at,
                 venue=venue,

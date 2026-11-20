@@ -17,6 +17,8 @@ class GroupUpdateTypedDict(TypedDict):
 
     name: NotRequired[str]
     r"""The group's name."""
+    attribute: NotRequired[str]
+    r"""The attribute its people share. Omit to keep the current value."""
     starts_at: NotRequired[Nullable[str]]
     r"""Optional event start; null for an ongoing group. Omit to keep the current value; send null to clear it."""
     ends_at: NotRequired[Nullable[str]]
@@ -38,6 +40,9 @@ class GroupUpdate(BaseModel):
 
     name: Optional[str] = None
     r"""The group's name."""
+
+    attribute: Optional[str] = None
+    r"""The attribute its people share. Omit to keep the current value."""
 
     starts_at: OptionalNullable[str] = UNSET
     r"""Optional event start; null for an ongoing group. Omit to keep the current value; send null to clear it."""
@@ -65,6 +70,7 @@ class GroupUpdate(BaseModel):
         optional_fields = set(
             [
                 "name",
+                "attribute",
                 "starts_at",
                 "ends_at",
                 "venue",
