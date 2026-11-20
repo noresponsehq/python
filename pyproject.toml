@@ -1,6 +1,6 @@
 [project]
 name = "noresponse"
-version = "19.0.4"
+version = "19.0.5"
 description = "NoResponse identity investigation, people screening and signup assessment client for Python"
 authors = [{ name = "NoResponse" },]
 readme = "README.md"
