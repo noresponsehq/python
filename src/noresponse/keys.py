@@ -363,7 +363,7 @@ class Keys(BaseSDK):
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment the key belongs to. A live key assesses with live sources; a test key answers from the deterministic simulator.
-        :param scopes: The key's scopes, each at most once.
+        :param scopes: Scopes for the new key. The legacy groups scope is reserved for existing keys.
         :param name: Optional display name for this API key, at most 100 printable characters. Preserved on rotation.
         :param purpose: Optional operational purpose, at most 200 printable characters without leading or trailing whitespace. Do not put secrets or personal data here. Preserved on rotation and included in the creation request fingerprint; omitted for older credentials.
         :param kind:
@@ -551,7 +551,7 @@ class Keys(BaseSDK):
 
         :param workspace_id: Your workspace id, as each key lists it in workspace_id. Another workspace, a malformed id and a test environment's id answer 404.
         :param environment: The environment the key belongs to. A live key assesses with live sources; a test key answers from the deterministic simulator.
-        :param scopes: The key's scopes, each at most once.
+        :param scopes: Scopes for the new key. The legacy groups scope is reserved for existing keys.
         :param name: Optional display name for this API key, at most 100 printable characters. Preserved on rotation.
         :param purpose: Optional operational purpose, at most 200 printable characters without leading or trailing whitespace. Do not put secrets or personal data here. Preserved on rotation and included in the creation request fingerprint; omitted for older credentials.
         :param kind:

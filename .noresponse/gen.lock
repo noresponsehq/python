@@ -1,12 +1,12 @@
 lockVersion: 2.0.0
 id: 5e6fa278-33a6-40a0-ba54-f130dbc42f0f
 management:
-  docChecksum: e4a918a2e89c2da5ef642860fad8ad15
+  docChecksum: e2af64e190a62f6aa6cb092ae054e9c8
   docVersion: "1"
   speakeasyVersion: internal
   generationVersion: internal
-  releaseVersion: 19.0.5
-  configChecksum: e663cbb59d6ce2a133630c93e8452ffd
+  releaseVersion: 19.0.6
+  configChecksum: 8a0d2efa628ec0ae52840fca88e8455d
 features:
   python:
     additionalDependencies: 1.1.0
@@ -1001,7 +1001,7 @@ trackedFiles:
   docs/models/shared/keylist.md:
     last_write_checksum: sha1:1257a52d0a4739b510c4d6a9d0136c56a1e960e3
   docs/models/shared/keyrequest.md:
-    last_write_checksum: sha1:533e9b4ff12f91235845237899bd64d177466de6
+    last_write_checksum: sha1:2d3a8b327f198b3b69f007ffd622c22bbbe24afa
   docs/models/shared/keyrequestdeniedaction.md:
     last_write_checksum: sha1:0860aeb2bc9709cf6e520a5229fd3ccaa3c0093c
   docs/models/shared/keyrequestscope.md:
@@ -1575,7 +1575,7 @@ trackedFiles:
   pylintrc:
     last_write_checksum: sha1:f4ed9df97846f83012839cedbfb375993e2e606f
   pyproject.toml:
-    last_write_checksum: sha1:82f3bd54d9423f8254e5ff013bcb741a9e1ff2b2
+    last_write_checksum: sha1:e464b8df271f8016c67cf58b94d437498afcd9ff
   scripts/publish.sh:
     last_write_checksum: sha1:adc9b741c12ad1591ab4870eabe20f0d0a86cd1a
   src/noresponse/_hooks/__init__.py:
@@ -1591,7 +1591,7 @@ trackedFiles:
   src/noresponse/_hooks/types.py:
     last_write_checksum: sha1:5cba453d07bb48bcb5eef05dc9eae66bd86c059e
   src/noresponse/_version.py:
-    last_write_checksum: sha1:226356f140b85dd360787e7d375552077b1fe2f1
+    last_write_checksum: sha1:73bca037d63049e9374a649065ba49abcd1a6d94
   src/noresponse/accounts.py:
     last_write_checksum: sha1:c09abf6ab3b780a819d1a1ed0af35063bb2625e6
   src/noresponse/assessments.py:
@@ -1617,7 +1617,7 @@ trackedFiles:
   src/noresponse/invites.py:
     last_write_checksum: sha1:658ce915cb4a5e0119debee79e2869272949a93f
   src/noresponse/keys.py:
-    last_write_checksum: sha1:fa479f824c577a6ca1bf842d9dd7921628e97f2c
+    last_write_checksum: sha1:07189aa1c089d6594f1626608db99a57754cd3c4
   src/noresponse/keyusage.py:
     last_write_checksum: sha1:01a7316d88b771bf6533f6b3a39c093709d83c3b
   src/noresponse/lists.py:
@@ -2321,7 +2321,7 @@ trackedFiles:
   src/noresponse/models/shared/keylist.py:
     last_write_checksum: sha1:87393fdb10c61d5348614277cd9443bcb48fdf11
   src/noresponse/models/shared/keyrequest.py:
-    last_write_checksum: sha1:9e973d0bb97d18fdd4f4fc76227fc56b55a1a320
+    last_write_checksum: sha1:47131cd3d44345fcdd3e133475cd4847fa40612b
   src/noresponse/models/shared/keyrotation.py:
     last_write_checksum: sha1:7576e219bb1a71ed526bd51a8de0ccf53212f892
   src/noresponse/models/shared/keyrotationrequest.py:
@@ -2845,7 +2845,7 @@ trackedFiles:
   src/noresponse/operations.py:
     last_write_checksum: sha1:43161abc6a60a79656e6cdfa144425c67cfc6609
   src/noresponse/people.py:
-    last_write_checksum: sha1:52fee754d1de301989fbc4ffd2e2a6cc436b7670
+    last_write_checksum: sha1:5e0e68bad3f1acee3cd5c6d1030bf3c542cb99ce
   src/noresponse/py.typed:
     last_write_checksum: sha1:8efc425ffe830805ffcc0f3055871bdcdc542c60
   src/noresponse/requests.py:
